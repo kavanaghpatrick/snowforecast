@@ -6,6 +6,7 @@ This module provides:
 - TemporalAligner: Temporal alignment and resampling
 - DataQualityController: Data quality control and flagging
 - AtmosphericFeatures: Atmospheric feature engineering
+- TerrainFeatureEngineer: Terrain feature engineering
 """
 
 from .orchestration import (
@@ -24,6 +25,7 @@ from .quality import (
     QualityReport,
 )
 from .atmospheric import AtmosphericFeatures
+from .terrain import TerrainFeatureEngineer
 
 __all__ = [
     "DataOrchestrator",
@@ -37,4 +39,5 @@ __all__ = [
     "QualityFlag",
     "QualityReport",
     "AtmosphericFeatures",
+    "TerrainFeatureEngineer",
 ]
