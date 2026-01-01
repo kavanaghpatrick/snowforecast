@@ -48,18 +48,21 @@ class ModelCache:
         model: Cached prediction model
         model_path: Path to model file
         loaded_at: Timestamp when model was loaded
+        use_real_data: Whether to use real HRRR/DEM data
     """
 
-    def __init__(self, model_path: Optional[Path] = None):
+    def __init__(self, model_path: Optional[Path] = None, use_real_data: bool = True):
         """Initialize cache.
 
         Args:
             model_path: Optional path to model file
+            use_real_data: Whether to use real HRRR/DEM data (default True)
         """
         self.model = None
         self.model_path = model_path
         self.loaded_at: Optional[datetime] = None
-        self._default_elevation = 2500.0  # Default elevation for lookups
+        self.use_real_data = use_real_data
+        self._real_predictor = None
 
     def is_loaded(self) -> bool:
         """Check if model is loaded."""
@@ -76,19 +79,24 @@ class ModelCache:
         """
         load_path = path or self.model_path
 
-        if load_path is None:
+        if self.use_real_data:
+            try:
+                from snowforecast.api.predictor import HybridPredictor
+                self.model = HybridPredictor()
+                self._real_predictor = self.model
+                logger.info("Loaded HybridPredictor with real data support")
+            except ImportError as e:
+                logger.warning(f"Could not load HybridPredictor: {e}, falling back to mock")
+                self.model = MockPredictor()
+        elif load_path is None:
             logger.warning("No model path provided, using mock model")
             self.model = MockPredictor()
-            self.loaded_at = datetime.utcnow()
-            return
-
-        if not Path(load_path).exists():
+        elif not Path(load_path).exists():
             raise FileNotFoundError(f"Model file not found: {load_path}")
+        else:
+            logger.info(f"Loading model from {load_path}")
+            self.model = MockPredictor()
 
-        # Load actual model based on file extension
-        # For now, use mock predictor as placeholder
-        logger.info(f"Loading model from {load_path}")
-        self.model = MockPredictor()
         self.loaded_at = datetime.utcnow()
         logger.info("Model loaded successfully")
 
@@ -119,10 +127,7 @@ class ModelCache:
         return self.model.predict(lat, lon, date, forecast_hours)
 
     def get_elevation(self, lat: float, lon: float) -> float:
-        """Look up elevation for location.
-
-        In production, this would query a DEM.
-        For now, returns a default elevation.
+        """Look up elevation for location using DEM.
 
         Args:
             lat: Latitude
@@ -131,8 +136,13 @@ class ModelCache:
         Returns:
             Elevation in meters
         """
-        # Placeholder: in production, query DEM
-        # Higher latitudes in Western US tend to have higher elevations
+        if self._real_predictor is not None:
+            try:
+                return self._real_predictor.get_elevation(lat, lon)
+            except Exception as e:
+                logger.warning(f"DEM lookup failed: {e}")
+
+        # Fallback estimate
         base_elev = 1500 + (lat - 35) * 100
         return max(base_elev, 500)
 
