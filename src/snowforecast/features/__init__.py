@@ -7,6 +7,7 @@ This module provides:
 - DataQualityController: Data quality control and flagging
 - AtmosphericFeatures: Atmospheric feature engineering
 - TerrainFeatureEngineer: Terrain feature engineering
+- TemporalFeatures: Temporal and cyclical features
 """
 
 from .orchestration import (
@@ -26,6 +27,7 @@ from .quality import (
 )
 from .atmospheric import AtmosphericFeatures
 from .terrain import TerrainFeatureEngineer
+from .temporal_features import TemporalFeatures
 
 __all__ = [
     "DataOrchestrator",
@@ -40,4 +42,5 @@ __all__ = [
     "QualityReport",
     "AtmosphericFeatures",
     "TerrainFeatureEngineer",
+    "TemporalFeatures",
 ]
