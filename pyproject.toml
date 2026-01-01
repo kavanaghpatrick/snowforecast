@@ -73,6 +73,11 @@ dashboard = [
     "streamlit>=1.30.0",
 ]
 
+# Cache dependencies
+cache = [
+    "duckdb>=0.9.0",
+]
+
 # Development dependencies
 dev = [
     "pytest>=7.0.0",
@@ -83,7 +88,7 @@ dev = [
 
 # All pipelines combined
 all = [
-    "snowforecast[snotel,ghcn,era5,hrrr,dem,openskimap,models,deeplearning,api,dashboard,dev]",
+    "snowforecast[snotel,ghcn,era5,hrrr,dem,openskimap,models,deeplearning,api,dashboard,cache,dev]",
 ]
 
 [build-system]

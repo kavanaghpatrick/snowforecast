@@ -349,6 +349,41 @@ def create_sidebar() -> tuple:
     return selected_area, selected_state
 
 
+def fetch_single_resort(name: str) -> dict:
+    """Fetch conditions for a single resort (fast path)."""
+    predictor = get_predictor()
+    if predictor is None:
+        return None
+
+    lat, lon, state, base_elev = SKI_AREAS[name]
+    today = datetime.now()
+
+    try:
+        terrain = predictor.get_terrain_features(lat, lon)
+        forecast, _ = predictor.predict(lat, lon, today, forecast_hours=24)
+        return {
+            "ski_area": name,
+            "state": state,
+            "latitude": lat,
+            "longitude": lon,
+            "elevation": terrain.get("elevation", base_elev),
+            "snow_depth_cm": forecast.snow_depth_cm,
+            "new_snow_cm": forecast.new_snow_cm,
+            "probability": forecast.snowfall_probability,
+        }
+    except Exception:
+        return {
+            "ski_area": name,
+            "state": state,
+            "latitude": lat,
+            "longitude": lon,
+            "elevation": base_elev,
+            "snow_depth_cm": 0,
+            "new_snow_cm": 0,
+            "probability": 0,
+        }
+
+
 def main():
     """Main dashboard function."""
     st.title("❄️ Snow Forecast Dashboard")
@@ -357,23 +392,29 @@ def main():
     # Sidebar
     selected_area, selected_state = create_sidebar()
 
-    # Fetch data with progress indicator
-    # Check if we have cached data
-    cache_key = f"conditions_{datetime.now().strftime('%Y%m%d%H')}"
-    if cache_key not in st.session_state:
-        st.subheader("Loading Snow Conditions...")
-        progress_bar = st.empty()
-        status_text = st.empty()
-        status_text.text("Connecting to NOAA HRRR...")
-        conditions_df = fetch_all_current_conditions(progress_bar)
-        st.session_state[cache_key] = conditions_df
-        status_text.empty()
-    else:
-        conditions_df = st.session_state[cache_key]
+    # Fast path: fetch only selected resort first
+    single_cache_key = f"single_{selected_area}_{datetime.now().strftime('%Y%m%d%H')}"
+    if single_cache_key not in st.session_state:
+        with st.spinner(f"Fetching {selected_area} from NOAA HRRR..."):
+            result = fetch_single_resort(selected_area)
+            st.session_state[single_cache_key] = result
 
-    # Current conditions for selected area
-    st.header(f"📍 {selected_area}")
-    create_current_conditions_cards(conditions_df, selected_area)
+    selected_data = st.session_state.get(single_cache_key)
+
+    # Show selected resort conditions immediately (from single fetch)
+    if selected_data:
+        col1, col2, col3, col4 = st.columns(4)
+        with col1:
+            st.metric("Snow Base", f"{selected_data['snow_depth_cm']:.0f} cm",
+                     f"{selected_data['snow_depth_cm']/2.54:.0f} inches")
+        with col2:
+            st.metric("24hr New Snow", f"{selected_data['new_snow_cm']:.1f} cm",
+                     f"{selected_data['new_snow_cm']/2.54:.1f} inches")
+        with col3:
+            st.metric("Snow Probability", f"{selected_data['probability']:.0%}")
+        with col4:
+            st.metric("Elevation", f"{selected_data['elevation']:.0f} m",
+                     f"{selected_data['elevation']*3.28084:.0f} ft")
 
     st.markdown("---")
 
@@ -381,7 +422,7 @@ def main():
     col1, col2 = st.columns(2)
 
     with col1:
-        # 7-day forecast
+        # 7-day forecast for selected resort
         if selected_area:
             lat, lon, _, _ = SKI_AREAS[selected_area]
             forecast_cache_key = f"forecast_{selected_area}_{datetime.now().strftime('%Y%m%d%H')}"
@@ -395,9 +436,20 @@ def main():
             create_forecast_table(forecast_df)
 
     with col2:
-        # Regional map
-        create_regional_map(conditions_df, selected_area)
-        create_regional_table(conditions_df)
+        # Regional comparison - load lazily with expander
+        with st.expander("🗺️ Compare All Resorts (loads 22 resorts)", expanded=False):
+            cache_key = f"conditions_{datetime.now().strftime('%Y%m%d%H')}"
+            if cache_key not in st.session_state:
+                progress_bar = st.empty()
+                st.caption("Loading all resort data from NOAA HRRR...")
+                conditions_df = fetch_all_current_conditions(progress_bar)
+                st.session_state[cache_key] = conditions_df
+            else:
+                conditions_df = st.session_state[cache_key]
+
+            if not conditions_df.empty:
+                create_regional_map(conditions_df, selected_area)
+                create_regional_table(conditions_df)
 
     # Footer
     st.markdown("---")
