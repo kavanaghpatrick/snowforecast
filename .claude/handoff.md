@@ -1,53 +1,95 @@
 # Agent Handoff Document
 
-## Current Status
-- [x] Complete
-- [ ] In Progress
-- [ ] Blocked
+## Status: Complete
 
-## Phase 1 Merge Status
+## Issue #9: Implement spatial alignment of data sources
 
-All Phase 1 data pipelines have been implemented and are being merged to develop.
+**Branch**: phase2/9-spatial
+**Worktree**: ~/snowforecast-worktrees/phase2-spatial
 
-### Pipelines Completed
+## Files Created/Modified
 
-1. **SNOTEL Pipeline** (Issue #2)
-   - `src/snowforecast/pipelines/snotel.py` - SnotelPipeline class
-   - `tests/pipelines/test_snotel.py` - 21 tests
-   - Uses metloom library
+### Source Files
+- `src/snowforecast/features/__init__.py` - Updated to export SpatialAligner and ExtractionResult
+- `src/snowforecast/features/spatial.py` - New SpatialAligner class
 
-2. **GHCN Pipeline** (Issue #3)
-   - `src/snowforecast/pipelines/ghcn.py` - GHCNPipeline class
-   - `tests/pipelines/test_ghcn.py` - 22 tests
-   - Fixed-width .dly file parsing
+### Test Files
+- `tests/features/__init__.py` - New test package init
+- `tests/features/test_spatial.py` - 42 unit tests
 
-3. **ERA5 Pipeline** (Issue #4)
-   - `src/snowforecast/pipelines/era5.py` - ERA5Pipeline class
-   - `tests/pipelines/test_era5.py` - 31 tests
-   - Uses cdsapi for Copernicus CDS
+## SpatialAligner Class Summary
 
-4. **HRRR Pipeline** (Issue #5)
-   - `src/snowforecast/pipelines/hrrr.py` - HRRRPipeline class
-   - `tests/pipelines/test_hrrr.py` - 20 tests
-   - Uses herbie-data library
+The `SpatialAligner` class provides utilities for extracting values from gridded xarray Datasets at specific lat/lon points.
 
-5. **DEM Pipeline** (Issue #6)
-   - `src/snowforecast/pipelines/dem.py` - DEMPipeline class
-   - `tests/pipelines/test_dem.py` - 38 tests
-   - Copernicus GLO-30 DEM terrain analysis
+### Key Methods
 
-6. **OpenSkiMap Pipeline** (Issue #7)
-   - `src/snowforecast/pipelines/openskimap.py` - OpenSkiMapPipeline class
-   - `tests/pipelines/test_openskimap.py` - 27 tests
-   - GeoJSON ski resort data
+1. **`__init__(interpolation_method="nearest")`**
+   - Initialize with interpolation method ("nearest" or "bilinear")
 
-## Total: 159 unit tests across 6 pipelines
+2. **`extract_at_points(ds, points, method=None, prefix="")`**
+   - Extract values from any xarray Dataset at lat/lon points
+   - Returns DataFrame with point_id, point_lat, point_lon and all data variables
 
-## Outstanding Work
-- None for Phase 1
+3. **`extract_era5_at_points(era5_ds, points)`**
+   - Convenience method with "era5_" prefix
 
-## Notes for Phase 2
-- All pipelines inherit from appropriate base classes (TemporalPipeline, StaticPipeline, GriddedPipeline)
-- All output ValidationResult from validate() method
-- Data paths use get_data_path() utility
-- Western US bounding box is default for all pipelines
+4. **`extract_hrrr_at_points(hrrr_ds, points)`**
+   - Convenience method with "hrrr_" prefix
+
+5. **`extract_dem_at_points(dem_pipeline, points)`**
+   - Extract terrain features using DEMPipeline
+   - Returns dem_elevation, dem_slope, dem_aspect, etc.
+
+6. **`find_nearest_grid_cell(ds, lat, lon)`**
+   - Find nearest grid cell indices for a point
+
+7. **`align_all_sources(points, era5_ds=None, hrrr_ds=None, dem_pipeline=None)`**
+   - Align all data sources to common points in one call
+
+8. **`get_extraction_stats(ds, points)`**
+   - Get statistics about extraction (grid resolution, points in bounds, etc.)
+
+### Features
+- Handles coordinate name variations (lat/lon vs latitude/longitude)
+- Supports nearest-neighbor and bilinear interpolation
+- Graceful error handling for failed extractions
+- Column prefixing for source identification
+
+## Tests
+
+```bash
+pytest tests/features/test_spatial.py -v
+```
+
+42 tests covering:
+- Initialization and configuration
+- Coordinate detection
+- Grid cell finding
+- Point extraction (single, multiple, time series)
+- ERA5/HRRR/DEM-specific extraction
+- Multi-source alignment
+- Extraction statistics
+- Edge cases (empty lists, out-of-bounds points)
+
+## Dependencies
+
+No new dependencies required. Uses:
+- xarray (already required)
+- numpy (already required)
+- pandas (already required)
+
+## Grok Review: Not yet performed
+
+## Integration Notes
+
+The SpatialAligner is designed to work with:
+- ERA5Pipeline.process_to_dataset() output
+- HRRRPipeline.process_to_dataset() output
+- DEMPipeline instance (uses get_terrain_features method)
+
+## Next Steps
+
+This module enables Phase 2 feature engineering by providing:
+- Aligned gridded data extraction for ML training
+- Consistent spatial sampling across all data sources
+- Foundation for temporal alignment (Issue #10)
