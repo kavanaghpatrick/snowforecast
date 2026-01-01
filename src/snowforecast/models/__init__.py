@@ -13,10 +13,36 @@ Model implementations:
 - SnowGRU: PyTorch GRU module
 - SnowUNet: U-Net for spatial snow prediction
 - SpatialModel: Wrapper for spatial models with BaseModel-like interface
+
+Ensemble methods:
+- SimpleEnsemble: Averaging ensemble with optional weights
+- StackingEnsemble: Two-level stacking with meta-learner
+- create_ensemble: Factory function for creating ensembles
+- get_model_weights: Extract learned weights from ensembles
+
+Comparison utilities:
+- ModelComparison: Compare multiple models on the same dataset
+- ComparisonResults: Container for comparison results
+- compare_models: Convenience function for model comparison
+- rank_models: Rank models by specified metric
+- create_comparison_report: Generate formatted comparison report
 """
 
 from snowforecast.models.base import BaseModel
 from snowforecast.models.linear import LinearRegressionModel
+from snowforecast.models.ensemble import (
+    SimpleEnsemble,
+    StackingEnsemble,
+    create_ensemble,
+    get_model_weights,
+)
+from snowforecast.models.comparison import (
+    ModelComparison,
+    ComparisonResults,
+    compare_models,
+    rank_models,
+    create_comparison_report,
+)
 
 # Gradient boosting is optional, import if available
 try:
@@ -42,6 +68,17 @@ except ImportError:
 __all__ = [
     "BaseModel",
     "LinearRegressionModel",
+    # Ensemble methods
+    "SimpleEnsemble",
+    "StackingEnsemble",
+    "create_ensemble",
+    "get_model_weights",
+    # Comparison utilities
+    "ModelComparison",
+    "ComparisonResults",
+    "compare_models",
+    "rank_models",
+    "create_comparison_report",
 ]
 
 if _HAS_GB:
