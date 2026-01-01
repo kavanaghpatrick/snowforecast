@@ -139,10 +139,25 @@ class SnotelPipeline(TemporalPipeline):
             >>> stations = pipeline.get_station_metadata(state="CO")
             >>> print(f"Found {len(stations)} stations in Colorado")
         """
-        SnotelPointData, _ = self._get_metloom_imports()
+        SnotelPointData, SnotelVariables = self._get_metloom_imports()
 
-        # Get all SNOTEL points
-        all_points = self._retry_with_backoff(SnotelPointData.points_from_geometry, None)
+        # Create Western US bounding box for station query
+        try:
+            import geopandas as gpd
+            from shapely.geometry import box
+
+            # Western US: -125 to -102 lon, 31 to 49 lat
+            west_us_bbox = gpd.GeoDataFrame(
+                geometry=[box(-125, 31, -102, 49)], crs="EPSG:4326"
+            )
+        except ImportError:
+            west_us_bbox = None
+
+        # Get all SNOTEL points (API requires variables list)
+        variables = [SnotelVariables.SWE]
+        all_points = self._retry_with_backoff(
+            SnotelPointData.points_from_geometry, west_us_bbox, variables
+        )
 
         stations = []
         for point in all_points:
