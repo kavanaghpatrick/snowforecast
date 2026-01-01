@@ -6,59 +6,87 @@
 - [ ] Blocked
 
 ## Task Definition
-Issue #1: Project Setup and Shared Infrastructure
-Branch: phase1/1-project-setup
-Description: Set up project structure, shared utilities, and testing infrastructure
+Issue #5: Implement HRRR archive data ingestion pipeline
+Branch: phase1/5-hrrr-pipeline
+Description: Create HRRR data ingestion pipeline using the herbie-data library
 
 ## Files Created/Modified
-- `pyproject.toml` - Full project configuration with modular dependencies
-- `README.md` - Project documentation
-- `src/snowforecast/__init__.py` - Package init
-- `src/snowforecast/utils/__init__.py` - Utils module exports
-- `src/snowforecast/utils/base.py` - Pipeline base classes (ValidationResult, TemporalPipeline, StaticPipeline, GriddedPipeline)
-- `src/snowforecast/utils/io.py` - I/O utilities (get_data_path, get_project_root)
-- `src/snowforecast/utils/geo.py` - Geographic utilities (BoundingBox, Point, haversine, WESTERN_US_BBOX)
-- `src/snowforecast/pipelines/__init__.py` - Pipelines module init
-- `src/snowforecast/models/__init__.py` - Models module init
-- `src/snowforecast/features/__init__.py` - Features module init
-- `tests/conftest.py` - Shared pytest fixtures
-- `tests/utils/__init__.py` - Utils tests init
-- `tests/utils/test_base.py` - Tests for pipeline base classes
-- `tests/utils/test_geo.py` - Tests for geographic utilities
-- `tests/utils/test_io.py` - Tests for I/O utilities
+- `src/snowforecast/pipelines/hrrr.py` - Main HRRRPipeline class inheriting from GriddedPipeline
+- `tests/pipelines/__init__.py` - Tests module init
+- `tests/pipelines/test_hrrr.py` - Unit tests (20 tests)
 
-## Dependencies Added
-Core:
-- numpy>=1.24.0
-- pandas>=2.0.0
-- xarray>=2023.1.0
-- pyarrow>=14.0.0
+## Dependencies
+Already in pyproject.toml:
+- herbie-data>=2024.1.0
+- cfgrib>=0.9.10
 
-Dev:
-- pytest>=7.0.0
-- pytest-cov>=4.0.0
-- ruff>=0.1.0
-- mypy>=1.0.0
+## HRRRPipeline API
+
+### Constructor
+```python
+HRRRPipeline(
+    product: str = "sfc",           # HRRR product type
+    bbox: BoundingBox | None = None, # Bounding box (default: Western US)
+    max_workers: int = 4,           # Parallel download workers
+    save_format: str = "netcdf",    # Output format (netcdf or zarr)
+)
+```
+
+### Key Methods
+
+```python
+# Download analysis (f00) for a single date
+ds = pipeline.download_analysis("2023-01-15", variables=["TMP:2 m above ground"])
+
+# Download forecasts for multiple lead times
+results = pipeline.download_forecast("2023-01-15", forecast_hours=[0, 6, 12, 18, 24])
+
+# Download date range (parallel by default)
+paths = pipeline.download_date_range("2023-01-01", "2023-01-31")
+
+# Extract values at specific points
+df = pipeline.extract_at_points(ds, [(40.0, -105.0), (39.5, -106.0)])
+
+# Full pipeline run (inherited from GriddedPipeline)
+df, validation = pipeline.run("2023-01-01", "2023-01-31")
+```
+
+### Default Variables
+- TMP:2 m above ground (2m temperature)
+- SNOD:surface (Snow depth)
+- WEASD:surface (Water equivalent of accumulated snow depth)
+- PRATE:surface (Precipitation rate)
+- CSNOW:surface (Categorical snow)
+
+Extended variables also include:
+- UGRD:10 m above ground (U wind)
+- VGRD:10 m above ground (V wind)
+
+### Data Output
+Files saved to: `data/raw/hrrr/{year}/{month}/hrrr_YYYYMMDD_fXX.nc`
 
 ## Tests Status
 - [x] Unit tests pass
 - [x] Coverage verified
 
 ```
-40 passed in 1.75s
-- tests/utils/test_base.py (14 tests)
-- tests/utils/test_geo.py (16 tests)
-- tests/utils/test_io.py (10 tests)
+59 passed, 1 skipped in 0.41s
+- tests/pipelines/test_hrrr.py (20 tests, 19 passed, 1 skipped)
+  - TestHRRRPipelineInit (3 tests)
+  - TestHRRRPipelineValidation (5 tests)
+  - TestHRRRPipelineExtractAtPoints (2 tests)
+  - TestHRRRPipelineDefaultVariables (2 tests)
+  - TestHRRRPipelineProcessing (3 tests)
+  - TestHRRRPipelineSaveDataset (3 tests, 1 skipped - zarr not installed)
+  - TestHRRRPipelineInheritance (2 tests)
+- tests/utils/* (40 tests)
 ```
 
-## Grok Review
-- [x] Complete - no critical issues
+## Integration Tests
+Integration tests are available but marked with @pytest.mark.integration and @pytest.mark.slow.
+These require herbie library and network access.
 
-## Pipeline Base Classes
-Agents should inherit from:
-- `TemporalPipeline` - For time-series data (SNOTEL, GHCN)
-- `GriddedPipeline` - For gridded weather data (ERA5, HRRR)
-- `StaticPipeline` - For static/spatial data (DEM, OpenSkiMap)
+Run with: `pytest -m integration tests/pipelines/test_hrrr.py`
 
 ## Outstanding Work
 - None
@@ -67,7 +95,8 @@ Agents should inherit from:
 - None
 
 ## Notes for Next Agent
-1. After merging to develop, agents should rebase their branches on develop
-2. Use `from snowforecast.utils import TemporalPipeline, ValidationResult` etc.
-3. Use `from snowforecast.utils.io import get_data_path` for data paths
-4. All pipelines should return `ValidationResult` from `validate()` method
+1. The herbie library lazily imports - tests can run without it installed
+2. Use `from snowforecast.pipelines.hrrr import HRRRPipeline` after merging
+3. Pipeline inherits from GriddedPipeline which provides run() method
+4. For production use, install with: `pip install .[hrrr]`
+5. Zarr support requires additional `zarr` package installation
