@@ -71,8 +71,7 @@ def get_predictor():
         return None
 
 
-@st.cache_data(ttl=3600)  # Cache for 1 hour
-def fetch_ski_area_forecast(name: str, lat: float, lon: float, days: int = 7) -> pd.DataFrame:
+def fetch_ski_area_forecast(name: str, lat: float, lon: float, days: int = 7, progress_container=None) -> pd.DataFrame:
     """Fetch forecast for a ski area.
 
     Args:
@@ -80,6 +79,7 @@ def fetch_ski_area_forecast(name: str, lat: float, lon: float, days: int = 7) ->
         lat: Latitude
         lon: Longitude
         days: Number of days to forecast
+        progress_container: Optional Streamlit container for progress
 
     Returns:
         DataFrame with daily forecasts
@@ -95,6 +95,11 @@ def fetch_ski_area_forecast(name: str, lat: float, lon: float, days: int = 7) ->
     terrain = predictor.get_terrain_features(lat, lon)
 
     for day in range(days):
+        if progress_container:
+            progress = (day + 1) / days
+            day_name = "Today" if day == 0 else f"Day +{day}"
+            progress_container.progress(progress, text=f"Fetching {day_name} forecast...")
+
         target_date = today + timedelta(days=day)
         try:
             forecast, confidence = predictor.predict(
@@ -114,6 +119,9 @@ def fetch_ski_area_forecast(name: str, lat: float, lon: float, days: int = 7) ->
         except Exception as e:
             st.warning(f"Forecast error for day {day}: {e}")
 
+    if progress_container:
+        progress_container.empty()
+
     df = pd.DataFrame(records)
     df["ski_area"] = name
     df["latitude"] = lat
@@ -125,17 +133,27 @@ def fetch_ski_area_forecast(name: str, lat: float, lon: float, days: int = 7) ->
     return df
 
 
-@st.cache_data(ttl=3600)
-def fetch_all_current_conditions() -> pd.DataFrame:
-    """Fetch current conditions for all ski areas."""
+def fetch_all_current_conditions(progress_container=None) -> pd.DataFrame:
+    """Fetch current conditions for all ski areas.
+
+    Args:
+        progress_container: Optional Streamlit container for progress updates
+    """
     predictor = get_predictor()
     if predictor is None:
         return pd.DataFrame()
 
     records = []
     today = datetime.now()
+    ski_areas_list = list(SKI_AREAS.items())
+    total = len(ski_areas_list)
 
-    for name, (lat, lon, state, base_elev) in SKI_AREAS.items():
+    for i, (name, (lat, lon, state, base_elev)) in enumerate(ski_areas_list):
+        # Update progress
+        if progress_container:
+            progress = (i + 1) / total
+            progress_container.progress(progress, text=f"Fetching {name} ({i+1}/{total})...")
+
         try:
             terrain = predictor.get_terrain_features(lat, lon)
             forecast, _ = predictor.predict(lat, lon, today, forecast_hours=24)
@@ -162,6 +180,9 @@ def fetch_all_current_conditions() -> pd.DataFrame:
                 "new_snow_cm": 0,
                 "probability": 0,
             })
+
+    if progress_container:
+        progress_container.empty()
 
     return pd.DataFrame(records)
 
@@ -317,6 +338,14 @@ def create_sidebar() -> tuple:
     st.sidebar.markdown("• NOAA HRRR (3km)")
     st.sidebar.markdown("• Copernicus DEM (30m)")
 
+    st.sidebar.markdown("---")
+    if st.sidebar.button("🔄 Refresh Data"):
+        # Clear all cached data
+        for key in list(st.session_state.keys()):
+            if key.startswith("conditions_") or key.startswith("forecast_"):
+                del st.session_state[key]
+        st.rerun()
+
     return selected_area, selected_state
 
 
@@ -328,9 +357,19 @@ def main():
     # Sidebar
     selected_area, selected_state = create_sidebar()
 
-    # Fetch data
-    with st.spinner("Fetching snow conditions..."):
-        conditions_df = fetch_all_current_conditions()
+    # Fetch data with progress indicator
+    # Check if we have cached data
+    cache_key = f"conditions_{datetime.now().strftime('%Y%m%d%H')}"
+    if cache_key not in st.session_state:
+        st.subheader("Loading Snow Conditions...")
+        progress_bar = st.empty()
+        status_text = st.empty()
+        status_text.text("Connecting to NOAA HRRR...")
+        conditions_df = fetch_all_current_conditions(progress_bar)
+        st.session_state[cache_key] = conditions_df
+        status_text.empty()
+    else:
+        conditions_df = st.session_state[cache_key]
 
     # Current conditions for selected area
     st.header(f"📍 {selected_area}")
@@ -345,8 +384,13 @@ def main():
         # 7-day forecast
         if selected_area:
             lat, lon, _, _ = SKI_AREAS[selected_area]
-            with st.spinner("Loading forecast..."):
-                forecast_df = fetch_ski_area_forecast(selected_area, lat, lon, days=7)
+            forecast_cache_key = f"forecast_{selected_area}_{datetime.now().strftime('%Y%m%d%H')}"
+            if forecast_cache_key not in st.session_state:
+                forecast_progress = st.empty()
+                forecast_df = fetch_ski_area_forecast(selected_area, lat, lon, days=7, progress_container=forecast_progress)
+                st.session_state[forecast_cache_key] = forecast_df
+            else:
+                forecast_df = st.session_state[forecast_cache_key]
             create_forecast_chart(forecast_df)
             create_forecast_table(forecast_df)
 
