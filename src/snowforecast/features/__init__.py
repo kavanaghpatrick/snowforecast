@@ -5,6 +5,7 @@ This module provides:
 - SpatialAligner: Spatial alignment of data sources
 - TemporalAligner: Temporal alignment and resampling
 - DataQualityController: Data quality control and flagging
+- AtmosphericFeatures: Atmospheric feature engineering
 """
 
 from .orchestration import (
@@ -22,6 +23,7 @@ from .quality import (
     QualityFlag,
     QualityReport,
 )
+from .atmospheric import AtmosphericFeatures
 
 __all__ = [
     "DataOrchestrator",
@@ -34,4 +36,5 @@ __all__ = [
     "DataQualityController",
     "QualityFlag",
     "QualityReport",
+    "AtmosphericFeatures",
 ]
