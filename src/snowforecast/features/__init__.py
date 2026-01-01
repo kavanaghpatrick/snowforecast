@@ -6,6 +6,7 @@ This module provides:
 - OrchestrationResult: Result container for orchestration operations
 - SpatialAligner: Spatial alignment of data sources
 - ExtractionResult: Result container for extraction operations
+- TemporalAligner: Temporal alignment and resampling
 """
 
 from .orchestration import (
@@ -14,6 +15,10 @@ from .orchestration import (
     OrchestrationResult,
 )
 from .spatial import SpatialAligner, ExtractionResult
+from .temporal import (
+    DEFAULT_AGGREGATIONS,
+    TemporalAligner,
+)
 
 __all__ = [
     "DataOrchestrator",
@@ -21,4 +26,6 @@ __all__ = [
     "OrchestrationResult",
     "SpatialAligner",
     "ExtractionResult",
+    "DEFAULT_AGGREGATIONS",
+    "TemporalAligner",
 ]
