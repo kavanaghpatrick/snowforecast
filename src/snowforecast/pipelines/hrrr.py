@@ -130,7 +130,19 @@ class HRRRPipeline(GriddedPipeline):
         datasets = []
         for var in variables:
             try:
-                ds = H.xarray(var, subset=subset)
+                # Download and then subset (compatible with herbie-data 2025+)
+                ds = H.xarray(var)
+                # Apply bbox subset if coordinates exist
+                if "latitude" in ds.coords and "longitude" in ds.coords:
+                    ds = ds.sel(
+                        latitude=slice(subset["lat"].start, subset["lat"].stop),
+                        longitude=slice(subset["lon"].start, subset["lon"].stop),
+                    )
+                elif "lat" in ds.coords and "lon" in ds.coords:
+                    ds = ds.sel(
+                        lat=slice(subset["lat"].start, subset["lat"].stop),
+                        lon=slice(subset["lon"].start, subset["lon"].stop),
+                    )
                 datasets.append(ds)
             except Exception as e:
                 logger.warning(f"Failed to download {var} for {date}: {e}")
@@ -176,7 +188,19 @@ class HRRRPipeline(GriddedPipeline):
                 datasets = []
                 for var in variables:
                     try:
-                        ds = H.xarray(var, subset=subset)
+                        # Download and then subset (compatible with herbie-data 2025+)
+                        ds = H.xarray(var)
+                        # Apply bbox subset if coordinates exist
+                        if "latitude" in ds.coords and "longitude" in ds.coords:
+                            ds = ds.sel(
+                                latitude=slice(subset["lat"].start, subset["lat"].stop),
+                                longitude=slice(subset["lon"].start, subset["lon"].stop),
+                            )
+                        elif "lat" in ds.coords and "lon" in ds.coords:
+                            ds = ds.sel(
+                                lat=slice(subset["lat"].start, subset["lat"].stop),
+                                lon=slice(subset["lon"].start, subset["lon"].stop),
+                            )
                         datasets.append(ds)
                     except Exception as e:
                         logger.warning(f"Failed to download {var} for {date} f{fxx:02d}: {e}")
