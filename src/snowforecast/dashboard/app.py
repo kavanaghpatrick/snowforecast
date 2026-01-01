@@ -204,12 +204,16 @@ def create_error_distribution(df: pd.DataFrame):
 
     errors = df["error_snow_depth"].values
 
-    # Create histogram data
-    hist_data = pd.DataFrame({"Error (cm)": errors})
+    # Create histogram using numpy
+    counts, bin_edges = np.histogram(errors, bins=20)
+    bin_centers = (bin_edges[:-1] + bin_edges[1:]) / 2
 
-    st.bar_chart(
-        pd.cut(errors, bins=20).value_counts().sort_index(),
-    )
+    hist_df = pd.DataFrame({
+        "Error (cm)": bin_centers,
+        "Count": counts,
+    }).set_index("Error (cm)")
+
+    st.bar_chart(hist_df)
 
 
 def create_performance_by_month(df: pd.DataFrame):
