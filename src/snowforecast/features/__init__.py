@@ -8,6 +8,7 @@ This module provides:
 - AtmosphericFeatures: Atmospheric feature engineering
 - TerrainFeatureEngineer: Terrain feature engineering
 - TemporalFeatures: Temporal and cyclical features
+- LaggedFeatures: Lagged and rolling window features
 """
 
 from .orchestration import (
@@ -28,6 +29,7 @@ from .quality import (
 from .atmospheric import AtmosphericFeatures
 from .terrain import TerrainFeatureEngineer
 from .temporal_features import TemporalFeatures
+from .lagged import LaggedFeatures
 
 __all__ = [
     "DataOrchestrator",
@@ -43,4 +45,5 @@ __all__ = [
     "AtmosphericFeatures",
     "TerrainFeatureEngineer",
     "TemporalFeatures",
+    "LaggedFeatures",
 ]

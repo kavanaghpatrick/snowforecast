@@ -11,6 +11,7 @@
 ### Issue #12: Atmospheric Features ✅ (32 tests)
 ### Issue #13: Terrain Features ✅ (62 tests)
 ### Issue #14: Temporal Features ✅ (28 tests)
+### Issue #15: Lagged Features ✅ (32 tests)
 
 ---
 
