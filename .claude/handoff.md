@@ -5,69 +5,49 @@
 - [ ] In Progress
 - [ ] Blocked
 
-## Task Definition
-Issue #2: Implement SNOTEL data ingestion pipeline
-Branch: phase1/2-snotel-pipeline
-Description: SNOTEL data ingestion pipeline using metloom library
+## Phase 1 Merge Status
 
-## Files Created/Modified
-- `src/snowforecast/pipelines/snotel.py` - Main SNOTEL pipeline class (SnotelPipeline, StationMetadata)
-- `src/snowforecast/pipelines/__init__.py` - Updated to export SnotelPipeline and StationMetadata
-- `tests/pipelines/__init__.py` - Test module init
-- `tests/pipelines/test_snotel.py` - Unit tests for SNOTEL pipeline (21 tests)
+All Phase 1 data pipelines have been implemented and are being merged to develop.
 
-## Dependencies Added
-snotel:
-- metloom>=0.3.0 (already in pyproject.toml from project setup)
+### Pipelines Completed
 
-## Tests Status
-- [x] Unit tests pass
-- [x] All project tests pass (61 tests)
+1. **SNOTEL Pipeline** (Issue #2)
+   - `src/snowforecast/pipelines/snotel.py` - SnotelPipeline class
+   - `tests/pipelines/test_snotel.py` - 21 tests
+   - Uses metloom library
 
-```
-pytest tests/pipelines/test_snotel.py -v
-21 passed in 0.34s
+2. **GHCN Pipeline** (Issue #3)
+   - `src/snowforecast/pipelines/ghcn.py` - GHCNPipeline class
+   - `tests/pipelines/test_ghcn.py` - 22 tests
+   - Fixed-width .dly file parsing
 
-pytest tests/ -v
-61 passed in 0.37s
-```
+3. **ERA5 Pipeline** (Issue #4)
+   - `src/snowforecast/pipelines/era5.py` - ERA5Pipeline class
+   - `tests/pipelines/test_era5.py` - 31 tests
+   - Uses cdsapi for Copernicus CDS
 
-## Implementation Details
+4. **HRRR Pipeline** (Issue #5)
+   - `src/snowforecast/pipelines/hrrr.py` - HRRRPipeline class
+   - `tests/pipelines/test_hrrr.py` - 20 tests
+   - Uses herbie-data library
 
-### SnotelPipeline class
-Inherits from `TemporalPipeline` and implements:
-- `get_station_metadata(state=None)` - Get SNOTEL station metadata, optionally filtered by state
-- `download_station(station_id, start_date, end_date, variables=None)` - Download single station data
-- `download_all_stations(start_date, end_date, states=None)` - Download all stations data
-- `download(start_date, end_date, **kwargs)` - TemporalPipeline interface method
-- `process(raw_path)` - Convert raw data to standardized format
-- `validate(df)` - Validate processed data quality
+5. **DEM Pipeline** (Issue #6)
+   - `src/snowforecast/pipelines/dem.py` - DEMPipeline class
+   - `tests/pipelines/test_dem.py` - 38 tests
+   - Copernicus GLO-30 DEM terrain analysis
 
-### Output Schema (Parquet)
-| Column | Type | Description |
-|--------|------|-------------|
-| station_id | str | SNOTEL station ID (e.g., "1050:CO:SNTL") |
-| datetime | datetime64[UTC] | UTC timestamp |
-| snow_depth_cm | float | Snow depth in centimeters |
-| swe_mm | float | Snow Water Equivalent in millimeters |
-| temp_avg_c | float | Average temperature in Celsius |
-| quality_flag | str | 'good', 'partial', or 'missing' |
+6. **OpenSkiMap Pipeline** (Issue #7)
+   - `src/snowforecast/pipelines/openskimap.py` - OpenSkiMapPipeline class
+   - `tests/pipelines/test_openskimap.py` - 27 tests
+   - GeoJSON ski resort data
 
-### Features
-- Network timeout retry with exponential backoff (3 retries)
-- Automatic unit conversion (inches to cm/mm, Fahrenheit to Celsius)
-- Quality flag computation based on data completeness
-- Data validation with outlier detection
-- Lazy metloom import (helpful error message if not installed)
+## Total: 159 unit tests across 6 pipelines
 
 ## Outstanding Work
-- None
+- None for Phase 1
 
-## Blocking Items
-- None
-
-## Notes for Next Agent
-1. The SnotelPipeline is now available via `from snowforecast.pipelines import SnotelPipeline, StationMetadata`
-2. metloom library is required - install with `pip install 'snowforecast[snotel]'`
-3. Default data paths are `data/raw/snotel/` and `data/processed/snotel/`
-4. Use `pipeline.run(start_date, end_date, states=["CO"])` for full pipeline execution
+## Notes for Phase 2
+- All pipelines inherit from appropriate base classes (TemporalPipeline, StaticPipeline, GriddedPipeline)
+- All output ValidationResult from validate() method
+- Data paths use get_data_path() utility
+- Western US bounding box is default for all pipelines
