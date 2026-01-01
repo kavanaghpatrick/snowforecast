@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 # Git Worktree Setup for Snowforecast Parallel Development
 # Run this script from anywhere - it uses absolute paths
 
@@ -39,7 +39,7 @@ echo "[4/7] Creating base project structure..."
 mkdir -p src/snowforecast/{pipelines,utils,models,features}
 mkdir -p tests/{pipelines,utils,models,features,integration}
 
-# Create __init__.py files
+# Create __init__.py files if they don't exist
 for dir in src/snowforecast src/snowforecast/{pipelines,utils,models,features}; do
     touch "$dir/__init__.py"
 done
@@ -47,18 +47,13 @@ done
 # Step 5: Define branches and worktrees
 echo "[5/7] Creating branches and worktrees..."
 
-declare -A BRANCH_MAP=(
-    ["setup"]="phase1/1-project-setup"
-    ["pipeline-snotel"]="phase1/2-snotel-pipeline"
-    ["pipeline-ghcn"]="phase1/3-ghcn-pipeline"
-    ["pipeline-era5"]="phase1/4-era5-pipeline"
-    ["pipeline-hrrr"]="phase1/5-hrrr-pipeline"
-    ["pipeline-dem"]="phase1/6-dem-pipeline"
-    ["pipeline-openskimap"]="phase1/7-openskimap-pipeline"
-)
+# Arrays for branches and worktrees
+worktrees=(setup pipeline-snotel pipeline-ghcn pipeline-era5 pipeline-hrrr pipeline-dem pipeline-openskimap)
+branches=(phase1/1-project-setup phase1/2-snotel-pipeline phase1/3-ghcn-pipeline phase1/4-era5-pipeline phase1/5-hrrr-pipeline phase1/6-dem-pipeline phase1/7-openskimap-pipeline)
 
-for worktree in "${!BRANCH_MAP[@]}"; do
-    branch="${BRANCH_MAP[$worktree]}"
+for i in {1..${#worktrees[@]}}; do
+    worktree="${worktrees[$i]}"
+    branch="${branches[$i]}"
     worktree_path="$WORKTREE_BASE/$worktree"
 
     echo "  Creating $worktree -> $branch"
@@ -76,11 +71,11 @@ done
 
 # Step 6: Create symlinks and .claude directories
 echo "[6/7] Creating data symlinks and handoff directories..."
-for worktree in "${!BRANCH_MAP[@]}"; do
+for worktree in $worktrees; do
     worktree_path="$WORKTREE_BASE/$worktree"
 
     # Create data symlink
-    if [ ! -L "$worktree_path/data" ]; then
+    if [ ! -L "$worktree_path/data" ] && [ ! -d "$worktree_path/data" ]; then
         ln -s "$PROJECT_ROOT/data" "$worktree_path/data"
         echo "  Created data symlink in $worktree"
     fi
@@ -112,6 +107,9 @@ Description:
 ## Tests Status
 - [ ] Unit tests pass
 - [ ] Coverage > 80%
+
+## Grok Review
+- [ ] Complete - no critical issues
 
 ## Outstanding Work
 - None
