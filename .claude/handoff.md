@@ -1,53 +1,71 @@
-# Agent Handoff Document
+# Agent Handoff Document - Issue #14: Temporal Features
 
 ## Current Status
 - [x] Complete
 - [ ] In Progress
 - [ ] Blocked
 
-## Phase 1 Merge Status
+## Issue #14: Engineer Temporal and Cyclical Features
 
-All Phase 1 data pipelines have been implemented and are being merged to develop.
+### Files Created/Modified
 
-### Pipelines Completed
+1. **TemporalFeatures Class** (Issue #14)
+   - `src/snowforecast/features/temporal_features.py` - TemporalFeatures class
+   - `src/snowforecast/features/__init__.py` - Updated exports
+   - `tests/features/__init__.py` - Test module
+   - `tests/features/test_temporal_features.py` - 28 tests
 
-1. **SNOTEL Pipeline** (Issue #2)
-   - `src/snowforecast/pipelines/snotel.py` - SnotelPipeline class
-   - `tests/pipelines/test_snotel.py` - 21 tests
-   - Uses metloom library
+### Features Implemented
 
-2. **GHCN Pipeline** (Issue #3)
-   - `src/snowforecast/pipelines/ghcn.py` - GHCNPipeline class
-   - `tests/pipelines/test_ghcn.py` - 22 tests
-   - Fixed-width .dly file parsing
+#### Day of Year Features
+- `day_of_year`: Raw day of year (1-365/366)
+- `day_of_year_sin`: sin(2*pi * day/365.25)
+- `day_of_year_cos`: cos(2*pi * day/365.25)
 
-3. **ERA5 Pipeline** (Issue #4)
-   - `src/snowforecast/pipelines/era5.py` - ERA5Pipeline class
-   - `tests/pipelines/test_era5.py` - 31 tests
-   - Uses cdsapi for Copernicus CDS
+#### Month Features
+- `month`: Raw month number (1-12)
+- `month_sin`: sin(2*pi * month/12)
+- `month_cos`: cos(2*pi * month/12)
 
-4. **HRRR Pipeline** (Issue #5)
-   - `src/snowforecast/pipelines/hrrr.py` - HRRRPipeline class
-   - `tests/pipelines/test_hrrr.py` - 20 tests
-   - Uses herbie-data library
+#### Season Features
+- `season`: Categorical (winter/spring/summer/fall)
+- `is_winter`: 1 if Dec/Jan/Feb, else 0
+- `is_snow_season`: 1 if Nov-Apr, else 0
 
-5. **DEM Pipeline** (Issue #6)
-   - `src/snowforecast/pipelines/dem.py` - DEMPipeline class
-   - `tests/pipelines/test_dem.py` - 38 tests
-   - Copernicus GLO-30 DEM terrain analysis
+#### Week Features
+- `day_of_week`: 0-6 (Monday-Sunday)
+- `is_weekend`: 1 if Sat/Sun, else 0
+- `week_of_year`: ISO week number (1-52/53)
 
-6. **OpenSkiMap Pipeline** (Issue #7)
-   - `src/snowforecast/pipelines/openskimap.py` - OpenSkiMapPipeline class
-   - `tests/pipelines/test_openskimap.py` - 27 tests
-   - GeoJSON ski resort data
+#### Water Year Features
+- `water_year`: Hydrological year (Oct 1 - Sep 30)
+- `water_year_day`: Day of water year (1-365/366)
+- `water_year_progress`: 0.0 to 1.0 progress through water year
 
-## Total: 159 unit tests across 6 pipelines
+### Test Results
+```
+28 passed, 1 warning in 0.30s
+```
 
-## Outstanding Work
-- None for Phase 1
+### Grok Review
+No critical issues found.
 
-## Notes for Phase 2
-- All pipelines inherit from appropriate base classes (TemporalPipeline, StaticPipeline, GriddedPipeline)
-- All output ValidationResult from validate() method
-- Data paths use get_data_path() utility
-- Western US bounding box is default for all pipelines
+### Usage Example
+```python
+from snowforecast.features import TemporalFeatures
+
+tf = TemporalFeatures()
+df_features = tf.compute_all(df, datetime_col="datetime")
+```
+
+## Dependencies
+- No new dependencies required (uses numpy, pandas from core)
+
+## Blocking
+- None
+
+## Notes for Integration
+- All methods are stateless and can be called independently
+- Sin/cos encoding preserves cyclical continuity (Dec 31 ~ Jan 1)
+- Water year starts Oct 1 (important for hydrology/snow studies)
+- Snow season defined as Nov-Apr for Western US
