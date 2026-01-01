@@ -14,10 +14,16 @@ Pipelines:
 - openskimap: Ski resort locations (forecast targets)
 """
 
+from .snotel import SnotelPipeline, StationMetadata
+
 # Pipelines will be imported here after implementation
-# from .snotel import SnotelPipeline
 # from .ghcn import GHCNPipeline
 # from .era5 import ERA5Pipeline
 # from .hrrr import HRRRPipeline
 # from .dem import DEMPipeline
 # from .openskimap import OpenSkiMapPipeline
+
+__all__ = [
+    "SnotelPipeline",
+    "StationMetadata",
+]

@@ -6,59 +6,59 @@
 - [ ] Blocked
 
 ## Task Definition
-Issue #1: Project Setup and Shared Infrastructure
-Branch: phase1/1-project-setup
-Description: Set up project structure, shared utilities, and testing infrastructure
+Issue #2: Implement SNOTEL data ingestion pipeline
+Branch: phase1/2-snotel-pipeline
+Description: SNOTEL data ingestion pipeline using metloom library
 
 ## Files Created/Modified
-- `pyproject.toml` - Full project configuration with modular dependencies
-- `README.md` - Project documentation
-- `src/snowforecast/__init__.py` - Package init
-- `src/snowforecast/utils/__init__.py` - Utils module exports
-- `src/snowforecast/utils/base.py` - Pipeline base classes (ValidationResult, TemporalPipeline, StaticPipeline, GriddedPipeline)
-- `src/snowforecast/utils/io.py` - I/O utilities (get_data_path, get_project_root)
-- `src/snowforecast/utils/geo.py` - Geographic utilities (BoundingBox, Point, haversine, WESTERN_US_BBOX)
-- `src/snowforecast/pipelines/__init__.py` - Pipelines module init
-- `src/snowforecast/models/__init__.py` - Models module init
-- `src/snowforecast/features/__init__.py` - Features module init
-- `tests/conftest.py` - Shared pytest fixtures
-- `tests/utils/__init__.py` - Utils tests init
-- `tests/utils/test_base.py` - Tests for pipeline base classes
-- `tests/utils/test_geo.py` - Tests for geographic utilities
-- `tests/utils/test_io.py` - Tests for I/O utilities
+- `src/snowforecast/pipelines/snotel.py` - Main SNOTEL pipeline class (SnotelPipeline, StationMetadata)
+- `src/snowforecast/pipelines/__init__.py` - Updated to export SnotelPipeline and StationMetadata
+- `tests/pipelines/__init__.py` - Test module init
+- `tests/pipelines/test_snotel.py` - Unit tests for SNOTEL pipeline (21 tests)
 
 ## Dependencies Added
-Core:
-- numpy>=1.24.0
-- pandas>=2.0.0
-- xarray>=2023.1.0
-- pyarrow>=14.0.0
-
-Dev:
-- pytest>=7.0.0
-- pytest-cov>=4.0.0
-- ruff>=0.1.0
-- mypy>=1.0.0
+snotel:
+- metloom>=0.3.0 (already in pyproject.toml from project setup)
 
 ## Tests Status
 - [x] Unit tests pass
-- [x] Coverage verified
+- [x] All project tests pass (61 tests)
 
 ```
-40 passed in 1.75s
-- tests/utils/test_base.py (14 tests)
-- tests/utils/test_geo.py (16 tests)
-- tests/utils/test_io.py (10 tests)
+pytest tests/pipelines/test_snotel.py -v
+21 passed in 0.34s
+
+pytest tests/ -v
+61 passed in 0.37s
 ```
 
-## Grok Review
-- [x] Complete - no critical issues
+## Implementation Details
 
-## Pipeline Base Classes
-Agents should inherit from:
-- `TemporalPipeline` - For time-series data (SNOTEL, GHCN)
-- `GriddedPipeline` - For gridded weather data (ERA5, HRRR)
-- `StaticPipeline` - For static/spatial data (DEM, OpenSkiMap)
+### SnotelPipeline class
+Inherits from `TemporalPipeline` and implements:
+- `get_station_metadata(state=None)` - Get SNOTEL station metadata, optionally filtered by state
+- `download_station(station_id, start_date, end_date, variables=None)` - Download single station data
+- `download_all_stations(start_date, end_date, states=None)` - Download all stations data
+- `download(start_date, end_date, **kwargs)` - TemporalPipeline interface method
+- `process(raw_path)` - Convert raw data to standardized format
+- `validate(df)` - Validate processed data quality
+
+### Output Schema (Parquet)
+| Column | Type | Description |
+|--------|------|-------------|
+| station_id | str | SNOTEL station ID (e.g., "1050:CO:SNTL") |
+| datetime | datetime64[UTC] | UTC timestamp |
+| snow_depth_cm | float | Snow depth in centimeters |
+| swe_mm | float | Snow Water Equivalent in millimeters |
+| temp_avg_c | float | Average temperature in Celsius |
+| quality_flag | str | 'good', 'partial', or 'missing' |
+
+### Features
+- Network timeout retry with exponential backoff (3 retries)
+- Automatic unit conversion (inches to cm/mm, Fahrenheit to Celsius)
+- Quality flag computation based on data completeness
+- Data validation with outlier detection
+- Lazy metloom import (helpful error message if not installed)
 
 ## Outstanding Work
 - None
@@ -67,7 +67,7 @@ Agents should inherit from:
 - None
 
 ## Notes for Next Agent
-1. After merging to develop, agents should rebase their branches on develop
-2. Use `from snowforecast.utils import TemporalPipeline, ValidationResult` etc.
-3. Use `from snowforecast.utils.io import get_data_path` for data paths
-4. All pipelines should return `ValidationResult` from `validate()` method
+1. The SnotelPipeline is now available via `from snowforecast.pipelines import SnotelPipeline, StationMetadata`
+2. metloom library is required - install with `pip install 'snowforecast[snotel]'`
+3. Default data paths are `data/raw/snotel/` and `data/processed/snotel/`
+4. Use `pipeline.run(start_date, end_date, states=["CO"])` for full pipeline execution
