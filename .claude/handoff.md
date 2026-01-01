@@ -5,49 +5,73 @@
 - [ ] In Progress
 - [ ] Blocked
 
-## Phase 1 Merge Status
+## Issue #15: Engineer lagged and rolling features
 
-All Phase 1 data pipelines have been implemented and are being merged to develop.
+### Files Created/Modified
 
-### Pipelines Completed
+1. **LaggedFeatures Class** (Issue #15)
+   - `src/snowforecast/features/__init__.py` - Package exports
+   - `src/snowforecast/features/lagged.py` - LaggedFeatures class
+   - `tests/features/__init__.py` - Test package
+   - `tests/features/test_lagged.py` - 32 tests
 
-1. **SNOTEL Pipeline** (Issue #2)
-   - `src/snowforecast/pipelines/snotel.py` - SnotelPipeline class
-   - `tests/pipelines/test_snotel.py` - 21 tests
-   - Uses metloom library
+### Implementation Summary
 
-2. **GHCN Pipeline** (Issue #3)
-   - `src/snowforecast/pipelines/ghcn.py` - GHCNPipeline class
-   - `tests/pipelines/test_ghcn.py` - 22 tests
-   - Fixed-width .dly file parsing
+The `LaggedFeatures` class provides temporal feature engineering with the following capabilities:
 
-3. **ERA5 Pipeline** (Issue #4)
-   - `src/snowforecast/pipelines/era5.py` - ERA5Pipeline class
-   - `tests/pipelines/test_era5.py` - 31 tests
-   - Uses cdsapi for Copernicus CDS
+**Features Created:**
+- **Lagged values**: `{var}_lag_{n}d` - Values from N days ago
+- **Rolling means**: `{var}_roll_mean_{n}d` - N-day moving averages
+- **Rolling std**: `{var}_roll_std_{n}d` - N-day variability measures
+- **Rolling min/max**: `{var}_roll_min_{n}d`, `{var}_roll_max_{n}d` - N-day extremes
+- **Trend features**: `{var}_change_{n}d`, `{var}_pct_change_{n}d` - Changes over N days
+- **Cumulative sums**: `{var}_cumsum_{n}d` - N-day cumulative sums (for precipitation)
 
-4. **HRRR Pipeline** (Issue #5)
-   - `src/snowforecast/pipelines/hrrr.py` - HRRRPipeline class
-   - `tests/pipelines/test_hrrr.py` - 20 tests
-   - Uses herbie-data library
+**Key Design Decisions:**
+- All operations are grouped by `station_id` to prevent data leakage between stations
+- Default lags: [1, 2, 3, 7] days
+- Default windows: [3, 7, 14] days
+- NaN values at the start of each group are preserved (not filled)
+- `compute_all()` method applies all feature types in one call
+- `get_feature_names()` method returns all feature names without computing
 
-5. **DEM Pipeline** (Issue #6)
-   - `src/snowforecast/pipelines/dem.py` - DEMPipeline class
-   - `tests/pipelines/test_dem.py` - 38 tests
-   - Copernicus GLO-30 DEM terrain analysis
+### Tests
 
-6. **OpenSkiMap Pipeline** (Issue #7)
-   - `src/snowforecast/pipelines/openskimap.py` - OpenSkiMapPipeline class
-   - `tests/pipelines/test_openskimap.py` - 27 tests
-   - GeoJSON ski resort data
+```bash
+pytest tests/features/test_lagged.py -v
+# Result: 32 passed
+```
 
-## Total: 159 unit tests across 6 pipelines
+Test coverage includes:
+- Initialization with default and custom parameters
+- Basic feature creation for all 6 feature types
+- Group-based computation (no data leakage between stations)
+- Edge cases: empty DataFrames, NaN values, single rows, missing group column
+- Original DataFrame preservation
+
+### Dependencies
+
+No additional dependencies required - uses only `pandas` and `numpy` from core dependencies.
 
 ## Outstanding Work
-- None for Phase 1
+- None for Issue #15
 
-## Notes for Phase 2
-- All pipelines inherit from appropriate base classes (TemporalPipeline, StaticPipeline, GriddedPipeline)
-- All output ValidationResult from validate() method
-- Data paths use get_data_path() utility
-- Western US bounding box is default for all pipelines
+## Notes for Integration
+- The `LaggedFeatures` class is now exported from `snowforecast.features`
+- Can be used with any DataFrame that has a `station_id` column (or custom group column)
+- Designed to work with output from Phase 1 pipelines (SNOTEL, GHCN, ERA5, etc.)
+
+## Example Usage
+
+```python
+from snowforecast.features import LaggedFeatures
+
+lf = LaggedFeatures(default_lags=[1, 7], default_windows=[7, 14])
+
+# Create all features for temperature and precipitation
+df = lf.compute_all(df, ["temperature", "precip"], group_col="station_id")
+
+# Or create specific features
+df = lf.create_lags(df, ["temperature"], lags=[1, 3, 7])
+df = lf.create_rolling_mean(df, ["precip"], windows=[7, 14, 30])
+```
