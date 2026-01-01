@@ -1,0 +1,117 @@
+# Snowforecast Project Configuration
+# This template should be used during phase1/1-project-setup
+# Each agent adds dependencies to their own optional-dependencies section
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "snowforecast"
+version = "0.1.0"
+description = "ML model for mountain snowfall prediction"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+authors = [
+    {name = "Patrick Kavanagh", email = "patrick@example.com"},
+]
+
+# Core dependencies only - managed by coordinator
+dependencies = [
+    "numpy>=1.24.0",
+    "pandas>=2.0.0",
+    "xarray>=2023.1.0",
+    "dask>=2023.1.0",
+    "netcdf4>=1.6.0",
+    "scipy>=1.10.0",
+    "tqdm>=4.65.0",
+    "python-dateutil>=2.8.0",
+    "requests>=2.28.0",
+]
+
+[project.optional-dependencies]
+# ============================================
+# PIPELINE-SPECIFIC DEPENDENCIES
+# Each agent adds to their section ONLY
+# ============================================
+
+# Issue #2: SNOTEL Pipeline (Agent-A)
+snotel = [
+    "metloom>=0.3.0",
+]
+
+# Issue #3: GHCN Pipeline (Agent-B)
+ghcn = [
+    # Add GHCN-specific dependencies here
+]
+
+# Issue #4: ERA5-Land Pipeline (Agent-C)
+era5 = [
+    "cdsapi>=0.6.0",
+    "cfgrib>=0.9.10",
+]
+
+# Issue #5: HRRR Pipeline (Agent-D)
+hrrr = [
+    "herbie-data>=2024.1.0",
+    "pygrib>=2.1.0",
+]
+
+# Issue #6: DEM Pipeline (Agent-E)
+dem = [
+    "rasterio>=1.3.0",
+    "rioxarray>=0.14.0",
+    "pyproj>=3.4.0",
+]
+
+# Issue #7: OpenSkiMap Pipeline (Agent-F)
+openskimap = [
+    "geojson>=3.0.0",
+    "shapely>=2.0.0",
+]
+
+# ============================================
+# GROUPED DEPENDENCIES
+# ============================================
+
+# All pipelines
+pipelines = [
+    "snowforecast[snotel,ghcn,era5,hrrr,dem,openskimap]",
+]
+
+# Development
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "pytest-xdist>=3.0.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0.0",
+]
+
+# All dependencies
+all = [
+    "snowforecast[pipelines,dev]",
+]
+
+[project.scripts]
+snowforecast = "snowforecast.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/snowforecast"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-v --tb=short"
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+select = ["E", "F", "I", "N", "W", "UP"]
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true

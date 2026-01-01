@@ -1,0 +1,61 @@
+name: Test Pipelines
+
+on:
+  push:
+    branches: [main, develop, 'phase*/**']
+    paths:
+      - 'src/snowforecast/pipelines/**'
+      - 'tests/pipelines/**'
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        pipeline: [snotel, ghcn, era5, hrrr, dem, openskimap]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install uv
+        run: pip install uv
+
+      - name: Install dependencies
+        run: |
+          uv pip install --system -e ".[${{ matrix.pipeline }},dev]"
+
+      - name: Run tests for ${{ matrix.pipeline }}
+        run: |
+          pytest tests/pipelines/test_${{ matrix.pipeline }}.py -v --tb=short
+
+  integration:
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/main'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install uv
+        run: pip install uv
+
+      - name: Install all dependencies
+        run: |
+          uv pip install --system -e ".[all]"
+
+      - name: Run integration tests
+        run: |
+          pytest tests/integration/ -v --tb=short

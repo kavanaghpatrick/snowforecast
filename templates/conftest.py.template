@@ -1,0 +1,173 @@
+"""Shared pytest fixtures for all tests.
+
+This file is defined by the coordinator BEFORE parallel work begins.
+Agents can USE these fixtures but should not modify this file.
+
+Add pipeline-specific fixtures to your test file, not here.
+"""
+
+import pytest
+from pathlib import Path
+from datetime import date, datetime
+from typing import Generator
+
+# Import shared utilities (these will exist after setup phase)
+# from snowforecast.utils.geo import Point, BoundingBox, WESTERN_US
+
+
+# ============================================
+# PATH FIXTURES
+# ============================================
+
+
+@pytest.fixture
+def project_root() -> Path:
+    """Get the project root directory."""
+    return Path(__file__).parent.parent
+
+
+@pytest.fixture
+def data_dir(project_root: Path) -> Path:
+    """Get the data directory (may not exist in CI)."""
+    return project_root / "data"
+
+
+@pytest.fixture
+def test_data_dir() -> Path:
+    """Get the test data directory for fixtures."""
+    path = Path(__file__).parent / "fixtures"
+    path.mkdir(exist_ok=True)
+    return path
+
+
+# ============================================
+# SAMPLE DATA FIXTURES
+# ============================================
+
+
+@pytest.fixture
+def sample_stations() -> list[dict]:
+    """Sample SNOTEL/GHCN station data for testing.
+
+    These are real station IDs but with simplified metadata.
+    """
+    return [
+        {
+            "id": "1050",
+            "name": "Brighton",
+            "network": "SNOTEL",
+            "lat": 40.5983,
+            "lon": -111.5831,
+            "elev": 2667,
+            "state": "UT",
+        },
+        {
+            "id": "1051",
+            "name": "Snowbird",
+            "network": "SNOTEL",
+            "lat": 40.5600,
+            "lon": -111.6567,
+            "elev": 2865,
+            "state": "UT",
+        },
+        {
+            "id": "1052",
+            "name": "Timpanogos Divide",
+            "network": "SNOTEL",
+            "lat": 40.4192,
+            "lon": -111.5683,
+            "elev": 2499,
+            "state": "UT",
+        },
+    ]
+
+
+@pytest.fixture
+def sample_bbox() -> dict:
+    """Sample bounding box for testing (Wasatch Range, UT)."""
+    return {
+        "west": -112.0,
+        "south": 40.0,
+        "east": -111.0,
+        "north": 41.0,
+    }
+
+
+@pytest.fixture
+def sample_date_range() -> tuple[date, date]:
+    """Sample date range for testing (one month)."""
+    return (date(2023, 1, 1), date(2023, 1, 31))
+
+
+# ============================================
+# TEMPORAL FIXTURES
+# ============================================
+
+
+@pytest.fixture
+def water_year_dates() -> dict[str, tuple[date, date]]:
+    """Water year date ranges (Oct 1 - Sep 30).
+
+    Water years are named by their ending year.
+    """
+    return {
+        "WY2022": (date(2021, 10, 1), date(2022, 9, 30)),
+        "WY2023": (date(2022, 10, 1), date(2023, 9, 30)),
+        "WY2024": (date(2023, 10, 1), date(2024, 9, 30)),
+    }
+
+
+# ============================================
+# MOCK/STUB FIXTURES (use sparingly)
+# ============================================
+
+
+@pytest.fixture
+def mock_api_response() -> dict:
+    """Generic mock API response structure.
+
+    Use this as a template, not as actual test data.
+    Real API tests should use real (cached) responses.
+    """
+    return {
+        "status": "success",
+        "data": [],
+        "metadata": {
+            "source": "test",
+            "timestamp": datetime.now().isoformat(),
+        },
+    }
+
+
+# ============================================
+# CLEANUP FIXTURES
+# ============================================
+
+
+@pytest.fixture
+def temp_data_dir(tmp_path: Path) -> Generator[Path, None, None]:
+    """Temporary data directory that's cleaned up after test."""
+    data_dir = tmp_path / "data"
+    data_dir.mkdir()
+    (data_dir / "raw").mkdir()
+    (data_dir / "processed").mkdir()
+    (data_dir / "cache").mkdir()
+    yield data_dir
+    # Cleanup happens automatically via tmp_path
+
+
+# ============================================
+# MARKERS
+# ============================================
+
+# Use these markers to categorize tests:
+# @pytest.mark.slow - Tests that take >10 seconds
+# @pytest.mark.network - Tests that require network access
+# @pytest.mark.integration - Integration tests
+
+
+def pytest_configure(config):
+    """Register custom markers."""
+    config.addinivalue_line("markers", "slow: marks tests as slow (deselect with '-m \"not slow\"')")
+    config.addinivalue_line("markers", "network: marks tests as requiring network access")
+    config.addinivalue_line("markers", "integration: marks tests as integration tests")

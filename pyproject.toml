@@ -1,0 +1,86 @@
+[project]
+name = "snowforecast"
+version = "0.1.0"
+description = "ML model for predicting mountain snowfall and snow depth"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+
+# Core dependencies - managed by coordinator
+dependencies = [
+    "numpy>=1.24.0",
+    "pandas>=2.0.0",
+    "xarray>=2023.1.0",
+    "pyarrow>=14.0.0",  # For parquet support
+]
+
+[project.optional-dependencies]
+# Each pipeline has its own optional deps
+# Agents: only modify YOUR section
+
+snotel = [
+    "metloom>=0.3.0",
+]
+
+ghcn = [
+    "requests>=2.28.0",
+]
+
+era5 = [
+    "cdsapi>=0.6.0",
+    "netcdf4>=1.6.0",
+]
+
+hrrr = [
+    "herbie-data>=2024.1.0",
+    "cfgrib>=0.9.10",
+]
+
+dem = [
+    "rasterio>=1.3.0",
+    "rioxarray>=0.14.0",
+    "scipy>=1.10.0",
+]
+
+openskimap = [
+    "geojson>=3.0.0",
+    "shapely>=2.0.0",
+    "requests>=2.28.0",
+]
+
+# Development dependencies
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0.0",
+]
+
+# All pipelines combined
+all = [
+    "snowforecast[snotel,ghcn,era5,hrrr,dem,openskimap,dev]",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/snowforecast"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-v --tb=short"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W"]
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_ignores = true

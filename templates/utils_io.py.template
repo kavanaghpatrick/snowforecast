@@ -1,0 +1,82 @@
+"""Shared I/O utilities for all pipelines.
+
+This module is defined by the coordinator BEFORE parallel work begins.
+Agents should USE these utilities, not modify them.
+
+If you need pipeline-specific I/O logic, add it to your pipeline module.
+"""
+
+from pathlib import Path
+from typing import Literal
+
+# Data stages
+DataStage = Literal["raw", "processed", "cache"]
+
+# Pipeline names
+PipelineName = Literal["snotel", "ghcn", "era5", "hrrr", "dem", "openskimap"]
+
+
+def get_project_root() -> Path:
+    """Get the project root directory.
+
+    Returns:
+        Path to the project root (where pyproject.toml lives)
+    """
+    current = Path(__file__).resolve()
+    for parent in current.parents:
+        if (parent / "pyproject.toml").exists():
+            return parent
+    raise RuntimeError("Could not find project root (no pyproject.toml found)")
+
+
+def get_data_path(pipeline: PipelineName, stage: DataStage = "raw") -> Path:
+    """Get standardized data path for a pipeline.
+
+    Each pipeline stores data in its own subdirectory to avoid conflicts.
+
+    Args:
+        pipeline: One of 'snotel', 'ghcn', 'era5', 'hrrr', 'dem', 'openskimap'
+        stage: One of 'raw' (downloaded data), 'processed' (cleaned data),
+               or 'cache' (temporary files)
+
+    Returns:
+        Path to the data directory (created if it doesn't exist)
+
+    Example:
+        >>> path = get_data_path("snotel", "raw")
+        >>> path
+        PosixPath('/Users/.../snowforecast/data/raw/snotel')
+    """
+    base = get_project_root() / "data" / stage / pipeline
+    base.mkdir(parents=True, exist_ok=True)
+    return base
+
+
+def ensure_parent_exists(file_path: Path) -> Path:
+    """Ensure the parent directory of a file exists.
+
+    Args:
+        file_path: Path to a file
+
+    Returns:
+        The same path (for chaining)
+    """
+    file_path.parent.mkdir(parents=True, exist_ok=True)
+    return file_path
+
+
+def get_cache_path(name: str, extension: str = ".pkl") -> Path:
+    """Get a cache file path.
+
+    Cache files are stored in data/cache/ and can be safely deleted.
+
+    Args:
+        name: Base name for the cache file
+        extension: File extension (default: .pkl)
+
+    Returns:
+        Path to the cache file
+    """
+    cache_dir = get_project_root() / "data" / "cache"
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    return cache_dir / f"{name}{extension}"

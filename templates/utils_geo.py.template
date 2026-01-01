@@ -1,0 +1,139 @@
+"""Shared geographic utilities for all pipelines.
+
+This module is defined by the coordinator BEFORE parallel work begins.
+Agents should USE these utilities, not modify them.
+
+These data classes and constants provide a common vocabulary for
+coordinates, bounding boxes, and geographic regions.
+"""
+
+from dataclasses import dataclass
+from typing import Iterator
+
+
+@dataclass(frozen=True)
+class Point:
+    """A geographic point with optional elevation.
+
+    Attributes:
+        lat: Latitude in decimal degrees (-90 to 90)
+        lon: Longitude in decimal degrees (-180 to 180)
+        elevation: Elevation in meters (optional)
+        name: Human-readable name (optional)
+        id: Unique identifier (optional)
+    """
+
+    lat: float
+    lon: float
+    elevation: float | None = None
+    name: str | None = None
+    id: str | None = None
+
+    def __post_init__(self):
+        if not -90 <= self.lat <= 90:
+            raise ValueError(f"Latitude must be between -90 and 90, got {self.lat}")
+        if not -180 <= self.lon <= 180:
+            raise ValueError(f"Longitude must be between -180 and 180, got {self.lon}")
+
+    def as_tuple(self) -> tuple[float, float]:
+        """Return (lat, lon) tuple."""
+        return (self.lat, self.lon)
+
+    def as_xy(self) -> tuple[float, float]:
+        """Return (lon, lat) tuple (x, y order for GIS tools)."""
+        return (self.lon, self.lat)
+
+
+@dataclass(frozen=True)
+class BoundingBox:
+    """A geographic bounding box.
+
+    Uses the convention: west < east, south < north.
+
+    Attributes:
+        west: Western boundary (minimum longitude)
+        south: Southern boundary (minimum latitude)
+        east: Eastern boundary (maximum longitude)
+        north: Northern boundary (maximum latitude)
+    """
+
+    west: float
+    south: float
+    east: float
+    north: float
+
+    def __post_init__(self):
+        if self.west >= self.east:
+            raise ValueError(f"west ({self.west}) must be less than east ({self.east})")
+        if self.south >= self.north:
+            raise ValueError(f"south ({self.south}) must be less than north ({self.north})")
+
+    def contains(self, point: Point) -> bool:
+        """Check if a point is within this bounding box."""
+        return (
+            self.west <= point.lon <= self.east and self.south <= point.lat <= self.north
+        )
+
+    def as_tuple(self) -> tuple[float, float, float, float]:
+        """Return (west, south, east, north) tuple."""
+        return (self.west, self.south, self.east, self.north)
+
+    def as_cdsapi_area(self) -> list[float]:
+        """Return [north, west, south, east] for CDS API requests."""
+        return [self.north, self.west, self.south, self.east]
+
+    @property
+    def center(self) -> Point:
+        """Return the center point of the bounding box."""
+        return Point(
+            lat=(self.south + self.north) / 2,
+            lon=(self.west + self.east) / 2,
+        )
+
+
+# ============================================
+# STANDARD REGIONS
+# ============================================
+
+# Western US - covers all SNOTEL stations
+WESTERN_US = BoundingBox(
+    west=-125.0,
+    south=31.0,
+    east=-102.0,
+    north=49.0,
+)
+
+# Individual states (for targeted downloads)
+REGIONS = {
+    "colorado": BoundingBox(west=-109.1, south=36.9, east=-102.0, north=41.0),
+    "utah": BoundingBox(west=-114.1, south=36.9, east=-109.0, north=42.0),
+    "california": BoundingBox(west=-124.5, south=32.5, east=-114.1, north=42.0),
+    "washington": BoundingBox(west=-124.8, south=45.5, east=-116.9, north=49.0),
+    "oregon": BoundingBox(west=-124.6, south=41.9, east=-116.5, north=46.3),
+    "montana": BoundingBox(west=-116.1, south=44.4, east=-104.0, north=49.0),
+    "idaho": BoundingBox(west=-117.3, south=42.0, east=-111.0, north=49.0),
+    "wyoming": BoundingBox(west=-111.1, south=41.0, east=-104.1, north=45.0),
+    "nevada": BoundingBox(west=-120.0, south=35.0, east=-114.0, north=42.0),
+    "arizona": BoundingBox(west=-114.8, south=31.3, east=-109.0, north=37.0),
+    "new_mexico": BoundingBox(west=-109.1, south=31.3, east=-103.0, north=37.0),
+}
+
+
+def points_in_region(
+    points: list[Point], region: BoundingBox | str
+) -> Iterator[Point]:
+    """Filter points to those within a region.
+
+    Args:
+        points: List of points to filter
+        region: BoundingBox or name of a standard region
+
+    Yields:
+        Points that fall within the region
+    """
+    if isinstance(region, str):
+        region = REGIONS[region.lower()]
+
+    for point in points:
+        if region.contains(point):
+            yield point

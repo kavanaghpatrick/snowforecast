@@ -1,0 +1,56 @@
+name: Pipeline Issue
+description: Work item for a data pipeline
+title: "[Pipeline] "
+labels: ["data-pipeline"]
+body:
+  - type: dropdown
+    id: pipeline
+    attributes:
+      label: Pipeline
+      options:
+        - snotel
+        - ghcn
+        - era5
+        - hrrr
+        - dem
+        - openskimap
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What needs to be done?
+    validations:
+      required: true
+
+  - type: textarea
+    id: tasks
+    attributes:
+      label: Tasks
+      description: Specific tasks to complete
+      value: |
+        - [ ] Task 1
+        - [ ] Task 2
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance Criteria
+      description: How do we know this is done?
+      value: |
+        - [ ] Tests pass
+        - [ ] Grok review complete
+        - [ ] Handoff document updated
+    validations:
+      required: true
+
+  - type: input
+    id: worktree
+    attributes:
+      label: Worktree
+      description: Which worktree is this assigned to?
+      placeholder: "pipeline-snotel"
