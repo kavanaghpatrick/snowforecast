@@ -188,14 +188,15 @@ class HRRRCache:
                 )
                 return None
 
-            # Calculate run_time from today's date (HRRR uses today's run)
-            # The RealPredictor uses today's date with forecast hour offset
-            today = date.today()
-            run_time = datetime(today.year, today.month, today.day)
+            # Calculate run_time based on current UTC hour
+            # HRRR runs hourly (00Z, 01Z, ..., 23Z)
+            # Data typically available ~45 mins after run time
+            now_utc = datetime.utcnow()
+            run_time = datetime(now_utc.year, now_utc.month, now_utc.day, now_utc.hour)
 
-            # Calculate forecast hour from valid_time
+            # Calculate forecast hour from valid_time relative to run_time
             if isinstance(valid_time, datetime):
-                hours_diff = (valid_time - datetime.combine(today, datetime.min.time())).total_seconds() / 3600
+                hours_diff = (valid_time - run_time).total_seconds() / 3600
                 forecast_hour = max(0, min(48, int(hours_diff)))
             else:
                 forecast_hour = forecast_hours

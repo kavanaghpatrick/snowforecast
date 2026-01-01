@@ -16,8 +16,9 @@ from snowforecast.cache.models import (
 
 logger = logging.getLogger(__name__)
 
-# Default database path
-DEFAULT_DB_PATH = Path("data/cache/snowforecast.duckdb")
+# Default database path - use project root to ensure consistent path
+_PROJECT_ROOT = Path(__file__).parent.parent.parent.parent
+DEFAULT_DB_PATH = _PROJECT_ROOT / "data" / "cache" / "snowforecast.duckdb"
 
 # SQL schema - DuckDB uses sequences for auto-increment
 SCHEMA_SQL = """
@@ -115,10 +116,27 @@ class CacheDatabase:
 
     @property
     def conn(self) -> duckdb.DuckDBPyConnection:
-        """Get database connection (lazy initialization)."""
+        """Get database connection (lazy initialization with retry)."""
         if self._conn is None:
-            self._conn = duckdb.connect(str(self.db_path))
+            self._conn = self._connect_with_retry()
         return self._conn
+
+    def _connect_with_retry(self, max_retries: int = 3) -> duckdb.DuckDBPyConnection:
+        """Connect to database with retry logic for lock handling."""
+        import time
+        last_error = None
+        for attempt in range(max_retries):
+            try:
+                return duckdb.connect(str(self.db_path))
+            except duckdb.IOException as e:
+                last_error = e
+                if "lock" in str(e).lower() and attempt < max_retries - 1:
+                    wait_time = 0.5 * (2 ** attempt)  # Exponential backoff
+                    logger.warning(f"Database locked, retrying in {wait_time}s...")
+                    time.sleep(wait_time)
+                else:
+                    raise
+        raise last_error
 
     def _init_schema(self) -> None:
         """Initialize database schema."""
