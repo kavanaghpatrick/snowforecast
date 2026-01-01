@@ -68,6 +68,11 @@ api = [
     "httpx>=0.24.0",  # For testing
 ]
 
+# Dashboard dependencies
+dashboard = [
+    "streamlit>=1.30.0",
+]
+
 # Development dependencies
 dev = [
     "pytest>=7.0.0",
@@ -78,7 +83,7 @@ dev = [
 
 # All pipelines combined
 all = [
-    "snowforecast[snotel,ghcn,era5,hrrr,dem,openskimap,models,deeplearning,api,dev]",
+    "snowforecast[snotel,ghcn,era5,hrrr,dem,openskimap,models,deeplearning,api,dashboard,dev]",
 ]
 
 [build-system]
