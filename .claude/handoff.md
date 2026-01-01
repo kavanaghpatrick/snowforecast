@@ -5,49 +5,66 @@
 - [ ] In Progress
 - [ ] Blocked
 
-## Phase 1 Merge Status
+## Phase 2: Atmospheric Features (Issue #12)
 
-All Phase 1 data pipelines have been implemented and are being merged to develop.
+### Status: Complete
 
-### Pipelines Completed
+### Files Created
+- `src/snowforecast/features/__init__.py` - Module exports AtmosphericFeatures
+- `src/snowforecast/features/atmospheric.py` - AtmosphericFeatures class
+- `tests/features/__init__.py` - Test module init
+- `tests/features/test_atmospheric.py` - 32 tests
 
-1. **SNOTEL Pipeline** (Issue #2)
-   - `src/snowforecast/pipelines/snotel.py` - SnotelPipeline class
-   - `tests/pipelines/test_snotel.py` - 21 tests
-   - Uses metloom library
+### Tests
+```bash
+pytest tests/features/test_atmospheric.py -v
+# Result: 32 passed in 0.26s
+```
 
-2. **GHCN Pipeline** (Issue #3)
-   - `src/snowforecast/pipelines/ghcn.py` - GHCNPipeline class
-   - `tests/pipelines/test_ghcn.py` - 22 tests
-   - Fixed-width .dly file parsing
+### Features Implemented
 
-3. **ERA5 Pipeline** (Issue #4)
-   - `src/snowforecast/pipelines/era5.py` - ERA5Pipeline class
-   - `tests/pipelines/test_era5.py` - 31 tests
-   - Uses cdsapi for Copernicus CDS
+**Temperature Features:**
+- `t2m_celsius`: Temperature in Celsius (from Kelvin)
+- `freezing_level`: 1 if below freezing, 0 otherwise
 
-4. **HRRR Pipeline** (Issue #5)
-   - `src/snowforecast/pipelines/hrrr.py` - HRRRPipeline class
-   - `tests/pipelines/test_hrrr.py` - 20 tests
-   - Uses herbie-data library
+**Humidity Features:**
+- `relative_humidity`: RH from t2m/d2m using Magnus formula (0-100%)
+- `dewpoint_depression`: T - Td in Celsius
+- `wet_bulb_temp`: Stull (2011) approximation
 
-5. **DEM Pipeline** (Issue #6)
-   - `src/snowforecast/pipelines/dem.py` - DEMPipeline class
-   - `tests/pipelines/test_dem.py` - 38 tests
-   - Copernicus GLO-30 DEM terrain analysis
+**Wind Features:**
+- `wind_speed`: sqrt(u10^2 + v10^2) in m/s
+- `wind_direction`: Meteorological convention (0=N, 90=E, 180=S, 270=W)
+- `wind_chill`: North American formula (applies when T <= 10C, wind >= 4.8 km/h)
 
-6. **OpenSkiMap Pipeline** (Issue #7)
-   - `src/snowforecast/pipelines/openskimap.py` - OpenSkiMapPipeline class
-   - `tests/pipelines/test_openskimap.py` - 27 tests
-   - GeoJSON ski resort data
+**Pressure Features:**
+- `pressure_hpa`: Surface pressure in hPa (from Pa)
+- `pressure_tendency`: 24h pressure change (if time column exists)
 
-## Total: 159 unit tests across 6 pipelines
+**Precipitation Features:**
+- `precip_mm`: Total precipitation in mm (from m)
+- `snow_water_equiv_mm`: Snow water equivalent in mm
+- `snow_fraction`: Fraction of precip that fell as snow (0-1)
+- `snow_depth_mm`: Snow depth in mm
 
-## Outstanding Work
-- None for Phase 1
+### Physics Formulas Used
 
-## Notes for Phase 2
-- All pipelines inherit from appropriate base classes (TemporalPipeline, StaticPipeline, GriddedPipeline)
-- All output ValidationResult from validate() method
-- Data paths use get_data_path() utility
-- Western US bounding box is default for all pipelines
+1. **Magnus formula** for relative humidity
+2. **Stull (2011)** for wet bulb temperature
+3. **Meteorological convention** for wind direction
+4. **North American formula** for wind chill
+
+### Dependencies
+- numpy
+- pandas
+
+No new dependencies added to pyproject.toml (numpy/pandas already required).
+
+### Blocking
+- None
+
+---
+
+## Phase 1 Summary
+
+All Phase 1 data pipelines have been implemented (159 tests across 6 pipelines).
