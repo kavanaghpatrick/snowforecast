@@ -72,6 +72,11 @@ packages = ["src/snowforecast"]
 testpaths = ["tests"]
 python_files = ["test_*.py"]
 addopts = "-v --tb=short"
+markers = [
+    "unit: fast unit tests using fixtures (no network)",
+    "integration: tests with recorded API responses (VCR cassettes)",
+    "live: real API tests - slow, requires network and credentials",
+]
 
 [tool.ruff]
 line-length = 100

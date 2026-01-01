@@ -1,8 +1,45 @@
-"""Shared pytest fixtures for snowforecast tests."""
+"""Shared pytest fixtures for snowforecast tests.
+
+Test Tiers:
+- unit: Fast tests with fixtures, no network (default)
+- integration: Tests with VCR cassettes (recorded API responses)
+- live: Real API tests, slow, requires network and may need credentials
+
+Run live tests with: pytest -m live --run-live
+"""
 
 import pytest
 from pathlib import Path
 import tempfile
+
+
+def pytest_addoption(parser):
+    """Add command line options for test configuration."""
+    parser.addoption(
+        "--run-live",
+        action="store_true",
+        default=False,
+        help="Run live API tests (slow, requires network)",
+    )
+
+
+def pytest_configure(config):
+    """Configure pytest with custom markers."""
+    config.addinivalue_line("markers", "unit: fast unit tests using fixtures")
+    config.addinivalue_line("markers", "integration: tests with recorded API responses")
+    config.addinivalue_line("markers", "live: real API tests (slow, requires network)")
+
+
+def pytest_collection_modifyitems(config, items):
+    """Skip live tests unless --run-live is specified."""
+    if config.getoption("--run-live"):
+        # --run-live given: don't skip live tests
+        return
+
+    skip_live = pytest.mark.skip(reason="need --run-live option to run")
+    for item in items:
+        if "live" in item.keywords:
+            item.add_marker(skip_live)
 
 
 @pytest.fixture
