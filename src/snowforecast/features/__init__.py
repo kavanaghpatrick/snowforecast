@@ -2,11 +2,9 @@
 
 This module provides:
 - DataOrchestrator: Unified coordination of all data pipelines
-- LocationPoint: Geographic location representation
-- OrchestrationResult: Result container for orchestration operations
 - SpatialAligner: Spatial alignment of data sources
-- ExtractionResult: Result container for extraction operations
 - TemporalAligner: Temporal alignment and resampling
+- DataQualityController: Data quality control and flagging
 """
 
 from .orchestration import (
@@ -19,6 +17,11 @@ from .temporal import (
     DEFAULT_AGGREGATIONS,
     TemporalAligner,
 )
+from .quality import (
+    DataQualityController,
+    QualityFlag,
+    QualityReport,
+)
 
 __all__ = [
     "DataOrchestrator",
@@ -28,4 +31,7 @@ __all__ = [
     "ExtractionResult",
     "DEFAULT_AGGREGATIONS",
     "TemporalAligner",
+    "DataQualityController",
+    "QualityFlag",
+    "QualityReport",
 ]

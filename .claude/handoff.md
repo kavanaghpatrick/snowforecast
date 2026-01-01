@@ -10,14 +10,17 @@
 
 ### Issue #9: Spatial Alignment ✅
 - SpatialAligner class for extracting values from gridded datasets
-- Supports ERA5, HRRR, DEM extraction at lat/lon points
 - 42 tests
 
 ### Issue #10: Temporal Alignment ✅
 - TemporalAligner class for resampling and alignment
-- resample_hourly_to_daily(), align_to_date_range(), localize_to_utc()
 - NEVER interpolates missing data (fills with NaN)
 - 39 tests
+
+### Issue #11: Data Quality Control ✅
+- DataQualityController, QualityFlag, QualityReport
+- Physical limits, outlier detection, temporal consistency
+- 55 tests
 
 ---
 
