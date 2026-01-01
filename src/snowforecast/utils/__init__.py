@@ -2,7 +2,13 @@
 
 from .io import get_data_path
 from .geo import BoundingBox, Point, WESTERN_US_BBOX
-from .base import BasePipeline, ValidationResult
+from .base import (
+    BasePipeline,
+    TemporalPipeline,
+    StaticPipeline,
+    GriddedPipeline,
+    ValidationResult,
+)
 
 __all__ = [
     "get_data_path",
@@ -10,5 +16,8 @@ __all__ = [
     "Point",
     "WESTERN_US_BBOX",
     "BasePipeline",
+    "TemporalPipeline",
+    "StaticPipeline",
+    "GriddedPipeline",
     "ValidationResult",
 ]

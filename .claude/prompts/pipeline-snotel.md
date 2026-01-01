@@ -91,8 +91,8 @@ class SnotelPipeline:
         """Process raw data into standardized format"""
         ...
 
-    def validate(self, df: pd.DataFrame) -> dict:
-        """Validate processed data, return stats"""
+    def validate(self, df: pd.DataFrame) -> ValidationResult:
+        """Validate processed data, return ValidationResult"""
         ...
 ```
 

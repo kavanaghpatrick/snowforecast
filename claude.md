@@ -152,27 +152,31 @@ Every worktree has `.claude/handoff.md` - UPDATE THIS:
 
 ## Code Standards
 
-### Pipeline Interface
+### Pipeline Base Classes
 
-All pipelines MUST implement:
+Choose the appropriate base class:
 
 ```python
-from snowforecast.utils.base import BasePipeline
+from snowforecast.utils import TemporalPipeline, StaticPipeline, GriddedPipeline, ValidationResult
 
-class SnotelPipeline(BasePipeline):
-    """SNOTEL data ingestion pipeline."""
+# For time-series data (SNOTEL, GHCN)
+class SnotelPipeline(TemporalPipeline):
+    def download(self, start_date: str, end_date: str) -> Path: ...
+    def process(self, raw_path: Path) -> pd.DataFrame: ...
+    def validate(self, df: pd.DataFrame) -> ValidationResult: ...
 
-    def download(self, start_date: str, end_date: str) -> Path:
-        """Download raw data to data/raw/{name}/"""
-        ...
+# For gridded weather data (ERA5, HRRR)
+class ERA5Pipeline(GriddedPipeline):
+    def download(self, start_date: str, end_date: str) -> Path: ...
+    def process_to_dataset(self, raw_path: Path) -> xr.Dataset: ...
+    def extract_at_points(self, ds, points) -> pd.DataFrame: ...
+    def validate(self, data) -> ValidationResult: ...
 
-    def process(self, raw_path: Path) -> pd.DataFrame:
-        """Process raw data, return DataFrame"""
-        ...
-
-    def validate(self, df: pd.DataFrame) -> ValidationResult:
-        """Validate processed data"""
-        ...
+# For static data (DEM, OpenSkiMap)
+class DEMPipeline(StaticPipeline):
+    def download(self, bbox: dict = None) -> Path: ...
+    def process(self, raw_path: Path) -> pd.DataFrame: ...
+    def validate(self, data) -> ValidationResult: ...
 ```
 
 ### Data Paths
