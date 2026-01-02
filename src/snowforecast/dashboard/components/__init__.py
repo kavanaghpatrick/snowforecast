@@ -43,6 +43,13 @@ from snowforecast.dashboard.components.favorites import (
     FAVORITES_KEY,
 )
 
+from snowforecast.dashboard.components.forecast_overlay import (
+    create_forecast_overlay,
+    generate_grid_points,
+    render_overlay_toggle,
+    OVERLAY_COLOR_RANGE,
+)
+
 __all__ = [
     # Map components
     "render_resort_map",
@@ -70,4 +77,9 @@ __all__ = [
     "render_favorite_toggle",
     "render_favorites_filter",
     "FAVORITES_KEY",
+    # Forecast overlay
+    "create_forecast_overlay",
+    "generate_grid_points",
+    "render_overlay_toggle",
+    "OVERLAY_COLOR_RANGE",
 ]
