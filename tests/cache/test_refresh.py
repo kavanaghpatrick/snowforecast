@@ -236,6 +236,7 @@ class TestRefreshTerrain:
         assert result.total == len(test_ski_areas)
         assert result.duration_ms >= 0
 
+    @pytest.mark.integration
     def test_refresh_terrain_counts_correctly(self, db, test_ski_areas):
         """refresh_terrain_for_ski_areas counts operations correctly."""
         # Cache only first area
