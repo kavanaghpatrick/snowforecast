@@ -7,6 +7,7 @@ This module provides reusable Streamlit components:
 - Terrain: create_terrain_layer, create_3d_view, create_terrain_deck, render_terrain_controls
 - Elevation: render_elevation_bands
 - Favorites: get_favorites, add_favorite, remove_favorite, is_favorite, render_favorite_toggle
+- Responsive: get_breakpoint, is_mobile, is_tablet, is_desktop, render_responsive_columns
 """
 
 from snowforecast.dashboard.components.map_view import (
@@ -43,6 +44,24 @@ from snowforecast.dashboard.components.favorites import (
     FAVORITES_KEY,
 )
 
+from snowforecast.dashboard.components.responsive import (
+    get_viewport_width,
+    get_breakpoint,
+    is_mobile,
+    is_tablet,
+    is_desktop,
+    get_column_ratio,
+    should_show_3d,
+    get_touch_target_size,
+    render_responsive_columns,
+    inject_responsive_css,
+    set_viewport_width,
+    inject_viewport_detector,
+    MOBILE_MAX,
+    TABLET_MAX,
+    Breakpoint,
+)
+
 __all__ = [
     # Map components
     "render_resort_map",
@@ -70,4 +89,20 @@ __all__ = [
     "render_favorite_toggle",
     "render_favorites_filter",
     "FAVORITES_KEY",
+    # Responsive layout
+    "get_viewport_width",
+    "get_breakpoint",
+    "is_mobile",
+    "is_tablet",
+    "is_desktop",
+    "get_column_ratio",
+    "should_show_3d",
+    "get_touch_target_size",
+    "render_responsive_columns",
+    "inject_responsive_css",
+    "set_viewport_width",
+    "inject_viewport_detector",
+    "MOBILE_MAX",
+    "TABLET_MAX",
+    "Breakpoint",
 ]
