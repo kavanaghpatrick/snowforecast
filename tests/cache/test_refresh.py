@@ -341,6 +341,7 @@ class TestRefreshWithAllSkiAreas:
             assert -180 <= area.lon <= 180
             assert area.base_elevation > 0
 
+    @pytest.mark.integration
     def test_refresh_counts_match_total(self, db):
         """Verify refresh counts add up to total."""
         # Pre-populate some data
