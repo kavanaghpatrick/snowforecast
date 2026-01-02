@@ -110,6 +110,7 @@ markers = [
     "unit: fast unit tests using fixtures (no network)",
     "integration: tests with recorded API responses (VCR cassettes)",
     "live: real API tests - slow, requires network and credentials",
+    "slow: slow tests that may timeout in CI",
 ]
 
 [tool.ruff]
