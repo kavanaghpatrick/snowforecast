@@ -13,6 +13,7 @@ This module provides reusable Streamlit components:
 - SNOTEL: SnotelStation, get_nearby_snotel_stations, render_snotel_section, create_snotel_map_layer
 - Snow Quality: calculate_slr, classify_snow_quality, render_snow_quality_badge
 - Responsive: get_breakpoint, is_mobile, is_tablet, is_desktop, render_responsive_columns
+- Performance: PerformanceTimer, timed, lazy_load, get_cached_predictor, prefetch_forecasts
 """
 
 from snowforecast.dashboard.components.map_view import (
@@ -126,6 +127,21 @@ from snowforecast.dashboard.components.responsive import (
     Breakpoint,
 )
 
+from snowforecast.dashboard.components.performance import (
+    PerformanceTimer,
+    timed,
+    lazy_load,
+    get_cached_predictor,
+    prefetch_forecasts,
+    render_performance_metrics,
+    clear_performance_metrics,
+    get_performance_metrics,
+    check_performance_targets,
+    TARGET_PAGE_LOAD,
+    TARGET_TIME_SWITCH,
+    TARGET_RESORT_SELECT,
+)
+
 __all__ = [
     # Map components
     "render_resort_map",
@@ -218,4 +234,17 @@ __all__ = [
     "MOBILE_MAX",
     "TABLET_MAX",
     "Breakpoint",
+    # Performance
+    "PerformanceTimer",
+    "timed",
+    "lazy_load",
+    "get_cached_predictor",
+    "prefetch_forecasts",
+    "render_performance_metrics",
+    "clear_performance_metrics",
+    "get_performance_metrics",
+    "check_performance_targets",
+    "TARGET_PAGE_LOAD",
+    "TARGET_TIME_SWITCH",
+    "TARGET_RESORT_SELECT",
 ]
