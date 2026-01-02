@@ -7,6 +7,7 @@ This module provides reusable Streamlit components:
 - Terrain: create_terrain_layer, create_3d_view, create_terrain_deck, render_terrain_controls
 - Elevation: render_elevation_bands
 - Favorites: get_favorites, add_favorite, remove_favorite, is_favorite, render_favorite_toggle
+- Performance: PerformanceTimer, timed, lazy_load, get_cached_predictor, prefetch_forecasts
 """
 
 from snowforecast.dashboard.components.map_view import (
@@ -43,6 +44,21 @@ from snowforecast.dashboard.components.favorites import (
     FAVORITES_KEY,
 )
 
+from snowforecast.dashboard.components.performance import (
+    PerformanceTimer,
+    timed,
+    lazy_load,
+    get_cached_predictor,
+    prefetch_forecasts,
+    render_performance_metrics,
+    clear_performance_metrics,
+    get_performance_metrics,
+    check_performance_targets,
+    TARGET_PAGE_LOAD,
+    TARGET_TIME_SWITCH,
+    TARGET_RESORT_SELECT,
+)
+
 __all__ = [
     # Map components
     "render_resort_map",
@@ -70,4 +86,17 @@ __all__ = [
     "render_favorite_toggle",
     "render_favorites_filter",
     "FAVORITES_KEY",
+    # Performance
+    "PerformanceTimer",
+    "timed",
+    "lazy_load",
+    "get_cached_predictor",
+    "prefetch_forecasts",
+    "render_performance_metrics",
+    "clear_performance_metrics",
+    "get_performance_metrics",
+    "check_performance_targets",
+    "TARGET_PAGE_LOAD",
+    "TARGET_TIME_SWITCH",
+    "TARGET_RESORT_SELECT",
 ]
