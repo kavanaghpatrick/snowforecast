@@ -12,6 +12,7 @@ This module provides reusable Streamlit components:
 - Confidence: get_confidence_level, get_confidence_badge, get_confidence_color, format_forecast_with_ci
 - SNOTEL: SnotelStation, get_nearby_snotel_stations, render_snotel_section, create_snotel_map_layer
 - Snow Quality: calculate_slr, classify_snow_quality, render_snow_quality_badge
+- Responsive: get_breakpoint, is_mobile, is_tablet, is_desktop, render_responsive_columns
 """
 
 from snowforecast.dashboard.components.map_view import (
@@ -107,6 +108,24 @@ from snowforecast.dashboard.components.snow_quality import (
     create_quality_metrics,
 )
 
+from snowforecast.dashboard.components.responsive import (
+    get_viewport_width,
+    get_breakpoint,
+    is_mobile,
+    is_tablet,
+    is_desktop,
+    get_column_ratio,
+    should_show_3d,
+    get_touch_target_size,
+    render_responsive_columns,
+    inject_responsive_css,
+    set_viewport_width,
+    inject_viewport_detector,
+    MOBILE_MAX,
+    TABLET_MAX,
+    Breakpoint,
+)
+
 __all__ = [
     # Map components
     "render_resort_map",
@@ -183,4 +202,20 @@ __all__ = [
     "render_snow_quality_details",
     "render_snow_quality_compact",
     "create_quality_metrics",
+    # Responsive layout
+    "get_viewport_width",
+    "get_breakpoint",
+    "is_mobile",
+    "is_tablet",
+    "is_desktop",
+    "get_column_ratio",
+    "should_show_3d",
+    "get_touch_target_size",
+    "render_responsive_columns",
+    "inject_responsive_css",
+    "set_viewport_width",
+    "inject_viewport_detector",
+    "MOBILE_MAX",
+    "TABLET_MAX",
+    "Breakpoint",
 ]
