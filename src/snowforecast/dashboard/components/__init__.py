@@ -1,10 +1,9 @@
-"""Dashboard components for Snowforecast visualization.
+"""Dashboard UI components for Snowforecast.
 
-This module provides reusable components for the Streamlit dashboard:
+This module provides reusable Streamlit components:
 
-- render_resort_map: Interactive PyDeck map with ski resort markers
-- create_resort_layer: ScatterplotLayer for resort visualization
-- create_base_view: Western US view state centered on ski country
+- Map: render_resort_map, create_resort_layer, create_base_view
+- Detail Panel: generate_forecast_summary, render_forecast_table, render_resort_detail
 """
 
 from snowforecast.dashboard.components.map_view import (
@@ -13,8 +12,19 @@ from snowforecast.dashboard.components.map_view import (
     create_base_view,
 )
 
+from .resort_detail import (
+    generate_forecast_summary,
+    render_forecast_table,
+    render_resort_detail,
+)
+
 __all__ = [
+    # Map components
     "render_resort_map",
     "create_resort_layer",
     "create_base_view",
+    # Detail panel
+    "generate_forecast_summary",
+    "render_forecast_table",
+    "render_resort_detail",
 ]
