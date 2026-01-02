@@ -1,0 +1,588 @@
+{
+  "pages_captured": [
+    "homepage",
+    "alta_resort",
+    "utah_10day",
+    "colorado_state",
+    "map",
+    "mammoth"
+  ],
+  "page_structure": {
+    "homepage": {
+      "headings": [
+        {
+          "tag": "H1",
+          "text": "Weather Forecast + Snow Report"
+        },
+        {
+          "tag": "H1",
+          "text": "Key Features"
+        },
+        {
+          "tag": "H3",
+          "text": "15-Day Forecasts"
+        },
+        {
+          "tag": "H3",
+          "text": "Local \"Daily Snow\" Experts"
+        },
+        {
+          "tag": "H3",
+          "text": "3D & Offline Maps"
+        },
+        {
+          "tag": "H3",
+          "text": "Custom Alerts"
+        },
+        {
+          "tag": "H3",
+          "text": "Super-Res Radar"
+        },
+        {
+          "tag": "H3",
+          "text": "Multi-Model Comparison"
+        },
+        {
+          "tag": "H2",
+          "text": "Join hundreds of thousands of skiers and adventurers who plan their missions with OpenSnow.\n    "
+        },
+        {
+          "tag": "H1",
+          "text": "How We Stack Up"
+        },
+        {
+          "tag": "H3",
+          "text": "Day & Night Snow Forecasts"
+        },
+        {
+          "tag": "H3",
+          "text": "Multi-Model Forecast"
+        },
+        {
+          "tag": "H3",
+          "text": "History & Forecast Comparison"
+        },
+        {
+          "tag": "H3",
+          "text": "Global Location Forecasts"
+        },
+        {
+          "tag": "H3",
+          "text": "Global Weather Maps"
+        },
+        {
+          "tag": "H3",
+          "text": "Local Experts"
+        },
+        {
+          "tag": "H3",
+          "text": "Webcams"
+        },
+        {
+          "tag": "H3",
+          "text": "Multi-Model Comparison"
+        },
+        {
+          "tag": "H3",
+          "text": "3D & Offline Maps"
+        },
+        {
+          "tag": "H3",
+          "text": "Custom Snow Alerts"
+        },
+        {
+          "tag": "H3",
+          "text": "Severe Weather Alerts"
+        },
+        {
+          "tag": "H2",
+          "text": "Frequently Asked Questions"
+        },
+        {
+          "tag": "H3",
+          "text": "How much does OpenSnow cost?"
+        },
+        {
+          "tag": "H3",
+          "text": "Is the OpenSnow subscription good for 365 days?"
+        },
+        {
+          "tag": "H3",
+          "text": "Can I upgrade from the Individual to the Family plan?"
+        },
+        {
+          "tag": "H3",
+          "text": "How does the Family plan work?"
+        },
+        {
+          "tag": "H3",
+          "text": "Will my OpenSnow subscription automatically renew?"
+        },
+        {
+          "tag": "H3",
+          "text": "How does the OpenSnow free trial work?"
+        },
+        {
+          "tag": "H3",
+          "text": "How does OpenSnow make its forecasts?"
+        }
+      ],
+      "buttons": [
+        null,
+        "Accept Cookies",
+        "Reject Cookies"
+      ],
+      "cards": [
+        "Card__body tw-overflow-hidden tw-p-2.5 tw-relative brand-color",
+        "tw-border-[1px] tw-border-[--basic-premium] tw-py-2 tw-text-center tw-font-medium tw-rounded-md hover:tw-no-underline hover:tw-brightness-110 hover:tw-shadow-md tw-transition-all tw-duration-300 tw-inline-block tw-cursor-pointer !tw-text-[--text-darkest] tw-w-full tw-flex tw-flex-col tw-items-center tw-justify-center tw-whitespace-nowrap tw-bg-[--card-background]/10 tw-backdrop-blur-md",
+        "tw-block tw-w-full tw-h-auto tw-object-contain tw-border-[1px] tw-border-[--card-divider] tw-border-b-0 md:tw-border-b-[1px] tw-rounded-t-md md:tw-rounded-md",
+        "tw-bg-white md:tw-bg-transparent dark:tw-bg-black dark:md:tw-bg-transparent tw-p-4 tw-pt-0 md:tw-p-0 tw-rounded-b-md tw-border-[--card-divider] tw-border-[1px] md:tw-border-0 tw-grow",
+        "tw-block tw-w-full tw-h-auto tw-object-contain tw-border-[1px] tw-border-[--card-divider] tw-border-b-0 md:tw-border-b-[1px] tw-rounded-t-md md:tw-rounded-md",
+        "tw-bg-white md:tw-bg-transparent dark:tw-bg-black dark:md:tw-bg-transparent tw-p-4 tw-pt-0 md:tw-p-0 tw-rounded-b-md tw-border-[--card-divider] tw-border-[1px] md:tw-border-0 tw-grow",
+        "tw-block tw-w-full tw-h-auto tw-object-contain tw-border-[1px] tw-border-[--card-divider] tw-border-b-0 md:tw-border-b-[1px] tw-rounded-t-md md:tw-rounded-md",
+        "tw-bg-white md:tw-bg-transparent dark:tw-bg-black dark:md:tw-bg-transparent tw-p-4 tw-pt-0 md:tw-p-0 tw-rounded-b-md tw-border-[--card-divider] tw-border-[1px] md:tw-border-0 tw-grow",
+        "tw-block tw-w-full tw-h-auto tw-object-contain tw-border-[1px] tw-border-[--card-divider] tw-border-b-0 md:tw-border-b-[1px] tw-rounded-t-md md:tw-rounded-md",
+        "tw-bg-white md:tw-bg-transparent dark:tw-bg-black dark:md:tw-bg-transparent tw-p-4 tw-pt-0 md:tw-p-0 tw-rounded-b-md tw-border-[--card-divider] tw-border-[1px] md:tw-border-0 tw-grow",
+        "tw-block tw-w-full tw-h-auto tw-object-contain tw-border-[1px] tw-border-[--card-divider] tw-border-b-0 md:tw-border-b-[1px] tw-rounded-t-md md:tw-rounded-md",
+        "tw-bg-white md:tw-bg-transparent dark:tw-bg-black dark:md:tw-bg-transparent tw-p-4 tw-pt-0 md:tw-p-0 tw-rounded-b-md tw-border-[--card-divider] tw-border-[1px] md:tw-border-0 tw-grow",
+        "tw-block tw-w-full tw-h-auto tw-object-contain tw-border-[1px] tw-border-[--card-divider] tw-border-b-0 md:tw-border-b-[1px] tw-rounded-t-md md:tw-rounded-md",
+        "tw-bg-white md:tw-bg-transparent dark:tw-bg-black dark:md:tw-bg-transparent tw-p-4 tw-pt-0 md:tw-p-0 tw-rounded-b-md tw-border-[--card-divider] tw-border-[1px] md:tw-border-0 tw-grow",
+        "Card__body tw-overflow-hidden tw-relative card-background-color tw-p-2 tw-pr-6 tw-cursor-pointer",
+        "Card__body tw-overflow-hidden tw-h-full tw-p-6 tw-relative card-background-color tw-bg-white/50 dark:tw-bg-black/50",
+        "Card__body tw-overflow-hidden tw-h-full tw-p-6 tw-relative card-background-color tw-bg-white/50 dark:tw-bg-black/50",
+        "Card__body tw-overflow-hidden tw-h-full tw-p-6 tw-relative card-background-color tw-bg-white/50 dark:tw-bg-black/50",
+        "Card__body tw-overflow-hidden tw-h-full tw-p-6 tw-relative card-background-color tw-bg-white/50 dark:tw-bg-black/50",
+        "Card__body tw-overflow-hidden tw-h-full tw-p-6 tw-relative card-background-color tw-bg-white/50 dark:tw-bg-black/50",
+        "Card__body tw-overflow-hidden tw-h-full tw-p-6 tw-relative card-background-color tw-bg-white/50 dark:tw-bg-black/50",
+        "tw-border-[1px] tw-border-[--basic-premium] tw-py-2 tw-text-center tw-font-medium tw-rounded-md hover:tw-no-underline hover:tw-brightness-110 hover:tw-shadow-md tw-transition-all tw-duration-300 tw-inline-block tw-cursor-pointer !tw-text-[--text-darkest] tw-w-full tw-flex tw-flex-col tw-items-center tw-justify-center tw-whitespace-nowrap tw-bg-[--card-background]/10 tw-backdrop-blur-md",
+        "tw-bg-[--card-background] tw-py-[64px]",
+        "tw-bg-[--card-background] container tw-max-w-[100vw] tw-pl-0 tw-pr-0 md:tw-pl-[15px] md:tw-pr-[15px] lg:tw-max-w[960px] xl:tw-max-w-[1140px]",
+        "tw-grid \n  tw-grid-cols-[170px_repeat(7,100px)_15px] \n  lg:tw-grid-cols-[minmax(210px,3fr)_repeat(7,minmax(100px,1fr))]\n  tw-gap-0 tw-min-w-min lg:tw-bg-[--card-divider-light] lg:tw-rounded-lg tw-border-b lg:tw-border-b-0 tw-border-[--card-divider] dark:tw-border-black",
+        "tw-sticky tw-left-0\n  tw-bg-[--card-background] \n  tw-border-r-[1px] tw-border-[--card-divider] dark:tw-border-black lg:tw-border-0\n  tw-shadow-xl tw-shadow-[--card-divider] dark:tw-shadow-black lg:tw-shadow-none tw-top-0 lg:tw-rounded-l-lg lg:tw-bg-[--card-divider-light]",
+        "tw-grid \n  tw-grid-cols-[170px_repeat(7,100px)_15px] \n  lg:tw-grid-cols-[minmax(210px,3fr)_repeat(7,minmax(100px,1fr))]\n  tw-gap-0 tw-min-w-min tw-border-b tw-border-[--card-divider] dark:tw-border-black tw-min-h-[90px] tw-items-stretch",
+        "tw-sticky tw-left-0\n  tw-bg-[--card-background] \n  tw-border-r-[1px] tw-border-[--card-divider] dark:tw-border-black lg:tw-border-0\n  tw-shadow-xl tw-shadow-[--card-divider] dark:tw-shadow-black lg:tw-shadow-none tw-z-10 tw-flex tw-items-center",
+        "tw-grid \n  tw-grid-cols-[170px_repeat(7,100px)_15px] \n  lg:tw-grid-cols-[minmax(210px,3fr)_repeat(7,minmax(100px,1fr))]\n  tw-gap-0 tw-min-w-min tw-border-b tw-border-[--card-divider] dark:tw-border-black tw-min-h-[90px] tw-items-stretch",
+        "tw-sticky tw-left-0\n  tw-bg-[--card-background] \n  tw-border-r-[1px] tw-border-[--card-divider] dark:tw-border-black lg:tw-border-0\n  tw-shadow-xl tw-shadow-[--card-divider] dark:tw-shadow-black lg:tw-shadow-none tw-z-10 tw-flex tw-items-center",
+        "tw-grid \n  tw-grid-cols-[170px_repeat(7,100px)_15px] \n  lg:tw-grid-cols-[minmax(210px,3fr)_repeat(7,minmax(100px,1fr))]\n  tw-gap-0 tw-min-w-min tw-border-b tw-border-[--card-divider] dark:tw-border-black tw-min-h-[90px] tw-items-stretch",
+        "tw-sticky tw-left-0\n  tw-bg-[--card-background] \n  tw-border-r-[1px] tw-border-[--card-divider] dark:tw-border-black lg:tw-border-0\n  tw-shadow-xl tw-shadow-[--card-divider] dark:tw-shadow-black lg:tw-shadow-none tw-z-10 tw-flex tw-items-center",
+        "tw-grid \n  tw-grid-cols-[170px_repeat(7,100px)_15px] \n  lg:tw-grid-cols-[minmax(210px,3fr)_repeat(7,minmax(100px,1fr))]\n  tw-gap-0 tw-min-w-min tw-border-b tw-border-[--card-divider] dark:tw-border-black tw-min-h-[90px] tw-items-stretch",
+        "tw-sticky tw-left-0\n  tw-bg-[--card-background] \n  tw-border-r-[1px] tw-border-[--card-divider] dark:tw-border-black lg:tw-border-0\n  tw-shadow-xl tw-shadow-[--card-divider] dark:tw-shadow-black lg:tw-shadow-none tw-z-10 tw-flex tw-items-center",
+        "tw-grid \n  tw-grid-cols-[170px_repeat(7,100px)_15px] \n  lg:tw-grid-cols-[minmax(210px,3fr)_repeat(7,minmax(100px,1fr))]\n  tw-gap-0 tw-min-w-min tw-border-b tw-border-[--card-divider] dark:tw-border-black tw-min-h-[90px] tw-items-stretch",
+        "tw-sticky tw-left-0\n  tw-bg-[--card-background] \n  tw-border-r-[1px] tw-border-[--card-divider] dark:tw-border-black lg:tw-border-0\n  tw-shadow-xl tw-shadow-[--card-divider] dark:tw-shadow-black lg:tw-shadow-none tw-z-10 tw-flex tw-items-center",
+        "tw-grid \n  tw-grid-cols-[170px_repeat(7,100px)_15px] \n  lg:tw-grid-cols-[minmax(210px,3fr)_repeat(7,minmax(100px,1fr))]\n  tw-gap-0 tw-min-w-min tw-border-b tw-border-[--card-divider] dark:tw-border-black tw-min-h-[90px] tw-items-stretch",
+        "tw-sticky tw-left-0\n  tw-bg-[--card-background] \n  tw-border-r-[1px] tw-border-[--card-divider] dark:tw-border-black lg:tw-border-0\n  tw-shadow-xl tw-shadow-[--card-divider] dark:tw-shadow-black lg:tw-shadow-none tw-z-10 tw-flex tw-items-center",
+        "tw-grid \n  tw-grid-cols-[170px_repeat(7,100px)_15px] \n  lg:tw-grid-cols-[minmax(210px,3fr)_repeat(7,minmax(100px,1fr))]\n  tw-gap-0 tw-min-w-min tw-border-b tw-border-[--card-divider] dark:tw-border-black tw-min-h-[90px] tw-items-stretch",
+        "tw-sticky tw-left-0\n  tw-bg-[--card-background] \n  tw-border-r-[1px] tw-border-[--card-divider] dark:tw-border-black lg:tw-border-0\n  tw-shadow-xl tw-shadow-[--card-divider] dark:tw-shadow-black lg:tw-shadow-none tw-z-10 tw-flex tw-items-center",
+        "tw-grid \n  tw-grid-cols-[170px_repeat(7,100px)_15px] \n  lg:tw-grid-cols-[minmax(210px,3fr)_repeat(7,minmax(100px,1fr))]\n  tw-gap-0 tw-min-w-min tw-border-b tw-border-[--card-divider] dark:tw-border-black tw-min-h-[90px] tw-items-stretch",
+        "tw-sticky tw-left-0\n  tw-bg-[--card-background] \n  tw-border-r-[1px] tw-border-[--card-divider] dark:tw-border-black lg:tw-border-0\n  tw-shadow-xl tw-shadow-[--card-divider] dark:tw-shadow-black lg:tw-shadow-none tw-z-10 tw-flex tw-items-center",
+        "tw-grid \n  tw-grid-cols-[170px_repeat(7,100px)_15px] \n  lg:tw-grid-cols-[minmax(210px,3fr)_repeat(7,minmax(100px,1fr))]\n  tw-gap-0 tw-min-w-min tw-border-b tw-border-[--card-divider] dark:tw-border-black tw-min-h-[90px] tw-items-stretch",
+        "tw-sticky tw-left-0\n  tw-bg-[--card-background] \n  tw-border-r-[1px] tw-border-[--card-divider] dark:tw-border-black lg:tw-border-0\n  tw-shadow-xl tw-shadow-[--card-divider] dark:tw-shadow-black lg:tw-shadow-none tw-z-10 tw-flex tw-items-center",
+        "tw-grid \n  tw-grid-cols-[170px_repeat(7,100px)_15px] \n  lg:tw-grid-cols-[minmax(210px,3fr)_repeat(7,minmax(100px,1fr))]\n  tw-gap-0 tw-min-w-min tw-border-b tw-border-[--card-divider] dark:tw-border-black tw-min-h-[90px] tw-items-stretch",
+        "tw-sticky tw-left-0\n  tw-bg-[--card-background] \n  tw-border-r-[1px] tw-border-[--card-divider] dark:tw-border-black lg:tw-border-0\n  tw-shadow-xl tw-shadow-[--card-divider] dark:tw-shadow-black lg:tw-shadow-none tw-z-10 tw-flex tw-items-center",
+        "tw-grid \n  tw-grid-cols-[170px_repeat(7,100px)_15px] \n  lg:tw-grid-cols-[minmax(210px,3fr)_repeat(7,minmax(100px,1fr))]\n  tw-gap-0 tw-min-w-min tw-border-b tw-border-[--card-divider] dark:tw-border-black tw-min-h-[90px] tw-items-stretch",
+        "tw-sticky tw-left-0\n  tw-bg-[--card-background] \n  tw-border-r-[1px] tw-border-[--card-divider] dark:tw-border-black lg:tw-border-0\n  tw-shadow-xl tw-shadow-[--card-divider] dark:tw-shadow-black lg:tw-shadow-none tw-z-10 tw-flex tw-items-center",
+        "tw-border-[1px] tw-border-[--basic-premium] tw-py-2 tw-text-center tw-font-medium tw-rounded-md hover:tw-no-underline hover:tw-brightness-110 hover:tw-shadow-md tw-transition-all tw-duration-300 tw-inline-block tw-cursor-pointer !tw-text-[--text-darkest] tw-w-full tw-flex tw-flex-col tw-items-center tw-justify-center tw-whitespace-nowrap tw-bg-[--card-background]/10 tw-backdrop-blur-md",
+        "tw-text-[--text-darkest] tw-py-[16px] tw-border-b tw-border-[--card-divider]",
+        "tw-text-[--text-darkest] tw-py-[16px] tw-border-b tw-border-[--card-divider]",
+        "tw-text-[--text-darkest] tw-py-[16px] tw-border-b tw-border-[--card-divider]",
+        "tw-text-[--text-darkest] tw-py-[16px] tw-border-b tw-border-[--card-divider]",
+        "tw-text-[--text-darkest] tw-py-[16px] tw-border-b tw-border-[--card-divider]",
+        "tw-text-[--text-darkest] tw-py-[16px] tw-border-b tw-border-[--card-divider]",
+        "tw-text-[--text-darkest] tw-py-[16px] tw-border-b tw-border-[--card-divider]",
+        "tw-border-[1px] tw-border-[--basic-premium] tw-py-2 tw-text-center tw-font-medium tw-rounded-md hover:tw-no-underline hover:tw-brightness-110 hover:tw-shadow-md tw-transition-all tw-duration-300 tw-inline-block tw-cursor-pointer !tw-text-[--text-darkest] tw-w-full tw-flex tw-flex-col tw-items-center tw-justify-center tw-whitespace-nowrap tw-bg-[--card-background]/10 tw-backdrop-blur-md"
+      ],
+      "maps": [],
+      "charts": []
+    },
+    "alta": {
+      "headings": [
+        {
+          "tag": "H3",
+          "text": "Yard Sale!"
+        }
+      ],
+      "buttons": [
+        null,
+        "Go Back"
+      ],
+      "cards": [
+        "Card__body tw-overflow-hidden tw-p-2.5 tw-relative brand-color",
+        "tw-block tw-rounded-lg tw-font-normal tw-py-1.5 tw-px-3 tw-transition-all tw-no-underline tw-text-center tw-text-base hover:tw-no-underline Button__secondaryCard tw-w-full tw-mt-4 tw-text-lg"
+      ],
+      "maps": [],
+      "charts": []
+    },
+    "utah": {
+      "headings": [
+        {
+          "tag": "H3",
+          "text": "Utah Daily Snow"
+        },
+        {
+          "tag": "H2",
+          "text": ""
+        },
+        {
+          "tag": "H3",
+          "text": ""
+        },
+        {
+          "tag": "H2",
+          "text": "3 Potential Storms Over Next 8 Days"
+        },
+        {
+          "tag": "H3",
+          "text": "Summary"
+        },
+        {
+          "tag": "H3",
+          "text": "Short Term Forecast"
+        },
+        {
+          "tag": "H3",
+          "text": "About Our Forecaster"
+        },
+        {
+          "tag": "H2",
+          "text": "Evan Thayer"
+        },
+        {
+          "tag": "H3",
+          "text": "Forecaster"
+        },
+        {
+          "tag": "H3",
+          "text": "Free OpenSnow App"
+        },
+        {
+          "tag": "H3",
+          "text": "Nearby 5-Day Forecasts"
+        },
+        {
+          "tag": "H2",
+          "text": "Snowbird"
+        },
+        {
+          "tag": "H3",
+          "text": ""
+        },
+        {
+          "tag": "H2",
+          "text": "Alta"
+        },
+        {
+          "tag": "H3",
+          "text": ""
+        },
+        {
+          "tag": "H2",
+          "text": "Brighton"
+        },
+        {
+          "tag": "H3",
+          "text": ""
+        },
+        {
+          "tag": "H2",
+          "text": "Powder Mountain"
+        },
+        {
+          "tag": "H3",
+          "text": ""
+        },
+        {
+          "tag": "H2",
+          "text": "Solitude"
+        },
+        {
+          "tag": "H3",
+          "text": ""
+        },
+        {
+          "tag": "H2",
+          "text": "Deer Valley"
+        },
+        {
+          "tag": "H3",
+          "text": ""
+        },
+        {
+          "tag": "H2",
+          "text": "Beaver Mountain"
+        },
+        {
+          "tag": "H3",
+          "text": ""
+        },
+        {
+          "tag": "H2",
+          "text": "Park City"
+        },
+        {
+          "tag": "H3",
+          "text": ""
+        },
+        {
+          "tag": "H2",
+          "text": "Sundance"
+        },
+        {
+          "tag": "H3",
+          "text": ""
+        },
+        {
+          "tag": "H2",
+          "text": "Snowbasin"
+        },
+        {
+          "tag": "H3",
+          "text": ""
+        },
+        {
+          "tag": "H2",
+          "text": "Eagle Point"
+        },
+        {
+          "tag": "H3",
+          "text": ""
+        },
+        {
+          "tag": "H2",
+          "text": "Cherry Peak"
+        },
+        {
+          "tag": "H3",
+          "text": ""
+        },
+        {
+          "tag": "H2",
+          "text": "Brian Head"
+        },
+        {
+          "tag": "H3",
+          "text": ""
+        },
+        {
+          "tag": "H2",
+          "text": "Nordic Valley"
+        },
+        {
+          "tag": "H3",
+          "text": ""
+        },
+        {
+          "tag": "H2",
+          "text": "Recent News"
+        }
+      ],
+      "buttons": [
+        null,
+        "Accept Cookies",
+        "Reject Cookies"
+      ],
+      "cards": [
+        "Card__body tw-overflow-hidden tw-p-2.5 tw-relative brand-color",
+        "Card__body tw-overflow-hidden tw-p-2.5 tw-relative card-background-color tw-pb-80",
+        "Card__body tw-overflow-hidden tw-p-2.5 Card__noBodyStyles tw-relative card-background-color tw-mt-8",
+        "Card__body tw-overflow-hidden Card__noBodyStyles tw-relative card-background-color",
+        "Card__body tw-overflow-hidden Card__noBodyStyles tw-relative card-background-color",
+        "Card__body tw-overflow-hidden Card__noBodyStyles tw-relative card-background-color",
+        "Card__body tw-overflow-hidden Card__noBodyStyles tw-relative card-background-color",
+        "Card__body tw-overflow-hidden Card__noBodyStyles tw-relative card-background-color",
+        "Card__body tw-overflow-hidden Card__noBodyStyles tw-relative card-background-color",
+        "Card__body tw-overflow-hidden Card__noBodyStyles tw-relative card-background-color",
+        "Card__body tw-overflow-hidden Card__noBodyStyles tw-relative card-background-color",
+        "Card__body tw-overflow-hidden Card__noBodyStyles tw-relative card-background-color",
+        "Card__body tw-overflow-hidden Card__noBodyStyles tw-relative card-background-color",
+        "Card__body tw-overflow-hidden Card__noBodyStyles tw-relative card-background-color",
+        "Card__body tw-overflow-hidden Card__noBodyStyles tw-relative card-background-color",
+        "Card__body tw-overflow-hidden Card__noBodyStyles tw-relative card-background-color",
+        "Card__body tw-overflow-hidden Card__noBodyStyles tw-relative card-background-color",
+        "Card__body tw-overflow-hidden tw-h-full Card__noBodyStyles tw-relative card-background-color",
+        "Card__body tw-overflow-hidden tw-h-full Card__noBodyStyles tw-relative card-background-color",
+        "Card__body tw-overflow-hidden tw-h-full Card__noBodyStyles tw-relative card-background-color"
+      ],
+      "maps": [],
+      "charts": []
+    },
+    "map": {
+      "headings": [
+        {
+          "tag": "H3",
+          "text": "Global Storm Forecast \ud83c\udf0e"
+        },
+        {
+          "tag": "H3",
+          "text": "Weather Stations"
+        },
+        {
+          "tag": "H3",
+          "text": "Super-Res Radar + StormNet "
+        },
+        {
+          "tag": "H3",
+          "text": "Current US Radar \ud83c\uddfa\ud83c\uddf8"
+        },
+        {
+          "tag": "H3",
+          "text": "Forecast US Radar \ud83c\uddfa\ud83c\uddf8"
+        },
+        {
+          "tag": "H3",
+          "text": "Current Global Radar \ud83c\udf0e"
+        },
+        {
+          "tag": "H3",
+          "text": "Current Japan Radar \ud83c\uddef\ud83c\uddf5"
+        },
+        {
+          "tag": "H3",
+          "text": "Lightning Risk"
+        },
+        {
+          "tag": "H3",
+          "text": "Hail Size"
+        },
+        {
+          "tag": "H3",
+          "text": "Temperature"
+        },
+        {
+          "tag": "H3",
+          "text": "Cloud Cover"
+        },
+        {
+          "tag": "H3",
+          "text": "Wind Gust"
+        },
+        {
+          "tag": "H3",
+          "text": "Fall Colors \ud83c\udf41"
+        },
+        {
+          "tag": "H3",
+          "text": "Forecast Total Snowfall"
+        },
+        {
+          "tag": "H3",
+          "text": "Forecast 6-Hour Snowfall"
+        },
+        {
+          "tag": "H3",
+          "text": "Forecast 12-Hour Snowfall"
+        },
+        {
+          "tag": "H3",
+          "text": "Forecast 24-Hour Snowfall"
+        },
+        {
+          "tag": "H3",
+          "text": "Avalanche Forecast"
+        },
+        {
+          "tag": "H3",
+          "text": "Snow Depth"
+        },
+        {
+          "tag": "H3",
+          "text": "Snowfall (24 Hours)"
+        },
+        {
+          "tag": "H3",
+          "text": "Snowfall (Season)"
+        },
+        {
+          "tag": "H3",
+          "text": "Public Lands"
+        },
+        {
+          "tag": "H3",
+          "text": "Land Ownership"
+        },
+        {
+          "tag": "H3",
+          "text": "Air Quality Real-Time"
+        },
+        {
+          "tag": "H3",
+          "text": "Air Quality Forecast"
+        },
+        {
+          "tag": "H3",
+          "text": "Active Fires \ud83d\udd25"
+        },
+        {
+          "tag": "H3",
+          "text": "Smoke Hi-Res (surface)"
+        },
+        {
+          "tag": "H3",
+          "text": "Smoke Hi-Res (sky)"
+        },
+        {
+          "tag": "H3",
+          "text": "Smoke (surface)"
+        },
+        {
+          "tag": "H3",
+          "text": "Smoke (sky)"
+        }
+      ],
+      "buttons": [
+        null,
+        "N",
+        "3D",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "Accept Cookies",
+        "Reject Cookies"
+      ],
+      "cards": [
+        "Card__body tw-overflow-hidden tw-p-2.5 tw-relative brand-color",
+        "Card__body tw-overflow-hidden tw-p-2.5 tw-relative card-background-color",
+        "tw-absolute tw-right-2.5 tw-z-10 tw-w-8 tw-top-14 lg:tw-top-16 lg:tw-mt-1 tw-border tw-rounded-full card-border-color tw-mb-2.5 tw-shadow-md CompassControl__container",
+        "tw-relative tw-border tw-rounded-md card-border-color tw-mb-5 tw-shadow-md MapControlGroup__container",
+        "tw-pt-2.5 tw-px-3 md:tw-px-5 card-background-color tw-border-solid tw-border-t border-color LayerDrawer__container tw-absolute tw-w-full tw-z-20 tw-z-10 tw-mb-14 tw-bottom-0 tw-h-0 tw-opacity-0 ControlContainer__slideTransition",
+        "Card__body tw-overflow-hidden tw-p-2.5 tw-relative card-background-color"
+      ],
+      "maps": [
+        "tw-hidden lg:tw-block tw-absolute tw-top-1 tw-z-20 Map__upgradeBanner",
+        "tw-h-full tw-w-full mapboxgl-map",
+        "mapboxgl-canary",
+        "mapboxgl-canvas-container mapboxgl-interactive mapboxgl-touch-drag-pan mapboxgl-touch-zoom-rotate",
+        "mapboxgl-canvas",
+        "mapboxgl-control-container",
+        "mapboxgl-ctrl-top-left",
+        "mapboxgl-ctrl",
+        "mapboxgl-ctrl-logo",
+        "mapboxgl-ctrl-top",
+        "mapboxgl-ctrl-top-right",
+        "mapboxgl-ctrl-right",
+        "mapboxgl-ctrl-bottom-right",
+        "mapboxgl-ctrl-bottom",
+        "mapboxgl-ctrl-bottom-left",
+        "mapboxgl-ctrl-left",
+        "tw-relative tw-border tw-rounded-md card-border-color tw-mb-5 tw-shadow-md MapControlGroup__container",
+        "tw-block tw-w-7 tw-h-7 tw-mx-0.5 tw-my-0.5 tw-rounded-md tw-appearance-none tw-transition-colors MapControlGroup__button",
+        "tw-block tw-w-7 tw-h-7 tw-mx-0.5 tw-my-0.5 tw-rounded-md tw-appearance-none tw-transition-colors MapControlGroup__button",
+        "tw-inline-block tw-w-full tw-h-full MapControlGroup__geolocateIcon",
+        "tw-block tw-w-7 tw-h-7 tw-mx-0.5 tw-my-0.5 tw-rounded-md tw-appearance-none tw-transition-colors MapControlGroup__button",
+        "tw-block tw-w-7 tw-h-7 tw-mx-0.5 tw-my-0.5 tw-rounded-md tw-appearance-none tw-transition-colors MapControlGroup__button",
+        "tw-block tw-w-7 tw-h-7 tw-mx-0.5 tw-my-0.5 tw-rounded-md tw-appearance-none tw-transition-colors MapControlGroup__button",
+        "tw-block tw-w-7 tw-h-7 tw-mx-0.5 tw-my-0.5 tw-rounded-md tw-appearance-none tw-transition-colors MapControlGroup__button",
+        "tw-fixed tw-z-30 CookieNotice__mapBottomPosition tw-inset-x-8 lg:tw-right-auto lg:tw-left-3 lg:tw-w-2/5 tw-p-4 tw-flex tw-justify-between tw-items-start tw-flex-col text-lightest-color text-darkest-background-color tw-border tw-rounded-lg text-lightest-border-color"
+      ],
+      "charts": [
+        "CANVAS:mapboxgl-canvas"
+      ]
+    }
+  },
+  "color_schemes": {
+    "resort": [],
+    "map_legend": []
+  }
+}

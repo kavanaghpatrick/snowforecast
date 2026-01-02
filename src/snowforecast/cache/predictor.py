@@ -89,6 +89,41 @@ class CachedPredictor:
             "tpi": 0.0,
         }
 
+    def _get_real_predictor(self):
+        """Get RealPredictor instance for NBM fetching."""
+        if not hasattr(self, '_real_predictor') or self._real_predictor is None:
+            from snowforecast.api.predictor import RealPredictor
+            self._real_predictor = RealPredictor()
+        return self._real_predictor
+
+    def _fetch_nbm_forecast(
+        self,
+        lat: float,
+        lon: float,
+        target_date: date,
+        forecast_hours: int = 24,
+    ) -> Optional[dict]:
+        """Fetch NBM forecast data for extended range forecasts.
+
+        Delegates to RealPredictor.fetch_nbm_forecast().
+        NBM provides forecasts up to 264 hours (11 days).
+
+        Args:
+            lat: Latitude
+            lon: Longitude
+            target_date: Date to forecast
+            forecast_hours: Hours ahead
+
+        Returns:
+            Dict with forecast variables or None if unavailable
+        """
+        try:
+            predictor = self._get_real_predictor()
+            return predictor.fetch_nbm_forecast(lat, lon, target_date, forecast_hours)
+        except Exception as e:
+            logger.error(f"NBM fetch via RealPredictor failed: {e}")
+            return None
+
     def fetch_hrrr_forecast(
         self,
         lat: float,
@@ -188,29 +223,38 @@ class CachedPredictor:
             logger.info(f"Using cached HRRR: snow_depth={snow_depth_cm:.1f}cm, new={new_snow_cm:.1f}cm")
 
         else:
-            # Fallback to climatology-based estimate
-            logger.info("HRRR unavailable, using climatological estimate")
+            # HRRR unavailable - try NBM for extended forecasts (days 3-7)
+            logger.info("HRRR unavailable, trying NBM for extended forecast")
 
-            month = forecast_date.month
+            nbm_data = self._fetch_nbm_forecast(lat, lon, forecast_date, forecast_hours)
 
-            if month in (12, 1, 2):
-                base_depth = 80 + (elevation - 2000) * 0.05
-                new_snow_base = 8.0
-            elif month in (3, 11):
-                base_depth = 50 + (elevation - 2000) * 0.03
-                new_snow_base = 5.0
-            elif month in (4, 10):
-                base_depth = 20 + (elevation - 2000) * 0.02
-                new_snow_base = 2.0
+            if nbm_data is not None:
+                # Use real NBM data (National Blend of Models)
+                snow_depth_cm = nbm_data["snow_depth_m"] * 100  # m to cm
+                new_snow_cm = nbm_data["new_snow_m"] * 100  # NBM provides accumulated snow
+                temp_c = nbm_data["temp_k"] - 273.15
+
+                # Probability based on forecast snow amount
+                if new_snow_cm > 5:
+                    snowfall_prob = 0.85
+                elif new_snow_cm > 1:
+                    snowfall_prob = 0.6
+                elif new_snow_cm > 0:
+                    snowfall_prob = 0.3
+                else:
+                    snowfall_prob = 0.1
+
+                # Wider CI for extended forecasts
+                ci_width = max(3.0, new_snow_cm * 0.4)
+                logger.info(f"Using NBM data: snow_depth={snow_depth_cm:.1f}cm, new={new_snow_cm:.1f}cm")
+
             else:
-                base_depth = max(0, (elevation - 3000) * 0.01)
-                new_snow_base = 0.5
-
-            import random
-            snow_depth_cm = max(0, base_depth + random.gauss(0, 10))
-            new_snow_cm = max(0, new_snow_base * random.uniform(0, 2))
-            snowfall_prob = 0.3 if month in (12, 1, 2, 3, 11) else 0.1
-            ci_width = max(5.0, new_snow_cm * 0.5)
+                # Both HRRR and NBM unavailable - this should be rare
+                logger.warning("Both HRRR and NBM unavailable - no forecast data")
+                snow_depth_cm = 0.0
+                new_snow_cm = 0.0
+                snowfall_prob = 0.0
+                ci_width = 0.0
 
         # Apply terrain adjustments
         slope = terrain.get("slope", 15)
