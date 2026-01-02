@@ -518,6 +518,15 @@ class SnotelPipeline(TemporalPipeline):
         else:
             return "missing"
 
+    def _get_date_range(self, df: pd.DataFrame) -> tuple:
+        """Get date range tuple from dataframe."""
+        if "datetime" not in df.columns or df["datetime"].isna().all():
+            return (None, None)
+        return (
+            df["datetime"].min().isoformat(),
+            df["datetime"].max().isoformat(),
+        )
+
     def validate(self, df: pd.DataFrame) -> ValidationResult:
         """Validate processed SNOTEL data.
 
@@ -583,10 +592,7 @@ class SnotelPipeline(TemporalPipeline):
         # Compute summary statistics
         stats = {
             "stations": df["station_id"].nunique() if "station_id" in df.columns else 0,
-            "date_range": (
-                df["datetime"].min().isoformat() if "datetime" in df.columns and not df["datetime"].isna().all() else None,
-                df["datetime"].max().isoformat() if "datetime" in df.columns and not df["datetime"].isna().all() else None,
-            ),
+            "date_range": self._get_date_range(df),
             "missing_by_column": missing_counts,
             "quality_distribution": df["quality_flag"].value_counts().to_dict() if "quality_flag" in df.columns else {},
         }

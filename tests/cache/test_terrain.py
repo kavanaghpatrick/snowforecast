@@ -1,15 +1,14 @@
 """Tests for terrain cache layer."""
 
 import tempfile
-from datetime import datetime
 from pathlib import Path
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
 
 import pytest
 
 from snowforecast.cache.database import CacheDatabase
+from snowforecast.cache.models import SKI_AREAS_DATA, CachedTerrain
 from snowforecast.cache.terrain import TerrainCache
-from snowforecast.cache.models import CachedTerrain, SKI_AREAS_DATA
 
 
 @pytest.fixture

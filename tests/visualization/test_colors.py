@@ -1,16 +1,15 @@
 """Tests for color scale functions."""
 
-import pytest
 from snowforecast.visualization.colors import (
-    SNOW_DEPTH_SCALE,
     ELEVATION_SCALE,
-    snow_depth_to_hex,
-    snow_depth_to_rgb,
-    snow_depth_category,
-    elevation_to_rgb,
+    SNOW_DEPTH_SCALE,
     elevation_category,
+    elevation_to_rgb,
     hex_to_rgb,
     rgb_to_hex,
+    snow_depth_category,
+    snow_depth_to_hex,
+    snow_depth_to_rgb,
 )
 
 

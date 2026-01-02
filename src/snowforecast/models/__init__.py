@@ -29,20 +29,20 @@ Comparison utilities:
 """
 
 from snowforecast.models.base import BaseModel
-from snowforecast.models.linear import LinearRegressionModel
+from snowforecast.models.comparison import (
+    ComparisonResults,
+    ModelComparison,
+    compare_models,
+    create_comparison_report,
+    rank_models,
+)
 from snowforecast.models.ensemble import (
     SimpleEnsemble,
     StackingEnsemble,
     create_ensemble,
     get_model_weights,
 )
-from snowforecast.models.comparison import (
-    ModelComparison,
-    ComparisonResults,
-    compare_models,
-    rank_models,
-    create_comparison_report,
-)
+from snowforecast.models.linear import LinearRegressionModel
 
 # Gradient boosting is optional, import if available
 try:
@@ -53,7 +53,7 @@ except ImportError:
 
 # LSTM/GRU models require PyTorch - import conditionally
 try:
-    from snowforecast.models.lstm import SequenceModel, SnowLSTM, SnowGRU
+    from snowforecast.models.lstm import SequenceModel, SnowGRU, SnowLSTM
     _LSTM_AVAILABLE = True
 except ImportError:
     _LSTM_AVAILABLE = False

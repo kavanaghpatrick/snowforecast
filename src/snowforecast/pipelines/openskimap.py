@@ -8,7 +8,7 @@ Data Sources:
 - Lifts: https://tiles.openskimap.org/geojson/lifts.geojson
 """
 
-from dataclasses import dataclass, asdict
+from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any
 
@@ -18,13 +18,12 @@ import requests
 from shapely.geometry import shape
 
 from snowforecast.utils import (
+    WESTERN_US_BBOX,
     StaticPipeline,
     ValidationResult,
-    WESTERN_US_BBOX,
 )
 from snowforecast.utils.geo import haversine
 from snowforecast.utils.io import get_data_path
-
 
 # OpenSkiMap GeoJSON download URLs
 SKI_AREAS_URL = "https://tiles.openskimap.org/geojson/ski_areas.geojson"

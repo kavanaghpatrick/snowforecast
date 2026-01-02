@@ -8,9 +8,9 @@ Test Tiers:
 Run live tests with: pytest -m live --run-live
 """
 
-import pytest
 from pathlib import Path
-import tempfile
+
+import pytest
 
 
 def pytest_addoption(parser):

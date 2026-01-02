@@ -11,24 +11,24 @@ Example:
     >>> # Run with: uvicorn snowforecast.api.app:app --reload
 """
 
+import logging
 from datetime import datetime
 from pathlib import Path
 from typing import Optional
-import logging
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from snowforecast.api.schemas import (
+    WESTERN_US_BOUNDS,
+    ConfidenceInterval,
+    ErrorResponse,
+    ForecastResult,
+    HealthResponse,
+    LocationInfo,
     PredictionRequest,
     PredictionResponse,
-    LocationInfo,
-    ForecastResult,
-    ConfidenceInterval,
-    HealthResponse,
-    ErrorResponse,
-    WESTERN_US_BOUNDS,
 )
 
 logger = logging.getLogger(__name__)

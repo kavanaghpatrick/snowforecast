@@ -1,7 +1,9 @@
 """Tests for I/O utilities."""
 
-import pytest
 from pathlib import Path
+
+import pytest
+
 from snowforecast.utils.io import get_data_path, get_project_root
 
 

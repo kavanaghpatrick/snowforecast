@@ -113,11 +113,22 @@ markers = [
 ]
 
 [tool.ruff]
-line-length = 100
+line-length = 120
 target-version = "py311"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "N", "W"]
+ignore = [
+    "N802",  # Allow non-lowercase function names (test methods)
+    "N803",  # Allow uppercase X, y params for ML convention
+    "N806",  # Allow uppercase X, y vars for ML convention
+    "N812",  # Allow torch.nn.functional as F (PyTorch convention)
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["E501"]  # Allow longer lines in tests
+"src/snowforecast/models/__init__.py" = ["F401"]  # Dynamic re-exports
+"src/snowforecast/models/tuning.py" = ["F401"]  # Optional imports
 
 [tool.mypy]
 python_version = "3.11"

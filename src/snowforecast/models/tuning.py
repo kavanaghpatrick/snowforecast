@@ -4,15 +4,15 @@ This module provides a flexible hyperparameter tuning framework for ML models
 in the snowforecast project.
 """
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Any, Callable
 
 import pandas as pd
 
 try:
     import optuna
-    from optuna.samplers import TPESampler, RandomSampler, GridSampler
-    from optuna.pruners import MedianPruner, HyperbandPruner, NopPruner
+    from optuna.pruners import HyperbandPruner, MedianPruner, NopPruner
+    from optuna.samplers import GridSampler, RandomSampler, TPESampler
 
     OPTUNA_AVAILABLE = True
 except ImportError:

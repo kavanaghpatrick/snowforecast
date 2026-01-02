@@ -7,12 +7,12 @@ Tests the TemporalAligner class which handles:
 - NEVER interpolating missing data
 """
 
-import pytest
-import pandas as pd
-import numpy as np
-from datetime import datetime, timedelta
 
-from snowforecast.features.temporal import TemporalAligner, DEFAULT_AGGREGATIONS
+import numpy as np
+import pandas as pd
+import pytest
+
+from snowforecast.features.temporal import DEFAULT_AGGREGATIONS, TemporalAligner
 
 
 class TestTemporalAlignerInit:

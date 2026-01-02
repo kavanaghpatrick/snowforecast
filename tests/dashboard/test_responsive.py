@@ -1,7 +1,8 @@
 """Tests for responsive layout utilities."""
 
-import pytest
 from unittest.mock import MagicMock, patch
+
+import pytest
 
 
 class TestGetViewportWidth:
@@ -10,9 +11,9 @@ class TestGetViewportWidth:
     def test_returns_default_when_not_set(self):
         """Should return 1200 when viewport_width not in session state."""
         with patch('streamlit.session_state', {}):
-            from snowforecast.dashboard.components.responsive import get_viewport_width
             # Need to reload to pick up mocked session_state
             import importlib
+
             import snowforecast.dashboard.components.responsive as responsive
             importlib.reload(responsive)
 
@@ -23,6 +24,7 @@ class TestGetViewportWidth:
         mock_session = {'viewport_width': 500}
         with patch('streamlit.session_state', mock_session):
             import importlib
+
             import snowforecast.dashboard.components.responsive as responsive
             importlib.reload(responsive)
 
@@ -49,6 +51,7 @@ class TestGetBreakpoint:
         mock_session = {'viewport_width': width}
         with patch('streamlit.session_state', mock_session):
             import importlib
+
             import snowforecast.dashboard.components.responsive as responsive
             importlib.reload(responsive)
 
@@ -63,6 +66,7 @@ class TestIsMobile:
         mock_session = {'viewport_width': 375}
         with patch('streamlit.session_state', mock_session):
             import importlib
+
             import snowforecast.dashboard.components.responsive as responsive
             importlib.reload(responsive)
 
@@ -73,6 +77,7 @@ class TestIsMobile:
         mock_session = {'viewport_width': 800}
         with patch('streamlit.session_state', mock_session):
             import importlib
+
             import snowforecast.dashboard.components.responsive as responsive
             importlib.reload(responsive)
 
@@ -83,6 +88,7 @@ class TestIsMobile:
         mock_session = {'viewport_width': 1200}
         with patch('streamlit.session_state', mock_session):
             import importlib
+
             import snowforecast.dashboard.components.responsive as responsive
             importlib.reload(responsive)
 
@@ -97,6 +103,7 @@ class TestIsTablet:
         mock_session = {'viewport_width': 375}
         with patch('streamlit.session_state', mock_session):
             import importlib
+
             import snowforecast.dashboard.components.responsive as responsive
             importlib.reload(responsive)
 
@@ -107,6 +114,7 @@ class TestIsTablet:
         mock_session = {'viewport_width': 800}
         with patch('streamlit.session_state', mock_session):
             import importlib
+
             import snowforecast.dashboard.components.responsive as responsive
             importlib.reload(responsive)
 
@@ -117,6 +125,7 @@ class TestIsTablet:
         mock_session = {'viewport_width': 1200}
         with patch('streamlit.session_state', mock_session):
             import importlib
+
             import snowforecast.dashboard.components.responsive as responsive
             importlib.reload(responsive)
 
@@ -131,6 +140,7 @@ class TestIsDesktop:
         mock_session = {'viewport_width': 375}
         with patch('streamlit.session_state', mock_session):
             import importlib
+
             import snowforecast.dashboard.components.responsive as responsive
             importlib.reload(responsive)
 
@@ -141,6 +151,7 @@ class TestIsDesktop:
         mock_session = {'viewport_width': 800}
         with patch('streamlit.session_state', mock_session):
             import importlib
+
             import snowforecast.dashboard.components.responsive as responsive
             importlib.reload(responsive)
 
@@ -151,6 +162,7 @@ class TestIsDesktop:
         mock_session = {'viewport_width': 1200}
         with patch('streamlit.session_state', mock_session):
             import importlib
+
             import snowforecast.dashboard.components.responsive as responsive
             importlib.reload(responsive)
 
@@ -165,6 +177,7 @@ class TestGetColumnRatio:
         mock_session = {'viewport_width': 1200}
         with patch('streamlit.session_state', mock_session):
             import importlib
+
             import snowforecast.dashboard.components.responsive as responsive
             importlib.reload(responsive)
 
@@ -175,6 +188,7 @@ class TestGetColumnRatio:
         mock_session = {'viewport_width': 800}
         with patch('streamlit.session_state', mock_session):
             import importlib
+
             import snowforecast.dashboard.components.responsive as responsive
             importlib.reload(responsive)
 
@@ -185,6 +199,7 @@ class TestGetColumnRatio:
         mock_session = {'viewport_width': 375}
         with patch('streamlit.session_state', mock_session):
             import importlib
+
             import snowforecast.dashboard.components.responsive as responsive
             importlib.reload(responsive)
 
@@ -199,6 +214,7 @@ class TestShouldShow3d:
         mock_session = {'viewport_width': 375}
         with patch('streamlit.session_state', mock_session):
             import importlib
+
             import snowforecast.dashboard.components.responsive as responsive
             importlib.reload(responsive)
 
@@ -209,6 +225,7 @@ class TestShouldShow3d:
         mock_session = {'viewport_width': 800}
         with patch('streamlit.session_state', mock_session):
             import importlib
+
             import snowforecast.dashboard.components.responsive as responsive
             importlib.reload(responsive)
 
@@ -219,6 +236,7 @@ class TestShouldShow3d:
         mock_session = {'viewport_width': 1200}
         with patch('streamlit.session_state', mock_session):
             import importlib
+
             import snowforecast.dashboard.components.responsive as responsive
             importlib.reload(responsive)
 
@@ -233,6 +251,7 @@ class TestGetTouchTargetSize:
         mock_session = {'viewport_width': 375}
         with patch('streamlit.session_state', mock_session):
             import importlib
+
             import snowforecast.dashboard.components.responsive as responsive
             importlib.reload(responsive)
 
@@ -243,6 +262,7 @@ class TestGetTouchTargetSize:
         mock_session = {'viewport_width': 800}
         with patch('streamlit.session_state', mock_session):
             import importlib
+
             import snowforecast.dashboard.components.responsive as responsive
             importlib.reload(responsive)
 
@@ -253,6 +273,7 @@ class TestGetTouchTargetSize:
         mock_session = {'viewport_width': 1200}
         with patch('streamlit.session_state', mock_session):
             import importlib
+
             import snowforecast.dashboard.components.responsive as responsive
             importlib.reload(responsive)
 
@@ -267,6 +288,7 @@ class TestRenderResponsiveColumns:
         mock_session = {'viewport_width': 375}
         with patch('streamlit.session_state', mock_session):
             import importlib
+
             import snowforecast.dashboard.components.responsive as responsive
             importlib.reload(responsive)
 
@@ -280,6 +302,7 @@ class TestRenderResponsiveColumns:
         mock_session = {'viewport_width': 800}
         with patch('streamlit.session_state', mock_session):
             import importlib
+
             import snowforecast.dashboard.components.responsive as responsive
             importlib.reload(responsive)
 
@@ -294,6 +317,7 @@ class TestRenderResponsiveColumns:
         mock_session = {'viewport_width': 1200}
         with patch('streamlit.session_state', mock_session):
             import importlib
+
             import snowforecast.dashboard.components.responsive as responsive
             importlib.reload(responsive)
 
@@ -310,6 +334,7 @@ class TestInjectResponsiveCss:
     def test_injects_css(self):
         """Should call st.markdown with CSS styles."""
         import importlib
+
         import snowforecast.dashboard.components.responsive as responsive
         importlib.reload(responsive)
 
@@ -333,6 +358,7 @@ class TestSetViewportWidth:
         mock_session = {}
         with patch('streamlit.session_state', mock_session):
             import importlib
+
             import snowforecast.dashboard.components.responsive as responsive
             importlib.reload(responsive)
 

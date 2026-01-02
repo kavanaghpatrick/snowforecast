@@ -28,14 +28,11 @@ Example usage:
     >>> deck.layers.append(overlay)
 """
 
+
 import numpy as np
 import pandas as pd
 import pydeck as pdk
 import streamlit as st
-from typing import Optional
-
-from snowforecast.visualization import SNOW_DEPTH_SCALE
-
 
 # Color range matching snow depth scale (Trace to Extreme)
 # RGB values extracted from SNOW_DEPTH_SCALE hex colors

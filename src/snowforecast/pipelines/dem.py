@@ -12,12 +12,9 @@ from typing import Any
 import numpy as np
 import pandas as pd
 import rasterio
-from rasterio.merge import merge
-from rasterio.windows import from_bounds
 from scipy import ndimage
 
 from snowforecast.utils import StaticPipeline, ValidationResult, get_data_path
-
 
 # AWS S3 bucket for Copernicus DEM (public, no auth required)
 COPERNICUS_DEM_BUCKET = "copernicus-dem-30m"

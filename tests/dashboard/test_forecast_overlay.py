@@ -4,16 +4,16 @@ Tests the HexagonLayer overlay functions from
 snowforecast.dashboard.components.forecast_overlay.
 """
 
-import pytest
-import pandas as pd
 import numpy as np
+import pandas as pd
 import pydeck as pdk
+import pytest
 
 from snowforecast.dashboard.components.forecast_overlay import (
+    OVERLAY_COLOR_RANGE,
     create_forecast_overlay,
     generate_grid_points,
     render_overlay_toggle,
-    OVERLAY_COLOR_RANGE,
 )
 from snowforecast.visualization import SNOW_DEPTH_SCALE
 

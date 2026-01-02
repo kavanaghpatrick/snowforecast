@@ -7,21 +7,19 @@ Tests the snow quality calculation functions including:
 - Badge and display functions
 """
 
-import sys
 
-import pytest
 from unittest.mock import MagicMock, patch
 
 from snowforecast.dashboard.components.snow_quality import (
-    SnowQuality,
     QualityMetrics,
+    SnowQuality,
     calculate_slr,
-    get_temp_trend,
     classify_snow_quality,
-    get_quality_badge,
-    get_slr_description,
-    get_quality_explanation,
     create_quality_metrics,
+    get_quality_badge,
+    get_quality_explanation,
+    get_slr_description,
+    get_temp_trend,
 )
 
 

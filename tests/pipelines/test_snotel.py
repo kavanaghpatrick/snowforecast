@@ -1,7 +1,5 @@
 """Tests for the SNOTEL data ingestion pipeline."""
 
-from datetime import datetime, timezone
-from pathlib import Path
 from unittest.mock import MagicMock, patch
 
 import pandas as pd
@@ -39,7 +37,7 @@ class TestSnotelPipelineInit:
         """Should use default data directories."""
         with patch("snowforecast.pipelines.snotel.get_data_path") as mock_get_path:
             mock_get_path.side_effect = lambda p, s: tmp_path / s / p
-            pipeline = SnotelPipeline()
+            SnotelPipeline()
             assert mock_get_path.call_count == 2
 
     def test_custom_directories(self, tmp_path):

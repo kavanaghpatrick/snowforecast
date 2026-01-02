@@ -9,7 +9,6 @@ from typing import Optional
 
 from pydantic import BaseModel, Field
 
-
 # Western US bounding box for validation
 WESTERN_US_BOUNDS = {
     "lat_min": 31.0,

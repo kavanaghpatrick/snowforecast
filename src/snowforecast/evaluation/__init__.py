@@ -10,14 +10,14 @@ This module provides:
 """
 
 from snowforecast.evaluation.evaluation import (
+    ConfidenceInterval,
     HoldoutEvaluator,
     MetricsBreakdown,
-    ResidualAnalyzer,
-    ConfidenceInterval,
     PRDMetrics,
-    evaluate_holdout,
-    compute_prd_metrics,
+    ResidualAnalyzer,
     check_prd_targets,
+    compute_prd_metrics,
+    evaluate_holdout,
 )
 
 __all__ = [

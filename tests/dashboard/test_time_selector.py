@@ -5,19 +5,19 @@ and prefetch functionality. Since render functions require Streamlit context,
 we test the pure functions that handle datetime calculations.
 """
 
-from datetime import datetime, timedelta
+from datetime import datetime
 from unittest.mock import MagicMock, patch
 
 import pytest
 
 from snowforecast.dashboard.components.time_selector import (
-    TIME_STEPS,
-    SELECTED_TIME_STEP_KEY,
     ALL_FORECASTS_KEY,
-    get_forecast_time,
-    get_forecast_hours,
-    parse_time_step,
+    SELECTED_TIME_STEP_KEY,
+    TIME_STEPS,
     calculate_forecast_datetime,
+    get_forecast_hours,
+    get_forecast_time,
+    parse_time_step,
 )
 
 

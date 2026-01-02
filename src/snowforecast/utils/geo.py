@@ -1,7 +1,7 @@
 """Geographic utilities and constants."""
 
 from dataclasses import dataclass
-from math import radians, cos, sin, asin, sqrt
+from math import asin, cos, radians, sin, sqrt
 
 
 @dataclass

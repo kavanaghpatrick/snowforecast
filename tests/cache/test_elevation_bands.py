@@ -3,13 +3,15 @@
 Tests lapse rate calculations, snow line computation, and elevation band forecasts.
 """
 
-import pytest
 from datetime import datetime
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
+
+import pytest
 
 from snowforecast.cache.elevation_bands import (
     LAPSE_RATE_C_PER_KM,
     RAIN_THRESHOLD_C,
+    RESORT_VERTICAL_M,
     SNOW_THRESHOLD_C,
     ElevationBandForecast,
     ElevationBandResult,
@@ -20,7 +22,6 @@ from snowforecast.cache.elevation_bands import (
     get_precip_type,
     get_snow_line,
     get_summit_elevation,
-    RESORT_VERTICAL_M,
 )
 
 
@@ -279,7 +280,7 @@ class TestComputeElevationBands:
         predictor = MagicMock()
 
         # Mock forecast result
-        from snowforecast.api.schemas import ForecastResult, ConfidenceInterval
+        from snowforecast.api.schemas import ConfidenceInterval, ForecastResult
 
         forecast = ForecastResult(
             snow_depth_cm=80.0,

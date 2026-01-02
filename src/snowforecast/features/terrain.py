@@ -9,7 +9,6 @@ import pandas as pd
 
 from snowforecast.utils.geo import haversine
 
-
 # Pacific coast approximation (simplified polyline for Western US)
 # These are lon, lat pairs forming a simplified Pacific coastline
 PACIFIC_COAST_POINTS = [

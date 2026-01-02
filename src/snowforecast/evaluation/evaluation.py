@@ -7,24 +7,23 @@ Provides comprehensive evaluation tools including:
 - Bootstrap confidence intervals
 """
 
-from dataclasses import dataclass, field
-from typing import Any, Callable
 import logging
+from dataclasses import dataclass, field
+from typing import Any
 
 import numpy as np
 import pandas as pd
 
+from snowforecast.models.base import BaseModel
 from snowforecast.models.metrics import (
-    rmse,
-    mae,
+    SNOWFALL_EVENT_THRESHOLD_CM,
     bias,
     f1_score_snowfall,
+    mae,
     precision_snowfall,
     recall_snowfall,
-    compute_all_metrics,
-    SNOWFALL_EVENT_THRESHOLD_CM,
+    rmse,
 )
-from snowforecast.models.base import BaseModel
 
 logger = logging.getLogger(__name__)
 
@@ -85,13 +84,16 @@ class PRDMetrics:
 
     def summary(self) -> str:
         """Generate human-readable summary."""
+        rmse_status = "[PASS]" if self.targets_met.get("rmse") else "[FAIL]"
+        bias_status = "[PASS]" if self.targets_met.get("bias") else "[FAIL]"
+        f1_status = "[PASS]" if self.targets_met.get("f1") else "[FAIL]"
         lines = [
             "PRD Metrics Summary",
             "=" * 40,
-            f"RMSE: {self.rmse:.2f} cm (target: <{PRD_TARGETS['rmse']} cm) {'[PASS]' if self.targets_met.get('rmse') else '[FAIL]'}",
+            f"RMSE: {self.rmse:.2f} cm (target: <{PRD_TARGETS['rmse']} cm) {rmse_status}",
             f"MAE: {self.mae:.2f} cm",
-            f"Bias: {self.bias:+.2f} cm (target: <{PRD_TARGETS['bias']} cm) {'[PASS]' if self.targets_met.get('bias') else '[FAIL]'}",
-            f"F1-score: {self.f1:.1%} (target: >{PRD_TARGETS['f1']:.0%}) {'[PASS]' if self.targets_met.get('f1') else '[FAIL]'}",
+            f"Bias: {self.bias:+.2f} cm (target: <{PRD_TARGETS['bias']} cm) {bias_status}",
+            f"F1-score: {self.f1:.1%} (target: >{PRD_TARGETS['f1']:.0%}) {f1_status}",
             f"Precision: {self.precision:.1%}",
             f"Recall: {self.recall:.1%}",
         ]

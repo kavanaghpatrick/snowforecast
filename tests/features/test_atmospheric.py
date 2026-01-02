@@ -353,7 +353,7 @@ class TestComputeAll:
         """Test that compute_all adds all expected feature columns."""
         result = atmospheric.compute_all(sample_era5_data)
 
-        expected_features = atmospheric.get_feature_names()
+        atmospheric.get_feature_names()
         # Some features might not be computed if input columns are missing
         # But with full sample data, we should have most of them
         for feature in ["t2m_celsius", "relative_humidity", "wind_speed", "pressure_hpa", "precip_mm"]:

@@ -4,13 +4,13 @@ This module tests the BaseModel interface and validation methods
 using a concrete test implementation.
 """
 
+from pathlib import Path
+
 import numpy as np
 import pandas as pd
 import pytest
-from pathlib import Path
 
 from snowforecast.models.base import BaseModel
-
 
 # =============================================================================
 # Concrete test implementation

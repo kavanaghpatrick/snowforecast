@@ -8,10 +8,10 @@ from typing import Optional
 import duckdb
 
 from snowforecast.cache.models import (
+    SKI_AREAS_DATA,
     CachedForecast,
     CachedTerrain,
     SkiArea,
-    SKI_AREAS_DATA,
 )
 
 logger = logging.getLogger(__name__)
@@ -440,8 +440,9 @@ class CacheDatabase:
         """Log a data fetch operation."""
         self.conn.execute(
             """
-            INSERT INTO fetch_log (source, timestamp, status, records_added, duration_ms, error_message)
-            VALUES (?, ?, ?, ?, ?, ?)
+            INSERT INTO fetch_log (
+                source, timestamp, status, records_added, duration_ms, error_message
+            ) VALUES (?, ?, ?, ?, ?, ?)
             """,
             [source, datetime.utcnow(), status, records_added, duration_ms, error_message],
         )

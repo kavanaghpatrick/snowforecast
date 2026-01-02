@@ -6,16 +6,15 @@ that handle serialization/deserialization separately.
 """
 
 import json
-import pytest
 from unittest.mock import MagicMock, patch
 
 from snowforecast.dashboard.components.favorites import (
-    parse_favorites_json,
-    serialize_favorites,
-    add_to_favorites_list,
-    remove_from_favorites_list,
-    check_is_favorite,
     FAVORITES_KEY,
+    add_to_favorites_list,
+    check_is_favorite,
+    parse_favorites_json,
+    remove_from_favorites_list,
+    serialize_favorites,
 )
 
 

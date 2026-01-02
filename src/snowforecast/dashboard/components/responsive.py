@@ -4,8 +4,9 @@ Provides breakpoint detection and responsive layout helpers for mobile,
 tablet, and desktop viewports.
 """
 
-import streamlit as st
 from typing import Literal
+
+import streamlit as st
 
 Breakpoint = Literal["mobile", "tablet", "desktop"]
 

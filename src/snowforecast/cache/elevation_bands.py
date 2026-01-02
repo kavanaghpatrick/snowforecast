@@ -264,7 +264,8 @@ def compute_elevation_bands(
     base_prob = forecast.snowfall_probability if base_precip_type == PrecipType.SNOW else (
         forecast.snowfall_probability * 0.5 if base_precip_type == PrecipType.MIXED else 0.1
     )
-    mid_prob = forecast.snowfall_probability if mid_precip_type in (PrecipType.SNOW, PrecipType.MIXED) else 0.1
+    mid_snow_types = (PrecipType.SNOW, PrecipType.MIXED)
+    mid_prob = forecast.snowfall_probability if mid_precip_type in mid_snow_types else 0.1
     summit_prob = forecast.snowfall_probability  # Always use full prob at summit
 
     # Calculate snow line

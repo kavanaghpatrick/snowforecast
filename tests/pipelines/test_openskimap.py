@@ -1,21 +1,18 @@
 """Tests for the OpenSkiMap ski resort extraction pipeline."""
 
 import json
-import tempfile
-from pathlib import Path
 from unittest.mock import Mock, patch
 
 import pandas as pd
 import pytest
 
 from snowforecast.pipelines.openskimap import (
+    LIFTS_URL,
+    SKI_AREAS_URL,
     OpenSkiMapPipeline,
     SkiResort,
-    SKI_AREAS_URL,
-    LIFTS_URL,
 )
 from snowforecast.utils.geo import haversine
-
 
 # Sample GeoJSON data for testing
 SAMPLE_SKI_AREAS_GEOJSON = {

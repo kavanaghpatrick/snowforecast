@@ -5,9 +5,7 @@ Run with: streamlit run src/snowforecast/dashboard/app.py
 
 import sys
 from datetime import date, datetime, timedelta
-from pathlib import Path
 
-import numpy as np
 import pandas as pd
 
 # Try to import streamlit, provide helpful error if missing
@@ -186,7 +184,9 @@ def render_cache_status_indicator():
     )
 
 
-def fetch_ski_area_forecast(name: str, lat: float, lon: float, days: int = 7, progress_container=None) -> pd.DataFrame:
+def fetch_ski_area_forecast(
+    name: str, lat: float, lon: float, days: int = 7, progress_container=None
+) -> pd.DataFrame:
     """Fetch forecast for a ski area.
 
     Args:
@@ -283,7 +283,7 @@ def fetch_all_current_conditions(progress_container=None) -> pd.DataFrame:
                 "new_snow_cm": forecast.new_snow_cm,
                 "probability": forecast.snowfall_probability,
             })
-        except Exception as e:
+        except Exception:
             # Use fallback values on error
             records.append({
                 "ski_area": name,
@@ -546,7 +546,9 @@ def main():
             forecast_cache_key = f"forecast_{selected_area}_{datetime.now().strftime('%Y%m%d%H')}"
             if forecast_cache_key not in st.session_state:
                 forecast_progress = st.empty()
-                forecast_df = fetch_ski_area_forecast(selected_area, lat, lon, days=7, progress_container=forecast_progress)
+                forecast_df = fetch_ski_area_forecast(
+                    selected_area, lat, lon, days=7, progress_container=forecast_progress
+                )
                 st.session_state[forecast_cache_key] = forecast_df
             else:
                 forecast_df = st.session_state[forecast_cache_key]

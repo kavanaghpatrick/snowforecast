@@ -1,12 +1,11 @@
 """Tests for ERA5-Land data ingestion pipeline."""
 
-import pytest
 from pathlib import Path
-from datetime import datetime
-from unittest.mock import Mock, patch, MagicMock
-import sys
+from unittest.mock import MagicMock
+
 import numpy as np
 import pandas as pd
+import pytest
 
 # Import xarray for testing
 try:
@@ -16,8 +15,7 @@ except ImportError:
     HAS_XARRAY = False
     xr = None
 
-from snowforecast.utils import BoundingBox, ValidationResult, WESTERN_US_BBOX
-
+from snowforecast.utils import WESTERN_US_BBOX, BoundingBox, ValidationResult
 
 # Skip all tests if xarray is not available
 pytestmark = pytest.mark.skipif(not HAS_XARRAY, reason="xarray not installed")
@@ -230,7 +228,7 @@ class TestERA5Download:
 
         era5_pipeline._mock_client.retrieve.side_effect = create_file
 
-        result = era5_pipeline.download("2023-01-01", "2023-01-01", force=True)
+        era5_pipeline.download("2023-01-01", "2023-01-01", force=True)
 
         # Client should have been called
         era5_pipeline._mock_client.retrieve.assert_called_once()
@@ -510,7 +508,7 @@ class TestVariableUnits:
 
     def test_variable_units_defined(self):
         """Should have units defined for all variables."""
-        from snowforecast.pipelines.era5 import VARIABLE_UNITS, ERA5_VARIABLES
+        from snowforecast.pipelines.era5 import ERA5_VARIABLES, VARIABLE_UNITS
 
         # All short names should have units
         for short_name in ERA5_VARIABLES.keys():

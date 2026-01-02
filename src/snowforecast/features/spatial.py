@@ -8,7 +8,7 @@ bilinear interpolation.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any, Literal, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Literal
 
 if TYPE_CHECKING:
     import xarray as xr
@@ -236,7 +236,7 @@ class SpatialAligner:
                 point_df["point_lon"] = lon
 
                 records.append(point_df)
-            except Exception as e:
+            except Exception:
                 # Create empty record for failed extraction
                 empty_record = {
                     "point_id": i,

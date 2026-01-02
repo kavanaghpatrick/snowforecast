@@ -1,13 +1,13 @@
 """Tests for DataOrchestrator and orchestration module."""
 
 from dataclasses import dataclass
-from unittest.mock import MagicMock, patch
-import pytest
+from unittest.mock import MagicMock
+
 import pandas as pd
+import pytest
 
 from snowforecast.features import DataOrchestrator, LocationPoint, OrchestrationResult
-from snowforecast.features.orchestration import StationProvider, ResortProvider
-
+from snowforecast.features.orchestration import ResortProvider, StationProvider
 
 # --- Mock data classes to simulate pipeline outputs ---
 

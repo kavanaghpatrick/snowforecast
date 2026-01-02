@@ -1,10 +1,11 @@
 """Tests for spatial alignment utilities."""
 
-import pytest
+from dataclasses import dataclass
+from unittest.mock import Mock
+
 import numpy as np
 import pandas as pd
-from dataclasses import dataclass
-from unittest.mock import Mock, MagicMock
+import pytest
 
 # Import xarray for testing
 try:

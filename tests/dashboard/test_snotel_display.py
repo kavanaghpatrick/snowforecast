@@ -1,16 +1,17 @@
 """Tests for SNOTEL display component."""
 
-import pytest
 from datetime import datetime
 
+import pytest
+
 from snowforecast.dashboard.components.snotel_display import (
-    SnotelStation,
     MOCK_SNOTEL_STATIONS,
-    calculate_pct_of_normal,
-    get_snowpack_status,
-    get_nearby_snotel_stations,
-    create_snotel_map_layer,
+    SnotelStation,
     _hex_to_rgb,
+    calculate_pct_of_normal,
+    create_snotel_map_layer,
+    get_nearby_snotel_stations,
+    get_snowpack_status,
 )
 
 

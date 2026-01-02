@@ -12,6 +12,7 @@ Why these tests exist:
 """
 
 import datetime
+
 import pytest
 
 # All tests in this file are live tests
@@ -132,7 +133,7 @@ class TestHRRRLive:
         yesterday = datetime.date.today() - datetime.timedelta(days=1)
 
         try:
-            raw_path = pipeline.download(
+            pipeline.download(
                 start_date=str(yesterday),
                 end_date=str(yesterday),
             )

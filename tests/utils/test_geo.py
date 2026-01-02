@@ -1,7 +1,6 @@
 """Tests for geographic utilities."""
 
-import pytest
-from snowforecast.utils.geo import BoundingBox, Point, haversine, WESTERN_US_BBOX
+from snowforecast.utils.geo import WESTERN_US_BBOX, BoundingBox, Point, haversine
 
 
 class TestBoundingBox:

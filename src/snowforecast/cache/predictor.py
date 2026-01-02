@@ -5,15 +5,14 @@ HRRR forecasts cached for 2 hours, terrain data cached permanently.
 """
 
 import logging
-from datetime import datetime, date, timedelta
+from datetime import date, datetime, timedelta
 from pathlib import Path
 from typing import Optional
 
-from snowforecast.api.schemas import ForecastResult, ConfidenceInterval
-from snowforecast.cache.database import CacheDatabase, DEFAULT_DB_PATH
+from snowforecast.api.schemas import ConfidenceInterval, ForecastResult
+from snowforecast.cache.database import DEFAULT_DB_PATH, CacheDatabase
 from snowforecast.cache.hrrr import HRRRCache
 from snowforecast.cache.terrain import TerrainCache
-from snowforecast.cache.models import CachedForecast, CachedTerrain
 
 logger = logging.getLogger(__name__)
 
@@ -186,7 +185,6 @@ class CachedPredictor:
         """
         # Get terrain features (cached permanently)
         terrain = self.get_terrain_features(lat, lon)
-        elevation = terrain.get("elevation", 2000)
 
         # Try to get HRRR forecast (cached for 2 hours)
         if isinstance(target_date, datetime):
@@ -221,7 +219,7 @@ class CachedPredictor:
                 snowfall_prob = 0.1
 
             ci_width = max(2.0, new_snow_cm * 0.3)
-            logger.info(f"Using cached HRRR: snow_depth={snow_depth_cm:.1f}cm, new={new_snow_cm:.1f}cm")
+            logger.info(f"HRRR: depth={snow_depth_cm:.1f}cm, new={new_snow_cm:.1f}cm")
 
         else:
             # HRRR unavailable - try NBM for extended forecasts (days 3-7)
@@ -247,7 +245,7 @@ class CachedPredictor:
 
                 # Wider CI for extended forecasts
                 ci_width = max(3.0, new_snow_cm * 0.4)
-                logger.info(f"Using NBM data: snow_depth={snow_depth_cm:.1f}cm, new={new_snow_cm:.1f}cm")
+                logger.info(f"NBM: depth={snow_depth_cm:.1f}cm, new={new_snow_cm:.1f}cm")
 
             else:
                 # Both HRRR and NBM unavailable - this should be rare

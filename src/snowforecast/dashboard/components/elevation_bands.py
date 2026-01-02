@@ -7,7 +7,6 @@ similar to Mountain-Forecast.com format.
 import streamlit as st
 
 from snowforecast.cache.elevation_bands import (
-    ElevationBandForecast,
     ElevationBandResult,
     PrecipType,
 )

@@ -1,6 +1,5 @@
 """Lagged and rolling window feature engineering."""
 
-from typing import Any
 
 import pandas as pd
 

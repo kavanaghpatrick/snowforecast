@@ -4,13 +4,12 @@ This module tests the linear regression baseline model using
 realistic synthetic snow data.
 """
 
+
 import numpy as np
 import pandas as pd
 import pytest
-from pathlib import Path
 
 from snowforecast.models.linear import LinearRegressionModel
-
 
 # =============================================================================
 # Test fixtures with realistic snow data

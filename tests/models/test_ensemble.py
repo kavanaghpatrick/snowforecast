@@ -4,19 +4,18 @@ This module tests SimpleEnsemble and StackingEnsemble using realistic
 synthetic snow data with multiple base models.
 """
 
+
 import numpy as np
 import pandas as pd
 import pytest
-from pathlib import Path
 
-from snowforecast.models.linear import LinearRegressionModel
 from snowforecast.models.ensemble import (
     SimpleEnsemble,
     StackingEnsemble,
     create_ensemble,
     get_model_weights,
 )
-
+from snowforecast.models.linear import LinearRegressionModel
 
 # =============================================================================
 # Test fixtures

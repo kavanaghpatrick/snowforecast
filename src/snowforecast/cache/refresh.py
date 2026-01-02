@@ -22,8 +22,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Optional
 
-from snowforecast.cache.database import CacheDatabase, DEFAULT_DB_PATH
-from snowforecast.cache.hrrr import HRRRCache, CACHE_VALIDITY_HOURS
+from snowforecast.cache.database import DEFAULT_DB_PATH, CacheDatabase
+from snowforecast.cache.hrrr import CACHE_VALIDITY_HOURS, HRRRCache
 from snowforecast.cache.models import SKI_AREAS_DATA, SkiArea
 from snowforecast.cache.terrain import TerrainCache
 
@@ -346,7 +346,7 @@ Examples:
   python -m snowforecast.cache.refresh --status # Show status
 
 Cron setup (refresh at :50 each hour before new HRRR run):
-  50 * * * * cd /path/to/snowforecast && python -m snowforecast.cache.refresh >> /var/log/snowforecast-refresh.log 2>&1
+  50 * * * * cd /path/to/snowforecast && python -m snowforecast.cache.refresh
         """,
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )

@@ -4,10 +4,11 @@ Provides UI components for displaying cache freshness and status
 information to users, including warnings for stale data.
 """
 
-import streamlit as st
-from datetime import datetime, timedelta
-from typing import Tuple, Optional, Any
 import logging
+from datetime import datetime, timedelta
+from typing import Any, Optional, Tuple
+
+import streamlit as st
 
 logger = logging.getLogger(__name__)
 
@@ -313,7 +314,6 @@ def render_data_source_indicator(
     """
     target = container if container is not None else st
 
-    icon = "cached" if is_cached else "live"
     color = "#3b82f6" if is_cached else "#22c55e"
 
     target.markdown(

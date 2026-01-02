@@ -8,7 +8,6 @@ Tests cover:
 - Tile URL formats
 """
 
-import pytest
 import pydeck as pdk
 
 from snowforecast.dashboard.components.terrain_layer import (
@@ -35,7 +34,7 @@ class TestTerrainLayer:
 
     def test_uses_aws_terrain_tiles_for_elevation(self):
         """Should use free AWS terrain tiles for elevation data."""
-        layer = create_terrain_layer()
+        create_terrain_layer()
         # Check layer configuration includes AWS terrain URL
         assert "s3.amazonaws.com/elevation-tiles-prod" in TERRAIN_IMAGE
 

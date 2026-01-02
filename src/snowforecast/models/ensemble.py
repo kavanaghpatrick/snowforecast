@@ -26,7 +26,6 @@ Example:
 
 import logging
 import pickle
-import warnings
 from pathlib import Path
 from typing import Any, Literal
 
@@ -563,7 +562,7 @@ class StackingEnsemble(BaseModel):
 
         # Create fold indices
         fold_size = n_samples // self.cv_folds
-        indices = np.arange(n_samples)
+        np.arange(n_samples)
 
         for fold_idx in range(self.cv_folds):
             # Define fold boundaries
@@ -613,7 +612,7 @@ class StackingEnsemble(BaseModel):
 
         # Prepare meta-features
         # Only keep columns for models that successfully fitted
-        valid_model_indices = [
+        [
             i for i, model in enumerate(self._base_models)
             if any(m.__class__ == model.__class__ for m in self._fitted_base_models)
         ]

@@ -6,14 +6,14 @@ This module provides production-ready predictions by:
 3. Combining into snow predictions
 """
 
-from datetime import datetime, date, timedelta
+import logging
+from datetime import date, datetime
 from pathlib import Path
 from typing import Optional
-import logging
 
 import numpy as np
 
-from snowforecast.api.schemas import ForecastResult, ConfidenceInterval
+from snowforecast.api.schemas import ConfidenceInterval, ForecastResult
 
 logger = logging.getLogger(__name__)
 
@@ -163,8 +163,9 @@ class RealPredictor:
             Dict with forecast variables or None if unavailable
         """
         try:
-            from herbie import Herbie
             from datetime import date as date_type
+
+            from herbie import Herbie
 
             # HRRR provides forecasts from the current run time
             # Use today's run with appropriate forecast hour (fxx)
@@ -295,8 +296,9 @@ class RealPredictor:
             Dict with forecast variables or None if unavailable
         """
         try:
-            from herbie import Herbie
             from datetime import date as date_type
+
+            from herbie import Herbie
 
             today = date_type.today()
 
@@ -412,7 +414,6 @@ class RealPredictor:
         """
         # Get terrain features
         terrain = self.get_terrain_features(lat, lon)
-        elevation = terrain.get("elevation", 2000)
 
         # Try to get HRRR forecast
         if isinstance(target_date, datetime):
@@ -448,7 +449,7 @@ class RealPredictor:
                 snowfall_prob = 0.1
 
             ci_width = max(2.0, new_snow_cm * 0.3)
-            logger.info(f"Using HRRR data: snow_depth={snow_depth_cm:.1f}cm, new={new_snow_cm:.1f}cm")
+            logger.info(f"HRRR: depth={snow_depth_cm:.1f}cm, new={new_snow_cm:.1f}cm")
 
         else:
             # Try NBM for extended forecasts (49-168h)
@@ -472,7 +473,7 @@ class RealPredictor:
 
                 # Wider confidence interval for extended forecasts
                 ci_width = max(3.0, new_snow_cm * 0.4)
-                logger.info(f"Using NBM data: snow_depth={snow_depth_cm:.1f}cm, new={new_snow_cm:.1f}cm")
+                logger.info(f"NBM: depth={snow_depth_cm:.1f}cm, new={new_snow_cm:.1f}cm")
 
             else:
                 # Last resort: no forecast data available

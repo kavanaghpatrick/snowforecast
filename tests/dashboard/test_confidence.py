@@ -4,13 +4,12 @@ Tests the confidence level classification, badge generation,
 color mapping, and formatting functions.
 """
 
-import pytest
 from snowforecast.api.schemas import ConfidenceInterval
 from snowforecast.dashboard.components.confidence import (
-    get_confidence_level,
+    format_forecast_with_ci,
     get_confidence_badge,
     get_confidence_color,
-    format_forecast_with_ci,
+    get_confidence_level,
 )
 
 

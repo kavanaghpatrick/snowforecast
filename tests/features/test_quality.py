@@ -13,13 +13,12 @@ import pandas as pd
 import pytest
 
 from snowforecast.features.quality import (
+    DEFAULT_MAX_HOURLY_CHANGE,
+    DEFAULT_PHYSICAL_LIMITS,
     DataQualityController,
     QualityFlag,
     QualityReport,
-    DEFAULT_PHYSICAL_LIMITS,
-    DEFAULT_MAX_HOURLY_CHANGE,
 )
-
 
 # =============================================================================
 # Fixtures

@@ -4,7 +4,6 @@ Tests the decorators and utility functions without requiring Streamlit.
 Streamlit-dependent rendering functions are tested with mocks.
 """
 
-import pytest
 from datetime import datetime, timedelta
 from unittest.mock import MagicMock, patch
 
@@ -536,8 +535,8 @@ class TestIntegrationScenarios:
     @patch("snowforecast.dashboard.components.cache_status.st")
     def test_fetch_with_loading_and_status_check(self, mock_cache_st, mock_loading_st):
         """Simulate fetching data with loading and checking cache status."""
-        from snowforecast.dashboard.components.loading import with_loading
         from snowforecast.dashboard.components.cache_status import get_cache_freshness
+        from snowforecast.dashboard.components.loading import with_loading
 
         mock_loading_st.spinner.return_value.__enter__ = MagicMock()
         mock_loading_st.spinner.return_value.__exit__ = MagicMock()
@@ -559,8 +558,8 @@ class TestIntegrationScenarios:
     def test_error_handling_workflow(self, mock_st):
         """Simulate error handling workflow."""
         from snowforecast.dashboard.components.loading import (
-            with_error_handling,
             render_retry_button,
+            with_error_handling,
         )
 
         @with_error_handling("Failed to load resort data")

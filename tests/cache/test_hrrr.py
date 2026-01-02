@@ -3,12 +3,12 @@
 import tempfile
 from datetime import datetime, timedelta
 from pathlib import Path
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock, patch
 
 import pytest
 
 from snowforecast.cache.database import CacheDatabase
-from snowforecast.cache.hrrr import HRRRCache, CACHE_VALIDITY_HOURS
+from snowforecast.cache.hrrr import CACHE_VALIDITY_HOURS, HRRRCache
 from snowforecast.cache.models import CachedForecast
 
 
@@ -370,7 +370,7 @@ class TestHRRRCacheCleanup:
         )
 
         # Clean up with 7-day retention
-        deleted = hrrr_cache.cleanup_old_data(keep_days=7)
+        hrrr_cache.cleanup_old_data(keep_days=7)
 
         # Old forecast should be deleted
         stats = temp_db.get_stats()

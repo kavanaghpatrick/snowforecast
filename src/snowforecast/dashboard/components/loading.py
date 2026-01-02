@@ -4,11 +4,11 @@ Provides decorators and UI components for managing loading states,
 error handling, and retry functionality in the Streamlit dashboard.
 """
 
-import streamlit as st
-from datetime import datetime, timedelta
-from typing import Optional, Callable, TypeVar, Any
-from functools import wraps
 import logging
+from functools import wraps
+from typing import Callable, Optional, TypeVar
+
+import streamlit as st
 
 T = TypeVar('T')
 
@@ -147,7 +147,7 @@ def render_loading_skeleton(
     elif skeleton_type == "table":
         # Render table-like skeleton rows
         rows_html = "".join([
-            f'<div style="height: 40px; background: #f0f0f0; margin: 4px 0; border-radius: 4px;"></div>'
+            '<div style="height: 40px; background: #f0f0f0; margin: 4px 0; border-radius: 4px;"></div>'
             for _ in range(min(height // 40, 10))
         ])
         target.markdown(
@@ -180,7 +180,8 @@ def render_loading_skeleton(
         )
     else:  # text
         lines_html = "".join([
-            f'<div style="height: 16px; width: {80 - i*10}%; background: #e8e8e8; margin: 8px 0; border-radius: 4px;"></div>'
+            f'<div style="height: 16px; width: {80 - i*10}%; '
+            f'background: #e8e8e8; margin: 8px 0; border-radius: 4px;"></div>'
             for i in range(min(height // 24, 8))
         ])
         target.markdown(

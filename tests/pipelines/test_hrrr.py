@@ -4,20 +4,17 @@ These tests verify the HRRR pipeline functionality. Tests marked with
 @pytest.mark.integration require the herbie library and network access.
 """
 
-import pytest
-from pathlib import Path
-from unittest.mock import MagicMock, patch
 
-import numpy as np
 import pandas as pd
+import pytest
 import xarray as xr
 
 from snowforecast.pipelines.hrrr import (
-    HRRRPipeline,
     DEFAULT_VARIABLES,
     EXTENDED_VARIABLES,
+    HRRRPipeline,
 )
-from snowforecast.utils import ValidationResult, BoundingBox, WESTERN_US_BBOX
+from snowforecast.utils import WESTERN_US_BBOX, BoundingBox, ValidationResult
 
 
 class TestHRRRPipelineInit:

@@ -9,15 +9,14 @@ import pytest
 from fastapi.testclient import TestClient
 
 from snowforecast.api import (
-    create_app,
-    get_model_cache,
+    ConfidenceInterval,
+    ForecastResult,
+    HealthResponse,
     ModelCache,
     PredictionRequest,
     PredictionResponse,
-    LocationInfo,
-    ForecastResult,
-    ConfidenceInterval,
-    HealthResponse,
+    create_app,
+    get_model_cache,
 )
 from snowforecast.api.schemas import WESTERN_US_BOUNDS
 

@@ -7,15 +7,13 @@ This module does NOT run actual data downloads - it provides the structure
 for orchestrating pipeline calls in a coordinated manner.
 """
 
-from dataclasses import dataclass, field
-from datetime import datetime
-from pathlib import Path
-from typing import Protocol, Any
 import logging
+from dataclasses import dataclass, field
+from typing import Any, Protocol
 
 import pandas as pd
 
-from snowforecast.utils import ValidationResult, WESTERN_US_BBOX
+from snowforecast.utils import ValidationResult
 
 logger = logging.getLogger(__name__)
 

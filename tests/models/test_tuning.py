@@ -9,16 +9,17 @@ import pandas as pd
 import pytest
 
 from snowforecast.models.tuning import (
-    TuningConfig,
-    SEARCH_SPACES,
-    get_search_space,
-    create_tuner,
     OPTUNA_AVAILABLE,
+    SEARCH_SPACES,
+    TuningConfig,
+    create_tuner,
+    get_search_space,
 )
 
 if OPTUNA_AVAILABLE:
-    from snowforecast.models.tuning import HyperparameterTuner
     import optuna
+
+    from snowforecast.models.tuning import HyperparameterTuner
 
 
 class TestTuningConfig:

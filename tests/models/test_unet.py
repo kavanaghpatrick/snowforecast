@@ -12,13 +12,12 @@ import pytest
 import torch
 
 from snowforecast.models.unet import (
-    UNetBlock,
-    UNetEncoder,
-    UNetDecoder,
     SnowUNet,
     SpatialModel,
+    UNetBlock,
+    UNetDecoder,
+    UNetEncoder,
 )
-
 
 # =============================================================================
 # Test fixtures
@@ -563,7 +562,7 @@ class TestSkipConnections:
         x = torch.randn(1, 4, 32, 32)
 
         # Get output with skip connections
-        output_with_skip = model(x)
+        model(x)
 
         # Verify skip connections exist by checking encoder-decoder structure
         assert hasattr(model, "encoder")

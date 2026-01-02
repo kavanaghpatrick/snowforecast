@@ -5,19 +5,18 @@ Tests use real numpy calculations - NO MOCKS.
 
 import numpy as np
 import pandas as pd
-import pytest
 
 from snowforecast.models.metrics import (
-    rmse,
-    mae,
+    METRICS,
+    SNOWFALL_EVENT_THRESHOLD_CM,
     bias,
-    f1_score_snowfall,
-    precision_snowfall,
-    recall_snowfall,
     compute_all_metrics,
     compute_metrics_by_group,
-    SNOWFALL_EVENT_THRESHOLD_CM,
-    METRICS,
+    f1_score_snowfall,
+    mae,
+    precision_snowfall,
+    recall_snowfall,
+    rmse,
 )
 
 

@@ -4,6 +4,7 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, TypeVar
+
 import pandas as pd
 
 # Type variable for flexible data types (DataFrame, xarray.Dataset, etc.)

@@ -7,13 +7,10 @@ This module provides an enhanced resort detail view with:
 - Snow depth trend chart
 """
 
-from datetime import datetime
-from typing import Optional
 
 import pandas as pd
 
-from snowforecast.visualization import snow_depth_to_hex, snow_depth_category
-
+from snowforecast.visualization import snow_depth_category, snow_depth_to_hex
 
 # Day name mappings
 DAY_NAMES = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
@@ -281,7 +278,7 @@ def render_forecast_table(forecasts: pd.DataFrame, container=None) -> None:
 
         # Get color for snow depth
         depth_color = snow_depth_to_hex(snow_depth)
-        category = snow_depth_category(snow_depth)
+        snow_depth_category(snow_depth)
 
         # Build row HTML
         html_rows.append(f"""

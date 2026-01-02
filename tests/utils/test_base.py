@@ -1,14 +1,16 @@
 """Tests for base pipeline classes."""
 
-import pytest
 from pathlib import Path
+
 import pandas as pd
+import pytest
+
 from snowforecast.utils.base import (
-    ValidationResult,
     BasePipeline,
-    TemporalPipeline,
-    StaticPipeline,
     GriddedPipeline,
+    StaticPipeline,
+    TemporalPipeline,
+    ValidationResult,
 )
 
 

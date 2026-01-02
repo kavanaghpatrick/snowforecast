@@ -1,19 +1,19 @@
 """Tests for resort detail panel component."""
 
-import pytest
+from datetime import date, datetime
+
 import pandas as pd
-from datetime import date, datetime, timedelta
 
 from snowforecast.dashboard.components.resort_detail import (
-    generate_forecast_summary,
-    _get_day_name,
-    _classify_snow_intensity,
-    _find_snow_events,
-    _format_date_range,
-    _describe_conditions,
+    HEAVY_SNOW_THRESHOLD,
     LIGHT_SNOW_THRESHOLD,
     MODERATE_SNOW_THRESHOLD,
-    HEAVY_SNOW_THRESHOLD,
+    _classify_snow_intensity,
+    _describe_conditions,
+    _find_snow_events,
+    _format_date_range,
+    _get_day_name,
+    generate_forecast_summary,
 )
 
 

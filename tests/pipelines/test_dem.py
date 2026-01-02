@@ -4,21 +4,18 @@ These tests use synthetic DEM data to verify terrain calculations without
 requiring actual downloads from AWS.
 """
 
+from unittest.mock import patch
+
 import numpy as np
 import pandas as pd
-import pytest
-from pathlib import Path
-from unittest.mock import MagicMock, patch
 
 from snowforecast.pipelines.dem import (
+    COPERNICUS_DEM_URL,
     DEMPipeline,
     TerrainFeatures,
     _tile_name,
     _tile_url,
-    DEM_CELL_SIZE,
-    COPERNICUS_DEM_URL,
 )
-from snowforecast.utils import ValidationResult
 
 
 class TestTileNaming:
@@ -195,7 +192,7 @@ class TestAspectCyclicalEncoding:
 
     def test_aspect_sin_cos_continuous(self):
         """Sin/cos encoding should be continuous across 0/360 boundary."""
-        pipeline = DEMPipeline()
+        DEMPipeline()
 
         # Test values near 0 and 360 should have similar sin/cos
         aspect_0 = 1.0

@@ -4,13 +4,14 @@ Tests the PyDeck map functions from snowforecast.dashboard.components.map_view.
 """
 
 import json
-import pytest
+
 import pandas as pd
 import pydeck as pdk
+import pytest
 
 from snowforecast.dashboard.components.map_view import (
-    create_resort_layer,
     create_base_view,
+    create_resort_layer,
     render_resort_map,
 )
 from snowforecast.visualization import snow_depth_to_rgb

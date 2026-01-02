@@ -20,8 +20,8 @@ Example usage:
     >>> deck = render_resort_map(resort_data)
 """
 
-import pydeck as pdk
 import pandas as pd
+import pydeck as pdk
 
 from snowforecast.visualization import snow_depth_to_rgb
 

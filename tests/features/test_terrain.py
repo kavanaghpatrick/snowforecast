@@ -4,26 +4,20 @@ This module tests the TerrainFeatureEngineer class and all helper functions
 for computing derived terrain features.
 """
 
-import math
 import numpy as np
 import pandas as pd
 import pytest
 
 from snowforecast.features.terrain import (
     TerrainFeatureEngineer,
-    _distance_to_coast,
-    _get_elevation_band,
-    _get_slope_category,
-    _get_aspect_cardinal,
-    _is_north_facing,
     _compute_solar_exposure,
     _compute_wind_exposure,
-    ELEVATION_BANDS,
-    SLOPE_CATEGORIES,
-    WESTERN_US_LAT_MIN,
-    WESTERN_US_LAT_MAX,
+    _distance_to_coast,
+    _get_aspect_cardinal,
+    _get_elevation_band,
+    _get_slope_category,
+    _is_north_facing,
 )
-
 
 # =============================================================================
 # Test fixtures

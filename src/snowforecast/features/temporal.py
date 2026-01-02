@@ -13,7 +13,6 @@ represented as NaN values.
 """
 
 import logging
-from datetime import datetime, timezone
 from typing import Callable
 
 import pandas as pd
@@ -159,7 +158,7 @@ class TemporalAligner:
 
         # Ensure index is timezone-aware (convert to UTC if needed)
         if df.index.tz is None:
-            logger.warning(f"Datetime index is timezone-naive, assuming UTC")
+            logger.warning("Datetime index is timezone-naive, assuming UTC")
             df.index = df.index.tz_localize("UTC")
         else:
             df.index = df.index.tz_convert("UTC")
@@ -421,7 +420,7 @@ class TemporalAligner:
         else:
             # No source timezone provided - assume UTC
             logger.warning(
-                f"No source timezone provided for timezone-naive data. Assuming UTC."
+                "No source timezone provided for timezone-naive data. Assuming UTC."
             )
             df[datetime_col] = df[datetime_col].dt.tz_localize("UTC")
 

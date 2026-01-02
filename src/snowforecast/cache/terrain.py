@@ -9,7 +9,7 @@ import time
 from typing import Optional
 
 from snowforecast.cache.database import CacheDatabase
-from snowforecast.cache.models import CachedTerrain, SKI_AREAS_DATA
+from snowforecast.cache.models import SKI_AREAS_DATA, CachedTerrain
 
 logger = logging.getLogger(__name__)
 

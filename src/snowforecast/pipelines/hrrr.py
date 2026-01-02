@@ -6,21 +6,21 @@ The archive on AWS provides data from 2014 to present.
 This pipeline downloads HRRR data using the herbie library.
 """
 
+import logging
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 from pathlib import Path
 from typing import Any
-import logging
 
 import pandas as pd
 import xarray as xr
 
 from snowforecast.utils import (
+    WESTERN_US_BBOX,
+    BoundingBox,
     GriddedPipeline,
     ValidationResult,
     get_data_path,
-    BoundingBox,
-    WESTERN_US_BBOX,
 )
 
 logger = logging.getLogger(__name__)
@@ -434,7 +434,6 @@ class HRRRPipeline(GriddedPipeline):
         missing_pct = (missing_cells / total_cells) * 100 if total_cells > 0 else 0
 
         # Check for data variables
-        expected_vars = ["t2m", "sde", "sd", "unknown"]  # Common HRRR variable names
         has_data_vars = any(col in df.columns for col in df.columns if col not in ["latitude", "longitude", "time"])
 
         if not has_data_vars:

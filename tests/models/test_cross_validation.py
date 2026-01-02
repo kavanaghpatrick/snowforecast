@@ -8,9 +8,9 @@ import pandas as pd
 import pytest
 
 from snowforecast.models.cross_validation import (
+    CVResults,
     StationKFold,
     TemporalSplit,
-    CVResults,
 )
 
 
@@ -30,7 +30,6 @@ class TestStationKFold:
         assert len(folds) == 3
 
         # Each fold should have disjoint indices
-        all_train = set()
         all_val = set()
         for train_idx, val_idx in folds:
             # No overlap within fold

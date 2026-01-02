@@ -1,19 +1,16 @@
 """Tests for GHCN-Daily data ingestion pipeline."""
 
-import pytest
-from pathlib import Path
-from unittest.mock import patch, MagicMock
-import pandas as pd
 import tempfile
+from pathlib import Path
+
+import pandas as pd
+import pytest
 
 from snowforecast.pipelines.ghcn import (
     GHCNPipeline,
     GHCNStation,
-    GHCN_QUALITY_FLAGS,
-    GHCN_VARIABLES,
 )
 from snowforecast.utils import BoundingBox
-
 
 # Sample station inventory data (fixed-width format)
 SAMPLE_STATION_INVENTORY = """USC00010008  32.9500  -85.9500  201.0 AL ABBEVILLE

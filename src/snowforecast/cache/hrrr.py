@@ -6,7 +6,7 @@ Cache validity is 2 hours (HRRR runs hourly).
 
 import logging
 import time
-from datetime import datetime, timedelta, date
+from datetime import datetime, timedelta
 from typing import Optional
 
 from snowforecast.cache.database import CacheDatabase

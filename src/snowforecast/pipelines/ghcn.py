@@ -17,15 +17,15 @@ Variables:
 - SNWD: Snow depth (mm)
 """
 
+import logging
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional
-import logging
 
 import pandas as pd
 import requests
 
-from snowforecast.utils import TemporalPipeline, ValidationResult, BoundingBox
+from snowforecast.utils import BoundingBox, TemporalPipeline, ValidationResult
 from snowforecast.utils.io import get_data_path
 
 logger = logging.getLogger(__name__)
@@ -477,7 +477,7 @@ class GHCNPipeline(TemporalPipeline):
             # Get stations in bbox or all stations
             stations = self.get_station_inventory(bbox=bbox)
             station_ids = [s.station_id for s in stations[:100]]  # Limit for safety
-            logger.warning(f"No station_ids specified, using first 100 stations")
+            logger.warning("No station_ids specified, using first 100 stations")
 
         return self.download_stations(station_ids)
 

@@ -5,13 +5,13 @@ No mocks - tests verify actual caching behavior.
 """
 
 import tempfile
-from datetime import datetime, timedelta, date
+from datetime import datetime, timedelta
 from pathlib import Path
 
 import pytest
 
+from snowforecast.api.schemas import ConfidenceInterval, ForecastResult
 from snowforecast.cache.predictor import CachedPredictor
-from snowforecast.api.schemas import ForecastResult, ConfidenceInterval
 
 
 @pytest.fixture

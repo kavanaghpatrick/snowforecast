@@ -10,7 +10,6 @@ All colors are provided in multiple formats:
 - Category names for legends
 """
 
-from typing import Optional
 
 
 # =============================================================================
