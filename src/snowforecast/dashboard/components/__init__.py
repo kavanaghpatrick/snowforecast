@@ -14,6 +14,8 @@ This module provides reusable Streamlit components:
 - Snow Quality: calculate_slr, classify_snow_quality, render_snow_quality_badge
 - Responsive: get_breakpoint, is_mobile, is_tablet, is_desktop, render_responsive_columns
 - Performance: PerformanceTimer, timed, lazy_load, get_cached_predictor, prefetch_forecasts
+- Loading: with_loading, with_error_handling, render_loading_skeleton, render_retry_button
+- Cache Status: get_cache_freshness, render_cache_status, render_data_warning, render_fallback_notice
 """
 
 from snowforecast.dashboard.components.map_view import (
@@ -142,6 +144,30 @@ from snowforecast.dashboard.components.performance import (
     TARGET_RESORT_SELECT,
 )
 
+from snowforecast.dashboard.components.loading import (
+    with_loading,
+    with_error_handling,
+    with_loading_and_error_handling,
+    render_loading_skeleton,
+    render_retry_button,
+    render_error_with_retry,
+    render_empty_state,
+)
+
+from snowforecast.dashboard.components.cache_status import (
+    get_cache_freshness,
+    get_cache_freshness_emoji,
+    format_cache_age,
+    render_cache_status,
+    render_cache_status_badge,
+    render_data_warning,
+    render_fallback_notice,
+    render_data_source_indicator,
+    should_show_stale_warning,
+    FRESHNESS_THRESHOLDS,
+    FRESHNESS_COLORS,
+)
+
 __all__ = [
     # Map components
     "render_resort_map",
@@ -247,4 +273,24 @@ __all__ = [
     "TARGET_PAGE_LOAD",
     "TARGET_TIME_SWITCH",
     "TARGET_RESORT_SELECT",
+    # Loading and error handling
+    "with_loading",
+    "with_error_handling",
+    "with_loading_and_error_handling",
+    "render_loading_skeleton",
+    "render_retry_button",
+    "render_error_with_retry",
+    "render_empty_state",
+    # Cache status
+    "get_cache_freshness",
+    "get_cache_freshness_emoji",
+    "format_cache_age",
+    "render_cache_status",
+    "render_cache_status_badge",
+    "render_data_warning",
+    "render_fallback_notice",
+    "render_data_source_indicator",
+    "should_show_stale_warning",
+    "FRESHNESS_THRESHOLDS",
+    "FRESHNESS_COLORS",
 ]
