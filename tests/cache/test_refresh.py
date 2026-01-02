@@ -420,6 +420,7 @@ class TestRefreshErrorHandling:
         assert result.skipped == 0
 
 
+@pytest.mark.integration
 class TestRefreshDatabaseIntegrity:
     """Tests for database integrity during refresh."""
 
