@@ -8,6 +8,7 @@ This module provides reusable Streamlit components:
 - Elevation: render_elevation_bands
 - Favorites: get_favorites, add_favorite, remove_favorite, is_favorite, render_favorite_toggle
 - Time Selector: TIME_STEPS, render_time_selector, get_forecast_time, prefetch_all_forecasts
+- Forecast Overlay: create_forecast_overlay, generate_grid_points, render_overlay_toggle
 """
 
 from snowforecast.dashboard.components.map_view import (
@@ -60,6 +61,13 @@ from snowforecast.dashboard.components.time_selector import (
     calculate_forecast_datetime,
 )
 
+from snowforecast.dashboard.components.forecast_overlay import (
+    create_forecast_overlay,
+    generate_grid_points,
+    render_overlay_toggle,
+    OVERLAY_COLOR_RANGE,
+)
+
 __all__ = [
     # Map components
     "render_resort_map",
@@ -101,4 +109,9 @@ __all__ = [
     "clear_forecast_cache",
     "parse_time_step",
     "calculate_forecast_datetime",
+    # Forecast overlay
+    "create_forecast_overlay",
+    "generate_grid_points",
+    "render_overlay_toggle",
+    "OVERLAY_COLOR_RANGE",
 ]
