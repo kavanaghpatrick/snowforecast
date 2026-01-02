@@ -7,6 +7,7 @@ This module provides reusable Streamlit components:
 - Terrain: create_terrain_layer, create_3d_view, create_terrain_deck, render_terrain_controls
 - Elevation: render_elevation_bands
 - Favorites: get_favorites, add_favorite, remove_favorite, is_favorite, render_favorite_toggle
+- Confidence: get_confidence_level, get_confidence_badge, get_confidence_color, format_forecast_with_ci
 """
 
 from snowforecast.dashboard.components.map_view import (
@@ -43,6 +44,16 @@ from snowforecast.dashboard.components.favorites import (
     FAVORITES_KEY,
 )
 
+from snowforecast.dashboard.components.confidence import (
+    get_confidence_level,
+    get_confidence_badge,
+    get_confidence_color,
+    format_forecast_with_ci,
+    render_confidence_badge,
+    render_confidence_explanation,
+    render_forecast_with_confidence,
+)
+
 __all__ = [
     # Map components
     "render_resort_map",
@@ -70,4 +81,12 @@ __all__ = [
     "render_favorite_toggle",
     "render_favorites_filter",
     "FAVORITES_KEY",
+    # Confidence visualization
+    "get_confidence_level",
+    "get_confidence_badge",
+    "get_confidence_color",
+    "format_forecast_with_ci",
+    "render_confidence_badge",
+    "render_confidence_explanation",
+    "render_forecast_with_confidence",
 ]
