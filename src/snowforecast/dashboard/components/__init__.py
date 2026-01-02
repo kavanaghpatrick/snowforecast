@@ -9,6 +9,7 @@ This module provides reusable Streamlit components:
 - Favorites: get_favorites, add_favorite, remove_favorite, is_favorite, render_favorite_toggle
 - Time Selector: TIME_STEPS, render_time_selector, get_forecast_time, prefetch_all_forecasts
 - Forecast Overlay: create_forecast_overlay, generate_grid_points, render_overlay_toggle
+- Confidence: get_confidence_level, get_confidence_badge, get_confidence_color, format_forecast_with_ci
 """
 
 from snowforecast.dashboard.components.map_view import (
@@ -68,6 +69,16 @@ from snowforecast.dashboard.components.forecast_overlay import (
     OVERLAY_COLOR_RANGE,
 )
 
+from snowforecast.dashboard.components.confidence import (
+    get_confidence_level,
+    get_confidence_badge,
+    get_confidence_color,
+    format_forecast_with_ci,
+    render_confidence_badge,
+    render_confidence_explanation,
+    render_forecast_with_confidence,
+)
+
 __all__ = [
     # Map components
     "render_resort_map",
@@ -114,4 +125,12 @@ __all__ = [
     "generate_grid_points",
     "render_overlay_toggle",
     "OVERLAY_COLOR_RANGE",
+    # Confidence visualization
+    "get_confidence_level",
+    "get_confidence_badge",
+    "get_confidence_color",
+    "format_forecast_with_ci",
+    "render_confidence_badge",
+    "render_confidence_explanation",
+    "render_forecast_with_confidence",
 ]
