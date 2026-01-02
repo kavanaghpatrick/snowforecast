@@ -62,13 +62,128 @@ SKI_AREAS = {
 
 @st.cache_resource
 def get_predictor():
-    """Get cached predictor instance."""
+    """Get cached predictor instance.
+
+    Uses CachedPredictor with DuckDB backend for persistent caching.
+    HRRR forecasts cached for 2 hours, terrain data cached permanently.
+    """
     try:
-        from snowforecast.api.predictor import RealPredictor
-        return RealPredictor()
+        from snowforecast.cache import CachedPredictor
+        return CachedPredictor()
     except ImportError as e:
-        st.error(f"Could not load predictor: {e}")
-        return None
+        st.error(f"Could not load CachedPredictor: {e}")
+        # Fall back to RealPredictor if cache module not available
+        try:
+            from snowforecast.api.predictor import RealPredictor
+            st.warning("Using RealPredictor (cache module not available)")
+            return RealPredictor()
+        except ImportError:
+            st.error("No predictor available")
+            return None
+
+
+def get_cache_status() -> dict:
+    """Get cache status information for display.
+
+    Returns:
+        Dict with is_fresh, freshness_label, last_updated, forecast_count, terrain_count
+    """
+    predictor = get_predictor()
+    if predictor is None or not hasattr(predictor, 'get_cache_stats'):
+        return {
+            "is_fresh": False,
+            "freshness_label": "Unknown",
+            "freshness_color": "gray",
+            "last_updated": None,
+            "forecast_count": 0,
+            "terrain_count": 0,
+        }
+
+    stats = predictor.get_cache_stats()
+    latest_run = stats.get("latest_run_time")
+
+    if latest_run is None:
+        return {
+            "is_fresh": False,
+            "freshness_label": "No Data",
+            "freshness_color": "gray",
+            "last_updated": None,
+            "forecast_count": stats.get("forecast_count", 0),
+            "terrain_count": stats.get("terrain_count", 0),
+        }
+
+    # Calculate age - ensure we're comparing with current UTC time
+    now = datetime.utcnow()
+    # Handle both datetime and pd.Timestamp
+    if hasattr(latest_run, 'to_pydatetime'):
+        latest_run = latest_run.to_pydatetime()
+    if latest_run.tzinfo is not None:
+        latest_run = latest_run.replace(tzinfo=None)
+
+    age_hours = (now - latest_run).total_seconds() / 3600
+
+    # Determine freshness status
+    if age_hours < 1:
+        freshness_label = "Fresh"
+        freshness_color = "green"
+        is_fresh = True
+    elif age_hours < 2:
+        freshness_label = "Recent"
+        freshness_color = "orange"
+        is_fresh = True
+    else:
+        freshness_label = "Stale"
+        freshness_color = "red"
+        is_fresh = False
+
+    return {
+        "is_fresh": is_fresh,
+        "freshness_label": freshness_label,
+        "freshness_color": freshness_color,
+        "last_updated": latest_run,
+        "age_hours": round(age_hours, 1),
+        "forecast_count": stats.get("forecast_count", 0),
+        "terrain_count": stats.get("terrain_count", 0),
+    }
+
+
+def render_cache_status_indicator():
+    """Render the cache status indicator in the sidebar."""
+    status = get_cache_status()
+
+    st.sidebar.markdown("---")
+    st.sidebar.markdown("**Cache Status**")
+
+    # Freshness indicator with colored emoji
+    if status["freshness_color"] == "green":
+        freshness_icon = ":green_circle:"
+    elif status["freshness_color"] == "orange":
+        freshness_icon = ":orange_circle:"
+    elif status["freshness_color"] == "red":
+        freshness_icon = ":red_circle:"
+    else:
+        freshness_icon = ":white_circle:"
+
+    st.sidebar.markdown(f"{freshness_icon} **{status['freshness_label']}**")
+
+    # Last updated timestamp
+    if status["last_updated"]:
+        # Convert to local time for display
+        last_updated_str = status["last_updated"].strftime("%Y-%m-%d %H:%M UTC")
+        st.sidebar.caption(f"Last updated: {last_updated_str}")
+        if "age_hours" in status:
+            if status["age_hours"] < 1:
+                age_str = f"{int(status['age_hours'] * 60)} min ago"
+            else:
+                age_str = f"{status['age_hours']:.1f} hrs ago"
+            st.sidebar.caption(f"({age_str})")
+    else:
+        st.sidebar.caption("No cached data yet")
+
+    # Cache stats
+    st.sidebar.caption(
+        f"Forecasts: {status['forecast_count']} | Terrain: {status['terrain_count']}"
+    )
 
 
 def fetch_ski_area_forecast(name: str, lat: float, lon: float, days: int = 7, progress_container=None) -> pd.DataFrame:
@@ -335,18 +450,56 @@ def create_sidebar() -> tuple:
 
     st.sidebar.markdown("---")
     st.sidebar.markdown("**Data Sources**")
-    st.sidebar.markdown("• NOAA HRRR (3km)")
-    st.sidebar.markdown("• Copernicus DEM (30m)")
+    st.sidebar.markdown("- NOAA HRRR (3km)")
+    st.sidebar.markdown("- Copernicus DEM (30m)")
+
+    # Add cache status indicator
+    render_cache_status_indicator()
 
     st.sidebar.markdown("---")
-    if st.sidebar.button("🔄 Refresh Data"):
-        # Clear all cached data
+    if st.sidebar.button("Refresh Data"):
+        # Clear all cached data from session state
         for key in list(st.session_state.keys()):
-            if key.startswith("conditions_") or key.startswith("forecast_"):
+            if key.startswith("conditions_") or key.startswith("forecast_") or key.startswith("single_"):
                 del st.session_state[key]
         st.rerun()
 
     return selected_area, selected_state
+
+
+def fetch_single_resort(name: str) -> dict:
+    """Fetch conditions for a single resort (fast path)."""
+    predictor = get_predictor()
+    if predictor is None:
+        return None
+
+    lat, lon, state, base_elev = SKI_AREAS[name]
+    today = datetime.now()
+
+    try:
+        terrain = predictor.get_terrain_features(lat, lon)
+        forecast, _ = predictor.predict(lat, lon, today, forecast_hours=24)
+        return {
+            "ski_area": name,
+            "state": state,
+            "latitude": lat,
+            "longitude": lon,
+            "elevation": terrain.get("elevation", base_elev),
+            "snow_depth_cm": forecast.snow_depth_cm,
+            "new_snow_cm": forecast.new_snow_cm,
+            "probability": forecast.snowfall_probability,
+        }
+    except Exception:
+        return {
+            "ski_area": name,
+            "state": state,
+            "latitude": lat,
+            "longitude": lon,
+            "elevation": base_elev,
+            "snow_depth_cm": 0,
+            "new_snow_cm": 0,
+            "probability": 0,
+        }
 
 
 def main():
@@ -357,23 +510,29 @@ def main():
     # Sidebar
     selected_area, selected_state = create_sidebar()
 
-    # Fetch data with progress indicator
-    # Check if we have cached data
-    cache_key = f"conditions_{datetime.now().strftime('%Y%m%d%H')}"
-    if cache_key not in st.session_state:
-        st.subheader("Loading Snow Conditions...")
-        progress_bar = st.empty()
-        status_text = st.empty()
-        status_text.text("Connecting to NOAA HRRR...")
-        conditions_df = fetch_all_current_conditions(progress_bar)
-        st.session_state[cache_key] = conditions_df
-        status_text.empty()
-    else:
-        conditions_df = st.session_state[cache_key]
+    # Fast path: fetch only selected resort first
+    single_cache_key = f"single_{selected_area}_{datetime.now().strftime('%Y%m%d%H')}"
+    if single_cache_key not in st.session_state:
+        with st.spinner(f"Fetching {selected_area} from NOAA HRRR..."):
+            result = fetch_single_resort(selected_area)
+            st.session_state[single_cache_key] = result
 
-    # Current conditions for selected area
-    st.header(f"📍 {selected_area}")
-    create_current_conditions_cards(conditions_df, selected_area)
+    selected_data = st.session_state.get(single_cache_key)
+
+    # Show selected resort conditions immediately (from single fetch)
+    if selected_data:
+        col1, col2, col3, col4 = st.columns(4)
+        with col1:
+            st.metric("Snow Base", f"{selected_data['snow_depth_cm']:.0f} cm",
+                     f"{selected_data['snow_depth_cm']/2.54:.0f} inches")
+        with col2:
+            st.metric("24hr New Snow", f"{selected_data['new_snow_cm']:.1f} cm",
+                     f"{selected_data['new_snow_cm']/2.54:.1f} inches")
+        with col3:
+            st.metric("Snow Probability", f"{selected_data['probability']:.0%}")
+        with col4:
+            st.metric("Elevation", f"{selected_data['elevation']:.0f} m",
+                     f"{selected_data['elevation']*3.28084:.0f} ft")
 
     st.markdown("---")
 
@@ -381,7 +540,7 @@ def main():
     col1, col2 = st.columns(2)
 
     with col1:
-        # 7-day forecast
+        # 7-day forecast for selected resort
         if selected_area:
             lat, lon, _, _ = SKI_AREAS[selected_area]
             forecast_cache_key = f"forecast_{selected_area}_{datetime.now().strftime('%Y%m%d%H')}"
@@ -395,9 +554,20 @@ def main():
             create_forecast_table(forecast_df)
 
     with col2:
-        # Regional map
-        create_regional_map(conditions_df, selected_area)
-        create_regional_table(conditions_df)
+        # Regional comparison - load lazily with expander
+        with st.expander("🗺️ Compare All Resorts (loads 22 resorts)", expanded=False):
+            cache_key = f"conditions_{datetime.now().strftime('%Y%m%d%H')}"
+            if cache_key not in st.session_state:
+                progress_bar = st.empty()
+                st.caption("Loading all resort data from NOAA HRRR...")
+                conditions_df = fetch_all_current_conditions(progress_bar)
+                st.session_state[cache_key] = conditions_df
+            else:
+                conditions_df = st.session_state[cache_key]
+
+            if not conditions_df.empty:
+                create_regional_map(conditions_df, selected_area)
+                create_regional_table(conditions_df)
 
     # Footer
     st.markdown("---")

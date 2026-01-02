@@ -168,6 +168,7 @@ class RealPredictor:
 
             # HRRR provides forecasts from the current run time
             # Use today's run with appropriate forecast hour (fxx)
+            # HRRR only forecasts up to 48 hours ahead
             today = date_type.today()
 
             # Calculate forecast hour offset from today
@@ -177,7 +178,14 @@ class RealPredictor:
                 target = target_date
 
             days_ahead = (target - today).days
-            fxx = max(0, min(days_ahead * 24 + forecast_hours, 48))
+            hours_ahead = days_ahead * 24 + forecast_hours
+
+            # HRRR only provides 48-hour forecasts - return None for beyond
+            if hours_ahead > 48:
+                logger.info(f"Target date {target} is {hours_ahead}h ahead, beyond HRRR 48h limit")
+                return None
+
+            fxx = max(0, hours_ahead)
 
             # Get the HRRR forecast from today's run
             h = Herbie(
@@ -244,6 +252,146 @@ class RealPredictor:
             logger.error(f"HRRR fetch failed: {e}")
             return None
 
+    def _find_nearest_nbm_point(self, ds, lat: float, lon: float) -> tuple:
+        """Find nearest y,x indices for lat/lon in NBM grid.
+
+        NBM uses Lambert Conformal projection similar to HRRR.
+        """
+        import numpy as np
+
+        # Get lat/lon arrays
+        lats = ds.latitude.values
+        lons = ds.longitude.values
+
+        # Convert target lon to match NBM convention
+        target_lon = lon + 360 if lon < 0 else lon
+
+        # Calculate distance to each grid point
+        dist = np.sqrt((lats - lat)**2 + (lons - target_lon)**2)
+
+        # Find minimum
+        idx = np.unravel_index(np.argmin(dist), dist.shape)
+        return idx  # (y_idx, x_idx)
+
+    def fetch_nbm_forecast(
+        self,
+        lat: float,
+        lon: float,
+        target_date: date,
+        forecast_hours: int = 24,
+    ) -> Optional[dict]:
+        """Fetch NBM (National Blend of Models) forecast for extended range.
+
+        NBM provides forecasts from 1-264 hours (up to 11 days).
+        Use for forecasts beyond HRRR's 48-hour limit.
+
+        Args:
+            lat: Latitude
+            lon: Longitude
+            target_date: Date to forecast
+            forecast_hours: Hours ahead
+
+        Returns:
+            Dict with forecast variables or None if unavailable
+        """
+        try:
+            from herbie import Herbie
+            from datetime import date as date_type
+
+            today = date_type.today()
+
+            # Calculate forecast hour offset from today
+            if hasattr(target_date, 'date'):
+                target = target_date.date()
+            else:
+                target = target_date
+
+            days_ahead = (target - today).days
+            hours_ahead = days_ahead * 24 + forecast_hours
+
+            # NBM provides forecasts up to 264 hours (11 days)
+            if hours_ahead > 264:
+                logger.info(f"Target {target} is {hours_ahead}h ahead, beyond NBM 264h limit")
+                return None
+
+            # NBM forecast hours are in specific intervals
+            # Round to nearest available forecast hour (every 3h for days 1-3, every 6h after)
+            if hours_ahead <= 72:
+                fxx = round(hours_ahead / 3) * 3  # Round to nearest 3h
+            else:
+                fxx = round(hours_ahead / 6) * 6  # Round to nearest 6h
+
+            fxx = max(1, min(fxx, 264))
+
+            logger.info(f"Fetching NBM forecast for {target}, fxx={fxx}h")
+
+            # Get NBM forecast
+            h = Herbie(
+                today,
+                model="nbm",
+                product="co",  # CONUS core product
+                fxx=fxx,
+            )
+
+            snow_depth = 0.0
+            temp_k = 273.0
+            precip = 0.0
+            asnow = 0.0  # Accumulated snow
+
+            # Download accumulated snow (NBM's primary snow variable)
+            try:
+                ds = h.xarray(":ASNOW:", remove_grib=True)
+                y_idx, x_idx = self._find_nearest_nbm_point(ds, lat, lon)
+                var_name = list(ds.data_vars)[0]
+                # ASNOW is in meters, accumulated over forecast period
+                asnow = float(ds[var_name].isel(y=y_idx, x=x_idx).values)
+                logger.info(f"NBM accumulated snow: {asnow:.3f}m ({asnow*100:.1f}cm)")
+            except Exception as e:
+                logger.warning(f"NBM ASNOW failed: {e}")
+
+            # Download temperature
+            try:
+                ds = h.xarray(":TMP:2 m above", remove_grib=True)
+                y_idx, x_idx = self._find_nearest_nbm_point(ds, lat, lon)
+                var_name = list(ds.data_vars)[0]
+                temp_k = float(ds[var_name].isel(y=y_idx, x=x_idx).values)
+                logger.info(f"NBM temp: {temp_k:.1f}K ({temp_k-273.15:.1f}C)")
+            except Exception as e:
+                logger.warning(f"NBM temp failed: {e}")
+
+            # Download total precipitation
+            try:
+                ds = h.xarray(":APCP:", remove_grib=True)
+                y_idx, x_idx = self._find_nearest_nbm_point(ds, lat, lon)
+                var_name = list(ds.data_vars)[0]
+                precip = float(ds[var_name].isel(y=y_idx, x=x_idx).values)
+                logger.info(f"NBM precip: {precip:.2f}mm")
+            except Exception as e:
+                logger.debug(f"NBM precip failed: {e}")
+
+            # Try to get snow depth if available
+            try:
+                ds = h.xarray(":SNOD:", remove_grib=True)
+                y_idx, x_idx = self._find_nearest_nbm_point(ds, lat, lon)
+                var_name = list(ds.data_vars)[0]
+                snow_depth = float(ds[var_name].isel(y=y_idx, x=x_idx).values)
+            except Exception as e:
+                # Snow depth not always available in NBM, estimate from ASNOW
+                snow_depth = asnow  # Use accumulated snow as proxy
+                logger.debug(f"NBM SNOD not available, using ASNOW: {e}")
+
+            return {
+                "snow_depth_m": snow_depth,
+                "new_snow_m": asnow,  # NBM provides accumulated snow directly!
+                "temp_k": temp_k,
+                "precip_mm": precip,
+                "source": "nbm",
+            }
+
+        except Exception as e:
+            logger.error(f"NBM fetch failed: {e}")
+            return None
+
     def predict(
         self,
         lat: float,
@@ -272,10 +420,11 @@ class RealPredictor:
         else:
             forecast_date = target_date
 
+        # Try HRRR first (0-48h), then NBM (49-168h)
         hrrr_data = self.fetch_hrrr_forecast(lat, lon, forecast_date, forecast_hours)
 
         if hrrr_data is not None:
-            # Use real HRRR data
+            # Use real HRRR data (highest resolution, best for 0-48h)
             snow_depth_cm = hrrr_data["snow_depth_m"] * 100  # m to cm
             temp_c = hrrr_data["temp_k"] - 273.15
 
@@ -283,8 +432,6 @@ class RealPredictor:
             precip_rate = hrrr_data["precip_rate"]
             if temp_c < 0 and precip_rate > 0:
                 # Cold enough for snow - estimate accumulation
-                # Precip rate in kg/m²/s, convert to cm over forecast period
-                # Assume 10:1 snow-water ratio adjusted by temp
                 snow_ratio = 10 + max(0, -temp_c)  # Higher ratio when colder
                 new_snow_cm = precip_rate * 3600 * forecast_hours * snow_ratio / 10
             else:
@@ -300,37 +447,41 @@ class RealPredictor:
             else:
                 snowfall_prob = 0.1
 
-            # Confidence based on data quality
             ci_width = max(2.0, new_snow_cm * 0.3)
-
             logger.info(f"Using HRRR data: snow_depth={snow_depth_cm:.1f}cm, new={new_snow_cm:.1f}cm")
 
         else:
-            # Fallback to climatology-based estimate
-            logger.info("HRRR unavailable, using climatological estimate")
+            # Try NBM for extended forecasts (49-168h)
+            nbm_data = self.fetch_nbm_forecast(lat, lon, forecast_date, forecast_hours)
 
-            month = forecast_date.month
+            if nbm_data is not None:
+                # Use real NBM data
+                snow_depth_cm = nbm_data["snow_depth_m"] * 100  # m to cm
+                new_snow_cm = nbm_data["new_snow_m"] * 100  # NBM provides accumulated snow directly
+                temp_c = nbm_data["temp_k"] - 273.15
 
-            # Seasonal snow depth estimate
-            if month in (12, 1, 2):
-                base_depth = 80 + (elevation - 2000) * 0.05
-                new_snow_base = 8.0
-            elif month in (3, 11):
-                base_depth = 50 + (elevation - 2000) * 0.03
-                new_snow_base = 5.0
-            elif month in (4, 10):
-                base_depth = 20 + (elevation - 2000) * 0.02
-                new_snow_base = 2.0
+                # Probability based on whether there's snow in the forecast
+                if new_snow_cm > 5:
+                    snowfall_prob = 0.85
+                elif new_snow_cm > 1:
+                    snowfall_prob = 0.6
+                elif new_snow_cm > 0:
+                    snowfall_prob = 0.3
+                else:
+                    snowfall_prob = 0.1
+
+                # Wider confidence interval for extended forecasts
+                ci_width = max(3.0, new_snow_cm * 0.4)
+                logger.info(f"Using NBM data: snow_depth={snow_depth_cm:.1f}cm, new={new_snow_cm:.1f}cm")
+
             else:
-                base_depth = max(0, (elevation - 3000) * 0.01)
-                new_snow_base = 0.5
-
-            # Add some randomness for realism
-            import random
-            snow_depth_cm = max(0, base_depth + random.gauss(0, 10))
-            new_snow_cm = max(0, new_snow_base * random.uniform(0, 2))
-            snowfall_prob = 0.3 if month in (12, 1, 2, 3, 11) else 0.1
-            ci_width = max(5.0, new_snow_cm * 0.5)
+                # Last resort: no forecast data available
+                # This should be rare - only if both HRRR and NBM fail
+                logger.warning("Both HRRR and NBM unavailable - no forecast data")
+                snow_depth_cm = 0.0
+                new_snow_cm = 0.0
+                snowfall_prob = 0.0
+                ci_width = 0.0
 
         # Apply terrain adjustments
         # Higher slopes = more wind-loading potential

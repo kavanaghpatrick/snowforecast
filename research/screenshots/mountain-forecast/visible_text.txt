@@ -1,0 +1,839 @@
+We value your privacy
+We and our partners store and/or access information on a device, such as cookies and process personal data, such as unique identifiers and standard information sent by a device for personalised advertising and content, advertising and content measurement, audience research and services development. With your permission we and our partners may use precise geolocation data and identification through device scanning. You may click to consent to our and our 1551 partners’ processing as described above. Alternatively you may click to refuse to consent or access more detailed information and change your preferences before consenting. Please note that some processing of your personal data may not require your consent, but you have a right to object to such processing. Your preferences will apply to this website only and will be stored in IABGPP_HDR_GppString cookie for 13 months. You can change your preferences or withdraw your consent at any time by returning to this site and clicking the "Privacy" button at the bottom of the webpage.
+Please note that this website/app uses one or more Google services and may gather and store information including but not limited to your visit or usage behaviour. You may click to grant or deny consent to Google and its third-party tags to use your data for below specified purposes in below Google consent section.
+MORE OPTIONS
+ACCEPT
+Forecasts
+Photos
+MyMountains
+Log In
+Pacific Coast Ranges
+Cascade Range
+– Lat/Long: 46.85° N 121.76° W
+Mount Rainier
+
+Weather Forecast, United States
+Issued: 9 am Thu 01 Jan Local Time
+Updates in: 2hr 27min 51s
+ 
+Forecasts
+Weather Map
+Mountain Info
+Climbing Notes (2)
+Photos (32)
+ 4 Forecast Elevations:
+Peak: 4392m
+3500m
+2500m
+Base: 1500m
+	
+Days 1–3 Weather Summary
+
+A heavy fall of snow, heaviest during Sat night. Extremely cold (max -11°C on Thu morning, min -19°C on Sat morning). Winds increasing (moderate winds from the SSW on Thu morning, severe gales from the SSW by Sat night).
+
+	
+Days 4–6 Weather Summary
+
+A heavy fall of snow, heaviest during Tue night. Extremely cold (max -17°C on Mon night, min -23°C on Tue night). Winds increasing (strong winds from the NW on Mon afternoon, stormy winds from the WSW by Tue night).
+
+
+
+Change
+units
+	
+Thursday
+1
+	
+Friday
+2
+	
+Saturday
+3
+	
+Sunday
+4
+	
+Monday
+5
+	
+Tuesday
+6
+
+
+AM
+	
+PM
+	
+night
+	
+AM
+	
+PM
+	
+night
+	
+AM
+	
+PM
+	
+night
+	
+AM
+	
+PM
+	
+night
+	
+AM
+	
+PM
+	
+night
+	
+AM
+	
+PM
+	
+night
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+	
+cloudy
+	
+mod. snow
+	
+snow shwrs
+	
+snow shwrs
+	
+light snow
+	
+snow shwrs
+	
+snow shwrs
+	
+cloudy
+	
+heavy snow
+	
+light snow
+	
+mod. snow
+	
+snow shwrs
+	
+snow shwrs
+	
+snow shwrs
+	
+some clouds
+	
+some clouds
+	
+mod. snow
+	
+snow shwrs
+
+
+ 
+km/h
+	
+20
+	
+45
+	
+65
+	
+55
+	
+50
+	
+45
+	
+80
+	
+50
+	
+70
+	
+75
+	
+55
+	
+60
+	
+55
+	
+40
+	
+60
+	
+75
+	
+70
+	
+90
+
+
+See all weather maps
+	
+	
+	
+	
+	
+	
+
+
+ 
+ cm
+	
+—
+	
+7
+	
+29
+	
+1
+	
+3
+	
+3
+	
+5
+	
+—
+	
+25
+	
+5
+	
+9
+	
+15
+	
+13
+	
+2
+	
+—
+	
+—
+	
+7
+	
+29
+
+
+ 
+ mm
+	
+—
+	
+—
+	
+—
+	
+—
+	
+—
+	
+—
+	
+—
+	
+—
+	
+—
+	
+—
+	
+—
+	
+—
+	
+—
+	
+—
+	
+—
+	
+—
+	
+—
+	
+—
+
+
+max 
+°C
+	
+-11
+	
+-11
+	
+-11
+	
+-14
+	
+-13
+	
+-13
+	
+-17
+	
+-18
+	
+-17
+	
+-20
+	
+-19
+	
+-20
+	
+-20
+	
+-18
+	
+-17
+	
+-17
+	
+-17
+	
+-19
+
+
+min 
+°C
+	
+-11
+	
+-11
+	
+-13
+	
+-14
+	
+-14
+	
+-15
+	
+-19
+	
+-19
+	
+-19
+	
+-20
+	
+-19
+	
+-21
+	
+-21
+	
+-19
+	
+-18
+	
+-17
+	
+-18
+	
+-23
+
+
+ 
+ chill °C
+	
+-20
+	
+-22
+	
+-27
+	
+-28
+	
+-26
+	
+-28
+	
+-36
+	
+-34
+	
+-37
+	
+-38
+	
+-34
+	
+-38
+	
+-38
+	
+-33
+	
+-33
+	
+-33
+	
+-35
+	
+-40
+
+
+	
+
+
+ 
+Freezing level m
+	
+2250
+	
+2150
+	
+2250
+	
+2050
+	
+2050
+	
+2200
+	
+1800
+	
+1850
+	
+1750
+	
+1450
+	
+1400
+	
+1200
+	
+1300
+	
+1000
+	
+450
+	
+900
+	
+850
+	
+1050
+
+
+Cloud base (m)
+	
+2850
+	
+1900
+	
+1500
+	
+1500
+	
+1500
+	
+1650
+	
+1600
+	
+1750
+	
+1600
+	
+1500
+	
+1500
+	
+1500
+	
+1500
+	
+1500
+	
+1550
+	
+2000
+	
+1700
+	
+1450
+
+
+Sea lvl
+1000m
+2000m
+3000m
+4000m
+5000m
+	
+-11
+-11
+-12
+-14
+-14
+-14
+-18
+-19
+-18
+-20
+-19
+-21
+-21
+-19
+-18
+-17
+-18
+-21
+-6
+-6
+-7
+-9
+-8
+-8
+-12
+-12
+-12
+-14
+-13
+-14
+-14
+-14
+-14
+-13
+-12
+-15
+-1
+-1
+-2
+-3
+-2
+-2
+-5
+-5
+-5
+-7
+-7
+-8
+-8
+-9
+-9
+-8
+-8
+-9
+3
+2
+4
+3
+3
+3
+3
+3
+1
+0
+-1
+-2
+-2
+-4
+-5
+-4
+-4
+-4
+
+
+	
+7:52
+	
+—
+	
+—
+	
+7:52
+	
+—
+	
+—
+	
+7:52
+	
+—
+	
+—
+	
+7:52
+	
+—
+	
+—
+	
+7:50
+	
+—
+	
+—
+	
+7:50
+	
+—
+	
+—
+
+
+	
+—
+	
+4:29
+	
+—
+	
+—
+	
+4:30
+	
+—
+	
+—
+	
+4:30
+	
+—
+	
+—
+	
+4:31
+	
+—
+	
+—
+	
+4:32
+	
+—
+	
+—
+	
+4:34
+	
+—
+Days 7-16 Weather Summary
+
+Interested in the 16-day Forecast? Unlock the full forecast and many more features by becoming a Pro member.
+
+Mountain
+Pro
+
+Your membership benefits:
+
+Detailed mountain forecasts
+16-day forecasts
+Hourly forecast detail
+Offline maps
+Full app access
+Remove ads
+Save 48%
+Annual
+$24.99
+Just $2.08/month
+Monthly
+$3.99
+Billed monthly
+Continue
+
+This table gives the weather forecast for Mount Rainier at the specific elevation of 4392 m. Our advanced weather models allow us to provide distinct weather forecasts for several elevations of Mount Rainier. To see the weather forecasts for the other elevations, use the tab navigation above the table. For a wider overview of the weather, consult the Weather Map of Washington.
+
+Live conditions reported by 5 closest weather stations
+WEATHER STATION	TEMP.	WEATHER	WIND	GUSTS	
+CLOUD / VISIBILITY
+
+
+Pierce County Airport - Thun Field - Puyallup (Washington)
+48 km WNW
+164m alt.
+1 hour ago
+	
+5°C
+	
+Drizzle
+	
+0
+Calm
+(0 kph at 0).
+		
+10 km
+Low: few
+Mid: few
+High: scattered
+
+
+Black Diamond
+51 km NW
+192m alt.
+2 hours ago
+		
+-
+	
+0
+Calm
+(0 kph at 0).
+	
+0
+	
+
+
+Stampede Pass Airport
+58 km NE
+628m alt.
+2 hours ago
+	
+-3°C
+	
+Light snow.
+	
+Wind obs. (6 kph from 1 degs) was rejected.
+		
+5 km
+
+
+Tacom / cChord Air Force Base Airport
+61 km W
+217m alt.
+2 hours ago
+	
+5°C
+	
+Light rain .
+	
+0
+Calm
+(0 kph at 0).
+		
+16 km
+Low: scattered
+Mid: overcast
+
+
+SHIP4021
+62 km WNW
+15m alt.
+3 hours ago
+		
+	
+		
+- km
+
+
+SHIP8217
+62 km WNW
+15m alt.
+2 hours ago
+		
+	
+		
+- km
+
+
+SHIP7092
+62 km WNW
+15m alt.
+2 hours ago
+		
+	
+		
+- km
+
+
+SHIP3510
+62 km WNW
+15m alt.
+2 hours ago
+		
+	
+		
+- km
+
+
+SHIP6092
+62 km WNW
+3m alt.
+3 hours ago
+	
+3°C
+	
+	
+		
+
+
+SHIP6084
+62 km WNW
+3m alt.
+3 hours ago
+	
+3°C
+	
+	
+		
+
+* NOTE: not all weather observatories update at the same frequency which is the reason why some locations may show data from stations that are further away than known closer ones.
+
+Mount Rainier Photos
+View all Cascade Range photos (443) | Pacific Coast Ranges photos (1029) | photos from mountains in United States (2995) | all photos
+ Upload new photo
+
+Wonderful Trail-Cowlitz Divide
+
+Mount Rainier
+
+Mt. Rainier, WA
+
+Rainier from Paradise - July 2015
+
+Mount Rainier
+
+Emmons Route 6-20-12
+
+Anthony Vito Fiore - Rescue - Mount Rainier
+
+See 32 more Mount Rainier photos
+Explore
+Countries
+Mountain Ranges
+Weather Maps
+Whiteroom News
+Photos
+Social
+Facebook
+Instagram
+Forecasts For Every Adventure
+Terms of Use
+Privacy Policy
+Cookie Policy
+Contact Us
+Privacy Settings
+
+© 2026 Meteo365 Ltd. All rights reserved
