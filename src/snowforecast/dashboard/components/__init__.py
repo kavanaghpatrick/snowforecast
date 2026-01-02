@@ -10,6 +10,7 @@ This module provides reusable Streamlit components:
 - Time Selector: TIME_STEPS, render_time_selector, get_forecast_time, prefetch_all_forecasts
 - Forecast Overlay: create_forecast_overlay, generate_grid_points, render_overlay_toggle
 - Confidence: get_confidence_level, get_confidence_badge, get_confidence_color, format_forecast_with_ci
+- SNOTEL: SnotelStation, get_nearby_snotel_stations, render_snotel_section, create_snotel_map_layer
 """
 
 from snowforecast.dashboard.components.map_view import (
@@ -79,6 +80,17 @@ from snowforecast.dashboard.components.confidence import (
     render_forecast_with_confidence,
 )
 
+from snowforecast.dashboard.components.snotel_display import (
+    SnotelStation,
+    MOCK_SNOTEL_STATIONS,
+    calculate_pct_of_normal,
+    get_snowpack_status,
+    get_nearby_snotel_stations,
+    create_snotel_map_layer,
+    render_station_card,
+    render_snotel_section,
+)
+
 __all__ = [
     # Map components
     "render_resort_map",
@@ -133,4 +145,13 @@ __all__ = [
     "render_confidence_badge",
     "render_confidence_explanation",
     "render_forecast_with_confidence",
+    # SNOTEL
+    "SnotelStation",
+    "MOCK_SNOTEL_STATIONS",
+    "calculate_pct_of_normal",
+    "get_snowpack_status",
+    "get_nearby_snotel_stations",
+    "create_snotel_map_layer",
+    "render_station_card",
+    "render_snotel_section",
 ]
