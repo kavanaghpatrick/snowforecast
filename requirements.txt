@@ -1,6 +1,9 @@
 # Requirements for Streamlit Cloud deployment
 # For local development, use: pip install -e ".[all]"
 
+# Install local package (enables 'import snowforecast')
+-e .
+
 # Core
 numpy>=1.24.0
 pandas>=2.0.0
