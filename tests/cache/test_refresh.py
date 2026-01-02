@@ -382,6 +382,7 @@ class TestRefreshWithAllSkiAreas:
 class TestRefreshErrorHandling:
     """Tests for error handling in refresh operations."""
 
+    @pytest.mark.integration
     def test_refresh_continues_after_error(self, db):
         """Refresh continues processing after one area fails."""
         # Create a custom ski area list with an invalid location
