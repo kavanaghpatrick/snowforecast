@@ -7,6 +7,7 @@ This module provides reusable Streamlit components:
 - Terrain: create_terrain_layer, create_3d_view, create_terrain_deck, render_terrain_controls
 - Elevation: render_elevation_bands
 - Favorites: get_favorites, add_favorite, remove_favorite, is_favorite, render_favorite_toggle
+- Snow Quality: calculate_slr, classify_snow_quality, render_snow_quality_badge
 """
 
 from snowforecast.dashboard.components.map_view import (
@@ -43,6 +44,21 @@ from snowforecast.dashboard.components.favorites import (
     FAVORITES_KEY,
 )
 
+from snowforecast.dashboard.components.snow_quality import (
+    SnowQuality,
+    QualityMetrics,
+    calculate_slr,
+    get_temp_trend,
+    classify_snow_quality,
+    get_quality_badge,
+    get_slr_description,
+    get_quality_explanation,
+    render_snow_quality_badge,
+    render_snow_quality_details,
+    render_snow_quality_compact,
+    create_quality_metrics,
+)
+
 __all__ = [
     # Map components
     "render_resort_map",
@@ -70,4 +86,17 @@ __all__ = [
     "render_favorite_toggle",
     "render_favorites_filter",
     "FAVORITES_KEY",
+    # Snow Quality
+    "SnowQuality",
+    "QualityMetrics",
+    "calculate_slr",
+    "get_temp_trend",
+    "classify_snow_quality",
+    "get_quality_badge",
+    "get_slr_description",
+    "get_quality_explanation",
+    "render_snow_quality_badge",
+    "render_snow_quality_details",
+    "render_snow_quality_compact",
+    "create_quality_metrics",
 ]
