@@ -124,6 +124,7 @@ class CachedPredictor:
             logger.error(f"NBM fetch via RealPredictor failed: {e}")
             return None
 
+
     def fetch_hrrr_forecast(
         self,
         lat: float,
