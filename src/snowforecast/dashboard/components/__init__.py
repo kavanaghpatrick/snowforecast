@@ -11,6 +11,7 @@ This module provides reusable Streamlit components:
 - Forecast Overlay: create_forecast_overlay, generate_grid_points, render_overlay_toggle
 - Confidence: get_confidence_level, get_confidence_badge, get_confidence_color, format_forecast_with_ci
 - SNOTEL: SnotelStation, get_nearby_snotel_stations, render_snotel_section, create_snotel_map_layer
+- Snow Quality: calculate_slr, classify_snow_quality, render_snow_quality_badge
 """
 
 from snowforecast.dashboard.components.map_view import (
@@ -91,6 +92,21 @@ from snowforecast.dashboard.components.snotel_display import (
     render_snotel_section,
 )
 
+from snowforecast.dashboard.components.snow_quality import (
+    SnowQuality,
+    QualityMetrics,
+    calculate_slr,
+    get_temp_trend,
+    classify_snow_quality,
+    get_quality_badge,
+    get_slr_description,
+    get_quality_explanation,
+    render_snow_quality_badge,
+    render_snow_quality_details,
+    render_snow_quality_compact,
+    create_quality_metrics,
+)
+
 __all__ = [
     # Map components
     "render_resort_map",
@@ -154,4 +170,17 @@ __all__ = [
     "create_snotel_map_layer",
     "render_station_card",
     "render_snotel_section",
+    # Snow Quality
+    "SnowQuality",
+    "QualityMetrics",
+    "calculate_slr",
+    "get_temp_trend",
+    "classify_snow_quality",
+    "get_quality_badge",
+    "get_slr_description",
+    "get_quality_explanation",
+    "render_snow_quality_badge",
+    "render_snow_quality_details",
+    "render_snow_quality_compact",
+    "create_quality_metrics",
 ]
