@@ -257,12 +257,38 @@ class CachedPredictor:
                 logger.info(f"NBM: depth={snow_depth_cm:.1f}cm, new={new_snow_cm:.1f}cm")
 
             else:
-                # Both HRRR and NBM unavailable - this should be rare
-                logger.warning("Both HRRR and NBM unavailable - no forecast data")
-                snow_depth_cm = 0.0
-                new_snow_cm = 0.0
-                snowfall_prob = 0.0
-                ci_width = 0.0
+                # Both HRRR and NBM unavailable - use persistence forecasting
+                # Get the most recent forecast for this location as a fallback
+                logger.info("HRRR/NBM unavailable, trying persistence forecast")
+
+                latest_forecast = self.db.get_latest_forecast_for_location(lat, lon)
+
+                if latest_forecast is not None:
+                    # Use the most recent available data (persistence forecasting)
+                    snow_depth_cm = latest_forecast.snow_depth_m * 100
+                    temp_c = latest_forecast.temp_k - 273.15
+
+                    # For persistence, assume no NEW snow (conservative)
+                    # but maintain the existing snow depth
+                    new_snow_cm = 0.0
+
+                    # Lower probability for persistence forecasts
+                    snowfall_prob = 0.1
+
+                    # Wider CI to reflect uncertainty
+                    ci_width = 5.0
+
+                    logger.info(
+                        f"Persistence forecast: depth={snow_depth_cm:.1f}cm "
+                        f"(from {latest_forecast.valid_time})"
+                    )
+                else:
+                    # No data at all for this location
+                    logger.warning("No forecast data available for location")
+                    snow_depth_cm = 0.0
+                    new_snow_cm = 0.0
+                    snowfall_prob = 0.0
+                    ci_width = 0.0
 
         # Apply terrain adjustments
         slope = terrain.get("slope", 15)

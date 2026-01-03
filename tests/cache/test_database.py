@@ -125,6 +125,46 @@ class TestForecastCache:
 
         assert temp_db.get_latest_run_time() == run_time
 
+    def test_get_latest_forecast_for_location(self, temp_db):
+        """Can get most recent forecast for location regardless of time."""
+        # Store multiple forecasts for same location
+        run_time1 = datetime(2026, 1, 1, 12, 0, 0)
+        run_time2 = datetime(2026, 1, 2, 12, 0, 0)
+
+        temp_db.store_forecast(
+            lat=47.74,
+            lon=-121.09,
+            run_time=run_time1,
+            forecast_hour=24,
+            snow_depth_m=1.0,
+            temp_k=270.0,
+            precip_mm=0.0,
+            categorical_snow=0.0,
+        )
+        temp_db.store_forecast(
+            lat=47.74,
+            lon=-121.09,
+            run_time=run_time2,
+            forecast_hour=24,
+            snow_depth_m=2.0,
+            temp_k=268.0,
+            precip_mm=5.0,
+            categorical_snow=1.0,
+        )
+
+        # Should return the most recent forecast (by valid_time)
+        latest = temp_db.get_latest_forecast_for_location(47.74, -121.09)
+
+        assert latest is not None
+        assert latest.snow_depth_m == 2.0  # From the second (later) forecast
+        assert latest.temp_k == 268.0
+        assert latest.categorical_snow == 1.0
+
+    def test_get_latest_forecast_for_location_not_found(self, temp_db):
+        """Returns None when no forecast exists for location."""
+        latest = temp_db.get_latest_forecast_for_location(99.99, -99.99)
+        assert latest is None
+
 
 class TestTerrainCache:
     """Tests for terrain caching."""

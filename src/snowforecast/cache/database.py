@@ -386,6 +386,52 @@ class CacheDatabase:
         ).fetchone()
         return result[0] if result and result[0] else None
 
+    def get_latest_forecast_for_location(
+        self,
+        lat: float,
+        lon: float,
+    ) -> Optional[CachedForecast]:
+        """Get the most recent forecast for a location regardless of valid_time.
+
+        Used for persistence forecasting when no data exists for the requested time.
+        Returns the latest available forecast data for the location.
+
+        Args:
+            lat: Latitude
+            lon: Longitude
+
+        Returns:
+            CachedForecast with the most recent data, or None if no data exists
+        """
+        result = self.conn.execute(
+            """
+            SELECT
+                lat, lon, run_time, forecast_hour, valid_time,
+                snow_depth_m, temp_k, precip_mm, categorical_snow, fetch_time
+            FROM hrrr_forecasts
+            WHERE lat = ? AND lon = ?
+            ORDER BY valid_time DESC
+            LIMIT 1
+            """,
+            [lat, lon],
+        ).fetchone()
+
+        if result is None:
+            return None
+
+        return CachedForecast(
+            lat=result[0],
+            lon=result[1],
+            run_time=result[2],
+            forecast_hour=result[3],
+            valid_time=result[4],
+            snow_depth_m=result[5] or 0.0,
+            temp_k=result[6] or 273.0,
+            precip_mm=result[7] or 0.0,
+            categorical_snow=result[8] or 0.0,
+            fetch_time=result[9],
+        )
+
     def cleanup_old_forecasts(self, keep_days: int = 7) -> int:
         """Remove forecasts older than keep_days.
 

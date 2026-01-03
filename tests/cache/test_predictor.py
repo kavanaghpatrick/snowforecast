@@ -404,3 +404,67 @@ class TestCachedPredictorCaching:
         assert features1["elevation"] == 1257.0
         assert features2["elevation"] == 2000.0
         assert features1 != features2
+
+
+class TestCachedPredictorPersistenceFallback:
+    """Tests for persistence forecasting fallback."""
+
+    def test_predict_uses_persistence_when_no_current_forecast(self, predictor):
+        """predict uses persistence forecast when HRRR/NBM unavailable for future dates."""
+        # Store old HRRR forecast (outside normal validity window)
+        old_run_time = datetime.utcnow() - timedelta(days=3)
+        predictor.db.store_forecast(
+            lat=47.74,
+            lon=-121.09,
+            run_time=old_run_time,
+            forecast_hour=24,
+            snow_depth_m=1.5,  # 150 cm
+            temp_k=268.0,
+            precip_mm=8.0,
+            categorical_snow=1.0,
+        )
+        predictor.db.store_terrain(
+            lat=47.74,
+            lon=-121.09,
+            elevation=1257.0,
+            slope=15.0,
+            aspect=180.0,
+            roughness=50.0,
+            tpi=0.5,
+        )
+
+        # Request forecast for far future date (no cached data available)
+        future_date = datetime.utcnow() + timedelta(days=7)
+        forecast, ci = predictor.predict(47.74, -121.09, future_date)
+
+        # Should use persistence fallback - snow_depth from latest forecast
+        assert isinstance(forecast, ForecastResult)
+        assert forecast.snow_depth_cm == pytest.approx(150.0, rel=0.05)  # 1.5m * 100
+        # Persistence forecast should have no new snow
+        assert forecast.new_snow_cm == 0.0
+        # Persistence has lower probability
+        assert forecast.snowfall_probability == 0.1
+        # Wider CI for persistence
+        assert ci.upper == 5.0
+
+    def test_predict_returns_zeros_when_no_data_at_all(self, predictor):
+        """predict returns zeros when no forecast data exists for location."""
+        # Only terrain, no HRRR forecast at all for this location
+        predictor.db.store_terrain(
+            lat=99.99,  # Unused location
+            lon=-99.99,
+            elevation=2000.0,
+            slope=15.0,
+            aspect=180.0,
+            roughness=50.0,
+            tpi=0.5,
+        )
+
+        forecast, ci = predictor.predict(99.99, -99.99, datetime.utcnow())
+
+        # No persistence data available - should return zeros (or near-zero)
+        assert isinstance(forecast, ForecastResult)
+        assert forecast.snow_depth_cm == 0.0
+        assert forecast.new_snow_cm == 0.0
+        # Probability is clamped to 0.01 minimum by ForecastResult builder
+        assert forecast.snowfall_probability <= 0.1
