@@ -106,6 +106,17 @@ class TerrainCache:
             logger.debug(f"Cache hit for terrain at ({lat}, {lon})")
             return cached
 
+        # On Streamlit Cloud, don't attempt live DEM fetches (dependencies not installed)
+        # Return default terrain values - the pre-populated cache should have all ski areas
+        import os
+        from pathlib import Path
+        is_streamlit_cloud = os.environ.get("STREAMLIT_SHARING_MODE") or Path("/mount/src").exists()
+        if is_streamlit_cloud:
+            logger.info(f"Streamlit Cloud: using default terrain (cache miss for {lat}, {lon})")
+            # Store and return default terrain values
+            self.store(lat, lon, 2500.0, 20.0, 180.0, 50.0, 0.0)
+            return self.get(lat, lon)
+
         # Cache miss - fetch from DEM
         logger.info(f"Cache miss for terrain at ({lat}, {lon}), fetching from DEM...")
         start_time = time.time()

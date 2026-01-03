@@ -15,31 +15,21 @@ _src_path = _app_file.parent.parent.parent
 if str(_src_path) not in sys.path:
     sys.path.insert(0, str(_src_path))
 
-# DIAGNOSTIC: Early import with error capture
-_import_errors = []
+# MINIMAL DIAGNOSTIC - catch any error before it crashes the app
+import traceback as _tb
+_startup_error = None
 
 try:
     from datetime import date, datetime, timedelta, timezone
-except Exception as e:
-    _import_errors.append(f"datetime: {e}")
-
-try:
     from typing import Optional
-except Exception as e:
-    _import_errors.append(f"typing: {e}")
-
-try:
     import pandas as pd
 except Exception as e:
-    _import_errors.append(f"pandas: {e}")
+    _startup_error = f"Core import error: {e}\n{_tb.format_exc()}"
 
 try:
     import streamlit as st
-except ImportError as e:
-    print(f"Streamlit not installed: {e}")
-    sys.exit(1)
 except Exception as e:
-    print(f"Streamlit error: {e}")
+    print(f"Streamlit import failed: {e}")
     sys.exit(1)
 
 # MUST be first Streamlit command
@@ -50,19 +40,30 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# DEBUG: Show deployment info at top
+# DEBUG: Show deployment info at top with diagnostics
 import os
 from pathlib import Path
 _debug_is_cloud = os.environ.get("STREAMLIT_SHARING_MODE") or Path("/mount/src").exists()
 _debug_db_path = Path("/mount/src/snowforecast/data/cache/snowforecast.duckdb")
-st.caption(f"v2026.01.03.10 | Cloud: {_debug_is_cloud} | DB exists: {_debug_db_path.exists() if _debug_is_cloud else 'N/A'}")
 
-# Now show any import errors
-if _import_errors:
-    st.error("Import errors detected:")
-    for err in _import_errors:
-        st.error(err)
+# Show version first
+st.caption(f"v2026.01.03.11 | Cloud: {_debug_is_cloud} | DB exists: {_debug_db_path.exists() if _debug_is_cloud else 'N/A'}")
+
+# Show startup error if any
+if _startup_error:
+    st.error("Startup error:")
+    st.code(_startup_error)
     st.stop()
+
+# Show directory listing for diagnostics on cloud
+if _debug_is_cloud:
+    try:
+        mount_src = Path("/mount/src")
+        if mount_src.exists():
+            contents = list(mount_src.iterdir())[:10]
+            st.caption(f"[DEBUG] /mount/src contents: {[p.name for p in contents]}")
+    except Exception as e:
+        st.caption(f"[DEBUG] Error listing /mount/src: {e}")
 
 # Import dashboard components with error catching
 try:
