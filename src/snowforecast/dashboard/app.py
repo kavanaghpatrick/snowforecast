@@ -4,6 +4,14 @@ Run with: streamlit run src/snowforecast/dashboard/app.py
 """
 
 import sys
+from pathlib import Path
+
+# Add src directory to path for Streamlit Cloud compatibility
+# This ensures 'import snowforecast' works even if package isn't pip-installed
+_src_path = Path(__file__).parent.parent.parent
+if str(_src_path) not in sys.path:
+    sys.path.insert(0, str(_src_path))
+
 from datetime import date, datetime, timedelta
 
 import pandas as pd
