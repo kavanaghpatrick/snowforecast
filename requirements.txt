@@ -1,9 +1,9 @@
 # Requirements for Streamlit Cloud deployment
-# Force rebuild: 2026-01-03-v8-remove-herbie
+# Force rebuild: 2026-01-03-v9-no-package-install
 # For local development, use: pip install -e ".[all]"
 
-# Install local package (enables 'import snowforecast')
-.
+# Note: NOT using pip install . here as it requires build dependencies
+# app.py adds src/ to sys.path for imports
 
 # Core
 numpy>=1.24.0
@@ -11,6 +11,7 @@ pandas>=2.0.0
 xarray>=2023.1.0
 pydantic>=2.0.0
 scipy>=1.10.0
+pyarrow>=14.0.0
 # Note: rasterio removed - requires GDAL, not needed for dashboard
 
 # Dashboard
