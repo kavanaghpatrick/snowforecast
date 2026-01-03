@@ -59,7 +59,8 @@ class TestForecastCache:
 
     def test_store_and_get_forecast(self, temp_db):
         """Can store and retrieve forecast."""
-        run_time = datetime(2026, 1, 1, 0, 0, 0)
+        # Use a recent run_time relative to current time to ensure it passes age filter
+        run_time = datetime.utcnow() - timedelta(hours=1)
 
         temp_db.store_forecast(
             lat=47.74,
@@ -73,6 +74,7 @@ class TestForecastCache:
         )
 
         valid_time = run_time + timedelta(hours=24)
+        # Use larger max_age_hours to ensure the forecast is found
         forecast = temp_db.get_forecast(47.74, -121.09, valid_time, max_age_hours=48)
 
         assert forecast is not None

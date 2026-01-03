@@ -256,7 +256,7 @@ class CacheDatabase:
         lat: float,
         lon: float,
         valid_time: datetime,
-        max_age_hours: int = 2,
+        max_age_hours: int = 12,
     ) -> Optional[CachedForecast]:
         """Get cached forecast for location and time.
 
@@ -264,7 +264,9 @@ class CacheDatabase:
             lat: Latitude
             lon: Longitude
             valid_time: Target forecast valid time
-            max_age_hours: Maximum age of cached data in hours
+            max_age_hours: Maximum age of cached data in hours (default: 12)
+                          HRRR model runs every 1-6 hours, so 12h ensures we
+                          always find data even if refresh is delayed.
 
         Returns:
             CachedForecast if found and fresh, None otherwise
@@ -277,6 +279,10 @@ class CacheDatabase:
         else:
             min_run_time = datetime.utcnow() - timedelta(hours=max_age_hours)
 
+        # Use a 6-hour window to find forecasts because HRRR data may only be
+        # available at specific forecast hours (e.g., every 3 hours).
+        # The ORDER BY clause prioritizes the closest valid_time to the requested time.
+        time_window_hours = 6
         result = self.conn.execute(
             """
             SELECT
@@ -292,8 +298,8 @@ class CacheDatabase:
             [
                 lat,
                 lon,
-                valid_time - timedelta(hours=1),
-                valid_time + timedelta(hours=1),
+                valid_time - timedelta(hours=time_window_hours),
+                valid_time + timedelta(hours=time_window_hours),
                 min_run_time,
                 valid_time,
             ],
