@@ -103,8 +103,9 @@ def get_predictor():
         return None
 
 
+@st.cache_data(ttl=3600, show_spinner="Loading resort conditions...")
 def fetch_all_conditions() -> pd.DataFrame:
-    """Fetch current conditions for all ski areas (for map display)."""
+    """Fetch current conditions for all ski areas (cached 1 hour)."""
     predictor = get_predictor()
     if predictor is None:
         return pd.DataFrame()
@@ -141,8 +142,9 @@ def fetch_all_conditions() -> pd.DataFrame:
     return pd.DataFrame(records)
 
 
+@st.cache_data(ttl=3600, show_spinner="Loading 7-day forecast...")
 def fetch_resort_7day_forecast(name: str, lat: float, lon: float) -> pd.DataFrame:
-    """Fetch 7-day forecast for a resort (for detail panel table)."""
+    """Fetch 7-day forecast for a resort (cached 1 hour)."""
     predictor = get_predictor()
     if predictor is None:
         return pd.DataFrame()
@@ -224,9 +226,7 @@ def create_sidebar() -> tuple[str, str]:
     st.sidebar.markdown("---")
     if st.sidebar.button("🔄 Refresh Data"):
         clear_forecast_cache()
-        for key in list(st.session_state.keys()):
-            if key.startswith("conditions_") or key.startswith("forecast_"):
-                del st.session_state[key]
+        st.cache_data.clear()  # Clear native Streamlit cache
         st.rerun()
 
     return selected_area, selected_state
@@ -240,6 +240,12 @@ def main():
 
     # Sidebar
     selected_area, selected_state = create_sidebar()
+
+    # Safety check for empty selection
+    if not selected_area or selected_area not in SKI_AREAS:
+        st.warning("Please select a ski area from the sidebar.")
+        return
+
     lat, lon, state, base_elev = SKI_AREAS[selected_area]
 
     # Time selector (horizontal)
@@ -260,15 +266,8 @@ def main():
     with col_map:
         st.subheader("Regional Overview")
 
-        # Load all resort conditions (cached)
-        cache_key = f"conditions_{datetime.now().strftime('%Y%m%d%H')}"
-        if cache_key not in st.session_state:
-            with st.spinner("Loading resort data..."):
-                render_loading_skeleton(height=400, skeleton_type="chart")
-                conditions_df = fetch_all_conditions()
-                st.session_state[cache_key] = conditions_df
-        else:
-            conditions_df = st.session_state[cache_key]
+        # Load all resort conditions (cached via @st.cache_data)
+        conditions_df = fetch_all_conditions()
 
         # Render interactive PyDeck map
         if not conditions_df.empty:
@@ -328,14 +327,8 @@ def main():
 
             st.markdown("---")
 
-            # Load 7-day forecast for table
-            forecast_cache_key = f"forecast_7day_{selected_area}_{datetime.now().strftime('%Y%m%d%H')}"
-            if forecast_cache_key not in st.session_state:
-                with st.spinner("Loading 7-day forecast..."):
-                    forecast_df = fetch_resort_7day_forecast(selected_area, lat, lon)
-                    st.session_state[forecast_cache_key] = forecast_df
-            else:
-                forecast_df = st.session_state[forecast_cache_key]
+            # Load 7-day forecast for table (cached via @st.cache_data)
+            forecast_df = fetch_resort_7day_forecast(selected_area, lat, lon)
 
             # Natural language forecast summary
             if not forecast_df.empty:
@@ -356,45 +349,42 @@ def main():
     tab_chart, tab_table = st.tabs(["📈 Forecast Chart", "📊 All Resorts"])
 
     with tab_chart:
-        # Load forecast for chart
-        forecast_key = f"forecast_7day_{selected_area}_{datetime.now().strftime('%Y%m%d%H')}"
-        if forecast_key in st.session_state:
-            forecast_df = st.session_state[forecast_key]
-            if not forecast_df.empty:
-                st.subheader("7-Day Snow Forecast")
+        # Use cached forecast data
+        forecast_df = fetch_resort_7day_forecast(selected_area, lat, lon)
+        if not forecast_df.empty:
+            st.subheader("7-Day Snow Forecast")
 
-                # Prepare chart data
-                chart_data = forecast_df[["date", "snow_depth_cm", "new_snow_cm"]].copy()
-                chart_data["date"] = pd.to_datetime(chart_data["date"])
-                chart_data = chart_data.set_index("date")
+            # Prepare chart data
+            chart_data = forecast_df[["date", "snow_depth_cm", "new_snow_cm"]].copy()
+            chart_data["date"] = pd.to_datetime(chart_data["date"])
+            chart_data = chart_data.set_index("date")
 
-                col_bar, col_line = st.columns(2)
-                with col_bar:
-                    st.markdown("**New Snow (cm)**")
-                    st.bar_chart(chart_data["new_snow_cm"])
-                with col_line:
-                    st.markdown("**Base Depth (cm)**")
-                    st.line_chart(chart_data["snow_depth_cm"])
+            col_bar, col_line = st.columns(2)
+            with col_bar:
+                st.markdown("**New Snow (cm)**")
+                st.bar_chart(chart_data["new_snow_cm"])
+            with col_line:
+                st.markdown("**Base Depth (cm)**")
+                st.line_chart(chart_data["snow_depth_cm"])
 
     with tab_table:
         st.subheader("All Ski Resorts")
-        if cache_key in st.session_state:
-            conditions_df = st.session_state[cache_key]
-            if not conditions_df.empty:
-                # Format for display
-                display_df = conditions_df[[
-                    "ski_area", "state", "elevation", "snow_depth_cm", "new_snow_cm", "probability"
-                ]].copy()
-                display_df.columns = ["Resort", "State", "Elevation (m)", "Base (cm)", "New (cm)", "Prob"]
-                display_df = display_df.sort_values("Base (cm)", ascending=False)
+        # Use cached conditions data
+        if not conditions_df.empty:
+            # Format for display
+            display_df = conditions_df[[
+                "ski_area", "state", "elevation", "snow_depth_cm", "new_snow_cm", "probability"
+            ]].copy()
+            display_df.columns = ["Resort", "State", "Elevation (m)", "Base (cm)", "New (cm)", "Prob"]
+            display_df = display_df.sort_values("Base (cm)", ascending=False)
 
-                # Format columns
-                display_df["Base (cm)"] = display_df["Base (cm)"].apply(lambda x: f"{x:.0f}")
-                display_df["New (cm)"] = display_df["New (cm)"].apply(lambda x: f"{x:.1f}")
-                display_df["Elevation (m)"] = display_df["Elevation (m)"].apply(lambda x: f"{x:.0f}")
-                display_df["Prob"] = display_df["Prob"].apply(lambda x: f"{x:.0%}")
+            # Format columns
+            display_df["Base (cm)"] = display_df["Base (cm)"].apply(lambda x: f"{x:.0f}")
+            display_df["New (cm)"] = display_df["New (cm)"].apply(lambda x: f"{x:.1f}")
+            display_df["Elevation (m)"] = display_df["Elevation (m)"].apply(lambda x: f"{x:.0f}")
+            display_df["Prob"] = display_df["Prob"].apply(lambda x: f"{x:.0%}")
 
-                st.dataframe(display_df, use_container_width=True, hide_index=True)
+            st.dataframe(display_df, use_container_width=True, hide_index=True)
 
     # Footer
     st.markdown("---")
