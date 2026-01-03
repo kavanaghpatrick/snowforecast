@@ -2,7 +2,7 @@
 # For local development, use: pip install -e ".[all]"
 
 # Install local package (enables 'import snowforecast')
--e .
+.
 
 # Core
 numpy>=1.24.0
