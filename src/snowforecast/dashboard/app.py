@@ -1,69 +1,51 @@
-"""Streamlit dashboard for Snow Forecast visualization.
+"""Streamlit dashboard for Snow Forecast visualization."""
 
-Phase 1: Core Layout - Interactive map, time selector, detail panel.
-Phase 2: Enhanced Metrics - Snow quality, confidence, elevation bands, SNOTEL.
-Phase 3: Polish & Mobile - Favorites, responsive layout, cache status, error handling.
-Run with: streamlit run src/snowforecast/dashboard/app.py
-"""
+# ULTRA-MINIMAL TEST - identify where crash occurs
+import streamlit as st
 
-import sys
+st.set_page_config(page_title="Snow Forecast", page_icon="❄️", layout="wide")
+st.write("v2026.01.03.12 - MINIMAL TEST")
+
+import os
 from pathlib import Path
 
-# Add src directory to path for Streamlit Cloud compatibility
+_is_cloud = os.environ.get("STREAMLIT_SHARING_MODE") or Path("/mount/src").exists()
+st.write(f"Cloud: {_is_cloud}")
+
+if _is_cloud:
+    # List /mount/src
+    mount_src = Path("/mount/src")
+    if mount_src.exists():
+        contents = [p.name for p in mount_src.iterdir()]
+        st.write(f"Contents of /mount/src: {contents}")
+
+        # Check snowforecast subdir
+        sf_dir = mount_src / "snowforecast"
+        if sf_dir.exists():
+            sf_contents = [p.name for p in sf_dir.iterdir()][:15]
+            st.write(f"Contents of /mount/src/snowforecast: {sf_contents}")
+
+            # Check data/cache
+            cache_dir = sf_dir / "data" / "cache"
+            if cache_dir.exists():
+                cache_contents = [p.name for p in cache_dir.iterdir()]
+                st.write(f"Contents of data/cache: {cache_contents}")
+            else:
+                st.write(f"data/cache does not exist at: {cache_dir}")
+        else:
+            st.write(f"snowforecast subdir does not exist")
+    else:
+        st.write("/mount/src does not exist")
+
+st.write("MINIMAL TEST COMPLETE")
+st.stop()  # STOP HERE FOR MINIMAL TEST
+
+# Only continue if minimal test works
+import sys
 _app_file = Path(__file__).resolve()
 _src_path = _app_file.parent.parent.parent
 if str(_src_path) not in sys.path:
     sys.path.insert(0, str(_src_path))
-
-# MINIMAL DIAGNOSTIC - catch any error before it crashes the app
-import traceback as _tb
-_startup_error = None
-
-try:
-    from datetime import date, datetime, timedelta, timezone
-    from typing import Optional
-    import pandas as pd
-except Exception as e:
-    _startup_error = f"Core import error: {e}\n{_tb.format_exc()}"
-
-try:
-    import streamlit as st
-except Exception as e:
-    print(f"Streamlit import failed: {e}")
-    sys.exit(1)
-
-# MUST be first Streamlit command
-st.set_page_config(
-    page_title="Snow Forecast Dashboard",
-    page_icon="❄️",
-    layout="wide",
-    initial_sidebar_state="expanded",
-)
-
-# DEBUG: Show deployment info at top with diagnostics
-import os
-from pathlib import Path
-_debug_is_cloud = os.environ.get("STREAMLIT_SHARING_MODE") or Path("/mount/src").exists()
-_debug_db_path = Path("/mount/src/snowforecast/data/cache/snowforecast.duckdb")
-
-# Show version first
-st.caption(f"v2026.01.03.11 | Cloud: {_debug_is_cloud} | DB exists: {_debug_db_path.exists() if _debug_is_cloud else 'N/A'}")
-
-# Show startup error if any
-if _startup_error:
-    st.error("Startup error:")
-    st.code(_startup_error)
-    st.stop()
-
-# Show directory listing for diagnostics on cloud
-if _debug_is_cloud:
-    try:
-        mount_src = Path("/mount/src")
-        if mount_src.exists():
-            contents = list(mount_src.iterdir())[:10]
-            st.caption(f"[DEBUG] /mount/src contents: {[p.name for p in contents]}")
-    except Exception as e:
-        st.caption(f"[DEBUG] Error listing /mount/src: {e}")
 
 # Import dashboard components with error catching
 try:
