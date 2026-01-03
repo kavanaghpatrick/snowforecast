@@ -73,3 +73,17 @@ logs/
 tmp/
 temp/
 *.tmp
+
+# Node
+node_modules/
+package*.json
+
+# Test artifacts
+test_*.js
+test_*.py
+screenshot*.png
+page_text.txt
+streamlit_*.png
+screenshots_time_selector/
+test-results/
+tests/e2e/
