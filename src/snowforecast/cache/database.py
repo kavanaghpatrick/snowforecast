@@ -269,7 +269,13 @@ class CacheDatabase:
         Returns:
             CachedForecast if found and fresh, None otherwise
         """
-        min_run_time = datetime.utcnow() - timedelta(hours=max_age_hours)
+        # In read-only mode (Streamlit Cloud), don't filter by age - use pre-populated cache
+        # The cache was populated before deployment and won't be updated
+        if self.read_only:
+            # Use a very large window (30 days) to accept any pre-populated data
+            min_run_time = datetime.utcnow() - timedelta(days=30)
+        else:
+            min_run_time = datetime.utcnow() - timedelta(hours=max_age_hours)
 
         result = self.conn.execute(
             """
