@@ -35,9 +35,15 @@ def get_storage() -> LocalStorage:
     Returns:
         LocalStorage instance for browser storage operations.
     """
-    if "local_storage" not in st.session_state:
-        st.session_state.local_storage = LocalStorage()
-    return st.session_state.local_storage
+    try:
+        if "local_storage" not in st.session_state:
+            st.session_state.local_storage = LocalStorage()
+        return st.session_state.local_storage
+    except Exception:
+        # Fallback if LocalStorage fails to initialize
+        if "local_storage" not in st.session_state:
+            st.session_state.local_storage = None
+        return st.session_state.local_storage
 
 
 def get_favorites() -> list[str]:
@@ -46,17 +52,18 @@ def get_favorites() -> list[str]:
     Returns:
         List of resort names marked as favorites. Empty list if none.
     """
-    storage = get_storage()
-    raw = storage.getItem(FAVORITES_KEY)
-    if raw:
-        try:
+    try:
+        storage = get_storage()
+        if storage is None:
+            return []
+        raw = storage.getItem(FAVORITES_KEY)
+        if raw:
             result = json.loads(raw)
             if isinstance(result, list):
                 return result
-            return []
-        except json.JSONDecodeError:
-            return []
-    return []
+        return []
+    except Exception:
+        return []
 
 
 def save_favorites(favs: list[str]) -> None:
@@ -65,11 +72,15 @@ def save_favorites(favs: list[str]) -> None:
     Args:
         favs: List of resort names to save as favorites.
     """
-    storage = get_storage()
-    storage.setItem(
-        itemKey=FAVORITES_KEY,
-        itemValue=json.dumps(favs)
-    )
+    try:
+        storage = get_storage()
+        if storage is not None:
+            storage.setItem(
+                itemKey=FAVORITES_KEY,
+                itemValue=json.dumps(favs)
+            )
+    except Exception:
+        pass  # Silently fail if storage unavailable
 
 
 def add_favorite(resort_name: str) -> None:
