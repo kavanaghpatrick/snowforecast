@@ -120,7 +120,8 @@ def get_cache_status() -> dict:
         }
 
     # Calculate age - ensure we're comparing with current UTC time
-    now = datetime.utcnow()
+    from datetime import timezone
+    now = datetime.now(timezone.utc).replace(tzinfo=None)
     # Handle both datetime and pd.Timestamp
     if hasattr(latest_run, 'to_pydatetime'):
         latest_run = latest_run.to_pydatetime()
@@ -349,12 +350,12 @@ def create_current_conditions_cards(df: pd.DataFrame, selected_area: str):
 
 
 def create_forecast_chart(forecast_df: pd.DataFrame):
-    """Create 7-day forecast chart."""
+    """Create 48-hour forecast chart."""
     if forecast_df.empty:
         st.info("No forecast data available")
         return
 
-    st.subheader("7-Day Snow Forecast")
+    st.subheader("48-Hour Snow Forecast")
 
     # Prepare data for chart
     chart_data = forecast_df[["date", "snow_depth_cm", "new_snow_cm"]].copy()
@@ -387,7 +388,7 @@ def create_forecast_table(forecast_df: pd.DataFrame):
     display_df["CI Low"] = display_df["CI Low"].apply(lambda x: f"{x:.1f}")
     display_df["CI High"] = display_df["CI High"].apply(lambda x: f"{x:.1f}")
 
-    st.dataframe(display_df, use_container_width=True, hide_index=True)
+    st.dataframe(display_df, width='stretch', hide_index=True)
 
 
 def create_regional_map(conditions_df: pd.DataFrame, selected_area: str = None):
@@ -426,7 +427,7 @@ def create_regional_table(conditions_df: pd.DataFrame):
     display_df["New 24hr (cm)"] = display_df["New 24hr (cm)"].apply(lambda x: f"{x:.1f}")
     display_df["Elevation (m)"] = display_df["Elevation (m)"].apply(lambda x: f"{x:.0f}")
 
-    st.dataframe(display_df, use_container_width=True, hide_index=True)
+    st.dataframe(display_df, width='stretch', hide_index=True)
 
 
 def create_sidebar() -> tuple:
@@ -549,14 +550,14 @@ def main():
     col1, col2 = st.columns(2)
 
     with col1:
-        # 7-day forecast for selected resort
+        # 2-day forecast for selected resort (HRRR limit is 48h)
         if selected_area:
             lat, lon, _, _ = SKI_AREAS[selected_area]
             forecast_cache_key = f"forecast_{selected_area}_{datetime.now().strftime('%Y%m%d%H')}"
             if forecast_cache_key not in st.session_state:
                 forecast_progress = st.empty()
                 forecast_df = fetch_ski_area_forecast(
-                    selected_area, lat, lon, days=7, progress_container=forecast_progress
+                    selected_area, lat, lon, days=2, progress_container=forecast_progress
                 )
                 st.session_state[forecast_cache_key] = forecast_df
             else:

@@ -1,0 +1,30 @@
+{
+  "page_title": "Snow Forecast Dashboard",
+  "ski_areas": [
+    "Ski",
+    "Snow",
+    "Alta"
+  ],
+  "error_messages": [
+    "6388 ft\n\nFetching Day +6 forecast...\n\nConnection error\nConnection failed with status 503.",
+    "g Day +6 forecast...\n\nConnection error\nConnection failed with status 503."
+  ],
+  "cache_status": [
+    "R (3km)\nCopernicus DEM (30m)\n\nCache Status\n\n:green_circle: Fresh\n\nLast updated: 2026-01-03 00:00 UTC\n\n(48 min",
+    "Cache Status\n\n:green_circle: Fresh\n\nLast updated: 2026-01-03 00:00 UTC\n\n(48 min ago)\n\nForecasts: 17 | Terrain",
+    "Status\n\n:green_circle: Fresh\n\nLast updated: 2026-01-03 00:00 UTC\n\n(48 min ago)\n\nForecasts: 17 | Terrain: 18\n\nR",
+    "Forecasts: 17 | Terrain: 18\n\nRefresh Data\n\n\u2744\ufe0f Snow Forecast Dashboard\n\nReal-time snow conditions from NOAA HR"
+  ],
+  "forecast_data_status": "SHOWING DATA - Keywords found: ['forecast', '24h', 'inches', 'cm']",
+  "data_sources": [
+    "HRRR",
+    "DEM",
+    "elevation",
+    "NOAA"
+  ],
+  "all_text_content": "Select Location\n\nState\n\nAll States\n\nSki Area\n\nAlta\n\nAlta\n\n\ud83d\udccd 40.5884\u00b0N, 111.6386\u00b0W\n\n\ud83c\udfd4\ufe0f Base: 2600m (8530ft)\n\nData Sources\n\nNOAA HRRR (3km)\nCopernicus DEM (30m)\n\nCache Status\n\n:green_circle: Fresh\n\nLast updated: 2026-01-03 00:00 UTC\n\n(48 min ago)\n\nForecasts: 17 | Terrain: 18\n\nRefresh Data\n\n\u2744\ufe0f Snow Forecast Dashboard\n\nReal-time snow conditions from NOAA HRRR + Copernicus DEM\n\nSnow Base\n\n0 cm\n0 inches\n\n24hr New Snow\n\n0.0 cm\n0.0 inches\n\nSnow Probability\n\n10%\n\nElevation\n\n1947 m\n6388 ft\n\nFetching Day +6 forecast...\n\nConnection error\nConnection failed with status 503.",
+  "page_load_time": "27.64 seconds",
+  "screenshots": [
+    "/Users/patrickkavanagh/snowforecast/e2e_screenshot.png"
+  ]
+}

@@ -220,7 +220,6 @@ def render_retry_button(
     clicked = target.button(
         f"🔄 {label}",
         key=f"retry_btn_{key}",
-        use_container_width=False,
     )
 
     if clicked and on_click is not None:

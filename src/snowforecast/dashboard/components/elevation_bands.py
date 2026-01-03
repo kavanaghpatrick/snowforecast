@@ -86,7 +86,7 @@ def render_elevation_bands(result: ElevationBandResult) -> None:
     # Display as dataframe
     st.dataframe(
         table_data,
-        use_container_width=True,
+        width='stretch',
         hide_index=True,
         column_config={
             "Elevation": st.column_config.TextColumn("Band", width="small"),
