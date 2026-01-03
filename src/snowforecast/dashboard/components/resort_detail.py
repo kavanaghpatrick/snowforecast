@@ -318,7 +318,9 @@ def render_forecast_table(forecasts: pd.DataFrame, container=None) -> None:
     </table>
     """
 
-    target.markdown(table_html, unsafe_allow_html=True)
+    # Use st.html() to avoid whitespace-sensitive markdown rendering issues
+    # (see: https://github.com/streamlit/streamlit/issues/9312)
+    target.html(table_html)
 
 
 def render_snow_chart(forecasts: pd.DataFrame, container=None) -> None:
