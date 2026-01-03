@@ -1,5 +1,5 @@
 # Requirements for Streamlit Cloud deployment
-# Force rebuild: 2026-01-03-v3
+# Force rebuild: 2026-01-03-v4-phase1
 # For local development, use: pip install -e ".[all]"
 
 # Install local package (enables 'import snowforecast')
