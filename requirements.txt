@@ -1,5 +1,5 @@
 # Requirements for Streamlit Cloud deployment
-# Force rebuild: 2026-01-03-v13-restore-deps
+# Force rebuild: 2026-01-03-v14-cache-path-fix
 
 # Core
 numpy>=1.24.0
