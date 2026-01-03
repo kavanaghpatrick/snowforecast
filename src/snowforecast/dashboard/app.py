@@ -13,10 +13,15 @@ _src_path = _app_file.parent.parent.parent  # src/snowforecast/dashboard -> src
 if str(_src_path) not in sys.path:
     sys.path.insert(0, str(_src_path))
 
-# Debug: print path info (visible in Streamlit Cloud logs)
-# print(f"DEBUG: __file__ = {_app_file}")
-# print(f"DEBUG: _src_path = {_src_path}")
-# print(f"DEBUG: sys.path = {sys.path[:3]}")
+# Debug path resolution (temporary - remove after fixing)
+import os
+_debug_info = {
+    "file": str(_app_file),
+    "src_path": str(_src_path),
+    "src_exists": _src_path.exists(),
+    "snowforecast_exists": (_src_path / "snowforecast").exists() if _src_path.exists() else False,
+    "cwd": os.getcwd(),
+}
 
 from datetime import date, datetime, timedelta
 
@@ -36,6 +41,10 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
+
+# DEBUG: Show path info (temporary)
+with st.expander("🔧 Debug Info (temporary)", expanded=False):
+    st.json(_debug_info)
 
 # Western US Ski Areas with coordinates
 SKI_AREAS = {
