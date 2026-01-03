@@ -1,6 +1,7 @@
 """Streamlit dashboard for Snow Forecast visualization.
 
 Phase 1: Core Layout - Interactive map, time selector, detail panel.
+Phase 2: Enhanced Metrics - Snow quality, confidence, elevation bands, SNOTEL.
 Run with: streamlit run src/snowforecast/dashboard/app.py
 """
 
@@ -40,7 +41,19 @@ from snowforecast.dashboard.components import (
     render_empty_state,
     # Cache status
     render_cache_status_badge,
+    # Phase 2: Snow Quality
+    create_quality_metrics,
+    render_snow_quality_badge,
+    # Phase 2: Confidence
+    render_confidence_badge,
+    render_confidence_explanation,
+    # Phase 2: Elevation Bands
+    render_elevation_bands,
+    # Phase 2: SNOTEL
+    render_snotel_section,
 )
+# Phase 2: Elevation bands computation
+from snowforecast.cache.elevation_bands import compute_elevation_bands, get_summit_elevation
 
 # Page configuration
 st.set_page_config(
@@ -313,7 +326,7 @@ def main():
             time_str = forecast_time.strftime("%A %I:%M %p") if forecast_time else "Now"
             st.caption(f"Forecast for: {time_str}")
 
-            # Quick metrics row
+            # Quick metrics row (Phase 1)
             metric_cols = st.columns(4)
             with metric_cols[0]:
                 st.metric("Snow Base", f"{forecast.snow_depth_cm:.0f} cm",
@@ -333,6 +346,24 @@ def main():
                     elev = base_elev
                 st.metric("Elevation", f"{elev:.0f} m", f"{elev*3.28084:.0f} ft")
 
+            # Phase 2: Snow Quality Badge
+            try:
+                # Estimate temperature from elevation (winter approximation)
+                temp_c = -5.0 - (elev - 2000) * 0.0065
+                quality_metrics = create_quality_metrics(
+                    snow_depth_change=forecast.new_snow_cm,
+                    precip_mm=forecast.new_snow_cm / 10.0,  # Approximate
+                    temp_c=temp_c,
+                )
+                col_quality, col_confidence = st.columns(2)
+                with col_quality:
+                    render_snow_quality_badge(quality_metrics)
+                with col_confidence:
+                    render_confidence_badge(confidence, forecast.snowfall_probability)
+                render_confidence_explanation()
+            except Exception:
+                pass  # Gracefully degrade if snow quality calc fails
+
             st.markdown("---")
 
             # Load 7-day forecast for table (cached via @st.cache_data)
@@ -347,14 +378,32 @@ def main():
             # Forecast table
             render_forecast_table(forecast_df)
 
+            # Phase 2: Elevation Bands
+            with st.expander("Forecast by Elevation", expanded=False):
+                try:
+                    predictor = get_predictor()
+                    if predictor:
+                        summit_elev = get_summit_elevation(selected_area, base_elev)
+                        elev_result = compute_elevation_bands(
+                            predictor=predictor,
+                            lat=lat,
+                            lon=lon,
+                            base_elev_m=base_elev,
+                            summit_elev_m=summit_elev,
+                            ski_area_name=selected_area,
+                        )
+                        render_elevation_bands(elev_result)
+                except Exception as e:
+                    st.caption(f"Elevation data unavailable: {e}")
+
         else:
             # No forecast data - show loading or error
             render_loading_skeleton(height=300, skeleton_type="card")
             st.caption("Loading forecast data...")
 
-    # Bottom section: Tabs for additional views
+    # Bottom section: Tabs for additional views (Phase 2: added SNOTEL)
     st.markdown("---")
-    tab_chart, tab_table = st.tabs(["📈 Forecast Chart", "📊 All Resorts"])
+    tab_chart, tab_snotel, tab_table = st.tabs(["📈 Forecast Chart", "📡 SNOTEL Stations", "📊 All Resorts"])
 
     with tab_chart:
         # Use cached forecast data
@@ -374,6 +423,15 @@ def main():
             with col_line:
                 st.markdown("**Base Depth (cm)**")
                 st.line_chart(chart_data["snow_depth_cm"])
+
+    with tab_snotel:
+        # Phase 2: SNOTEL station observations
+        st.subheader("SNOTEL Observations")
+        st.caption("Compare model forecasts with real-world SNOTEL observations")
+        try:
+            render_snotel_section(lat, lon, radius_km=50)
+        except Exception as e:
+            st.info(f"SNOTEL data unavailable: {e}")
 
     with tab_table:
         st.subheader("All Ski Resorts")
