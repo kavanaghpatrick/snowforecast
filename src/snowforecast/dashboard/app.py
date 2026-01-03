@@ -30,23 +30,16 @@ from snowforecast.dashboard.components import (
     render_resort_map,
     # Time selector
     render_time_selector,
-    get_forecast_time,
-    prefetch_all_forecasts,
     get_current_forecast,
-    needs_prefetch,
     clear_forecast_cache,
-    TIME_STEPS,
     # Resort detail
-    render_resort_detail,
     generate_forecast_summary,
     render_forecast_table,
     # Loading states
     render_loading_skeleton,
     render_empty_state,
-    render_error_with_retry,
     # Cache status
     render_cache_status_badge,
-    get_cache_freshness,
 )
 
 # Page configuration
@@ -103,9 +96,12 @@ def get_predictor():
         return None
 
 
-@st.cache_data(ttl=3600, show_spinner="Loading resort conditions...")
+@st.cache_data(ttl=3600, max_entries=5, show_spinner="Loading resort conditions...")
 def fetch_all_conditions() -> pd.DataFrame:
-    """Fetch current conditions for all ski areas (cached 1 hour)."""
+    """Fetch current conditions for all ski areas (cached 1 hour).
+
+    Memory optimization: max_entries=5 limits cache to 5 versions.
+    """
     predictor = get_predictor()
     if predictor is None:
         return pd.DataFrame()
@@ -139,12 +135,21 @@ def fetch_all_conditions() -> pd.DataFrame:
                 "probability": 0,
             })
 
-    return pd.DataFrame(records)
+    df = pd.DataFrame(records)
+    # Optimize memory: use float32 instead of float64
+    for col in ["latitude", "longitude", "elevation", "snow_depth_cm", "new_snow_cm", "probability"]:
+        if col in df.columns:
+            df[col] = df[col].astype("float32")
+    df["state"] = df["state"].astype("category")
+    return df
 
 
-@st.cache_data(ttl=3600, show_spinner="Loading 7-day forecast...")
+@st.cache_data(ttl=3600, max_entries=10, show_spinner="Loading 7-day forecast...")
 def fetch_resort_7day_forecast(name: str, lat: float, lon: float) -> pd.DataFrame:
-    """Fetch 7-day forecast for a resort (cached 1 hour)."""
+    """Fetch 7-day forecast for a resort (cached 1 hour).
+
+    Memory optimization: max_entries=10 limits to 10 resort forecasts.
+    """
     predictor = get_predictor()
     if predictor is None:
         return pd.DataFrame()
@@ -184,6 +189,11 @@ def fetch_resort_7day_forecast(name: str, lat: float, lon: float) -> pd.DataFram
     df = pd.DataFrame(records)
     df["ski_area"] = name
     df["elevation"] = terrain.get("elevation", 2000)
+    # Optimize memory: use float32 instead of float64
+    for col in ["snow_depth_cm", "new_snow_cm", "probability", "ci_lower", "ci_upper", "elevation"]:
+        if col in df.columns:
+            df[col] = df[col].astype("float32")
+    df["day"] = df["day"].astype("int8")
     return df
 
 
@@ -252,12 +262,10 @@ def main():
     st.markdown("---")
     selected_time = render_time_selector()
 
-    # Check if we need to prefetch forecasts for this location
-    if needs_prefetch(lat, lon):
-        with st.spinner(f"Loading forecasts for {selected_area}..."):
-            predictor = get_predictor()
-            if predictor:
-                prefetch_all_forecasts(predictor, lat, lon)
+    # Memory optimization: Removed aggressive prefetching of all 9 time steps.
+    # Forecasts are now loaded on-demand via get_current_forecast() which
+    # uses the DuckDB cache. This significantly reduces memory usage on
+    # Streamlit Cloud (1GB limit).
 
     # Main content: Map | Detail Panel
     col_map, col_detail = st.columns([1, 1])
