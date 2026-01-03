@@ -8,37 +8,10 @@ from pathlib import Path
 
 # Add src directory to path for Streamlit Cloud compatibility
 # This ensures 'import snowforecast' works even if package isn't pip-installed
-_app_file = Path(__file__).resolve()  # Resolve to absolute path
+_app_file = Path(__file__).resolve()
 _src_path = _app_file.parent.parent.parent  # src/snowforecast/dashboard -> src
 if str(_src_path) not in sys.path:
     sys.path.insert(0, str(_src_path))
-
-# Debug path resolution (temporary - remove after fixing)
-import os
-_debug_info = {
-    "file": str(_app_file),
-    "src_path": str(_src_path),
-    "src_exists": _src_path.exists(),
-    "snowforecast_exists": (_src_path / "snowforecast").exists() if _src_path.exists() else False,
-    "cache_exists": (_src_path / "snowforecast" / "cache").exists() if _src_path.exists() else False,
-    "init_exists": (_src_path / "snowforecast" / "__init__.py").exists() if _src_path.exists() else False,
-    "cwd": os.getcwd(),
-    "sys_path_0": sys.path[0] if sys.path else "empty",
-}
-
-# Try import test
-try:
-    import snowforecast
-    _debug_info["import_snowforecast"] = "SUCCESS"
-    _debug_info["snowforecast_path"] = str(snowforecast.__file__) if hasattr(snowforecast, '__file__') else "no __file__"
-except ImportError as e:
-    _debug_info["import_snowforecast"] = f"FAILED: {e}"
-
-try:
-    from snowforecast import cache
-    _debug_info["import_cache"] = "SUCCESS"
-except ImportError as e:
-    _debug_info["import_cache"] = f"FAILED: {e}"
 
 from datetime import date, datetime, timedelta
 
@@ -58,10 +31,6 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
-
-# DEBUG: Show path info (temporary)
-with st.expander("🔧 Debug Info (temporary)", expanded=False):
-    st.json(_debug_info)
 
 # Western US Ski Areas with coordinates
 SKI_AREAS = {

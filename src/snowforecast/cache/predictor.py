@@ -9,6 +9,7 @@ from datetime import date, datetime, timedelta
 from pathlib import Path
 from typing import Optional
 
+# Import directly from schemas to avoid loading api.__init__ which requires FastAPI
 from snowforecast.api.schemas import ConfidenceInterval, ForecastResult
 from snowforecast.cache.database import DEFAULT_DB_PATH, CacheDatabase
 from snowforecast.cache.hrrr import HRRRCache
