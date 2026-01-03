@@ -33,14 +33,20 @@ def _find_db_file() -> Optional[Path]:
         mount_src / "src" / "data" / "cache" / "snowforecast.duckdb",
     ]
 
-    # Also do a recursive search if not found in expected locations
+    # Check known paths first
     for path in search_paths:
-        if path.exists():
-            return path
+        try:
+            if path.exists():
+                return path
+        except Exception:
+            pass
 
-    # Try to find any .duckdb file
-    for duckdb_file in mount_src.rglob("*.duckdb"):
-        return duckdb_file
+    # Try to find any .duckdb file (with error handling)
+    try:
+        for duckdb_file in mount_src.rglob("*.duckdb"):
+            return duckdb_file
+    except Exception as e:
+        print(f"[CACHE DB] Error during rglob search: {e}")
 
     return None
 
@@ -61,27 +67,29 @@ def _get_default_db_path() -> Path:
         print(f"[CACHE DB] Primary path: {_GIT_REPO_DB_PATH}")
         print(f"[CACHE DB] Primary path exists: {_GIT_REPO_DB_PATH.exists()}")
 
-        # Check what's in /mount/src
+        # Check what's in /mount/src (with defensive error handling)
         mount_src = Path("/mount/src")
-        if mount_src.exists():
-            try:
-                top_items = list(mount_src.iterdir())
-                print(f"[CACHE DB] /mount/src ({len(top_items)} items): {[p.name for p in top_items[:15]]}")
+        try:
+            if mount_src.exists():
+                top_items = list(mount_src.iterdir())[:15]
+                print(f"[CACHE DB] /mount/src ({len(top_items)} items): {[p.name for p in top_items]}")
 
                 # Check if data dir exists
                 data_dir = mount_src / "data"
                 if data_dir.exists():
-                    data_items = list(data_dir.iterdir())
-                    print(f"[CACHE DB] /mount/src/data ({len(data_items)} items): {[p.name for p in data_items[:10]]}")
+                    data_items = list(data_dir.iterdir())[:10]
+                    print(f"[CACHE DB] /mount/src/data ({len(data_items)} items): {[p.name for p in data_items]}")
 
                     cache_dir = data_dir / "cache"
                     if cache_dir.exists():
                         cache_items = list(cache_dir.iterdir())
                         print(f"[CACHE DB] /mount/src/data/cache ({len(cache_items)} items): {[p.name for p in cache_items]}")
+                    else:
+                        print(f"[CACHE DB] /mount/src/data/cache does NOT exist")
                 else:
                     print(f"[CACHE DB] /mount/src/data does NOT exist")
-            except Exception as e:
-                print(f"[CACHE DB] Error listing dirs: {e}")
+        except Exception as e:
+            print(f"[CACHE DB] Error listing dirs: {e}")
 
         # Try to find the database
         found_db = _find_db_file()

@@ -63,7 +63,7 @@ if _debug_is_cloud and Path("/mount/src").exists():
         _debug_mount_items = [p.name for p in Path("/mount/src").iterdir()][:10]
     except Exception:
         _debug_mount_items = ["error listing"]
-st.caption(f"v2026.01.03.4 | Cloud: {_debug_is_cloud} | data/: {_debug_data_exists} | cache/: {_debug_cache_exists} | DB: {_debug_db_path.exists() if _debug_is_cloud else 'N/A'}")
+st.caption(f"v2026.01.03.5 | Cloud: {_debug_is_cloud} | data/: {_debug_data_exists} | cache/: {_debug_cache_exists} | DB: {_debug_db_path.exists() if _debug_is_cloud else 'N/A'}")
 if _debug_is_cloud and not _debug_db_path.exists():
     st.caption(f"/mount/src contents: {_debug_mount_items}")
 
