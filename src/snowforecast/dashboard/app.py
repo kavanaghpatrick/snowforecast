@@ -8,9 +8,15 @@ from pathlib import Path
 
 # Add src directory to path for Streamlit Cloud compatibility
 # This ensures 'import snowforecast' works even if package isn't pip-installed
-_src_path = Path(__file__).parent.parent.parent
+_app_file = Path(__file__).resolve()  # Resolve to absolute path
+_src_path = _app_file.parent.parent.parent  # src/snowforecast/dashboard -> src
 if str(_src_path) not in sys.path:
     sys.path.insert(0, str(_src_path))
+
+# Debug: print path info (visible in Streamlit Cloud logs)
+# print(f"DEBUG: __file__ = {_app_file}")
+# print(f"DEBUG: _src_path = {_src_path}")
+# print(f"DEBUG: sys.path = {sys.path[:3]}")
 
 from datetime import date, datetime, timedelta
 
