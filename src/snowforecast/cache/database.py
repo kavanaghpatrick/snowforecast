@@ -20,8 +20,9 @@ logger = logging.getLogger(__name__)
 
 # Streamlit Cloud detection and paths
 _IS_STREAMLIT_CLOUD = os.environ.get("STREAMLIT_SHARING_MODE") or Path("/mount/src").exists()
-# On Streamlit Cloud, repo content is mounted directly at /mount/src/
-_GIT_REPO_DB_PATH = Path("/mount/src/data/cache/snowforecast.duckdb")
+# On Streamlit Cloud, repo is cloned to /mount/src/{repo_name}/
+# The repo name is 'snowforecast'
+_GIT_REPO_DB_PATH = Path("/mount/src/snowforecast/data/cache/snowforecast.duckdb")
 
 
 def _get_default_db_path() -> Path:

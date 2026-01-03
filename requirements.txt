@@ -1,5 +1,5 @@
 # Requirements for Streamlit Cloud deployment
-# Force rebuild: 2026-01-03-v18-force-clean-rebuild
+# Force rebuild: 2026-01-03-v19-path-fix
 # REBUILD TRIGGER: Changed at 2026-01-03T20:00:00
 
 # Core
