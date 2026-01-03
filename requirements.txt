@@ -1,3 +1,23 @@
-# Absolute minimal test - just Streamlit
-# Force rebuild: 2026-01-03-v12-bare-minimum
+# Requirements for Streamlit Cloud deployment
+# Force rebuild: 2026-01-03-v13-restore-deps
+
+# Core
+numpy>=1.24.0
+pandas>=2.0.0
+xarray>=2023.1.0
+pydantic>=2.0.0
+scipy>=1.10.0
+pyarrow>=14.0.0
+
+# Dashboard
 streamlit>=1.30.0
+pydeck>=0.9.0
+streamlit-folium>=0.15.0
+streamlit-local-storage>=0.0.25
+branca>=0.6.0
+
+# Cache
+duckdb>=0.9.0
+
+# HTTP
+requests>=2.28.0
