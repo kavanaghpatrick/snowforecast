@@ -115,9 +115,9 @@ def render_resort_map(resort_data: pd.DataFrame) -> pdk.Deck:
         "html": """
             <b>{ski_area}</b><br/>
             {state}<br/>
-            Snow Depth: {snow_depth_cm} cm<br/>
-            New Snow: {new_snow_cm} cm<br/>
-            Probability: {probability:.0%}
+            Snow Depth: {snow_depth_cm:.0f} cm<br/>
+            New Snow: {new_snow_cm:.1f} cm<br/>
+            Probability: {probability_pct}
         """,
         "style": {
             "backgroundColor": "#1a1a2e",

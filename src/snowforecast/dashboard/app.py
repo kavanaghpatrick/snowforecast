@@ -203,6 +203,8 @@ def fetch_all_conditions() -> pd.DataFrame:
         if col in df.columns:
             df[col] = df[col].astype("float32")
     df["state"] = df["state"].astype("category")
+    # Add formatted probability for map tooltip
+    df["probability_pct"] = df["probability"].apply(lambda x: f"{x:.0%}")
     return df
 
 

@@ -1,0 +1,99 @@
+name: Cache Refresh
+
+# Runs hourly to keep HRRR forecast cache fresh for Streamlit Cloud
+# HRRR model runs hourly, so we refresh at :50 to catch the latest data
+
+on:
+  schedule:
+    # Run at :50 every hour (HRRR data available ~45 min after model run)
+    - cron: '50 * * * *'
+  workflow_dispatch:  # Allow manual trigger
+    inputs:
+      force:
+        description: 'Force refresh even if cache is fresh'
+        type: boolean
+        default: false
+
+jobs:
+  refresh-cache:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    permissions:
+      contents: write  # Need to push cache updates
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libeccodes-dev libgeos-dev
+
+      - name: Install Python dependencies
+        run: |
+          pip install --upgrade pip
+          # Install core package with cache and HRRR dependencies
+          pip install -e ".[cache,hrrr]"
+          # Also need these for terrain
+          pip install requests httpx
+
+      - name: Create cache directory
+        run: mkdir -p data/cache
+
+      - name: Run cache refresh
+        run: |
+          if [ "${{ github.event.inputs.force }}" = "true" ]; then
+            python -m snowforecast.cache.refresh --force -v
+          else
+            python -m snowforecast.cache.refresh -v
+          fi
+        env:
+          # Suppress herbie progress bars in CI
+          HERBIE_VERBOSE: "false"
+
+      - name: Show cache status
+        run: python -m snowforecast.cache.refresh --status
+
+      - name: Check for changes
+        id: check_changes
+        run: |
+          if [ -f data/cache/snowforecast.duckdb ]; then
+            echo "cache_exists=true" >> $GITHUB_OUTPUT
+            ls -lh data/cache/snowforecast.duckdb
+          else
+            echo "cache_exists=false" >> $GITHUB_OUTPUT
+            echo "No cache file found!"
+          fi
+
+      - name: Commit and push cache
+        if: steps.check_changes.outputs.cache_exists == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+
+          # Add the cache file
+          git add data/cache/snowforecast.duckdb
+
+          # Check if there are changes to commit
+          if git diff --staged --quiet; then
+            echo "No changes to cache file"
+          else
+            git commit -m "Update forecast cache $(date -u +'%Y-%m-%d %H:%M UTC')
+
+            Automated hourly HRRR forecast refresh for 22 ski areas.
+
+            [skip ci]"
+
+            git push
+            echo "Cache updated and pushed!"
+          fi
