@@ -43,13 +43,21 @@ def _get_default_db_path() -> Path:
 
         # Also check parent directories exist
         if _GIT_REPO_DB_PATH.parent.exists():
-            print(f"[CACHE DB] Parent dir exists, contents: {list(_GIT_REPO_DB_PATH.parent.iterdir())[:5]}")
+            contents = list(_GIT_REPO_DB_PATH.parent.iterdir())
+            print(f"[CACHE DB] Parent dir exists, contents: {[f.name for f in contents]}")
         else:
             print(f"[CACHE DB] Parent dir does not exist: {_GIT_REPO_DB_PATH.parent}")
-            # Try to find where data might be
-            mount_src = Path("/mount/src")
-            if mount_src.exists():
-                print(f"[CACHE DB] /mount/src contents: {list(mount_src.iterdir())[:10]}")
+            # Walk up and find what exists
+            for path in [
+                Path("/mount/src/snowforecast/data/cache"),
+                Path("/mount/src/snowforecast/data"),
+                Path("/mount/src/snowforecast"),
+                Path("/mount/src"),
+            ]:
+                if path.exists():
+                    print(f"[CACHE DB] {path} exists, contents: {[f.name for f in path.iterdir()][:10]}")
+                else:
+                    print(f"[CACHE DB] {path} does not exist")
 
         # Try the git repo path first (where committed data lives)
         if _GIT_REPO_DB_PATH.exists():
