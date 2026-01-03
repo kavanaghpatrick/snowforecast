@@ -108,7 +108,7 @@ def is_favorite(resort_name: str) -> bool:
     return resort_name in get_favorites()
 
 
-def render_favorite_toggle(resort_name: str, key_suffix: str = "") -> bool:
+def render_favorite_toggle(resort_name: str, key_suffix: str = "", container=None) -> bool:
     """Render star toggle button for favorite status.
 
     Displays a star icon that toggles the favorite status when clicked.
@@ -117,14 +117,18 @@ def render_favorite_toggle(resort_name: str, key_suffix: str = "") -> bool:
     Args:
         resort_name: Name of resort to toggle.
         key_suffix: Optional suffix for unique Streamlit widget key.
+        container: Optional Streamlit container (e.g., st.sidebar) to render in.
 
     Returns:
         Current favorite status (before any toggle action).
     """
+    # Use provided container or default to st
+    ctx = container if container is not None else st
+
     is_fav = is_favorite(resort_name)
     icon = "\u2B50" if is_fav else "\u2606"  # Filled star vs empty star
 
-    col1, col2 = st.columns([1, 10])
+    col1, col2 = ctx.columns([1, 10])
     with col1:
         if st.button(
             icon,

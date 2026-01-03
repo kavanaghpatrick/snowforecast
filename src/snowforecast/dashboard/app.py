@@ -272,10 +272,12 @@ def create_sidebar() -> tuple[str, str]:
     if predictor:
         render_cache_status_badge(predictor, container=st.sidebar)
         # Phase 3: Stale data warning if cache is old
-        if should_show_stale_warning(predictor):
+        cache_stats = predictor.get_cache_stats()
+        latest_run_time = cache_stats.get("latest_run_time")
+        if should_show_stale_warning(latest_run_time):
             render_data_warning(
-                "Cache data may be stale",
-                suggestion="Click 'Refresh Data' for latest forecasts",
+                last_updated=latest_run_time,
+                threshold_hours=2.0,
                 container=st.sidebar,
             )
 
