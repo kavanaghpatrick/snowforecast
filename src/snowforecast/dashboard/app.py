@@ -354,10 +354,15 @@ def main():
     st.markdown("---")
     selected_time = render_time_selector()
 
-    # Memory optimization: Removed aggressive prefetching of all 9 time steps.
-    # Forecasts are now loaded on-demand via get_current_forecast() which
-    # uses the DuckDB cache. This significantly reduces memory usage on
-    # Streamlit Cloud (1GB limit).
+    # Prefetch forecasts for selected resort when location changes
+    # This is needed for get_current_forecast() to return data
+    from snowforecast.dashboard.components.time_selector import (
+        prefetch_all_forecasts,
+        needs_prefetch,
+    )
+    predictor = get_predictor()
+    if predictor and needs_prefetch(lat, lon):
+        prefetch_all_forecasts(predictor, lat, lon)
 
     # Main content: Map | Detail Panel (stacked vertically on mobile)
     if is_mobile:

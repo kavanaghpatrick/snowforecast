@@ -18,19 +18,43 @@ from snowforecast.cache.models import (
 
 logger = logging.getLogger(__name__)
 
-# Default database path - use temp directory on Streamlit Cloud for write access
+# Streamlit Cloud detection and paths
+_IS_STREAMLIT_CLOUD = os.environ.get("STREAMLIT_SHARING_MODE") or Path("/mount/src").exists()
+# On Streamlit Cloud, repo content is mounted directly at /mount/src/
+_GIT_REPO_DB_PATH = Path("/mount/src/data/cache/snowforecast.duckdb")
+
+
 def _get_default_db_path() -> Path:
-    """Get default database path, using temp dir on Streamlit Cloud."""
-    # Check if running on Streamlit Cloud
-    if os.environ.get("STREAMLIT_SHARING_MODE") or Path("/mount/src").exists():
-        # Use temp directory for Streamlit Cloud (writable)
+    """Get default database path.
+
+    On Streamlit Cloud:
+    - First try to use the committed database in git repo (read-only but has data)
+    - Fall back to temp directory if git repo database doesn't exist
+
+    Locally:
+    - Use project data directory
+    """
+    if _IS_STREAMLIT_CLOUD:
+        # Try the git repo path first (where committed data lives)
+        if _GIT_REPO_DB_PATH.exists():
+            logger.info(f"Using committed database from git repo: {_GIT_REPO_DB_PATH}")
+            return _GIT_REPO_DB_PATH
+
+        # Fall back to temp directory if git repo database doesn't exist
         temp_dir = Path(tempfile.gettempdir()) / "snowforecast_cache"
         temp_dir.mkdir(parents=True, exist_ok=True)
+        logger.warning(f"Git repo database not found, using temp: {temp_dir}")
         return temp_dir / "snowforecast.duckdb"
     else:
         # Local development - use project data directory
         project_root = Path(__file__).parent.parent.parent.parent
         return project_root / "data" / "cache" / "snowforecast.duckdb"
+
+
+def _is_read_only_path(db_path: Path) -> bool:
+    """Check if database path is read-only (e.g., Streamlit Cloud git repo)."""
+    return _IS_STREAMLIT_CLOUD and db_path == _GIT_REPO_DB_PATH
+
 
 DEFAULT_DB_PATH = _get_default_db_path()
 
@@ -123,7 +147,11 @@ class CacheDatabase:
             db_path: Path to DuckDB file. Creates if doesn't exist.
         """
         self.db_path = db_path or DEFAULT_DB_PATH
-        self.db_path.parent.mkdir(parents=True, exist_ok=True)
+        self.read_only = _is_read_only_path(self.db_path)
+
+        # Only create parent directories if not read-only
+        if not self.read_only:
+            self.db_path.parent.mkdir(parents=True, exist_ok=True)
 
         self._conn = None
         self._init_schema()
@@ -141,7 +169,11 @@ class CacheDatabase:
         last_error = None
         for attempt in range(max_retries):
             try:
-                return duckdb.connect(str(self.db_path))
+                if self.read_only:
+                    # Read-only mode for Streamlit Cloud git repo (no lock files needed)
+                    return duckdb.connect(str(self.db_path), read_only=True)
+                else:
+                    return duckdb.connect(str(self.db_path))
             except duckdb.IOException as e:
                 last_error = e
                 if "lock" in str(e).lower() and attempt < max_retries - 1:
@@ -153,7 +185,11 @@ class CacheDatabase:
         raise last_error
 
     def _init_schema(self) -> None:
-        """Initialize database schema."""
+        """Initialize database schema (skip if read-only)."""
+        if self.read_only:
+            # Schema already exists in committed database
+            logger.info(f"Read-only database, skipping schema init: {self.db_path}")
+            return
         # DuckDB executes multiple statements with execute()
         for statement in SCHEMA_SQL.split(";"):
             statement = statement.strip()
@@ -270,6 +306,10 @@ class CacheDatabase:
             precip_mm: Precipitation in mm
             categorical_snow: Categorical snow flag (0 or 1)
         """
+        if self.read_only:
+            logger.debug("Skipping store_forecast in read-only mode")
+            return
+
         valid_time = run_time + timedelta(hours=forecast_hour)
         fetch_time = datetime.utcnow()
 
@@ -314,6 +354,10 @@ class CacheDatabase:
         Returns:
             Number of rows deleted
         """
+        if self.read_only:
+            logger.debug("Skipping cleanup_old_forecasts in read-only mode")
+            return 0
+
         cutoff = datetime.utcnow() - timedelta(days=keep_days)
         result = self.conn.execute(
             "DELETE FROM hrrr_forecasts WHERE run_time < ?",
@@ -381,6 +425,10 @@ class CacheDatabase:
             roughness: Terrain roughness
             tpi: Topographic Position Index
         """
+        if self.read_only:
+            logger.debug("Skipping store_terrain in read-only mode")
+            return
+
         fetch_time = datetime.utcnow()
 
         self.conn.execute(
@@ -452,6 +500,10 @@ class CacheDatabase:
         error_message: Optional[str] = None,
     ) -> None:
         """Log a data fetch operation."""
+        if self.read_only:
+            logger.debug("Skipping log_fetch in read-only mode")
+            return
+
         self.conn.execute(
             """
             INSERT INTO fetch_log (
