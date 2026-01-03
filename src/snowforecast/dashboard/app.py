@@ -2,6 +2,7 @@
 
 Phase 1: Core Layout - Interactive map, time selector, detail panel.
 Phase 2: Enhanced Metrics - Snow quality, confidence, elevation bands, SNOTEL.
+Phase 3: Polish & Mobile - Favorites, responsive layout, cache status, error handling.
 Run with: streamlit run src/snowforecast/dashboard/app.py
 """
 
@@ -41,6 +42,8 @@ from snowforecast.dashboard.components import (
     render_empty_state,
     # Cache status
     render_cache_status_badge,
+    should_show_stale_warning,
+    render_data_warning,
     # Phase 2: Snow Quality
     create_quality_metrics,
     render_snow_quality_badge,
@@ -51,6 +54,12 @@ from snowforecast.dashboard.components import (
     render_elevation_bands,
     # Phase 2: SNOTEL
     render_snotel_section,
+    # Phase 3: Responsive
+    inject_responsive_css,
+    get_breakpoint,
+    # Phase 3: Favorites
+    render_favorite_toggle,
+    get_favorites,
 )
 # Phase 2: Elevation bands computation
 from snowforecast.cache.elevation_bands import compute_elevation_bands, get_summit_elevation
@@ -62,6 +71,9 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
+
+# Phase 3: Inject responsive CSS for mobile/tablet support
+inject_responsive_css()
 
 # Western US Ski Areas with coordinates
 SKI_AREAS = {
@@ -214,6 +226,9 @@ def create_sidebar() -> tuple[str, str]:
     """Create sidebar with resort selector and data info."""
     st.sidebar.header("Select Location")
 
+    # Phase 3: Get favorites for quick access
+    favorites = get_favorites()
+
     # State filter
     states = ["All States"] + sorted(set(info[2] for info in SKI_AREAS.values()))
     selected_state = st.sidebar.selectbox("State", states)
@@ -224,7 +239,16 @@ def create_sidebar() -> tuple[str, str]:
     else:
         available_areas = list(SKI_AREAS.keys())
 
-    selected_area = st.sidebar.selectbox("Ski Area", sorted(available_areas))
+    # Phase 3: Show favorites at top of list if any exist
+    if favorites:
+        # Move favorites to top of the list
+        favorite_areas = [f for f in favorites if f in available_areas]
+        other_areas = [a for a in available_areas if a not in favorites]
+        sorted_areas = favorite_areas + sorted(other_areas)
+    else:
+        sorted_areas = sorted(available_areas)
+
+    selected_area = st.sidebar.selectbox("Ski Area", sorted_areas)
 
     # Show location info
     if selected_area:
@@ -233,6 +257,9 @@ def create_sidebar() -> tuple[str, str]:
         st.sidebar.markdown(f"**{selected_area}**")
         st.sidebar.markdown(f"📍 {lat:.4f}°N, {abs(lon):.4f}°W")
         st.sidebar.markdown(f"🏔️ Base: {elev}m ({elev*3.28084:.0f}ft)")
+
+        # Phase 3: Favorite toggle
+        render_favorite_toggle(selected_area, container=st.sidebar)
 
     # Data sources
     st.sidebar.markdown("---")
@@ -244,6 +271,13 @@ def create_sidebar() -> tuple[str, str]:
     predictor = get_predictor()
     if predictor:
         render_cache_status_badge(predictor, container=st.sidebar)
+        # Phase 3: Stale data warning if cache is old
+        if should_show_stale_warning(predictor):
+            render_data_warning(
+                "Cache data may be stale",
+                suggestion="Click 'Refresh Data' for latest forecasts",
+                container=st.sidebar,
+            )
 
     # Refresh button
     st.sidebar.markdown("---")
@@ -256,7 +290,11 @@ def create_sidebar() -> tuple[str, str]:
 
 
 def main():
-    """Main dashboard function with Phase 1 components."""
+    """Main dashboard function with all phases integrated."""
+    # Phase 3: Check breakpoint for responsive layout
+    breakpoint = get_breakpoint()
+    is_mobile = breakpoint == "mobile"
+
     # Header
     st.title("❄️ Snow Forecast Dashboard")
     st.markdown("Real-time snow conditions from NOAA HRRR + Copernicus DEM")
@@ -280,8 +318,14 @@ def main():
     # uses the DuckDB cache. This significantly reduces memory usage on
     # Streamlit Cloud (1GB limit).
 
-    # Main content: Map | Detail Panel
-    col_map, col_detail = st.columns([1, 1])
+    # Main content: Map | Detail Panel (stacked vertically on mobile)
+    if is_mobile:
+        # Mobile: Full width, stacked layout
+        col_map = st.container()
+        col_detail = st.container()
+    else:
+        # Desktop: Side by side columns
+        col_map, col_detail = st.columns([1, 1])
 
     # Left column: Interactive Map
     with col_map:
