@@ -35,15 +35,32 @@ def _get_default_db_path() -> Path:
     - Use project data directory
     """
     if _IS_STREAMLIT_CLOUD:
+        # Log diagnostic info
+        print(f"[CACHE DB] Streamlit Cloud detected")
+        print(f"[CACHE DB] Checking for git repo DB at: {_GIT_REPO_DB_PATH}")
+        print(f"[CACHE DB] Path exists: {_GIT_REPO_DB_PATH.exists()}")
+
+        # Also check parent directories exist
+        if _GIT_REPO_DB_PATH.parent.exists():
+            print(f"[CACHE DB] Parent dir exists, contents: {list(_GIT_REPO_DB_PATH.parent.iterdir())[:5]}")
+        else:
+            print(f"[CACHE DB] Parent dir does not exist: {_GIT_REPO_DB_PATH.parent}")
+            # Try to find where data might be
+            mount_src = Path("/mount/src")
+            if mount_src.exists():
+                print(f"[CACHE DB] /mount/src contents: {list(mount_src.iterdir())[:10]}")
+
         # Try the git repo path first (where committed data lives)
         if _GIT_REPO_DB_PATH.exists():
             logger.info(f"Using committed database from git repo: {_GIT_REPO_DB_PATH}")
+            print(f"[CACHE DB] Using git repo DB: {_GIT_REPO_DB_PATH}")
             return _GIT_REPO_DB_PATH
 
         # Fall back to temp directory if git repo database doesn't exist
         temp_dir = Path(tempfile.gettempdir()) / "snowforecast_cache"
         temp_dir.mkdir(parents=True, exist_ok=True)
         logger.warning(f"Git repo database not found, using temp: {temp_dir}")
+        print(f"[CACHE DB] Falling back to temp: {temp_dir}")
         return temp_dir / "snowforecast.duckdb"
     else:
         # Local development - use project data directory
