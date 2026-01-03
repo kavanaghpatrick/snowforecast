@@ -1,5 +1,5 @@
 # Requirements for Streamlit Cloud deployment
-# Force rebuild: 2026-01-03-v10-debug-imports
+# Force rebuild: 2026-01-03-v11-minimal-test
 # For local development, use: pip install -e ".[all]"
 
 # Note: NOT using pip install . here as it requires build dependencies
