@@ -15,62 +15,99 @@ _src_path = _app_file.parent.parent.parent
 if str(_src_path) not in sys.path:
     sys.path.insert(0, str(_src_path))
 
-from datetime import date, datetime, timedelta, timezone
-from typing import Optional
+# DIAGNOSTIC: Early import with error capture
+_import_errors = []
 
-import pandas as pd
+try:
+    from datetime import date, datetime, timedelta, timezone
+except Exception as e:
+    _import_errors.append(f"datetime: {e}")
+
+try:
+    from typing import Optional
+except Exception as e:
+    _import_errors.append(f"typing: {e}")
+
+try:
+    import pandas as pd
+except Exception as e:
+    _import_errors.append(f"pandas: {e}")
 
 try:
     import streamlit as st
-except ImportError:
-    print("Streamlit not installed. Install with: pip install streamlit")
+except ImportError as e:
+    print(f"Streamlit not installed: {e}")
+    sys.exit(1)
+except Exception as e:
+    print(f"Streamlit error: {e}")
     sys.exit(1)
 
-# Import dashboard components
-from snowforecast.dashboard.components import (
-    # Map
-    render_resort_map,
-    # Time selector
-    render_time_selector,
-    get_current_forecast,
-    clear_forecast_cache,
-    # Resort detail
-    generate_forecast_summary,
-    render_forecast_table,
-    # Loading states
-    render_loading_skeleton,
-    render_empty_state,
-    # Cache status
-    render_cache_status_badge,
-    should_show_stale_warning,
-    render_data_warning,
-    # Phase 2: Snow Quality
-    create_quality_metrics,
-    render_snow_quality_badge,
-    # Phase 2: Confidence
-    render_confidence_badge,
-    render_confidence_explanation,
-    # Phase 2: Elevation Bands
-    render_elevation_bands,
-    # Phase 2: SNOTEL
-    render_snotel_section,
-    # Phase 3: Responsive
-    inject_responsive_css,
-    get_breakpoint,
-    # Phase 3: Favorites
-    render_favorite_toggle,
-    get_favorites,
-)
-# Phase 2: Elevation bands computation
-from snowforecast.cache.elevation_bands import compute_elevation_bands, get_summit_elevation
-
-# Page configuration
+# MUST be first Streamlit command
 st.set_page_config(
     page_title="Snow Forecast Dashboard",
     page_icon="❄️",
     layout="wide",
     initial_sidebar_state="expanded",
 )
+
+# Now show any import errors
+if _import_errors:
+    st.error("Import errors detected:")
+    for err in _import_errors:
+        st.error(err)
+    st.stop()
+
+# Import dashboard components with error catching
+try:
+    from snowforecast.dashboard.components import (
+        # Map
+        render_resort_map,
+        # Time selector
+        render_time_selector,
+        get_current_forecast,
+        clear_forecast_cache,
+        # Resort detail
+        generate_forecast_summary,
+        render_forecast_table,
+        # Loading states
+        render_loading_skeleton,
+        render_empty_state,
+        # Cache status
+        render_cache_status_badge,
+        should_show_stale_warning,
+        render_data_warning,
+        # Phase 2: Snow Quality
+        create_quality_metrics,
+        render_snow_quality_badge,
+        # Phase 2: Confidence
+        render_confidence_badge,
+        render_confidence_explanation,
+        # Phase 2: Elevation Bands
+        render_elevation_bands,
+        # Phase 2: SNOTEL
+        render_snotel_section,
+        # Phase 3: Responsive
+        inject_responsive_css,
+        get_breakpoint,
+        # Phase 3: Favorites
+        render_favorite_toggle,
+        get_favorites,
+    )
+except Exception as e:
+    st.error(f"Failed to import dashboard components: {e}")
+    import traceback
+    st.code(traceback.format_exc())
+    st.stop()
+
+# Phase 2: Elevation bands computation
+try:
+    from snowforecast.cache.elevation_bands import compute_elevation_bands, get_summit_elevation
+except Exception as e:
+    st.error(f"Failed to import elevation_bands: {e}")
+    import traceback
+    st.code(traceback.format_exc())
+    st.stop()
+
 
 # Phase 3: Inject responsive CSS for mobile/tablet support
 inject_responsive_css()
