@@ -328,12 +328,12 @@ def create_sidebar() -> tuple[str, str]:
                 threshold_hours=2.0,
                 container=st.sidebar,
             )
-        # Debug info (can be removed after troubleshooting)
-        with st.sidebar.expander("Debug Info", expanded=False):
-            st.caption(f"DB Path: {cache_stats.get('db_path', 'unknown')}")
-            st.caption(f"Forecasts: {cache_stats.get('forecast_count', 0)}")
-            st.caption(f"Terrain: {cache_stats.get('terrain_count', 0)}")
-            st.caption(f"Latest Run: {latest_run_time}")
+        # Debug info (inline for troubleshooting)
+        st.sidebar.markdown("---")
+        st.sidebar.markdown("**🔍 Debug**")
+        st.sidebar.caption(f"DB: {cache_stats.get('db_path', '?')}")
+        st.sidebar.caption(f"FC: {cache_stats.get('forecast_count', 0)} | T: {cache_stats.get('terrain_count', 0)}")
+        st.sidebar.caption(f"Run: {latest_run_time}")
 
     # Refresh button
     st.sidebar.markdown("---")
