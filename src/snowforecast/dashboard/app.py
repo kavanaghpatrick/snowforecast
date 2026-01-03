@@ -3,6 +3,7 @@
 Phase 1: Core Layout - Interactive map, time selector, detail panel.
 Phase 2: Enhanced Metrics - Snow quality, confidence, elevation bands, SNOTEL.
 Phase 3: Polish & Mobile - Favorites, responsive layout, cache status, error handling.
+Phase 4: Advanced Viz - 3D terrain, forecast overlay heatmap.
 Run with: streamlit run src/snowforecast/dashboard/app.py
 """
 
@@ -60,6 +61,13 @@ from snowforecast.dashboard.components import (
     # Phase 3: Favorites
     render_favorite_toggle,
     get_favorites,
+    # Phase 4: 3D Terrain
+    create_terrain_deck,
+    create_resort_layer,
+    render_terrain_controls,
+    # Phase 4: Forecast Overlay
+    create_forecast_overlay,
+    render_overlay_toggle,
 )
 # Phase 2: Elevation bands computation
 from snowforecast.cache.elevation_bands import compute_elevation_bands, get_summit_elevation
@@ -331,15 +339,77 @@ def main():
     with col_map:
         st.subheader("Regional Overview")
 
+        # Phase 4: Map visualization controls
+        if not is_mobile:
+            ctrl_col1, ctrl_col2 = st.columns(2)
+            with ctrl_col1:
+                terrain_controls = render_terrain_controls(st)
+            with ctrl_col2:
+                show_overlay = render_overlay_toggle()
+        else:
+            # Simplified controls on mobile (3D can be heavy)
+            terrain_controls = {"enabled_3d": False, "pitch": 0, "use_texture": True}
+            show_overlay = False
+
         # Load all resort conditions (cached via @st.cache_data)
         conditions_df = fetch_all_conditions()
 
         # Render interactive PyDeck map
         if not conditions_df.empty:
             try:
-                deck = render_resort_map(conditions_df)
-                st.pydeck_chart(deck, use_container_width=True)
-                st.caption("Circle color = snow depth | Circle size = new snow")
+                if terrain_controls["enabled_3d"]:
+                    # Phase 4: 3D terrain mode
+                    # Create resort marker layer to overlay on terrain
+                    resort_layer = create_resort_layer(conditions_df)
+
+                    # Build layers list
+                    layers = [resort_layer]
+
+                    # Add forecast overlay if enabled
+                    if show_overlay:
+                        # Create overlay from conditions data
+                        overlay_df = conditions_df[["latitude", "longitude", "new_snow_cm"]].copy()
+                        overlay_df.columns = ["lat", "lon", "new_snow_cm"]
+                        overlay_layer = create_forecast_overlay(overlay_df, radius=20000, opacity=0.4)
+                        layers.insert(0, overlay_layer)  # Insert below resort markers
+
+                    # Create 3D terrain deck with resort markers
+                    deck = create_terrain_deck(
+                        lat=lat,
+                        lon=lon,
+                        zoom=6,
+                        pitch=terrain_controls["pitch"],
+                        bearing=0,
+                        use_texture=terrain_controls["use_texture"],
+                        additional_layers=layers,
+                    )
+                    st.pydeck_chart(deck, use_container_width=True)
+                    st.caption("3D Terrain | Circle color = snow depth | Circle size = new snow")
+                else:
+                    # Standard 2D map mode
+                    if show_overlay:
+                        # Create map with overlay
+                        from snowforecast.dashboard.components import create_base_view
+                        import pydeck as pdk
+
+                        overlay_df = conditions_df[["latitude", "longitude", "new_snow_cm"]].copy()
+                        overlay_df.columns = ["lat", "lon", "new_snow_cm"]
+                        overlay_layer = create_forecast_overlay(overlay_df, radius=20000, opacity=0.4)
+                        resort_layer = create_resort_layer(conditions_df)
+
+                        view = create_base_view(lat, lon, zoom=5)
+                        deck = pdk.Deck(
+                            layers=[overlay_layer, resort_layer],
+                            initial_view_state=view,
+                            map_style="mapbox://styles/mapbox/dark-v10",
+                        )
+                        st.pydeck_chart(deck, use_container_width=True)
+                        st.caption("Forecast overlay | Circle color = snow depth | Circle size = new snow")
+                    else:
+                        # Standard map without overlay
+                        deck = render_resort_map(conditions_df)
+                        st.pydeck_chart(deck, use_container_width=True)
+                        st.caption("Circle color = snow depth | Circle size = new snow")
             except Exception as e:
                 st.error(f"Map error: {e}")
                 # Fallback to basic map
