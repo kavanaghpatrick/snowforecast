@@ -280,47 +280,39 @@ def render_forecast_table(forecasts: pd.DataFrame, container=None) -> None:
         depth_color = snow_depth_to_hex(snow_depth)
         snow_depth_category(snow_depth)
 
-        # Build row HTML
-        html_rows.append(f"""
-            <tr>
-                <td style="font-weight:bold;padding:8px;">{day_name}</td>
-                <td style="padding:8px;color:#666;">{date_str}</td>
-                <td style="padding:8px;background:{depth_color};text-align:center;border-radius:4px;">
-                    {snow_depth:.0f}cm
-                </td>
-                <td style="padding:8px;text-align:center;">
-                    {'+' if new_snow > 0 else ''}{new_snow:.1f}cm
-                </td>
-                <td style="padding:8px;text-align:center;color:#666;font-size:0.85em;">
-                    {ci_lower:.0f}-{ci_upper:.0f}cm
-                </td>
-                <td style="padding:8px;text-align:center;">
-                    {probability:.0%}
-                </td>
-            </tr>
-        """)
+        # Build row HTML - minified to avoid Streamlit markdown whitespace bug (#9312)
+        new_snow_prefix = '+' if new_snow > 0 else ''
+        html_rows.append(
+            f'<tr>'
+            f'<td style="font-weight:bold;padding:8px;">{day_name}</td>'
+            f'<td style="padding:8px;color:#666;">{date_str}</td>'
+            f'<td style="padding:8px;background:{depth_color};text-align:center;border-radius:4px;">{snow_depth:.0f}cm</td>'
+            f'<td style="padding:8px;text-align:center;">{new_snow_prefix}{new_snow:.1f}cm</td>'
+            f'<td style="padding:8px;text-align:center;color:#666;font-size:0.85em;">{ci_lower:.0f}-{ci_upper:.0f}cm</td>'
+            f'<td style="padding:8px;text-align:center;">{probability:.0%}</td>'
+            f'</tr>'
+        )
 
-    table_html = f"""
-    <table style="width:100%;border-collapse:collapse;font-size:14px;">
-        <thead>
-            <tr style="border-bottom:2px solid #ddd;">
-                <th style="padding:8px;text-align:left;">Day</th>
-                <th style="padding:8px;text-align:left;">Date</th>
-                <th style="padding:8px;text-align:center;">Base</th>
-                <th style="padding:8px;text-align:center;">New</th>
-                <th style="padding:8px;text-align:center;">CI (95%)</th>
-                <th style="padding:8px;text-align:center;">Prob</th>
-            </tr>
-        </thead>
-        <tbody>
-            {''.join(html_rows)}
-        </tbody>
-    </table>
-    """
+    # Minified table HTML to avoid Streamlit markdown whitespace bug (#9312)
+    table_html = (
+        '<table style="width:100%;border-collapse:collapse;font-size:14px;">'
+        '<thead>'
+        '<tr style="border-bottom:2px solid #ddd;">'
+        '<th style="padding:8px;text-align:left;">Day</th>'
+        '<th style="padding:8px;text-align:left;">Date</th>'
+        '<th style="padding:8px;text-align:center;">Base</th>'
+        '<th style="padding:8px;text-align:center;">New</th>'
+        '<th style="padding:8px;text-align:center;">CI (95%)</th>'
+        '<th style="padding:8px;text-align:center;">Prob</th>'
+        '</tr>'
+        '</thead>'
+        '<tbody>'
+        f'{"".join(html_rows)}'
+        '</tbody>'
+        '</table>'
+    )
 
-    # Use st.html() to avoid whitespace-sensitive markdown rendering issues
-    # (see: https://github.com/streamlit/streamlit/issues/9312)
-    target.html(table_html)
+    target.markdown(table_html, unsafe_allow_html=True)
 
 
 def render_snow_chart(forecasts: pd.DataFrame, container=None) -> None:
