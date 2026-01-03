@@ -152,9 +152,18 @@ def get_predictor():
     """Get cached predictor instance."""
     try:
         from snowforecast.cache import CachedPredictor
-        return CachedPredictor()
+        predictor = CachedPredictor()
+        # Debug: Log database path on initialization
+        import logging
+        logging.info(f"CachedPredictor initialized: {predictor.db.db_path}")
+        return predictor
     except ImportError as e:
         st.error(f"Could not load CachedPredictor: {e}")
+        return None
+    except Exception as e:
+        st.error(f"Error initializing predictor: {e}")
+        import traceback
+        st.code(traceback.format_exc())
         return None
 
 
@@ -319,6 +328,12 @@ def create_sidebar() -> tuple[str, str]:
                 threshold_hours=2.0,
                 container=st.sidebar,
             )
+        # Debug info (can be removed after troubleshooting)
+        with st.sidebar.expander("Debug Info", expanded=False):
+            st.caption(f"DB Path: {cache_stats.get('db_path', 'unknown')}")
+            st.caption(f"Forecasts: {cache_stats.get('forecast_count', 0)}")
+            st.caption(f"Terrain: {cache_stats.get('terrain_count', 0)}")
+            st.caption(f"Latest Run: {latest_run_time}")
 
     # Refresh button
     st.sidebar.markdown("---")
