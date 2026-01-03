@@ -1,6 +1,8 @@
 """DuckDB cache database for snowforecast."""
 
 import logging
+import os
+import tempfile
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Optional
@@ -16,9 +18,21 @@ from snowforecast.cache.models import (
 
 logger = logging.getLogger(__name__)
 
-# Default database path - use project root to ensure consistent path
-_PROJECT_ROOT = Path(__file__).parent.parent.parent.parent
-DEFAULT_DB_PATH = _PROJECT_ROOT / "data" / "cache" / "snowforecast.duckdb"
+# Default database path - use temp directory on Streamlit Cloud for write access
+def _get_default_db_path() -> Path:
+    """Get default database path, using temp dir on Streamlit Cloud."""
+    # Check if running on Streamlit Cloud
+    if os.environ.get("STREAMLIT_SHARING_MODE") or Path("/mount/src").exists():
+        # Use temp directory for Streamlit Cloud (writable)
+        temp_dir = Path(tempfile.gettempdir()) / "snowforecast_cache"
+        temp_dir.mkdir(parents=True, exist_ok=True)
+        return temp_dir / "snowforecast.duckdb"
+    else:
+        # Local development - use project data directory
+        project_root = Path(__file__).parent.parent.parent.parent
+        return project_root / "data" / "cache" / "snowforecast.duckdb"
+
+DEFAULT_DB_PATH = _get_default_db_path()
 
 # SQL schema - DuckDB uses sequences for auto-increment
 SCHEMA_SQL = """
