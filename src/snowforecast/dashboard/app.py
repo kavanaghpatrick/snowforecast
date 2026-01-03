@@ -20,8 +20,25 @@ _debug_info = {
     "src_path": str(_src_path),
     "src_exists": _src_path.exists(),
     "snowforecast_exists": (_src_path / "snowforecast").exists() if _src_path.exists() else False,
+    "cache_exists": (_src_path / "snowforecast" / "cache").exists() if _src_path.exists() else False,
+    "init_exists": (_src_path / "snowforecast" / "__init__.py").exists() if _src_path.exists() else False,
     "cwd": os.getcwd(),
+    "sys_path_0": sys.path[0] if sys.path else "empty",
 }
+
+# Try import test
+try:
+    import snowforecast
+    _debug_info["import_snowforecast"] = "SUCCESS"
+    _debug_info["snowforecast_path"] = str(snowforecast.__file__) if hasattr(snowforecast, '__file__') else "no __file__"
+except ImportError as e:
+    _debug_info["import_snowforecast"] = f"FAILED: {e}"
+
+try:
+    from snowforecast import cache
+    _debug_info["import_cache"] = "SUCCESS"
+except ImportError as e:
+    _debug_info["import_cache"] = f"FAILED: {e}"
 
 from datetime import date, datetime, timedelta
 
