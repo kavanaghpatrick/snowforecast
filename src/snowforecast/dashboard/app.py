@@ -55,17 +55,7 @@ import os
 from pathlib import Path
 _debug_is_cloud = os.environ.get("STREAMLIT_SHARING_MODE") or Path("/mount/src").exists()
 _debug_db_path = Path("/mount/src/data/cache/snowforecast.duckdb")
-_debug_data_exists = Path("/mount/src/data").exists() if _debug_is_cloud else False
-_debug_cache_exists = Path("/mount/src/data/cache").exists() if _debug_is_cloud else False
-_debug_mount_items = []
-if _debug_is_cloud and Path("/mount/src").exists():
-    try:
-        _debug_mount_items = [p.name for p in Path("/mount/src").iterdir()][:10]
-    except Exception:
-        _debug_mount_items = ["error listing"]
-st.caption(f"v2026.01.03.5 | Cloud: {_debug_is_cloud} | data/: {_debug_data_exists} | cache/: {_debug_cache_exists} | DB: {_debug_db_path.exists() if _debug_is_cloud else 'N/A'}")
-if _debug_is_cloud and not _debug_db_path.exists():
-    st.caption(f"/mount/src contents: {_debug_mount_items}")
+st.caption(f"v2026.01.03.6 | Cloud: {_debug_is_cloud} | DB exists: {_debug_db_path.exists() if _debug_is_cloud else 'N/A'}")
 
 # Now show any import errors
 if _import_errors:

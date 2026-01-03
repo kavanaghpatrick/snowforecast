@@ -24,33 +24,6 @@ _IS_STREAMLIT_CLOUD = os.environ.get("STREAMLIT_SHARING_MODE") or Path("/mount/s
 _GIT_REPO_DB_PATH = Path("/mount/src/data/cache/snowforecast.duckdb")
 
 
-def _find_db_file() -> Optional[Path]:
-    """Search for the database file in various locations on Streamlit Cloud."""
-    mount_src = Path("/mount/src")
-    search_paths = [
-        mount_src / "data" / "cache" / "snowforecast.duckdb",
-        mount_src / "snowforecast" / "data" / "cache" / "snowforecast.duckdb",
-        mount_src / "src" / "data" / "cache" / "snowforecast.duckdb",
-    ]
-
-    # Check known paths first
-    for path in search_paths:
-        try:
-            if path.exists():
-                return path
-        except Exception:
-            pass
-
-    # Try to find any .duckdb file (with error handling)
-    try:
-        for duckdb_file in mount_src.rglob("*.duckdb"):
-            return duckdb_file
-    except Exception as e:
-        print(f"[CACHE DB] Error during rglob search: {e}")
-
-    return None
-
-
 def _get_default_db_path() -> Path:
     """Get default database path.
 
@@ -64,38 +37,18 @@ def _get_default_db_path() -> Path:
     if _IS_STREAMLIT_CLOUD:
         # Log diagnostic info
         print(f"[CACHE DB] Streamlit Cloud detected")
-        print(f"[CACHE DB] Primary path: {_GIT_REPO_DB_PATH}")
-        print(f"[CACHE DB] Primary path exists: {_GIT_REPO_DB_PATH.exists()}")
+        print(f"[CACHE DB] Checking for git repo DB at: {_GIT_REPO_DB_PATH}")
+        print(f"[CACHE DB] Path exists: {_GIT_REPO_DB_PATH.exists()}")
 
-        # Check what's in /mount/src (with defensive error handling)
-        mount_src = Path("/mount/src")
-        try:
+        # Also check parent directories exist
+        if _GIT_REPO_DB_PATH.parent.exists():
+            print(f"[CACHE DB] Parent dir exists, contents: {list(_GIT_REPO_DB_PATH.parent.iterdir())[:5]}")
+        else:
+            print(f"[CACHE DB] Parent dir does not exist: {_GIT_REPO_DB_PATH.parent}")
+            # Try to find where data might be
+            mount_src = Path("/mount/src")
             if mount_src.exists():
-                top_items = list(mount_src.iterdir())[:15]
-                print(f"[CACHE DB] /mount/src ({len(top_items)} items): {[p.name for p in top_items]}")
-
-                # Check if data dir exists
-                data_dir = mount_src / "data"
-                if data_dir.exists():
-                    data_items = list(data_dir.iterdir())[:10]
-                    print(f"[CACHE DB] /mount/src/data ({len(data_items)} items): {[p.name for p in data_items]}")
-
-                    cache_dir = data_dir / "cache"
-                    if cache_dir.exists():
-                        cache_items = list(cache_dir.iterdir())
-                        print(f"[CACHE DB] /mount/src/data/cache ({len(cache_items)} items): {[p.name for p in cache_items]}")
-                    else:
-                        print(f"[CACHE DB] /mount/src/data/cache does NOT exist")
-                else:
-                    print(f"[CACHE DB] /mount/src/data does NOT exist")
-        except Exception as e:
-            print(f"[CACHE DB] Error listing dirs: {e}")
-
-        # Try to find the database
-        found_db = _find_db_file()
-        if found_db:
-            print(f"[CACHE DB] Found DB at: {found_db}")
-            return found_db
+                print(f"[CACHE DB] /mount/src contents: {list(mount_src.iterdir())[:10]}")
 
         # Try the git repo path first (where committed data lives)
         if _GIT_REPO_DB_PATH.exists():
@@ -104,7 +57,6 @@ def _get_default_db_path() -> Path:
             return _GIT_REPO_DB_PATH
 
         # Fall back to temp directory if git repo database doesn't exist
-        print(f"[CACHE DB] WARNING: No database found anywhere!")
         temp_dir = Path(tempfile.gettempdir()) / "snowforecast_cache"
         temp_dir.mkdir(parents=True, exist_ok=True)
         logger.warning(f"Git repo database not found, using temp: {temp_dir}")

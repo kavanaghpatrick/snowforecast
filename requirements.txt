@@ -1,5 +1,5 @@
 # Requirements for Streamlit Cloud deployment
-# Force rebuild: 2026-01-03-v16-defensive-error-handling
+# Force rebuild: 2026-01-03-v17-revert-to-working
 
 # Core
 numpy>=1.24.0
