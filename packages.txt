@@ -1,4 +1,2 @@
-# System packages for Streamlit Cloud
-# Required for eccodes (GRIB file reading for herbie)
 libeccodes-dev
 libeccodes-tools
