@@ -196,8 +196,8 @@ def get_slf_snow_depth(station_id, station_name):
         return None
 
 
-def fetch_open_meteo(lat: float, lon: float) -> dict | None:
-    """Fetch forecast from Open-Meteo API."""
+def fetch_open_meteo(lat: float, lon: float, retries: int = 3) -> dict | None:
+    """Fetch forecast from Open-Meteo API with retry logic."""
     url = (
         f"https://api.open-meteo.com/v1/forecast?"
         f"latitude={lat}&longitude={lon}"
@@ -206,12 +206,16 @@ def fetch_open_meteo(lat: float, lon: float) -> dict | None:
         f"&timezone=auto"
         f"&forecast_days=7"
     )
-    try:
-        with urllib.request.urlopen(url, timeout=15) as response:
-            return json.loads(response.read())
-    except (urllib.error.URLError, json.JSONDecodeError) as e:
-        logger.warning(f"Open-Meteo error: {e}")
-        return None
+    for attempt in range(retries):
+        try:
+            with urllib.request.urlopen(url, timeout=30) as response:
+                return json.loads(response.read())
+        except (urllib.error.URLError, json.JSONDecodeError) as e:
+            if attempt < retries - 1:
+                time.sleep(2 ** attempt)  # Exponential backoff: 1s, 2s, 4s
+                continue
+            logger.warning(f"Open-Meteo error after {retries} retries: {e}")
+            return None
 
 
 def process_region(ski_areas, country, snow_depth_func, use_austria_fallback=False):
