@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
-"""Hybrid SNOTEL + Open-Meteo forecast fetcher for Dashboard V2.
+"""Hybrid snow depth + Open-Meteo forecast fetcher for Dashboard V2.
 
-Uses SNOTEL for real base depth measurements + Open-Meteo for 7-day forecasts.
-SNOTEL station mappings are pre-computed to avoid unreliable station-list API.
+Data sources by region:
+- USA: SNOTEL (NRCS) for base depth + Open-Meteo for forecasts
+- Austria: GeoSphere Austria TAWES for base depth + Open-Meteo for forecasts
+- Switzerland: SLF IMIS for base depth + Open-Meteo for forecasts
 
 Usage:
     python scripts/fetch_data_v2.py
@@ -19,9 +21,11 @@ import time
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger(__name__)
 
-# Ski areas with their nearest SNOTEL station (pre-computed)
-# Format: (name, lat, lon, state, elevation_m, snotel_id, snotel_name)
-SKI_AREAS = [
+# =============================================================================
+# USA - SNOTEL stations (pre-computed mappings)
+# Format: (name, lat, lon, region, elevation_m, station_id, station_name)
+# =============================================================================
+US_SKI_AREAS = [
     ("Stevens Pass", 47.7448, -121.089, "Washington", 1241, "791:WA:SNTL", "Stevens Pass"),
     ("Crystal Mountain", 46.9282, -121.5045, "Washington", 2134, "679:WA:SNTL", "Morse Lake"),
     ("Mt. Baker", 48.857, -121.6695, "Washington", 1524, "909:WA:SNTL", "Wells Creek"),
@@ -44,6 +48,42 @@ SKI_AREAS = [
     ("Whitefish", 48.4833, -114.355, "Montana", 2133, "656:MT:SNTL", "Noisy Basin"),
     ("Jackson Hole", 43.5875, -110.8281, "Wyoming", 3185, "481:WY:SNTL", "Granite Creek"),
     ("Sun Valley", 43.6804, -114.4075, "Idaho", 2789, "489:ID:SNTL", "Hyndman"),
+]
+
+# =============================================================================
+# AUSTRIA - GeoSphere TAWES mountain stations (using zamg library)
+# Format: (name, lat, lon, region, elevation_m, station_id, station_name)
+# IMPORTANT: Use MOUNTAIN station IDs, not town stations!
+# =============================================================================
+AUSTRIA_SKI_AREAS = [
+    ("St. Anton", 47.1297, 10.2303, "Tyrol", 2079, "11110", "Galzig"),
+    ("Sölden", 46.9128, 10.8617, "Tyrol", 3437, "11318", "Brunnenkogel"),
+    ("Obergurgl", 46.8669, 11.0244, "Tyrol", 1941, "11127", "Obergurgl"),
+    ("Ischgl", 46.9681, 10.1856, "Tyrol", 1587, "11312", "Galtür"),
+    ("Kitzbühel", 47.4183, 12.3592, "Tyrol", 1794, "8989044", "Hahnenkamm"),
+    ("Lech am Arlberg", 47.1575, 10.2128, "Vorarlberg", 2805, "11308", "Warth"),
+    ("Pitztal Glacier", 46.9269, 10.8792, "Tyrol", 2864, "11316", "Pitztaler Gletscher"),
+    ("Obertauern", 47.2489, 13.5597, "Salzburg", 1437, "11222", "Flattnitz"),
+    ("Zell am See", 47.3286, 12.7381, "Salzburg", 1956, "11340", "Schmittenhöhe"),
+    ("Schladming", 47.4678, 13.6264, "Styria", 2520, "11268", "Dachstein-Schladminger Gletscher"),
+]
+
+# =============================================================================
+# SWITZERLAND - SLF IMIS stations (using snow sensor stations - type 2/3)
+# Format: (name, lat, lon, region, elevation_m, station_id, station_name)
+# =============================================================================
+SWISS_SKI_AREAS = [
+    ("Zermatt", 45.9872, 7.7836, "Valais", 2953, "GOR2", "Gornergratsee"),
+    ("Saas-Fee", 46.1275, 7.9814, "Valais", 2480, "SAA2", "Seetal"),
+    ("Verbier", 46.0989, 7.2856, "Valais", 2550, "ATT2", "Lac des Vaux"),
+    ("St. Moritz", 46.4761, 9.8438, "Graubünden", 2512, "BEV2", "Valetta"),
+    ("Davos", 46.8131, 9.8439, "Graubünden", 1563, "SLF2", "Davos Stilli"),
+    ("Laax", 46.8356, 9.2317, "Graubünden", 2325, "CMA2", "La Fuorcla"),
+    ("Lenzerheide", 46.7267, 9.5542, "Graubünden", 2429, "PMA2", "Colms da Parsonz"),
+    ("Mürren", 46.5573, 7.8352, "Bern", 2332, "SCH2", "Türliboden"),
+    ("Andermatt", 46.6544, 8.6106, "Uri", 2209, "GOS3", "Gütsch"),
+    ("Arosa", 46.7594, 9.6669, "Graubünden", 2495, "ROT3", "Plang Bi"),
+    ("Engelberg", 46.7711, 8.4306, "Uri", 2149, "TIT2", "Titlisboden"),
 ]
 
 
@@ -75,6 +115,87 @@ def get_snotel_snow_depth(station_id, station_name):
         return None
 
 
+def get_geosphere_snow_depth(station_id, station_name):
+    """Get current snow depth from GeoSphere Austria TAWES station."""
+    url = (
+        f"https://dataset.api.hub.geosphere.at/v1/station/current/tawes-v1-10min"
+        f"?parameters=SCHNEE&station_ids={station_id}"
+    )
+    try:
+        with urllib.request.urlopen(url, timeout=15) as response:
+            data = json.loads(response.read())
+            features = data.get("features", [])
+            if features:
+                params = features[0].get("properties", {}).get("parameters", {})
+                schnee = params.get("SCHNEE", {}).get("data", [])
+                if schnee and schnee[0] is not None:
+                    return round(schnee[0], 1), station_name
+        return None, None
+    except urllib.error.HTTPError as e:
+        if e.code == 429:
+            logger.warning(f"GeoSphere rate limited for {station_name}")
+        else:
+            logger.warning(f"GeoSphere HTTP error for {station_name}: {e}")
+        return None, None
+    except (urllib.error.URLError, json.JSONDecodeError, KeyError, IndexError) as e:
+        logger.warning(f"GeoSphere error for {station_name}: {e}")
+        return None, None
+
+
+def get_openmeteo_snow_depth(lat, lon):
+    """Get current snow depth from Open-Meteo model (fallback)."""
+    url = (
+        f"https://api.open-meteo.com/v1/forecast?"
+        f"latitude={lat}&longitude={lon}"
+        f"&current=snow_depth"
+        f"&timezone=auto"
+    )
+    try:
+        with urllib.request.urlopen(url, timeout=15) as response:
+            data = json.loads(response.read())
+            snow_m = data.get("current", {}).get("snow_depth")
+            if snow_m is not None:
+                return round(snow_m * 100, 1)
+        return None
+    except (urllib.error.URLError, json.JSONDecodeError, KeyError) as e:
+        return None
+
+
+def get_austria_snow_depth(station_id, station_name, lat, lon):
+    """Get snow depth for Austria: try GeoSphere first, fall back to Open-Meteo."""
+    # Try GeoSphere TAWES first (real station data)
+    depth, source = get_geosphere_snow_depth(station_id, station_name)
+    if depth is not None:
+        return depth, source
+
+    # Fall back to Open-Meteo model
+    depth = get_openmeteo_snow_depth(lat, lon)
+    if depth is not None:
+        return depth, "Open-Meteo (modeled)"
+
+    return None, None
+
+
+def get_slf_snow_depth(station_id, station_name):
+    """Get current snow depth from SLF IMIS station (Switzerland)."""
+    url = "https://measurement-api.slf.ch/public/api/imis/measurements"
+    try:
+        with urllib.request.urlopen(url, timeout=15) as response:
+            data = json.loads(response.read())
+            # Find latest measurement for this station
+            station_data = [d for d in data if d.get("station_code") == station_id]
+            if station_data:
+                # Get most recent measurement with HS (snow height)
+                latest = max(station_data, key=lambda x: x.get("measure_date", ""))
+                hs = latest.get("HS")
+                if hs is not None:
+                    return round(hs, 1)
+        return None
+    except (urllib.error.URLError, json.JSONDecodeError, KeyError) as e:
+        logger.warning(f"SLF error for {station_name}: {e}")
+        return None
+
+
 def fetch_open_meteo(lat: float, lon: float) -> dict | None:
     """Fetch forecast from Open-Meteo API."""
     url = (
@@ -93,27 +214,35 @@ def fetch_open_meteo(lat: float, lon: float) -> dict | None:
         return None
 
 
-def main():
-    """Fetch all data and output JSON."""
-    logger.info("=" * 50)
-    logger.info("FETCH DATA V2 - SNOTEL + Open-Meteo Hybrid")
-    logger.info("=" * 50)
+def process_region(ski_areas, country, snow_depth_func, use_austria_fallback=False):
+    """Process a region's ski areas and return resort data.
 
+    Args:
+        ski_areas: List of resort tuples
+        country: Country name
+        snow_depth_func: Function to get snow depth
+        use_austria_fallback: If True, use Austria's fallback logic (GeoSphere -> Open-Meteo)
+    """
     resorts = []
-    snotel_success = 0
+    success_count = 0
 
-    for name, lat, lon, state, elev, snotel_id, snotel_name in SKI_AREAS:
-        logger.info(f"Processing {name}...")
+    for name, lat, lon, region, elev, station_id, station_name in ski_areas:
+        logger.info(f"Processing {name} ({country})...")
 
-        # Get base depth from SNOTEL
-        base_depth_cm = get_snotel_snow_depth(snotel_id, snotel_name)
-        if base_depth_cm:
-            logger.info(f"  SNOTEL ({snotel_name}): {base_depth_cm}cm")
-            snotel_success += 1
+        # Get base depth from regional snow sensor network
+        if use_austria_fallback:
+            base_depth_cm, actual_source = snow_depth_func(station_id, station_name, lat, lon)
+            if actual_source:
+                station_name = actual_source  # Update source name for display
         else:
-            logger.warning(f"  SNOTEL ({snotel_name}): No data")
+            base_depth_cm = snow_depth_func(station_id, station_name)
+        if base_depth_cm is not None:
+            logger.info(f"  Station ({station_name}): {base_depth_cm}cm")
+            success_count += 1
+        else:
+            logger.warning(f"  Station ({station_name}): No data")
 
-        # Get forecast from Open-Meteo
+        # Get forecast from Open-Meteo (works globally)
         forecast_data = fetch_open_meteo(lat, lon)
 
         forecast = []
@@ -140,10 +269,11 @@ def main():
             "name": name,
             "lat": lat,
             "lon": lon,
-            "state": state,
+            "country": country,
+            "region": region,
             "elevation_m": elev,
             "base_depth_cm": base_depth_cm,
-            "base_depth_source": snotel_name if base_depth_cm else None,
+            "base_depth_source": station_name if base_depth_cm is not None else None,
             "temp_c": round(temp_c, 1) if temp_c is not None else None,
             "forecast": forecast,
             "seven_day_total_cm": round(total_snow, 1),
@@ -152,14 +282,48 @@ def main():
         resorts.append(resort)
         time.sleep(0.3)  # Be nice to APIs
 
+    return resorts, success_count
+
+
+def main():
+    """Fetch all data and output JSON."""
+    logger.info("=" * 50)
+    logger.info("FETCH DATA V2 - Multi-Region Snow Data")
+    logger.info("=" * 50)
+
+    all_resorts = []
+    stats = {}
+
+    # Process USA (SNOTEL)
+    logger.info("\n--- USA (SNOTEL) ---")
+    resorts, success = process_region(US_SKI_AREAS, "USA", get_snotel_snow_depth)
+    all_resorts.extend(resorts)
+    stats["USA"] = {"total": len(US_SKI_AREAS), "success": success}
+
+    # Process Austria (GeoSphere TAWES with Open-Meteo fallback)
+    logger.info("\n--- Austria (GeoSphere TAWES + fallback) ---")
+    resorts, success = process_region(AUSTRIA_SKI_AREAS, "Austria", get_austria_snow_depth, use_austria_fallback=True)
+    all_resorts.extend(resorts)
+    stats["Austria"] = {"total": len(AUSTRIA_SKI_AREAS), "success": success}
+
+    # Process Switzerland (SLF IMIS)
+    logger.info("\n--- Switzerland (SLF IMIS) ---")
+    resorts, success = process_region(SWISS_SKI_AREAS, "Switzerland", get_slf_snow_depth)
+    all_resorts.extend(resorts)
+    stats["Switzerland"] = {"total": len(SWISS_SKI_AREAS), "success": success}
+
     # Build output
     output = {
         "updated": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
         "sources": {
-            "base_depth": "SNOTEL (nrcs.usda.gov)",
+            "base_depth": {
+                "USA": "SNOTEL (nrcs.usda.gov)",
+                "Austria": "GeoSphere ZAMG (geosphere.at)",
+                "Switzerland": "SLF IMIS (slf.ch)",
+            },
             "forecast": "Open-Meteo (open-meteo.com)",
         },
-        "resorts": resorts,
+        "resorts": all_resorts,
     }
 
     # Write to data directory
@@ -169,9 +333,12 @@ def main():
     with open(out_path, "w") as f:
         json.dump(output, f, indent=2)
 
-    logger.info(f"Output written to: {out_path}")
-    logger.info(f"SNOTEL success: {snotel_success}/{len(SKI_AREAS)}")
-    logger.info(f"Average 7-day snowfall: {sum(r['seven_day_total_cm'] for r in resorts)/len(resorts):.1f}cm")
+    logger.info(f"\nOutput written to: {out_path}")
+    logger.info(f"Total resorts: {len(all_resorts)}")
+    for country, s in stats.items():
+        logger.info(f"  {country}: {s['success']}/{s['total']} stations reporting")
+    avg_snow = sum(r['seven_day_total_cm'] for r in all_resorts) / len(all_resorts)
+    logger.info(f"Average 7-day snowfall: {avg_snow:.1f}cm")
     logger.info("Done!")
 
 

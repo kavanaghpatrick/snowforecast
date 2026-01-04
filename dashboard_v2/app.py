@@ -1,7 +1,8 @@
 """
-Snow Forecast Dashboard v2 - Minimal Streamlit app for Western US ski resorts.
+Snow Forecast Dashboard v2 - Multi-region ski resort forecasts.
 
 Reads forecast data from JSON and displays an interactive table with filtering.
+Supports USA, Austria, and Switzerland with regional snow depth sensors.
 """
 
 import streamlit as st
@@ -72,7 +73,7 @@ def find_best_day(daily_snow: list[dict]) -> str:
 
 
 def main():
-    st.title("❄️ Snow Forecast - Western US")
+    st.title("❄️ Snow Forecast")
 
     # Load data
     data = load_data()
@@ -113,30 +114,47 @@ def main():
         best_day = find_best_day(daily[:7])
 
         base_depth = resort.get("base_depth_cm")
-        snotel_station = resort.get("base_depth_source", "")
+        station_name = resort.get("base_depth_source", "")
+
+        # Handle both old (state) and new (country/region) formats
+        country = resort.get("country", "USA")
+        region = resort.get("region", resort.get("state", "??"))
 
         rows.append({
             "Resort": resort.get("name", "Unknown"),
-            "State": resort.get("state", "??"),
+            "Country": country,
+            "Region": region,
             "Elevation (m)": resort.get("elevation_m", 0),
             "Base (cm)": base_depth if base_depth else None,
-            "SNOTEL Station": snotel_station if snotel_station else "N/A",
+            "Station": station_name if station_name else "N/A",
             "7-Day Snow (cm)": round(seven_day_total, 1),
             "Peak Snowfall": best_day,
         })
 
     df = pd.DataFrame(rows)
 
-    # State filter
+    # Country and region filters
     st.subheader("Resort Forecasts")
 
-    states = ["All States"] + sorted(df["State"].unique().tolist())
-    selected_state = st.selectbox("Filter by State", states)
+    col1, col2 = st.columns(2)
+    with col1:
+        countries = ["All Countries"] + sorted(df["Country"].unique().tolist())
+        selected_country = st.selectbox("Filter by Country", countries)
 
-    if selected_state != "All States":
-        df_filtered = df[df["State"] == selected_state]
-    else:
-        df_filtered = df
+    with col2:
+        if selected_country != "All Countries":
+            available_regions = sorted(df[df["Country"] == selected_country]["Region"].unique().tolist())
+        else:
+            available_regions = sorted(df["Region"].unique().tolist())
+        regions = ["All Regions"] + available_regions
+        selected_region = st.selectbox("Filter by Region", regions)
+
+    # Apply filters
+    df_filtered = df
+    if selected_country != "All Countries":
+        df_filtered = df_filtered[df_filtered["Country"] == selected_country]
+    if selected_region != "All Regions":
+        df_filtered = df_filtered[df_filtered["Region"] == selected_region]
 
     # Display count
     st.caption(f"Showing {len(df_filtered)} of {len(df)} resorts")
@@ -148,11 +166,12 @@ def main():
         hide_index=True,
         column_config={
             "Resort": st.column_config.TextColumn("Resort", width="medium"),
-            "State": st.column_config.TextColumn("State", width="small"),
+            "Country": st.column_config.TextColumn("Country", width="small"),
+            "Region": st.column_config.TextColumn("Region", width="small"),
             "Elevation (m)": st.column_config.NumberColumn("Elev (m)", format="%d"),
             "Base (cm)": st.column_config.NumberColumn("Base (cm)", format="%.0f"),
-            "SNOTEL Station": st.column_config.TextColumn("SNOTEL Station", width="medium",
-                help="Nearby SNOTEL station used for base depth measurement"),
+            "Station": st.column_config.TextColumn("Station", width="medium",
+                help="Nearby snow monitoring station used for base depth measurement"),
             "7-Day Snow (cm)": st.column_config.NumberColumn("7-Day (cm)", format="%.1f"),
             "Peak Snowfall": st.column_config.TextColumn("Peak Snowfall", width="small",
                 help="Day with highest forecasted snowfall in the next 7 days"),
@@ -172,8 +191,9 @@ def main():
     # Footer
     st.divider()
     st.caption(
-        "Data sources: SNOTEL (base depth from nearby stations), Open-Meteo (7-day forecasts). "
-        "Base depths are from the nearest SNOTEL station, not necessarily at the resort. "
+        "Data sources: USA - SNOTEL (nrcs.usda.gov), Austria - GeoSphere TAWES (geosphere.at), "
+        "Switzerland - SLF IMIS (slf.ch), Forecasts - Open-Meteo (open-meteo.com). "
+        "Base depths are from nearby mountain monitoring stations, not at the resort. "
         "Always check official resort reports before traveling."
     )
 
