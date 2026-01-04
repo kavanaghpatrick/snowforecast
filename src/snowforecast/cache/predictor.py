@@ -117,7 +117,15 @@ class CachedPredictor:
         Returns:
             Dict with forecast variables or None if unavailable
         """
-        # Fetch NBM data (herbie now available on Streamlit Cloud)
+        # On Streamlit Cloud, don't attempt live fetches - use pre-populated cache only
+        import os
+        from pathlib import Path
+        is_streamlit_cloud = os.environ.get("STREAMLIT_SHARING_MODE") or Path("/mount/src").exists()
+        if is_streamlit_cloud:
+            logger.info(f"Streamlit Cloud: skipping NBM fetch - use background refresh")
+            return None
+
+        # Fetch NBM data locally
         try:
             predictor = self._get_real_predictor()
             return predictor.fetch_nbm_forecast(lat, lon, target_date, forecast_hours)
@@ -144,10 +152,12 @@ class CachedPredictor:
         Returns:
             Dict with forecast variables or None if unavailable
         """
-        # Convert date to datetime for cache
+        # Convert date to datetime for cache lookup
+        # Use noon of target_date to find forecasts valid on that day
+        # (the 6-hour window in get_forecast will match data from that day)
         if isinstance(target_date, date) and not isinstance(target_date, datetime):
             valid_time = datetime.combine(target_date, datetime.min.time())
-            valid_time += timedelta(hours=forecast_hours)
+            valid_time += timedelta(hours=12)  # Use noon for better matching
         else:
             valid_time = target_date
 

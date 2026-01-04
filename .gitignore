@@ -1,5 +1,8 @@
 # Data directories (large files, not for git)
 data/
+# Exception: include the pre-populated cache database for Streamlit Cloud
+!data/cache/
+!data/cache/snowforecast.duckdb
 *.parquet
 *.nc
 *.nc4

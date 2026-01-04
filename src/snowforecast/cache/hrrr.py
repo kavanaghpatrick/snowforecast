@@ -162,7 +162,16 @@ class HRRRCache:
         if cached is not None:
             return cached
 
-        # Fetch from HRRR (herbie now available on Streamlit Cloud)
+        # On Streamlit Cloud, don't attempt live fetches - use pre-populated cache only
+        # (herbie writes temp files which fails on ephemeral filesystem)
+        import os
+        from pathlib import Path
+        is_streamlit_cloud = os.environ.get("STREAMLIT_SHARING_MODE") or Path("/mount/src").exists()
+        if is_streamlit_cloud:
+            logger.info(f"Streamlit Cloud: cache miss for ({lat}, {lon}) - use background refresh")
+            return None
+
+        # Fetch from HRRR locally
         start_time = time.time()
         predictor = self._get_predictor()
 
