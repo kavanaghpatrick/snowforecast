@@ -112,11 +112,15 @@ def main():
         seven_day_total = resort.get("seven_day_total_cm", sum(d.get("new_snow_cm", 0) for d in daily[:7]))
         best_day = find_best_day(daily[:7])
 
+        base_depth = resort.get("base_depth_cm")
+        snotel_station = resort.get("base_depth_source", "")
+
         rows.append({
             "Resort": resort.get("name", "Unknown"),
             "State": resort.get("state", "??"),
             "Elevation (m)": resort.get("elevation_m", 0),
-            "Base Depth (cm)": resort.get("base_depth_cm", 0),
+            "Base (cm)": base_depth if base_depth else None,
+            "SNOTEL Station": snotel_station if snotel_station else "N/A",
             "7-Day Snow (cm)": round(seven_day_total, 1),
             "Best Day": best_day,
         })
@@ -145,9 +149,11 @@ def main():
         column_config={
             "Resort": st.column_config.TextColumn("Resort", width="medium"),
             "State": st.column_config.TextColumn("State", width="small"),
-            "Elevation (m)": st.column_config.NumberColumn("Elevation (m)", format="%d"),
-            "Base Depth (cm)": st.column_config.NumberColumn("Base Depth (cm)", format="%.0f"),
-            "7-Day Snow (cm)": st.column_config.NumberColumn("7-Day Snow (cm)", format="%.1f"),
+            "Elevation (m)": st.column_config.NumberColumn("Elev (m)", format="%d"),
+            "Base (cm)": st.column_config.NumberColumn("Base (cm)", format="%.0f"),
+            "SNOTEL Station": st.column_config.TextColumn("SNOTEL Station", width="medium",
+                help="Nearby SNOTEL station used for base depth measurement"),
+            "7-Day Snow (cm)": st.column_config.NumberColumn("7-Day (cm)", format="%.1f"),
             "Best Day": st.column_config.TextColumn("Best Day", width="small"),
         }
     )
@@ -155,7 +161,7 @@ def main():
     # Bar chart of base depths
     st.subheader("Base Depth by Resort")
 
-    chart_data = df_filtered.set_index("Resort")["Base Depth (cm)"].sort_values(ascending=False)
+    chart_data = df_filtered.set_index("Resort")["Base (cm)"].dropna().sort_values(ascending=False)
     if len(chart_data) > 20:
         st.caption("Showing top 20 resorts by base depth")
         chart_data = chart_data.head(20)
@@ -165,8 +171,8 @@ def main():
     # Footer
     st.divider()
     st.caption(
-        "Data sources: Open-Meteo (forecasts), OpenSkiMap (resort locations). "
-        "Forecasts are estimates and may differ from actual conditions. "
+        "Data sources: SNOTEL (base depth from nearby stations), Open-Meteo (7-day forecasts). "
+        "Base depths are from the nearest SNOTEL station, not necessarily at the resort. "
         "Always check official resort reports before traveling."
     )
 

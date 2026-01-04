@@ -25,7 +25,7 @@ SKI_AREAS = [
     ("Stevens Pass", 47.7448, -121.089, "Washington", 1241, "791:WA:SNTL", "Stevens Pass"),
     ("Crystal Mountain", 46.9282, -121.5045, "Washington", 2134, "679:WA:SNTL", "Morse Lake"),
     ("Mt. Baker", 48.857, -121.6695, "Washington", 1524, "909:WA:SNTL", "Wells Creek"),
-    ("Snoqualmie Pass", 47.4204, -121.4138, "Washington", 1067, "778:WA:SNTL", "Snoqualmie Pass"),
+    ("Snoqualmie Pass", 47.4204, -121.4138, "Washington", 1067, "817:WA:SNTL", "Stampede Pass"),
     ("Mt. Hood Meadows", 45.3311, -121.6647, "Oregon", 1829, "651:OR:SNTL", "Mt Hood Test Site"),
     ("Mt. Bachelor", 43.9792, -121.6886, "Oregon", 2743, "729:OR:SNTL", "Santiam Jct"),
     ("Timberline", 45.3309, -121.7109, "Oregon", 1829, "651:OR:SNTL", "Mt Hood Test Site"),
@@ -40,10 +40,10 @@ SKI_AREAS = [
     ("Park City", 40.6514, -111.508, "Utah", 3049, "628:UT:SNTL", "Mill D North"),
     ("Snowbird", 40.583, -111.6508, "Utah", 3353, "766:UT:SNTL", "Snowbird"),
     ("Alta", 40.5884, -111.6386, "Utah", 3215, "332:UT:SNTL", "Alta"),
-    ("Big Sky", 45.2618, -111.4018, "Montana", 3403, "561:MT:SNTL", "Lone Mountain"),
+    ("Big Sky", 45.2618, -111.4018, "Montana", 3403, "609:MT:SNTL", "Shower Falls"),
     ("Whitefish", 48.4833, -114.355, "Montana", 2133, "656:MT:SNTL", "Noisy Basin"),
     ("Jackson Hole", 43.5875, -110.8281, "Wyoming", 3185, "481:WY:SNTL", "Granite Creek"),
-    ("Sun Valley", 43.6804, -114.4075, "Idaho", 2789, "440:ID:SNTL", "Dollarhide Summit"),
+    ("Sun Valley", 43.6804, -114.4075, "Idaho", 2789, "489:ID:SNTL", "Hyndman"),
 ]
 
 
