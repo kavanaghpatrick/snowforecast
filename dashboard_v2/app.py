@@ -59,8 +59,8 @@ def find_best_day(daily_snow: list[dict]) -> str:
     if not daily_snow:
         return "N/A"
 
-    best_day = max(daily_snow, key=lambda d: d.get("snow_cm", 0))
-    if best_day.get("snow_cm", 0) == 0:
+    best_day = max(daily_snow, key=lambda d: d.get("new_snow_cm", 0))
+    if best_day.get("new_snow_cm", 0) == 0:
         return "None expected"
 
     # Format the date nicely
@@ -107,8 +107,9 @@ def main():
     # Process resort data
     rows = []
     for resort in resorts:
-        daily = resort.get("daily_forecast", [])
-        seven_day_total = sum(d.get("snow_cm", 0) for d in daily[:7])
+        daily = resort.get("forecast", [])
+        # Use pre-computed total, or sum from forecast data
+        seven_day_total = resort.get("seven_day_total_cm", sum(d.get("new_snow_cm", 0) for d in daily[:7]))
         best_day = find_best_day(daily[:7])
 
         rows.append({
