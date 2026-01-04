@@ -8,6 +8,7 @@ Supports USA, Austria, and Switzerland with regional snow depth sensors.
 import streamlit as st
 import pandas as pd
 import json
+import urllib.request
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -17,19 +18,30 @@ st.set_page_config(
     layout="wide"
 )
 
-# Data path relative to this file's location
+# GitHub raw URL for live data (bypasses Streamlit Cloud's file caching)
+GITHUB_DATA_URL = "https://raw.githubusercontent.com/kavanaghpatrick/snowforecast/main/data/forecasts_v2.json"
+# Local fallback
 DATA_PATH = Path(__file__).parent.parent / "data" / "forecasts_v2.json"
 
 
+@st.cache_data(ttl=300)  # Cache for 5 minutes, then fetch fresh
 def load_data() -> dict | None:
-    """Load forecast JSON, return None if missing or invalid."""
-    if not DATA_PATH.exists():
-        return None
+    """Load forecast JSON from GitHub (live) or local file (fallback)."""
+    # Try GitHub first for latest data
     try:
-        with open(DATA_PATH, "r") as f:
-            return json.load(f)
-    except (json.JSONDecodeError, IOError):
-        return None
+        with urllib.request.urlopen(GITHUB_DATA_URL, timeout=10) as response:
+            return json.loads(response.read())
+    except Exception:
+        pass  # Fall back to local file
+
+    # Local fallback
+    if DATA_PATH.exists():
+        try:
+            with open(DATA_PATH, "r") as f:
+                return json.load(f)
+        except (json.JSONDecodeError, IOError):
+            pass
+    return None
 
 
 def check_freshness(updated_str: str) -> tuple[bool, float]:
