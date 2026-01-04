@@ -122,7 +122,7 @@ def main():
             "Base (cm)": base_depth if base_depth else None,
             "SNOTEL Station": snotel_station if snotel_station else "N/A",
             "7-Day Snow (cm)": round(seven_day_total, 1),
-            "Best Day": best_day,
+            "Peak Snowfall": best_day,
         })
 
     df = pd.DataFrame(rows)
@@ -154,7 +154,8 @@ def main():
             "SNOTEL Station": st.column_config.TextColumn("SNOTEL Station", width="medium",
                 help="Nearby SNOTEL station used for base depth measurement"),
             "7-Day Snow (cm)": st.column_config.NumberColumn("7-Day (cm)", format="%.1f"),
-            "Best Day": st.column_config.TextColumn("Best Day", width="small"),
+            "Peak Snowfall": st.column_config.TextColumn("Peak Snowfall", width="small",
+                help="Day with highest forecasted snowfall in the next 7 days"),
         }
     )
 
