@@ -170,7 +170,9 @@ class RealPredictor:
             # HRRR provides forecasts from the current run time
             # Use today's run with appropriate forecast hour (fxx)
             # HRRR only forecasts up to 48 hours ahead
+            from datetime import timedelta
             today = date_type.today()
+            yesterday = today - timedelta(days=1)
 
             # Calculate forecast hour offset from today
             if hasattr(target_date, 'date'):
@@ -188,13 +190,26 @@ class RealPredictor:
 
             fxx = max(0, hours_ahead)
 
-            # Get the HRRR forecast from today's run
-            h = Herbie(
-                today,
-                model="hrrr",
-                product="sfc",
-                fxx=fxx,
-            )
+            # Try today's run first, fall back to yesterday if not available
+            # (NOAA data has ~2-4 hour latency)
+            h = None
+            for run_date in [today, yesterday]:
+                adjusted_fxx = fxx if run_date == today else fxx + 24
+                if adjusted_fxx > 48:
+                    continue  # Skip if forecast hour exceeds HRRR range
+                try:
+                    h_test = Herbie(run_date, model="hrrr", product="sfc", fxx=adjusted_fxx)
+                    if h_test.grib:
+                        h = h_test
+                        fxx = adjusted_fxx
+                        logger.info(f"Using HRRR run from {run_date} with fxx={fxx}")
+                        break
+                except Exception:
+                    continue
+
+            if h is None or not h.grib:
+                logger.warning(f"No HRRR data available for today or yesterday")
+                return None
 
             snow_depth = 0.0
             temp_k = 273.0
@@ -296,11 +311,12 @@ class RealPredictor:
             Dict with forecast variables or None if unavailable
         """
         try:
-            from datetime import date as date_type
+            from datetime import date as date_type, timedelta
 
             from herbie import Herbie
 
             today = date_type.today()
+            yesterday = today - timedelta(days=1)
 
             # Calculate forecast hour offset from today
             if hasattr(target_date, 'date'):
@@ -327,13 +343,26 @@ class RealPredictor:
 
             logger.info(f"Fetching NBM forecast for {target}, fxx={fxx}h")
 
-            # Get NBM forecast
-            h = Herbie(
-                today,
-                model="nbm",
-                product="co",  # CONUS core product
-                fxx=fxx,
-            )
+            # Try today's run first, fall back to yesterday if not available
+            # (NOAA data has ~2-4 hour latency)
+            h = None
+            for run_date in [today, yesterday]:
+                adjusted_fxx = fxx if run_date == today else fxx + 24
+                if adjusted_fxx > 264:
+                    continue  # Skip if forecast hour exceeds NBM range
+                try:
+                    h_test = Herbie(run_date, model="nbm", product="co", fxx=adjusted_fxx)
+                    if h_test.grib:
+                        h = h_test
+                        fxx = adjusted_fxx
+                        logger.info(f"Using NBM run from {run_date} with fxx={fxx}")
+                        break
+                except Exception:
+                    continue
+
+            if h is None or not h.grib:
+                logger.warning(f"No NBM data available for today or yesterday")
+                return None
 
             snow_depth = 0.0
             temp_k = 273.0

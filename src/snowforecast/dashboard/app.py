@@ -47,7 +47,7 @@ _debug_is_cloud = os.environ.get("STREAMLIT_SHARING_MODE") or Path("/mount/src")
 _debug_db_path = Path("/mount/src/snowforecast/data/cache/snowforecast.duckdb")
 
 # Show version first
-st.caption(f"v2026.01.04.23-herbie | Cloud: {_debug_is_cloud} | DB exists: {_debug_db_path.exists() if _debug_is_cloud else 'N/A'}")
+st.caption(f"v2026.01.04.24-latency-fix | Cloud: {_debug_is_cloud} | DB exists: {_debug_db_path.exists() if _debug_is_cloud else 'N/A'}")
 
 # Show startup error if any
 if _startup_error:
