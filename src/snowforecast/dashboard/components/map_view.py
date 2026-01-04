@@ -63,28 +63,51 @@ def create_resort_layer(resort_data: pd.DataFrame) -> pdk.Layer:
     )
 
 
-def create_base_view() -> pdk.ViewState:
-    """Create Western US view centered on ski country.
+def create_base_view(
+    center_lat: float = None,
+    center_lon: float = None,
+    zoom: float = None
+) -> pdk.ViewState:
+    """Create map view, optionally centered on a specific resort.
+
+    Args:
+        center_lat: Latitude to center on (default: Western US overview)
+        center_lon: Longitude to center on (default: Western US overview)
+        zoom: Zoom level (default: 5.5 for overview, 9 for single resort)
 
     Returns:
-        PyDeck ViewState centered on Utah/Colorado ski areas,
-        zoomed to show all Western US resorts.
+        PyDeck ViewState centered on specified location or Western US overview.
 
     Note:
-        View is centered at approximately:
+        When no coordinates provided, defaults to Western US overview:
         - Latitude 40.0 (Utah/Colorado border)
         - Longitude -111.0 (Salt Lake City area)
         - Zoom 5.5 (shows WA, OR, CA, UT, CO, MT, WY, ID)
     """
-    return pdk.ViewState(
-        latitude=40.0,
-        longitude=-111.0,
-        zoom=5.5,
-        pitch=0,
-    )
+    if center_lat is not None and center_lon is not None:
+        # Center on specific resort with closer zoom
+        return pdk.ViewState(
+            latitude=center_lat,
+            longitude=center_lon,
+            zoom=zoom if zoom is not None else 9,
+            pitch=0,
+        )
+    else:
+        # Default: Western US overview
+        return pdk.ViewState(
+            latitude=40.0,
+            longitude=-111.0,
+            zoom=zoom if zoom is not None else 5.5,
+            pitch=0,
+        )
 
 
-def render_resort_map(resort_data: pd.DataFrame) -> pdk.Deck:
+def render_resort_map(
+    resort_data: pd.DataFrame,
+    center_lat: float = None,
+    center_lon: float = None,
+    zoom: float = None
+) -> pdk.Deck:
     """Render the full interactive resort map.
 
     Args:
@@ -96,6 +119,9 @@ def render_resort_map(resort_data: pd.DataFrame) -> pdk.Deck:
             - snow_depth_cm: float
             - new_snow_cm: float
             - probability: float (snowfall probability, 0-1)
+        center_lat: Optional latitude to center map on
+        center_lon: Optional longitude to center map on
+        zoom: Optional zoom level (default: 9 for single resort, 5.5 for overview)
 
     Returns:
         PyDeck Deck object ready for display with st.pydeck_chart()
@@ -106,9 +132,10 @@ def render_resort_map(resort_data: pd.DataFrame) -> pdk.Deck:
         - Tooltips showing resort name, state, and conditions
         - Free CartoDB basemap (no API key required)
         - Loads in <3 seconds for 22 resorts
+        - Centers on selected resort when coordinates provided
 
     Example:
-        >>> deck = render_resort_map(resort_data)
+        >>> deck = render_resort_map(resort_data, center_lat=37.63, center_lon=-119.03)
         >>> st.pydeck_chart(deck)
     """
     tooltip = {
@@ -129,7 +156,7 @@ def render_resort_map(resort_data: pd.DataFrame) -> pdk.Deck:
 
     return pdk.Deck(
         layers=[create_resort_layer(resort_data)],
-        initial_view_state=create_base_view(),
+        initial_view_state=create_base_view(center_lat, center_lon, zoom),
         tooltip=tooltip,
         map_style="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
     )

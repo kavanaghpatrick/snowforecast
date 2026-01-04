@@ -230,6 +230,11 @@ def fetch_resort_7day_forecast(name: str, lat: float, lon: float) -> pd.DataFram
     """Fetch 7-day forecast for a resort (cached 30 min).
 
     Memory optimization: max_entries=3 for Streamlit Cloud 1GB limit.
+
+    Note: HRRR (days 0-1) provides actual ground snow depth.
+          NBM (days 2-6) provides NEW snow accumulation, not ground depth.
+          We carry forward the HRRR base depth and add cumulative new snow
+          for extended forecasts to maintain a realistic snow base.
     """
     predictor = get_predictor()
     if predictor is None:
@@ -239,6 +244,10 @@ def fetch_resort_7day_forecast(name: str, lat: float, lon: float) -> pd.DataFram
     today = date.today()
     terrain = predictor.get_terrain_features(lat, lon)
 
+    # Track base depth from HRRR (days 0-1) to carry forward
+    last_hrrr_base = None
+    cumulative_new_snow = 0.0
+
     for day in range(7):
         target_date = today + timedelta(days=day)
         try:
@@ -247,24 +256,51 @@ def fetch_resort_7day_forecast(name: str, lat: float, lon: float) -> pd.DataFram
                 datetime.combine(target_date, datetime.min.time()),
                 forecast_hours=24
             )
+
+            # For days 0-1, HRRR gives us actual ground depth
+            # For days 2+, we need to carry forward the base and add new snow
+            if day <= 1:
+                # HRRR data - use actual snow depth
+                snow_depth = forecast.snow_depth_cm
+                new_snow = forecast.new_snow_cm
+                # Save the most recent HRRR base for carry-forward
+                if forecast.snow_depth_cm > 0:
+                    last_hrrr_base = forecast.snow_depth_cm
+            else:
+                # NBM data - forecast.snow_depth_cm is actually new accumulation
+                # Use carry-forward logic for realistic base depth
+                new_snow = forecast.new_snow_cm
+
+                if last_hrrr_base is not None:
+                    # Carry forward HRRR base + cumulative new snow
+                    cumulative_new_snow += new_snow
+                    # Apply slight daily melt factor (0.5% per day in winter)
+                    melt_factor = 0.995 ** (day - 1)
+                    snow_depth = (last_hrrr_base * melt_factor) + cumulative_new_snow
+                else:
+                    # No HRRR base available, use NBM value as-is
+                    snow_depth = forecast.snow_depth_cm
+
             records.append({
                 "date": target_date,
                 "day": day,
-                "snow_depth_cm": forecast.snow_depth_cm,
-                "new_snow_cm": forecast.new_snow_cm,
+                "snow_depth_cm": max(0, snow_depth),
+                "new_snow_cm": new_snow,
                 "probability": forecast.snowfall_probability,
                 "ci_lower": confidence.lower,
                 "ci_upper": confidence.upper,
+                "source": "HRRR" if day <= 1 else "NBM",  # Track data source
             })
         except Exception:
             records.append({
                 "date": target_date,
                 "day": day,
-                "snow_depth_cm": 0,
+                "snow_depth_cm": last_hrrr_base or 0,  # Use last known base
                 "new_snow_cm": 0,
                 "probability": 0,
                 "ci_lower": 0,
                 "ci_upper": 0,
+                "source": "fallback",
             })
 
     df = pd.DataFrame(records)
@@ -403,10 +439,15 @@ def main():
         # Load all resort conditions (cached via @st.cache_data)
         conditions_df = fetch_all_conditions()
 
-        # Render interactive PyDeck map
+        # Render interactive PyDeck map centered on selected resort
         if not conditions_df.empty:
             try:
-                deck = render_resort_map(conditions_df)
+                deck = render_resort_map(
+                    conditions_df,
+                    center_lat=lat,
+                    center_lon=lon,
+                    zoom=8  # Close enough to see nearby resorts
+                )
                 st.pydeck_chart(deck, use_container_width=True)
                 st.caption("Circle color = snow depth | Circle size = new snow")
             except Exception as e:

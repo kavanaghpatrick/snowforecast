@@ -275,16 +275,26 @@ def render_forecast_table(forecasts: pd.DataFrame, container=None) -> None:
         ci_lower = row.get("ci_lower", 0)
         ci_upper = row.get("ci_upper", 0)
         probability = row.get("probability", 0)
+        source = row.get("source", "")
 
         # Get color for snow depth
         depth_color = snow_depth_to_hex(snow_depth)
         snow_depth_category(snow_depth)
 
+        # Source indicator (subtle, helps users understand data quality)
+        source_indicator = ""
+        if source == "HRRR":
+            source_indicator = '<span title="HRRR 3km (high confidence)" style="color:#28a745;font-size:0.7em;">&#9679;</span>'
+        elif source == "NBM":
+            source_indicator = '<span title="NBM forecast (moderate confidence)" style="color:#ffc107;font-size:0.7em;">&#9679;</span>'
+        elif source == "fallback":
+            source_indicator = '<span title="Persistence forecast (low confidence)" style="color:#dc3545;font-size:0.7em;">&#9679;</span>'
+
         # Build row HTML - minified to avoid Streamlit markdown whitespace bug (#9312)
         new_snow_prefix = '+' if new_snow > 0 else ''
         html_rows.append(
             f'<tr>'
-            f'<td style="font-weight:bold;padding:8px;">{day_name}</td>'
+            f'<td style="font-weight:bold;padding:8px;">{day_name} {source_indicator}</td>'
             f'<td style="padding:8px;color:#666;">{date_str}</td>'
             f'<td style="padding:8px;background:{depth_color};text-align:center;border-radius:4px;">{snow_depth:.0f}cm</td>'
             f'<td style="padding:8px;text-align:center;">{new_snow_prefix}{new_snow:.1f}cm</td>'
