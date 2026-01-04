@@ -112,8 +112,9 @@ def refresh_hrrr_batch(db, target_date, fxx):
     logger.info(f"HRRR batch refresh for {target_date} (fxx={fxx}h)")
 
     # Try today's run, then yesterday's
+    # Use date.today() as base, NOT target_date (fixes #58: day+1 fxx > 48h bug)
     for run_offset in [0, 1]:
-        run_date = datetime.combine(target_date, datetime.min.time()) - timedelta(days=run_offset)
+        run_date = datetime.combine(date.today(), datetime.min.time()) - timedelta(days=run_offset)
         adjusted_fxx = fxx + (run_offset * 24)
 
         if adjusted_fxx > 48:
@@ -181,13 +182,15 @@ def refresh_hrrr_batch(db, target_date, fxx):
                         lon=lon,
                         run_time=run_date,
                         forecast_hour=adjusted_fxx,
-                        snow_depth_m=snow,
+                        source='hrrr',
+                        snow_depth_m=snow,  # SNOD - total base depth
+                        new_snow_m=None,    # HRRR doesn't provide this directly
                         temp_k=temp or 273.0,
                         precip_mm=precip or 0.0,
                         categorical_snow=csnow or 0.0,
                     )
                     stored += 1
-                    logger.info(f"    {name}: {snow*100:.1f}cm")
+                    logger.info(f"    {name}: {snow*100:.1f}cm base depth")
 
             logger.info(f"  Stored {stored}/{len(SKI_AREAS)} forecasts")
             return True
@@ -271,13 +274,15 @@ def refresh_nbm_batch(db, target_date, fxx):
                         lon=lon,
                         run_time=run_date,
                         forecast_hour=adjusted_fxx,
-                        snow_depth_m=snow or 0.0,
+                        source='nbm',
+                        snow_depth_m=None,  # NBM doesn't provide base depth
+                        new_snow_m=snow,    # ASNOW - new snow accumulation
                         temp_k=temp or 273.0,
                         precip_mm=precip or 0.0,
                         categorical_snow=1.0 if (snow or 0) > 0.01 else 0.0,
                     )
                     stored += 1
-                    logger.info(f"    {name}: {(snow or 0)*100:.1f}cm snow")
+                    logger.info(f"    {name}: {(snow or 0)*100:.1f}cm new snow")
 
             logger.info(f"  Stored {stored}/{len(SKI_AREAS)} forecasts")
             return True
@@ -322,8 +327,9 @@ def main():
     logger.info("--- NBM Forecasts (Days 2-6) ---")
     for day_offset in range(2, 7):
         target = today + timedelta(days=day_offset)
-        # Forecast hour from today: 48h, 72h, 96h, 120h, 144h
-        fxx = day_offset * 24
+        # Forecast hour from today: 60h, 84h, 108h, 132h, 156h (noon each day)
+        # Fixes #59: queries expect noon valid_times, not midnight
+        fxx = (day_offset * 24) + 12
 
         if refresh_nbm_batch(db, target, fxx):
             success_count += 1

@@ -7,23 +7,30 @@ from typing import Optional
 
 @dataclass
 class CachedForecast:
-    """Cached HRRR forecast data."""
+    """Cached forecast data (HRRR or NBM)."""
 
     lat: float
     lon: float
     run_time: datetime
     forecast_hour: int
     valid_time: datetime
-    snow_depth_m: float
+    source: Optional[str]  # 'hrrr' or 'nbm'
+    snow_depth_m: Optional[float]  # Base depth (HRRR SNOD)
+    new_snow_m: Optional[float]  # New accumulation (NBM ASNOW)
     temp_k: float
     precip_mm: float
     categorical_snow: float
     fetch_time: datetime
 
     @property
-    def snow_depth_cm(self) -> float:
+    def snow_depth_cm(self) -> Optional[float]:
         """Snow depth in centimeters."""
-        return self.snow_depth_m * 100
+        return self.snow_depth_m * 100 if self.snow_depth_m is not None else None
+
+    @property
+    def new_snow_cm(self) -> Optional[float]:
+        """New snow in centimeters."""
+        return self.new_snow_m * 100 if self.new_snow_m is not None else None
 
     @property
     def temp_c(self) -> float:

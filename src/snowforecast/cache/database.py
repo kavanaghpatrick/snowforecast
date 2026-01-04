@@ -92,8 +92,8 @@ CREATE SEQUENCE IF NOT EXISTS seq_terrain_id START 1;
 CREATE SEQUENCE IF NOT EXISTS seq_ski_areas_id START 1;
 CREATE SEQUENCE IF NOT EXISTS seq_fetch_log_id START 1;
 
--- HRRR forecast cache
-CREATE TABLE IF NOT EXISTS hrrr_forecasts (
+-- Forecast cache (HRRR + NBM)
+CREATE TABLE IF NOT EXISTS forecasts (
     id INTEGER DEFAULT nextval('seq_hrrr_id') PRIMARY KEY,
     fetch_time TIMESTAMP NOT NULL,
     run_time TIMESTAMP NOT NULL,
@@ -101,17 +101,20 @@ CREATE TABLE IF NOT EXISTS hrrr_forecasts (
     valid_time TIMESTAMP NOT NULL,
     lat DOUBLE NOT NULL,
     lon DOUBLE NOT NULL,
+    source VARCHAR(10),
     snow_depth_m DOUBLE,
+    new_snow_m DOUBLE,
     temp_k DOUBLE,
     precip_mm DOUBLE,
     categorical_snow DOUBLE,
-    UNIQUE(run_time, forecast_hour, lat, lon)
+    UNIQUE(run_time, forecast_hour, lat, lon, source)
 );
 
 -- Index for fast lookups
-CREATE INDEX IF NOT EXISTS idx_hrrr_valid ON hrrr_forecasts(valid_time, lat, lon);
-CREATE INDEX IF NOT EXISTS idx_hrrr_run ON hrrr_forecasts(run_time);
-CREATE INDEX IF NOT EXISTS idx_hrrr_location ON hrrr_forecasts(lat, lon);
+CREATE INDEX IF NOT EXISTS idx_forecasts_valid ON forecasts(valid_time, lat, lon);
+CREATE INDEX IF NOT EXISTS idx_forecasts_run ON forecasts(run_time);
+CREATE INDEX IF NOT EXISTS idx_forecasts_location ON forecasts(lat, lon);
+CREATE INDEX IF NOT EXISTS idx_forecasts_source ON forecasts(source);
 
 -- Terrain cache (permanent - terrain doesn't change)
 CREATE TABLE IF NOT EXISTS terrain_cache (
@@ -287,8 +290,9 @@ class CacheDatabase:
             """
             SELECT
                 lat, lon, run_time, forecast_hour, valid_time,
-                snow_depth_m, temp_k, precip_mm, categorical_snow, fetch_time
-            FROM hrrr_forecasts
+                source, snow_depth_m, new_snow_m, temp_k, precip_mm,
+                categorical_snow, fetch_time
+            FROM forecasts
             WHERE lat = ? AND lon = ?
               AND valid_time BETWEEN ? AND ?
               AND run_time >= ?
@@ -314,11 +318,13 @@ class CacheDatabase:
             run_time=result[2],
             forecast_hour=result[3],
             valid_time=result[4],
-            snow_depth_m=result[5] or 0.0,
-            temp_k=result[6] or 273.0,
-            precip_mm=result[7] or 0.0,
-            categorical_snow=result[8] or 0.0,
-            fetch_time=result[9],
+            source=result[5],
+            snow_depth_m=result[6],
+            new_snow_m=result[7],
+            temp_k=result[8] or 273.0,
+            precip_mm=result[9] or 0.0,
+            categorical_snow=result[10] or 0.0,
+            fetch_time=result[11],
         )
 
     def store_forecast(
@@ -327,19 +333,23 @@ class CacheDatabase:
         lon: float,
         run_time: datetime,
         forecast_hour: int,
-        snow_depth_m: float,
-        temp_k: float,
-        precip_mm: float,
-        categorical_snow: float,
+        source: str,
+        snow_depth_m: Optional[float] = None,
+        new_snow_m: Optional[float] = None,
+        temp_k: Optional[float] = None,
+        precip_mm: Optional[float] = None,
+        categorical_snow: Optional[float] = None,
     ) -> None:
         """Store forecast in cache.
 
         Args:
             lat: Latitude
             lon: Longitude
-            run_time: HRRR model run time
-            forecast_hour: Forecast hour (0-48)
-            snow_depth_m: Snow depth in meters
+            run_time: Model run time
+            forecast_hour: Forecast hour
+            source: Model source ('hrrr' or 'nbm')
+            snow_depth_m: Snow depth in meters (HRRR SNOD)
+            new_snow_m: New snow accumulation in meters (NBM ASNOW)
             temp_k: Temperature in Kelvin
             precip_mm: Precipitation in mm
             categorical_snow: Categorical snow flag (0 or 1)
@@ -353,14 +363,15 @@ class CacheDatabase:
 
         self.conn.execute(
             """
-            INSERT INTO hrrr_forecasts
+            INSERT INTO forecasts
             (fetch_time, run_time, forecast_hour, valid_time, lat, lon,
-             snow_depth_m, temp_k, precip_mm, categorical_snow)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            ON CONFLICT (run_time, forecast_hour, lat, lon)
+             source, snow_depth_m, new_snow_m, temp_k, precip_mm, categorical_snow)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ON CONFLICT (run_time, forecast_hour, lat, lon, source)
             DO UPDATE SET
                 fetch_time = EXCLUDED.fetch_time,
                 snow_depth_m = EXCLUDED.snow_depth_m,
+                new_snow_m = EXCLUDED.new_snow_m,
                 temp_k = EXCLUDED.temp_k,
                 precip_mm = EXCLUDED.precip_mm,
                 categorical_snow = EXCLUDED.categorical_snow
@@ -372,7 +383,9 @@ class CacheDatabase:
                 valid_time,
                 lat,
                 lon,
+                source,
                 snow_depth_m,
+                new_snow_m,
                 temp_k,
                 precip_mm,
                 categorical_snow,
@@ -382,7 +395,7 @@ class CacheDatabase:
     def get_latest_run_time(self) -> Optional[datetime]:
         """Get the most recent HRRR run time in cache."""
         result = self.conn.execute(
-            "SELECT MAX(run_time) FROM hrrr_forecasts"
+            "SELECT MAX(run_time) FROM forecasts"
         ).fetchone()
         return result[0] if result and result[0] else None
 
@@ -407,8 +420,9 @@ class CacheDatabase:
             """
             SELECT
                 lat, lon, run_time, forecast_hour, valid_time,
-                snow_depth_m, temp_k, precip_mm, categorical_snow, fetch_time
-            FROM hrrr_forecasts
+                source, snow_depth_m, new_snow_m, temp_k, precip_mm,
+                categorical_snow, fetch_time
+            FROM forecasts
             WHERE lat = ? AND lon = ?
             ORDER BY valid_time DESC
             LIMIT 1
@@ -425,11 +439,13 @@ class CacheDatabase:
             run_time=result[2],
             forecast_hour=result[3],
             valid_time=result[4],
-            snow_depth_m=result[5] or 0.0,
-            temp_k=result[6] or 273.0,
-            precip_mm=result[7] or 0.0,
-            categorical_snow=result[8] or 0.0,
-            fetch_time=result[9],
+            source=result[5],
+            snow_depth_m=result[6],
+            new_snow_m=result[7],
+            temp_k=result[8] or 273.0,
+            precip_mm=result[9] or 0.0,
+            categorical_snow=result[10] or 0.0,
+            fetch_time=result[11],
         )
 
     def cleanup_old_forecasts(self, keep_days: int = 7) -> int:
@@ -444,7 +460,7 @@ class CacheDatabase:
 
         cutoff = datetime.utcnow() - timedelta(days=keep_days)
         result = self.conn.execute(
-            "DELETE FROM hrrr_forecasts WHERE run_time < ?",
+            "DELETE FROM forecasts WHERE run_time < ?",
             [cutoff],
         )
         deleted = result.fetchone()[0] if result else 0
@@ -604,7 +620,7 @@ class CacheDatabase:
     def get_stats(self) -> dict:
         """Get cache statistics."""
         forecast_count = self.conn.execute(
-            "SELECT COUNT(*) FROM hrrr_forecasts"
+            "SELECT COUNT(*) FROM forecasts"
         ).fetchone()[0]
 
         terrain_count = self.conn.execute(
