@@ -1,5 +1,5 @@
 {
-  "updated": "2026-01-04T15:30:59Z",
+  "updated": "2026-01-04T15:33:27Z",
   "sources": {
     "base_depth": "SNOTEL (nrcs.usda.gov)",
     "forecast": "Open-Meteo (open-meteo.com)"
@@ -13,18 +13,18 @@
       "elevation_m": 1241,
       "base_depth_cm": 81.3,
       "base_depth_source": "Stevens Pass",
-      "temp_c": -2.4,
+      "temp_c": -2.6,
       "forecast": [
         {
           "day": 0,
           "date": "2026-01-04",
-          "new_snow_cm": 7.2,
+          "new_snow_cm": 7.1,
           "source": "open-meteo"
         },
         {
           "day": 1,
           "date": "2026-01-05",
-          "new_snow_cm": 10.0,
+          "new_snow_cm": 9.9,
           "source": "open-meteo"
         },
         {
@@ -58,7 +58,7 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 70.7
+      "seven_day_total_cm": 70.6
     },
     {
       "name": "Crystal Mountain",
@@ -68,7 +68,7 @@
       "elevation_m": 2134,
       "base_depth_cm": 73.7,
       "base_depth_source": "Morse Lake",
-      "temp_c": -6.2,
+      "temp_c": -6.5,
       "forecast": [
         {
           "day": 0,
@@ -123,18 +123,18 @@
       "elevation_m": 1524,
       "base_depth_cm": 63.5,
       "base_depth_source": "Wells Creek",
-      "temp_c": -0.1,
+      "temp_c": -0.0,
       "forecast": [
         {
           "day": 0,
           "date": "2026-01-04",
-          "new_snow_cm": 23.8,
+          "new_snow_cm": 23.9,
           "source": "open-meteo"
         },
         {
           "day": 1,
           "date": "2026-01-05",
-          "new_snow_cm": 2.0,
+          "new_snow_cm": 2.1,
           "source": "open-meteo"
         },
         {
@@ -168,7 +168,7 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 96.9
+      "seven_day_total_cm": 97.1
     },
     {
       "name": "Snoqualmie Pass",
@@ -183,13 +183,13 @@
         {
           "day": 0,
           "date": "2026-01-04",
-          "new_snow_cm": 3.6,
+          "new_snow_cm": 3.5,
           "source": "open-meteo"
         },
         {
           "day": 1,
           "date": "2026-01-05",
-          "new_snow_cm": 1.8,
+          "new_snow_cm": 1.7,
           "source": "open-meteo"
         },
         {
@@ -223,7 +223,7 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 60.1
+      "seven_day_total_cm": 59.9
     },
     {
       "name": "Mt. Hood Meadows",
@@ -233,18 +233,18 @@
       "elevation_m": 1829,
       "base_depth_cm": 45.7,
       "base_depth_source": "Mt Hood Test Site",
-      "temp_c": -2.1,
+      "temp_c": -2.4,
       "forecast": [
         {
           "day": 0,
           "date": "2026-01-04",
-          "new_snow_cm": 10.1,
+          "new_snow_cm": 10.3,
           "source": "open-meteo"
         },
         {
           "day": 1,
           "date": "2026-01-05",
-          "new_snow_cm": 2.0,
+          "new_snow_cm": 2.2,
           "source": "open-meteo"
         },
         {
@@ -278,7 +278,7 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 41.8
+      "seven_day_total_cm": 42.1
     },
     {
       "name": "Mt. Bachelor",
@@ -288,7 +288,7 @@
       "elevation_m": 2743,
       "base_depth_cm": 2.5,
       "base_depth_source": "Santiam Jct",
-      "temp_c": -9.0,
+      "temp_c": -9.1,
       "forecast": [
         {
           "day": 0,
@@ -343,18 +343,18 @@
       "elevation_m": 1829,
       "base_depth_cm": 45.7,
       "base_depth_source": "Mt Hood Test Site",
-      "temp_c": -3.2,
+      "temp_c": -3.5,
       "forecast": [
         {
           "day": 0,
           "date": "2026-01-04",
-          "new_snow_cm": 10.3,
+          "new_snow_cm": 10.5,
           "source": "open-meteo"
         },
         {
           "day": 1,
           "date": "2026-01-05",
-          "new_snow_cm": 5.7,
+          "new_snow_cm": 5.8,
           "source": "open-meteo"
         },
         {
@@ -388,7 +388,7 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 49.9
+      "seven_day_total_cm": 50.2
     },
     {
       "name": "Mammoth Mountain",
@@ -398,18 +398,18 @@
       "elevation_m": 3369,
       "base_depth_cm": 203.2,
       "base_depth_source": "Mammoth Pass",
-      "temp_c": -8.0,
+      "temp_c": -8.1,
       "forecast": [
         {
           "day": 0,
           "date": "2026-01-04",
-          "new_snow_cm": 33.8,
+          "new_snow_cm": 34.0,
           "source": "open-meteo"
         },
         {
           "day": 1,
           "date": "2026-01-05",
-          "new_snow_cm": 4.1,
+          "new_snow_cm": 4.3,
           "source": "open-meteo"
         },
         {
@@ -443,7 +443,7 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 37.9
+      "seven_day_total_cm": 38.4
     },
     {
       "name": "Squaw Valley",
@@ -458,13 +458,13 @@
         {
           "day": 0,
           "date": "2026-01-04",
-          "new_snow_cm": 18.0,
+          "new_snow_cm": 18.2,
           "source": "open-meteo"
         },
         {
           "day": 1,
           "date": "2026-01-05",
-          "new_snow_cm": 0.7,
+          "new_snow_cm": 0.9,
           "source": "open-meteo"
         },
         {
@@ -498,7 +498,7 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 18.7
+      "seven_day_total_cm": 19.1
     },
     {
       "name": "Heavenly",
@@ -519,7 +519,7 @@
         {
           "day": 1,
           "date": "2026-01-05",
-          "new_snow_cm": 0.0,
+          "new_snow_cm": 0.1,
           "source": "open-meteo"
         },
         {
@@ -553,7 +553,7 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 13.8
+      "seven_day_total_cm": 13.9
     },
     {
       "name": "Kirkwood",
@@ -608,7 +608,7 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 27.3
+      "seven_day_total_cm": 27.4
     },
     {
       "name": "Vail",
