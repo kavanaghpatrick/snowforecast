@@ -117,14 +117,7 @@ class CachedPredictor:
         Returns:
             Dict with forecast variables or None if unavailable
         """
-        # On Streamlit Cloud, don't attempt live fetches (herbie not installed)
-        import os
-        from pathlib import Path
-        is_streamlit_cloud = os.environ.get("STREAMLIT_SHARING_MODE") or Path("/mount/src").exists()
-        if is_streamlit_cloud:
-            logger.info(f"Streamlit Cloud: skipping NBM fetch (herbie unavailable)")
-            return None
-
+        # Fetch NBM data (herbie now available on Streamlit Cloud)
         try:
             predictor = self._get_real_predictor()
             return predictor.fetch_nbm_forecast(lat, lon, target_date, forecast_hours)
