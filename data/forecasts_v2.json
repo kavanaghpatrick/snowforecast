@@ -1,5 +1,5 @@
 {
-  "updated": "2026-01-04T21:58:37Z",
+  "updated": "2026-01-04T22:22:24Z",
   "sources": {
     "base_depth": {
       "USA": "SNOTEL (nrcs.usda.gov)",
@@ -18,7 +18,7 @@
       "elevation_m": 1241,
       "base_depth_cm": 81.3,
       "base_depth_source": "Stevens Pass",
-      "temp_c": -0.7,
+      "temp_c": -0.6,
       "forecast": [
         {
           "day": 0,
@@ -74,7 +74,7 @@
       "elevation_m": 2134,
       "base_depth_cm": 73.7,
       "base_depth_source": "Morse Lake",
-      "temp_c": -5.9,
+      "temp_c": -6.1,
       "forecast": [
         {
           "day": 0,
@@ -130,7 +130,7 @@
       "elevation_m": 1524,
       "base_depth_cm": 63.5,
       "base_depth_source": "Wells Creek",
-      "temp_c": -1.7,
+      "temp_c": -1.8,
       "forecast": [
         {
           "day": 0,
@@ -186,7 +186,7 @@
       "elevation_m": 1067,
       "base_depth_cm": 83.8,
       "base_depth_source": "Stampede Pass",
-      "temp_c": 1.4,
+      "temp_c": 1.6,
       "forecast": [
         {
           "day": 0,
@@ -242,7 +242,7 @@
       "elevation_m": 1829,
       "base_depth_cm": 40.6,
       "base_depth_source": "Mt Hood Test Site",
-      "temp_c": -2.9,
+      "temp_c": -3.0,
       "forecast": [
         {
           "day": 0,
@@ -354,7 +354,7 @@
       "elevation_m": 1829,
       "base_depth_cm": 40.6,
       "base_depth_source": "Mt Hood Test Site",
-      "temp_c": -4.1,
+      "temp_c": -4.0,
       "forecast": [
         {
           "day": 0,
@@ -410,7 +410,7 @@
       "elevation_m": 3369,
       "base_depth_cm": 203.2,
       "base_depth_source": "Mammoth Pass",
-      "temp_c": -8.8,
+      "temp_c": -8.9,
       "forecast": [
         {
           "day": 0,
@@ -466,7 +466,7 @@
       "elevation_m": 2500,
       "base_depth_cm": 94.0,
       "base_depth_source": "Squaw Valley G.C.",
-      "temp_c": 1.3,
+      "temp_c": 1.0,
       "forecast": [
         {
           "day": 0,
@@ -522,7 +522,7 @@
       "elevation_m": 3060,
       "base_depth_cm": 15.2,
       "base_depth_source": "Heavenly Valley",
-      "temp_c": 0.3,
+      "temp_c": 0.9,
       "forecast": [
         {
           "day": 0,
@@ -578,7 +578,7 @@
       "elevation_m": 2377,
       "base_depth_cm": 73.7,
       "base_depth_source": "Kirkwood",
-      "temp_c": -1.6,
+      "temp_c": -1.9,
       "forecast": [
         {
           "day": 0,
@@ -634,7 +634,7 @@
       "elevation_m": 3527,
       "base_depth_cm": 35.6,
       "base_depth_source": "Vail Mountain",
-      "temp_c": 6.5,
+      "temp_c": 5.8,
       "forecast": [
         {
           "day": 0,
@@ -690,7 +690,7 @@
       "elevation_m": 3914,
       "base_depth_cm": 35.6,
       "base_depth_source": "Copper Mountain",
-      "temp_c": 5.8,
+      "temp_c": 5.6,
       "forecast": [
         {
           "day": 0,
@@ -746,7 +746,7 @@
       "elevation_m": 3813,
       "base_depth_cm": 45.7,
       "base_depth_source": "Independence Pass",
-      "temp_c": 7.9,
+      "temp_c": 7.3,
       "forecast": [
         {
           "day": 0,
@@ -802,7 +802,7 @@
       "elevation_m": 3831,
       "base_depth_cm": 48.3,
       "base_depth_source": "Telluride",
-      "temp_c": 7.9,
+      "temp_c": 7.5,
       "forecast": [
         {
           "day": 0,
@@ -858,7 +858,7 @@
       "elevation_m": 3049,
       "base_depth_cm": 53.3,
       "base_depth_source": "Mill D North",
-      "temp_c": 5.4,
+      "temp_c": 5.3,
       "forecast": [
         {
           "day": 0,
@@ -914,7 +914,7 @@
       "elevation_m": 3353,
       "base_depth_cm": 71.1,
       "base_depth_source": "Snowbird",
-      "temp_c": 0.7,
+      "temp_c": 0.3,
       "forecast": [
         {
           "day": 0,
@@ -970,7 +970,7 @@
       "elevation_m": 3215,
       "base_depth_cm": 50.8,
       "base_depth_source": "Alta",
-      "temp_c": 0.2,
+      "temp_c": 0.5,
       "forecast": [
         {
           "day": 0,
@@ -1026,7 +1026,7 @@
       "elevation_m": 3403,
       "base_depth_cm": 76.2,
       "base_depth_source": "Shower Falls",
-      "temp_c": -1.7,
+      "temp_c": -2.3,
       "forecast": [
         {
           "day": 0,
@@ -1138,7 +1138,7 @@
       "elevation_m": 3185,
       "base_depth_cm": null,
       "base_depth_source": null,
-      "temp_c": 1.6,
+      "temp_c": 0.9,
       "forecast": [
         {
           "day": 0,
@@ -1194,7 +1194,7 @@
       "elevation_m": 2789,
       "base_depth_cm": 88.9,
       "base_depth_source": "Hyndman",
-      "temp_c": 1.6,
+      "temp_c": 1.5,
       "forecast": [
         {
           "day": 0,
@@ -1285,7 +1285,7 @@
         {
           "day": 5,
           "date": "2026-01-09",
-          "new_snow_cm": 12.3,
+          "new_snow_cm": 12.2,
           "source": "open-meteo"
         },
         {
@@ -1295,7 +1295,7 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 46.7
+      "seven_day_total_cm": 46.6
     },
     {
       "name": "S\u00f6lden",
@@ -1341,7 +1341,7 @@
         {
           "day": 5,
           "date": "2026-01-09",
-          "new_snow_cm": 3.1,
+          "new_snow_cm": 3.0,
           "source": "open-meteo"
         },
         {
@@ -1351,7 +1351,7 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 19.6
+      "seven_day_total_cm": 19.5
     },
     {
       "name": "Obergurgl",
@@ -1362,7 +1362,7 @@
       "elevation_m": 1941,
       "base_depth_cm": 31.0,
       "base_depth_source": "Obergurgl",
-      "temp_c": -11.9,
+      "temp_c": -12.6,
       "forecast": [
         {
           "day": 0,
@@ -1397,7 +1397,7 @@
         {
           "day": 5,
           "date": "2026-01-09",
-          "new_snow_cm": 3.1,
+          "new_snow_cm": 3.0,
           "source": "open-meteo"
         },
         {
@@ -1407,7 +1407,7 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 16.2
+      "seven_day_total_cm": 16.1
     },
     {
       "name": "Ischgl",
@@ -1418,7 +1418,7 @@
       "elevation_m": 1587,
       "base_depth_cm": 42.0,
       "base_depth_source": "Open-Meteo (modeled)",
-      "temp_c": -11.3,
+      "temp_c": -11.4,
       "forecast": [
         {
           "day": 0,
@@ -1509,7 +1509,7 @@
         {
           "day": 5,
           "date": "2026-01-09",
-          "new_snow_cm": 10.9,
+          "new_snow_cm": 10.8,
           "source": "open-meteo"
         },
         {
@@ -1519,7 +1519,7 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 20.6
+      "seven_day_total_cm": 20.5
     },
     {
       "name": "Lech am Arlberg",
@@ -1565,7 +1565,7 @@
         {
           "day": 5,
           "date": "2026-01-09",
-          "new_snow_cm": 11.9,
+          "new_snow_cm": 11.8,
           "source": "open-meteo"
         },
         {
@@ -1575,7 +1575,7 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 46.7
+      "seven_day_total_cm": 46.6
     },
     {
       "name": "Pitztal Glacier",
@@ -1586,7 +1586,7 @@
       "elevation_m": 2864,
       "base_depth_cm": 84.0,
       "base_depth_source": "Pitztaler Gletscher",
-      "temp_c": -12.1,
+      "temp_c": -12.6,
       "forecast": [
         {
           "day": 0,
@@ -1621,7 +1621,7 @@
         {
           "day": 5,
           "date": "2026-01-09",
-          "new_snow_cm": 3.1,
+          "new_snow_cm": 3.0,
           "source": "open-meteo"
         },
         {
@@ -1631,7 +1631,7 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 19.6
+      "seven_day_total_cm": 19.5
     },
     {
       "name": "Obertauern",
@@ -1677,7 +1677,7 @@
         {
           "day": 5,
           "date": "2026-01-09",
-          "new_snow_cm": 6.6,
+          "new_snow_cm": 6.3,
           "source": "open-meteo"
         },
         {
@@ -1687,7 +1687,7 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 14.6
+      "seven_day_total_cm": 14.2
     },
     {
       "name": "Zell am See",
@@ -1698,7 +1698,7 @@
       "elevation_m": 1956,
       "base_depth_cm": 8.0,
       "base_depth_source": "Open-Meteo (modeled)",
-      "temp_c": -16.9,
+      "temp_c": -17.0,
       "forecast": [
         {
           "day": 0,
@@ -1733,7 +1733,7 @@
         {
           "day": 5,
           "date": "2026-01-09",
-          "new_snow_cm": 14.5,
+          "new_snow_cm": 14.4,
           "source": "open-meteo"
         },
         {
@@ -1743,7 +1743,7 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 24.5
+      "seven_day_total_cm": 24.4
     },
     {
       "name": "Schladming",
@@ -1789,7 +1789,7 @@
         {
           "day": 5,
           "date": "2026-01-09",
-          "new_snow_cm": 19.0,
+          "new_snow_cm": 18.8,
           "source": "open-meteo"
         },
         {
@@ -1799,7 +1799,7 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 30.1
+      "seven_day_total_cm": 29.9
     },
     {
       "name": "Zermatt",
@@ -1808,7 +1808,7 @@
       "country": "Switzerland",
       "region": "Valais",
       "elevation_m": 2953,
-      "base_depth_cm": 56.4,
+      "base_depth_cm": 56.2,
       "base_depth_source": "Gornergratsee",
       "temp_c": -12.2,
       "forecast": [
@@ -1864,9 +1864,9 @@
       "country": "Switzerland",
       "region": "Valais",
       "elevation_m": 2480,
-      "base_depth_cm": 26.9,
+      "base_depth_cm": 26.8,
       "base_depth_source": "Seetal",
-      "temp_c": -12.0,
+      "temp_c": -12.1,
       "forecast": [
         {
           "day": 0,
@@ -1901,7 +1901,7 @@
         {
           "day": 5,
           "date": "2026-01-09",
-          "new_snow_cm": 7.0,
+          "new_snow_cm": 6.9,
           "source": "open-meteo"
         },
         {
@@ -1911,7 +1911,7 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 28.7
+      "seven_day_total_cm": 28.6
     },
     {
       "name": "Verbier",
@@ -1920,9 +1920,9 @@
       "country": "Switzerland",
       "region": "Valais",
       "elevation_m": 2550,
-      "base_depth_cm": 75.6,
+      "base_depth_cm": 75.2,
       "base_depth_source": "Lac des Vaux",
-      "temp_c": -11.9,
+      "temp_c": -12.1,
       "forecast": [
         {
           "day": 0,
@@ -1976,9 +1976,9 @@
       "country": "Switzerland",
       "region": "Graub\u00fcnden",
       "elevation_m": 2512,
-      "base_depth_cm": 52.9,
+      "base_depth_cm": 52.0,
       "base_depth_source": "Valetta",
-      "temp_c": -12.1,
+      "temp_c": -12.2,
       "forecast": [
         {
           "day": 0,
@@ -2032,7 +2032,7 @@
       "country": "Switzerland",
       "region": "Graub\u00fcnden",
       "elevation_m": 1563,
-      "base_depth_cm": 18.8,
+      "base_depth_cm": 18.1,
       "base_depth_source": "Davos Stilli",
       "temp_c": -14.4,
       "forecast": [
@@ -2088,9 +2088,9 @@
       "country": "Switzerland",
       "region": "Graub\u00fcnden",
       "elevation_m": 2325,
-      "base_depth_cm": 54.9,
+      "base_depth_cm": 55.2,
       "base_depth_source": "La Fuorcla",
-      "temp_c": -11.5,
+      "temp_c": -11.4,
       "forecast": [
         {
           "day": 0,
@@ -2125,7 +2125,7 @@
         {
           "day": 5,
           "date": "2026-01-09",
-          "new_snow_cm": 10.2,
+          "new_snow_cm": 10.1,
           "source": "open-meteo"
         },
         {
@@ -2135,7 +2135,7 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 38.9
+      "seven_day_total_cm": 38.8
     },
     {
       "name": "Lenzerheide",
@@ -2144,9 +2144,9 @@
       "country": "Switzerland",
       "region": "Graub\u00fcnden",
       "elevation_m": 2429,
-      "base_depth_cm": 40.6,
+      "base_depth_cm": 41.0,
       "base_depth_source": "Colms da Parsonz",
-      "temp_c": -11.8,
+      "temp_c": -11.9,
       "forecast": [
         {
           "day": 0,
@@ -2200,9 +2200,9 @@
       "country": "Switzerland",
       "region": "Bern",
       "elevation_m": 2332,
-      "base_depth_cm": 82.8,
+      "base_depth_cm": 82.7,
       "base_depth_source": "T\u00fcrliboden",
-      "temp_c": -16.1,
+      "temp_c": -16.2,
       "forecast": [
         {
           "day": 0,
@@ -2237,7 +2237,7 @@
         {
           "day": 5,
           "date": "2026-01-09",
-          "new_snow_cm": 16.0,
+          "new_snow_cm": 15.9,
           "source": "open-meteo"
         },
         {
@@ -2247,7 +2247,7 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 36.1
+      "seven_day_total_cm": 36.0
     },
     {
       "name": "Andermatt",
@@ -2256,9 +2256,9 @@
       "country": "Switzerland",
       "region": "Uri",
       "elevation_m": 2209,
-      "base_depth_cm": 15.0,
+      "base_depth_cm": 14.8,
       "base_depth_source": "G\u00fctsch",
-      "temp_c": -15.1,
+      "temp_c": -15.2,
       "forecast": [
         {
           "day": 0,
@@ -2293,7 +2293,7 @@
         {
           "day": 5,
           "date": "2026-01-09",
-          "new_snow_cm": 13.2,
+          "new_snow_cm": 13.1,
           "source": "open-meteo"
         },
         {
@@ -2303,7 +2303,7 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 44.6
+      "seven_day_total_cm": 44.5
     },
     {
       "name": "Arosa",
@@ -2312,7 +2312,7 @@
       "country": "Switzerland",
       "region": "Graub\u00fcnden",
       "elevation_m": 2495,
-      "base_depth_cm": 50.7,
+      "base_depth_cm": 50.3,
       "base_depth_source": "Plang Bi",
       "temp_c": -11.6,
       "forecast": [
@@ -2368,9 +2368,9 @@
       "country": "Switzerland",
       "region": "Uri",
       "elevation_m": 2149,
-      "base_depth_cm": 77.8,
+      "base_depth_cm": 78.3,
       "base_depth_source": "Titlisboden",
-      "temp_c": -15.1,
+      "temp_c": -15.2,
       "forecast": [
         {
           "day": 0,
@@ -2405,7 +2405,7 @@
         {
           "day": 5,
           "date": "2026-01-09",
-          "new_snow_cm": 10.1,
+          "new_snow_cm": 10.0,
           "source": "open-meteo"
         },
         {
@@ -2415,7 +2415,7 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 41.3
+      "seven_day_total_cm": 41.2
     }
   ]
 }
