@@ -565,13 +565,59 @@ def main():
         if not forecast_df.empty:
             st.subheader("7-Day Snow Forecast")
 
-            col_bar, col_line = st.columns(2)
-            with col_bar:
-                st.markdown("**New Snow (cm)**")
-                st.bar_chart(forecast_df.set_index("date")["new_snow_cm"])
-            with col_line:
-                st.markdown("**Base Depth (cm)**")
-                st.line_chart(forecast_df.set_index("date")["snow_depth_cm"])
+            # Summary metrics row
+            total_new = forecast_df["new_snow_cm"].sum()
+            max_day_new = forecast_df["new_snow_cm"].max()
+            avg_prob = forecast_df["probability"].mean()
+            current_base = forecast_df.iloc[0]["snow_depth_cm"]
+
+            col1, col2, col3, col4 = st.columns(4)
+            with col1:
+                st.metric("Current Base", f"{current_base:.0f} cm")
+            with col2:
+                st.metric("7-Day Total", f"+{total_new:.0f} cm")
+            with col3:
+                st.metric("Peak Day", f"+{max_day_new:.1f} cm")
+            with col4:
+                st.metric("Avg Probability", f"{avg_prob:.0%}")
+
+            st.markdown("---")
+
+            # Build daily forecast cards
+            st.markdown("**Daily Breakdown**")
+            day_cols = st.columns(7)
+            day_names = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+
+            for i, (_, row) in enumerate(forecast_df.iterrows()):
+                if i >= 7:
+                    break
+                day_idx = row["date"].weekday() if hasattr(row["date"], "weekday") else i
+                day_name = day_names[day_idx]
+                with day_cols[i]:
+                    # Color based on new snow amount
+                    new_cm = row["new_snow_cm"]
+                    prob = row["probability"]
+                    source = row.get("source", "")
+
+                    if new_cm >= 15:
+                        emoji = "🌨️"  # Heavy
+                    elif new_cm >= 5:
+                        emoji = "❄️"   # Moderate
+                    elif new_cm > 0:
+                        emoji = "🌤️"   # Light
+                    else:
+                        emoji = "☀️"   # Clear
+
+                    st.markdown(f"**{day_name}**")
+                    st.markdown(f"{emoji}")
+                    st.caption(f"+{new_cm:.0f}cm")
+                    st.caption(f"{prob:.0%}")
+                    if source:
+                        source_color = "#28a745" if source == "HRRR" else "#ffc107" if source == "NBM" else "#dc3545"
+                        st.markdown(f'<span style="color:{source_color};font-size:0.7em;">●</span>', unsafe_allow_html=True)
+
+            # Note about data sources
+            st.caption("🟢 HRRR (high confidence) | 🟡 NBM (moderate) | 🔴 Fallback")
 
     with tab_snotel:
         # Phase 2: SNOTEL station observations
