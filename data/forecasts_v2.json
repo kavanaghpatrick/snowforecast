@@ -1,5 +1,6 @@
 {
-  "updated": "2026-01-04T14:46:05Z",
+  "updated": "2026-01-04T15:09:29Z",
+  "source": "Open-Meteo (open-meteo.com)",
   "resorts": [
     {
       "name": "Stevens Pass",
@@ -7,53 +8,53 @@
       "lon": -121.089,
       "state": "Washington",
       "elevation_m": 1241,
-      "base_depth_cm": 169.2,
-      "temp_c": -1.1,
+      "base_depth_cm": 1.5,
+      "temp_c": -2.5,
       "forecast": [
         {
           "day": 0,
           "date": "2026-01-04",
-          "new_snow_cm": 0.0,
-          "source": "hrrr"
+          "new_snow_cm": 7.4,
+          "source": "open-meteo"
         },
         {
           "day": 1,
           "date": "2026-01-05",
-          "new_snow_cm": 0.0,
-          "source": "hrrr"
+          "new_snow_cm": 10.0,
+          "source": "open-meteo"
         },
         {
           "day": 2,
           "date": "2026-01-06",
-          "new_snow_cm": 1.5,
-          "source": "nbm"
+          "new_snow_cm": 19.2,
+          "source": "open-meteo"
         },
         {
           "day": 3,
           "date": "2026-01-07",
-          "new_snow_cm": 8.4,
-          "source": "nbm"
+          "new_snow_cm": 17.1,
+          "source": "open-meteo"
         },
         {
           "day": 4,
           "date": "2026-01-08",
-          "new_snow_cm": 6.1,
-          "source": "nbm"
+          "new_snow_cm": 13.9,
+          "source": "open-meteo"
         },
         {
           "day": 5,
           "date": "2026-01-09",
-          "new_snow_cm": 5.8,
-          "source": "nbm"
+          "new_snow_cm": 3.4,
+          "source": "open-meteo"
         },
         {
           "day": 6,
           "date": "2026-01-10",
-          "new_snow_cm": 1.3,
-          "source": "nbm"
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 23.1
+      "seven_day_total_cm": 71.0
     },
     {
       "name": "Crystal Mountain",
@@ -61,53 +62,53 @@
       "lon": -121.5045,
       "state": "Washington",
       "elevation_m": 2134,
-      "base_depth_cm": 77.6,
-      "temp_c": -2.3,
+      "base_depth_cm": 0.8,
+      "temp_c": -6.0,
       "forecast": [
         {
           "day": 0,
           "date": "2026-01-04",
-          "new_snow_cm": 0.0,
-          "source": "hrrr"
+          "new_snow_cm": 10.1,
+          "source": "open-meteo"
         },
         {
           "day": 1,
           "date": "2026-01-05",
-          "new_snow_cm": 0.0,
-          "source": "hrrr"
+          "new_snow_cm": 0.3,
+          "source": "open-meteo"
         },
         {
           "day": 2,
           "date": "2026-01-06",
-          "new_snow_cm": 0.3,
-          "source": "nbm"
+          "new_snow_cm": 13.7,
+          "source": "open-meteo"
         },
         {
           "day": 3,
           "date": "2026-01-07",
-          "new_snow_cm": 4.3,
-          "source": "nbm"
+          "new_snow_cm": 15.7,
+          "source": "open-meteo"
         },
         {
           "day": 4,
           "date": "2026-01-08",
-          "new_snow_cm": 4.6,
-          "source": "nbm"
+          "new_snow_cm": 3.1,
+          "source": "open-meteo"
         },
         {
           "day": 5,
           "date": "2026-01-09",
-          "new_snow_cm": 3.6,
-          "source": "nbm"
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
         },
         {
           "day": 6,
           "date": "2026-01-10",
-          "new_snow_cm": 0.8,
-          "source": "nbm"
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 13.6
+      "seven_day_total_cm": 42.9
     },
     {
       "name": "Mt. Baker",
@@ -115,53 +116,53 @@
       "lon": -121.6695,
       "state": "Washington",
       "elevation_m": 1524,
-      "base_depth_cm": 246.4,
-      "temp_c": -0.4,
+      "base_depth_cm": 2.5,
+      "temp_c": -0.1,
       "forecast": [
         {
           "day": 0,
           "date": "2026-01-04",
-          "new_snow_cm": 0.0,
-          "source": "hrrr"
+          "new_snow_cm": 29.8,
+          "source": "open-meteo"
         },
         {
           "day": 1,
           "date": "2026-01-05",
-          "new_snow_cm": 0.0,
-          "source": "hrrr"
+          "new_snow_cm": 2.0,
+          "source": "open-meteo"
         },
         {
           "day": 2,
           "date": "2026-01-06",
-          "new_snow_cm": 6.1,
-          "source": "nbm"
+          "new_snow_cm": 25.6,
+          "source": "open-meteo"
         },
         {
           "day": 3,
           "date": "2026-01-07",
-          "new_snow_cm": 7.9,
-          "source": "nbm"
+          "new_snow_cm": 22.5,
+          "source": "open-meteo"
         },
         {
           "day": 4,
           "date": "2026-01-08",
-          "new_snow_cm": 7.4,
-          "source": "nbm"
+          "new_snow_cm": 20.2,
+          "source": "open-meteo"
         },
         {
           "day": 5,
           "date": "2026-01-09",
-          "new_snow_cm": 5.6,
-          "source": "nbm"
+          "new_snow_cm": 2.9,
+          "source": "open-meteo"
         },
         {
           "day": 6,
           "date": "2026-01-10",
-          "new_snow_cm": 1.5,
-          "source": "nbm"
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 28.5
+      "seven_day_total_cm": 102.9
     },
     {
       "name": "Snoqualmie Pass",
@@ -169,53 +170,53 @@
       "lon": -121.4138,
       "state": "Washington",
       "elevation_m": 1067,
-      "base_depth_cm": 80.1,
-      "temp_c": -0.7,
+      "base_depth_cm": 0.2,
+      "temp_c": -0.1,
       "forecast": [
         {
           "day": 0,
           "date": "2026-01-04",
-          "new_snow_cm": 0.0,
-          "source": "hrrr"
+          "new_snow_cm": 6.1,
+          "source": "open-meteo"
         },
         {
           "day": 1,
           "date": "2026-01-05",
-          "new_snow_cm": 0.0,
-          "source": "hrrr"
+          "new_snow_cm": 1.8,
+          "source": "open-meteo"
         },
         {
           "day": 2,
           "date": "2026-01-06",
-          "new_snow_cm": 1.5,
-          "source": "nbm"
+          "new_snow_cm": 19.3,
+          "source": "open-meteo"
         },
         {
           "day": 3,
           "date": "2026-01-07",
-          "new_snow_cm": 7.1,
-          "source": "nbm"
+          "new_snow_cm": 20.0,
+          "source": "open-meteo"
         },
         {
           "day": 4,
           "date": "2026-01-08",
-          "new_snow_cm": 6.6,
-          "source": "nbm"
+          "new_snow_cm": 14.6,
+          "source": "open-meteo"
         },
         {
           "day": 5,
           "date": "2026-01-09",
-          "new_snow_cm": 5.8,
-          "source": "nbm"
+          "new_snow_cm": 0.8,
+          "source": "open-meteo"
         },
         {
           "day": 6,
           "date": "2026-01-10",
-          "new_snow_cm": 0.8,
-          "source": "nbm"
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 21.8
+      "seven_day_total_cm": 62.6
     },
     {
       "name": "Mt. Hood Meadows",
@@ -223,53 +224,53 @@
       "lon": -121.6647,
       "state": "Oregon",
       "elevation_m": 1829,
-      "base_depth_cm": 15.7,
-      "temp_c": -2.6,
+      "base_depth_cm": 0.1,
+      "temp_c": -1.1,
       "forecast": [
         {
           "day": 0,
           "date": "2026-01-04",
-          "new_snow_cm": 0.0,
-          "source": "hrrr"
+          "new_snow_cm": 9.4,
+          "source": "open-meteo"
         },
         {
           "day": 1,
           "date": "2026-01-05",
-          "new_snow_cm": 0.0,
-          "source": "hrrr"
+          "new_snow_cm": 2.0,
+          "source": "open-meteo"
         },
         {
           "day": 2,
           "date": "2026-01-06",
-          "new_snow_cm": 0.0,
-          "source": "nbm"
+          "new_snow_cm": 14.4,
+          "source": "open-meteo"
         },
         {
           "day": 3,
           "date": "2026-01-07",
-          "new_snow_cm": 8.9,
-          "source": "nbm"
+          "new_snow_cm": 6.9,
+          "source": "open-meteo"
         },
         {
           "day": 4,
           "date": "2026-01-08",
-          "new_snow_cm": 7.1,
-          "source": "nbm"
+          "new_snow_cm": 8.3,
+          "source": "open-meteo"
         },
         {
           "day": 5,
           "date": "2026-01-09",
-          "new_snow_cm": 4.6,
-          "source": "nbm"
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
         },
         {
           "day": 6,
           "date": "2026-01-10",
-          "new_snow_cm": 0.3,
-          "source": "nbm"
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 20.9
+      "seven_day_total_cm": 41.0
     },
     {
       "name": "Mt. Bachelor",
@@ -277,53 +278,53 @@
       "lon": -121.6886,
       "state": "Oregon",
       "elevation_m": 2743,
-      "base_depth_cm": 39.8,
-      "temp_c": -4.1,
+      "base_depth_cm": 0.5,
+      "temp_c": -8.2,
       "forecast": [
         {
           "day": 0,
           "date": "2026-01-04",
-          "new_snow_cm": 0.0,
-          "source": "hrrr"
+          "new_snow_cm": 9.7,
+          "source": "open-meteo"
         },
         {
           "day": 1,
           "date": "2026-01-05",
-          "new_snow_cm": 0.0,
-          "source": "hrrr"
+          "new_snow_cm": 3.1,
+          "source": "open-meteo"
         },
         {
           "day": 2,
           "date": "2026-01-06",
-          "new_snow_cm": 0.0,
-          "source": "nbm"
+          "new_snow_cm": 8.1,
+          "source": "open-meteo"
         },
         {
           "day": 3,
           "date": "2026-01-07",
-          "new_snow_cm": 8.9,
-          "source": "nbm"
+          "new_snow_cm": 5.0,
+          "source": "open-meteo"
         },
         {
           "day": 4,
           "date": "2026-01-08",
-          "new_snow_cm": 4.3,
-          "source": "nbm"
+          "new_snow_cm": 6.5,
+          "source": "open-meteo"
         },
         {
           "day": 5,
           "date": "2026-01-09",
-          "new_snow_cm": 2.3,
-          "source": "nbm"
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
         },
         {
           "day": 6,
           "date": "2026-01-10",
           "new_snow_cm": 0.0,
-          "source": "nbm"
+          "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 15.5
+      "seven_day_total_cm": 32.4
     },
     {
       "name": "Timberline",
@@ -331,53 +332,53 @@
       "lon": -121.7109,
       "state": "Oregon",
       "elevation_m": 1829,
-      "base_depth_cm": 12.3,
+      "base_depth_cm": 0.1,
       "temp_c": -2.2,
       "forecast": [
         {
           "day": 0,
           "date": "2026-01-04",
-          "new_snow_cm": 0.0,
-          "source": "hrrr"
+          "new_snow_cm": 9.9,
+          "source": "open-meteo"
         },
         {
           "day": 1,
           "date": "2026-01-05",
-          "new_snow_cm": 0.0,
-          "source": "hrrr"
+          "new_snow_cm": 5.6,
+          "source": "open-meteo"
         },
         {
           "day": 2,
           "date": "2026-01-06",
-          "new_snow_cm": 0.3,
-          "source": "nbm"
+          "new_snow_cm": 15.8,
+          "source": "open-meteo"
         },
         {
           "day": 3,
           "date": "2026-01-07",
-          "new_snow_cm": 9.1,
-          "source": "nbm"
+          "new_snow_cm": 8.9,
+          "source": "open-meteo"
         },
         {
           "day": 4,
           "date": "2026-01-08",
-          "new_snow_cm": 7.6,
-          "source": "nbm"
+          "new_snow_cm": 9.2,
+          "source": "open-meteo"
         },
         {
           "day": 5,
           "date": "2026-01-09",
-          "new_snow_cm": 4.8,
-          "source": "nbm"
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
         },
         {
           "day": 6,
           "date": "2026-01-10",
-          "new_snow_cm": 0.3,
-          "source": "nbm"
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 22.1
+      "seven_day_total_cm": 49.4
     },
     {
       "name": "Mammoth Mountain",
@@ -385,53 +386,53 @@
       "lon": -119.0326,
       "state": "California",
       "elevation_m": 3369,
-      "base_depth_cm": 150.5,
-      "temp_c": -4.1,
+      "base_depth_cm": 1.5,
+      "temp_c": -8.0,
       "forecast": [
         {
           "day": 0,
           "date": "2026-01-04",
-          "new_snow_cm": 0.0,
-          "source": "hrrr"
+          "new_snow_cm": 35.7,
+          "source": "open-meteo"
         },
         {
           "day": 1,
           "date": "2026-01-05",
-          "new_snow_cm": 0.0,
-          "source": "hrrr"
+          "new_snow_cm": 4.0,
+          "source": "open-meteo"
         },
         {
           "day": 2,
           "date": "2026-01-06",
-          "new_snow_cm": 0.5,
-          "source": "nbm"
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
         },
         {
           "day": 3,
           "date": "2026-01-07",
           "new_snow_cm": 0.0,
-          "source": "nbm"
+          "source": "open-meteo"
         },
         {
           "day": 4,
           "date": "2026-01-08",
-          "new_snow_cm": 0.5,
-          "source": "nbm"
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
         },
         {
           "day": 5,
           "date": "2026-01-09",
           "new_snow_cm": 0.0,
-          "source": "nbm"
+          "source": "open-meteo"
         },
         {
           "day": 6,
           "date": "2026-01-10",
           "new_snow_cm": 0.0,
-          "source": "nbm"
+          "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 1.0
+      "seven_day_total_cm": 39.6
     },
     {
       "name": "Squaw Valley",
@@ -439,53 +440,53 @@
       "lon": -120.2358,
       "state": "California",
       "elevation_m": 2500,
-      "base_depth_cm": 73.0,
-      "temp_c": -1.1,
+      "base_depth_cm": 0.8,
+      "temp_c": -0.9,
       "forecast": [
         {
           "day": 0,
           "date": "2026-01-04",
-          "new_snow_cm": 0.0,
-          "source": "hrrr"
+          "new_snow_cm": 26.4,
+          "source": "open-meteo"
         },
         {
           "day": 1,
           "date": "2026-01-05",
-          "new_snow_cm": 0.0,
-          "source": "hrrr"
+          "new_snow_cm": 0.6,
+          "source": "open-meteo"
         },
         {
           "day": 2,
           "date": "2026-01-06",
-          "new_snow_cm": 0.5,
-          "source": "nbm"
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
         },
         {
           "day": 3,
           "date": "2026-01-07",
-          "new_snow_cm": 1.0,
-          "source": "nbm"
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
         },
         {
           "day": 4,
           "date": "2026-01-08",
-          "new_snow_cm": 3.3,
-          "source": "nbm"
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
         },
         {
           "day": 5,
           "date": "2026-01-09",
           "new_snow_cm": 0.0,
-          "source": "nbm"
+          "source": "open-meteo"
         },
         {
           "day": 6,
           "date": "2026-01-10",
           "new_snow_cm": 0.0,
-          "source": "nbm"
+          "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 4.8
+      "seven_day_total_cm": 27.0
     },
     {
       "name": "Heavenly",
@@ -493,53 +494,53 @@
       "lon": -119.9396,
       "state": "California",
       "elevation_m": 3060,
-      "base_depth_cm": 37.6,
-      "temp_c": -2.8,
+      "base_depth_cm": 0.2,
+      "temp_c": -2.2,
       "forecast": [
         {
           "day": 0,
           "date": "2026-01-04",
-          "new_snow_cm": 0.0,
-          "source": "hrrr"
+          "new_snow_cm": 13.8,
+          "source": "open-meteo"
         },
         {
           "day": 1,
           "date": "2026-01-05",
           "new_snow_cm": 0.0,
-          "source": "hrrr"
+          "source": "open-meteo"
         },
         {
           "day": 2,
           "date": "2026-01-06",
           "new_snow_cm": 0.0,
-          "source": "nbm"
+          "source": "open-meteo"
         },
         {
           "day": 3,
           "date": "2026-01-07",
-          "new_snow_cm": 0.3,
-          "source": "nbm"
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
         },
         {
           "day": 4,
           "date": "2026-01-08",
-          "new_snow_cm": 1.3,
-          "source": "nbm"
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
         },
         {
           "day": 5,
           "date": "2026-01-09",
           "new_snow_cm": 0.0,
-          "source": "nbm"
+          "source": "open-meteo"
         },
         {
           "day": 6,
           "date": "2026-01-10",
           "new_snow_cm": 0.0,
-          "source": "nbm"
+          "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 1.6
+      "seven_day_total_cm": 13.8
     },
     {
       "name": "Kirkwood",
@@ -547,53 +548,53 @@
       "lon": -120.0655,
       "state": "California",
       "elevation_m": 2377,
-      "base_depth_cm": 132.1,
-      "temp_c": -3.6,
+      "base_depth_cm": 1.3,
+      "temp_c": -3.1,
       "forecast": [
         {
           "day": 0,
           "date": "2026-01-04",
-          "new_snow_cm": 0.0,
-          "source": "hrrr"
+          "new_snow_cm": 23.7,
+          "source": "open-meteo"
         },
         {
           "day": 1,
           "date": "2026-01-05",
-          "new_snow_cm": 0.0,
-          "source": "hrrr"
+          "new_snow_cm": 2.0,
+          "source": "open-meteo"
         },
         {
           "day": 2,
           "date": "2026-01-06",
-          "new_snow_cm": 0.5,
-          "source": "nbm"
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
         },
         {
           "day": 3,
           "date": "2026-01-07",
-          "new_snow_cm": 1.0,
-          "source": "nbm"
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
         },
         {
           "day": 4,
           "date": "2026-01-08",
-          "new_snow_cm": 2.5,
-          "source": "nbm"
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
         },
         {
           "day": 5,
           "date": "2026-01-09",
           "new_snow_cm": 0.0,
-          "source": "nbm"
+          "source": "open-meteo"
         },
         {
           "day": 6,
           "date": "2026-01-10",
           "new_snow_cm": 0.0,
-          "source": "nbm"
+          "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 4.0
+      "seven_day_total_cm": 25.7
     },
     {
       "name": "Vail",
@@ -601,53 +602,53 @@
       "lon": -106.3742,
       "state": "Colorado",
       "elevation_m": 3527,
-      "base_depth_cm": 5.7,
-      "temp_c": -3.0,
+      "base_depth_cm": 0.1,
+      "temp_c": -0.5,
       "forecast": [
         {
           "day": 0,
           "date": "2026-01-04",
           "new_snow_cm": 0.0,
-          "source": "hrrr"
+          "source": "open-meteo"
         },
         {
           "day": 1,
           "date": "2026-01-05",
-          "new_snow_cm": 0.0,
-          "source": "hrrr"
+          "new_snow_cm": 3.0,
+          "source": "open-meteo"
         },
         {
           "day": 2,
           "date": "2026-01-06",
-          "new_snow_cm": 0.3,
-          "source": "nbm"
+          "new_snow_cm": 1.4,
+          "source": "open-meteo"
         },
         {
           "day": 3,
           "date": "2026-01-07",
-          "new_snow_cm": 0.0,
-          "source": "nbm"
+          "new_snow_cm": 2.2,
+          "source": "open-meteo"
         },
         {
           "day": 4,
           "date": "2026-01-08",
-          "new_snow_cm": 1.3,
-          "source": "nbm"
+          "new_snow_cm": 0.9,
+          "source": "open-meteo"
         },
         {
           "day": 5,
           "date": "2026-01-09",
-          "new_snow_cm": 1.3,
-          "source": "nbm"
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
         },
         {
           "day": 6,
           "date": "2026-01-10",
-          "new_snow_cm": 0.3,
-          "source": "nbm"
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 3.2
+      "seven_day_total_cm": 7.5
     },
     {
       "name": "Breckenridge",
@@ -655,53 +656,53 @@
       "lon": -106.0384,
       "state": "Colorado",
       "elevation_m": 3914,
-      "base_depth_cm": 5.4,
-      "temp_c": -1.1,
+      "base_depth_cm": 0.1,
+      "temp_c": -2.4,
       "forecast": [
         {
           "day": 0,
           "date": "2026-01-04",
           "new_snow_cm": 0.0,
-          "source": "hrrr"
+          "source": "open-meteo"
         },
         {
           "day": 1,
           "date": "2026-01-05",
-          "new_snow_cm": 0.0,
-          "source": "hrrr"
+          "new_snow_cm": 1.6,
+          "source": "open-meteo"
         },
         {
           "day": 2,
           "date": "2026-01-06",
-          "new_snow_cm": 0.0,
-          "source": "nbm"
+          "new_snow_cm": 1.4,
+          "source": "open-meteo"
         },
         {
           "day": 3,
           "date": "2026-01-07",
-          "new_snow_cm": 0.0,
-          "source": "nbm"
+          "new_snow_cm": 0.6,
+          "source": "open-meteo"
         },
         {
           "day": 4,
           "date": "2026-01-08",
-          "new_snow_cm": 1.0,
-          "source": "nbm"
+          "new_snow_cm": 0.3,
+          "source": "open-meteo"
         },
         {
           "day": 5,
           "date": "2026-01-09",
-          "new_snow_cm": 1.0,
-          "source": "nbm"
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
         },
         {
           "day": 6,
           "date": "2026-01-10",
-          "new_snow_cm": 0.3,
-          "source": "nbm"
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 2.3
+      "seven_day_total_cm": 3.8
     },
     {
       "name": "Aspen Snowmass",
@@ -709,53 +710,53 @@
       "lon": -106.949,
       "state": "Colorado",
       "elevation_m": 3813,
-      "base_depth_cm": 0.0,
-      "temp_c": -0.7,
+      "base_depth_cm": null,
+      "temp_c": -0.8,
       "forecast": [
         {
           "day": 0,
           "date": "2026-01-04",
           "new_snow_cm": 0.0,
-          "source": "hrrr"
+          "source": "open-meteo"
         },
         {
           "day": 1,
           "date": "2026-01-05",
-          "new_snow_cm": 0.0,
-          "source": "hrrr"
+          "new_snow_cm": 1.9,
+          "source": "open-meteo"
         },
         {
           "day": 2,
           "date": "2026-01-06",
-          "new_snow_cm": 0.0,
-          "source": "nbm"
+          "new_snow_cm": 1.9,
+          "source": "open-meteo"
         },
         {
           "day": 3,
           "date": "2026-01-07",
-          "new_snow_cm": 0.0,
-          "source": "nbm"
+          "new_snow_cm": 1.3,
+          "source": "open-meteo"
         },
         {
           "day": 4,
           "date": "2026-01-08",
-          "new_snow_cm": 1.0,
-          "source": "nbm"
+          "new_snow_cm": 0.9,
+          "source": "open-meteo"
         },
         {
           "day": 5,
           "date": "2026-01-09",
-          "new_snow_cm": 0.5,
-          "source": "nbm"
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
         },
         {
           "day": 6,
           "date": "2026-01-10",
           "new_snow_cm": 0.0,
-          "source": "nbm"
+          "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 1.5
+      "seven_day_total_cm": 6.1
     },
     {
       "name": "Telluride",
@@ -763,53 +764,53 @@
       "lon": -107.8123,
       "state": "Colorado",
       "elevation_m": 3831,
-      "base_depth_cm": 0.0,
-      "temp_c": -0.7,
+      "base_depth_cm": null,
+      "temp_c": 1.1,
       "forecast": [
         {
           "day": 0,
           "date": "2026-01-04",
           "new_snow_cm": 0.0,
-          "source": "hrrr"
+          "source": "open-meteo"
         },
         {
           "day": 1,
           "date": "2026-01-05",
           "new_snow_cm": 0.0,
-          "source": "hrrr"
+          "source": "open-meteo"
         },
         {
           "day": 2,
           "date": "2026-01-06",
           "new_snow_cm": 0.0,
-          "source": "nbm"
+          "source": "open-meteo"
         },
         {
           "day": 3,
           "date": "2026-01-07",
           "new_snow_cm": 0.0,
-          "source": "nbm"
+          "source": "open-meteo"
         },
         {
           "day": 4,
           "date": "2026-01-08",
-          "new_snow_cm": 0.8,
-          "source": "nbm"
+          "new_snow_cm": 0.3,
+          "source": "open-meteo"
         },
         {
           "day": 5,
           "date": "2026-01-09",
-          "new_snow_cm": 1.0,
-          "source": "nbm"
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
         },
         {
           "day": 6,
           "date": "2026-01-10",
           "new_snow_cm": 0.0,
-          "source": "nbm"
+          "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 1.8
+      "seven_day_total_cm": 0.3
     },
     {
       "name": "Park City",
@@ -817,53 +818,53 @@
       "lon": -111.508,
       "state": "Utah",
       "elevation_m": 3049,
-      "base_depth_cm": 0.0,
-      "temp_c": 0.8,
+      "base_depth_cm": null,
+      "temp_c": 1.6,
       "forecast": [
         {
           "day": 0,
           "date": "2026-01-04",
-          "new_snow_cm": 0.0,
-          "source": "hrrr"
+          "new_snow_cm": 2.9,
+          "source": "open-meteo"
         },
         {
           "day": 1,
           "date": "2026-01-05",
-          "new_snow_cm": 0.0,
-          "source": "hrrr"
+          "new_snow_cm": 3.1,
+          "source": "open-meteo"
         },
         {
           "day": 2,
           "date": "2026-01-06",
-          "new_snow_cm": 0.8,
-          "source": "nbm"
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
         },
         {
           "day": 3,
           "date": "2026-01-07",
-          "new_snow_cm": 0.3,
-          "source": "nbm"
+          "new_snow_cm": 4.5,
+          "source": "open-meteo"
         },
         {
           "day": 4,
           "date": "2026-01-08",
-          "new_snow_cm": 3.0,
-          "source": "nbm"
+          "new_snow_cm": 4.2,
+          "source": "open-meteo"
         },
         {
           "day": 5,
           "date": "2026-01-09",
-          "new_snow_cm": 1.0,
-          "source": "nbm"
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
         },
         {
           "day": 6,
           "date": "2026-01-10",
-          "new_snow_cm": 1.0,
-          "source": "nbm"
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 6.1
+      "seven_day_total_cm": 14.8
     },
     {
       "name": "Snowbird",
@@ -871,53 +872,53 @@
       "lon": -111.6508,
       "state": "Utah",
       "elevation_m": 3353,
-      "base_depth_cm": 26.1,
-      "temp_c": -2.7,
+      "base_depth_cm": 0.2,
+      "temp_c": -1.4,
       "forecast": [
         {
           "day": 0,
           "date": "2026-01-04",
-          "new_snow_cm": 0.0,
-          "source": "hrrr"
+          "new_snow_cm": 9.4,
+          "source": "open-meteo"
         },
         {
           "day": 1,
           "date": "2026-01-05",
-          "new_snow_cm": 0.0,
-          "source": "hrrr"
+          "new_snow_cm": 13.7,
+          "source": "open-meteo"
         },
         {
           "day": 2,
           "date": "2026-01-06",
-          "new_snow_cm": 2.5,
-          "source": "nbm"
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
         },
         {
           "day": 3,
           "date": "2026-01-07",
-          "new_snow_cm": 0.8,
-          "source": "nbm"
+          "new_snow_cm": 4.2,
+          "source": "open-meteo"
         },
         {
           "day": 4,
           "date": "2026-01-08",
-          "new_snow_cm": 5.8,
-          "source": "nbm"
+          "new_snow_cm": 4.5,
+          "source": "open-meteo"
         },
         {
           "day": 5,
           "date": "2026-01-09",
-          "new_snow_cm": 1.8,
-          "source": "nbm"
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
         },
         {
           "day": 6,
           "date": "2026-01-10",
-          "new_snow_cm": 1.3,
-          "source": "nbm"
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 12.2
+      "seven_day_total_cm": 31.7
     },
     {
       "name": "Alta",
@@ -925,53 +926,53 @@
       "lon": -111.6386,
       "state": "Utah",
       "elevation_m": 3215,
-      "base_depth_cm": 26.1,
-      "temp_c": -2.7,
+      "base_depth_cm": 0.1,
+      "temp_c": -0.8,
       "forecast": [
         {
           "day": 0,
           "date": "2026-01-04",
-          "new_snow_cm": 0.0,
-          "source": "hrrr"
+          "new_snow_cm": 14.8,
+          "source": "open-meteo"
         },
         {
           "day": 1,
           "date": "2026-01-05",
-          "new_snow_cm": 0.0,
-          "source": "hrrr"
+          "new_snow_cm": 10.4,
+          "source": "open-meteo"
         },
         {
           "day": 2,
           "date": "2026-01-06",
-          "new_snow_cm": 2.3,
-          "source": "nbm"
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
         },
         {
           "day": 3,
           "date": "2026-01-07",
-          "new_snow_cm": 0.8,
-          "source": "nbm"
+          "new_snow_cm": 4.2,
+          "source": "open-meteo"
         },
         {
           "day": 4,
           "date": "2026-01-08",
-          "new_snow_cm": 5.8,
-          "source": "nbm"
+          "new_snow_cm": 4.5,
+          "source": "open-meteo"
         },
         {
           "day": 5,
           "date": "2026-01-09",
-          "new_snow_cm": 1.8,
-          "source": "nbm"
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
         },
         {
           "day": 6,
           "date": "2026-01-10",
-          "new_snow_cm": 1.3,
-          "source": "nbm"
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 12.0
+      "seven_day_total_cm": 33.9
     },
     {
       "name": "Big Sky",
@@ -979,53 +980,53 @@
       "lon": -111.4018,
       "state": "Montana",
       "elevation_m": 3403,
-      "base_depth_cm": 4.8,
-      "temp_c": -4.9,
+      "base_depth_cm": 0.0,
+      "temp_c": -5.1,
       "forecast": [
         {
           "day": 0,
           "date": "2026-01-04",
-          "new_snow_cm": 0.0,
-          "source": "hrrr"
+          "new_snow_cm": 0.1,
+          "source": "open-meteo"
         },
         {
           "day": 1,
           "date": "2026-01-05",
-          "new_snow_cm": 0.0,
-          "source": "hrrr"
+          "new_snow_cm": 4.1,
+          "source": "open-meteo"
         },
         {
           "day": 2,
           "date": "2026-01-06",
-          "new_snow_cm": 0.3,
-          "source": "nbm"
+          "new_snow_cm": 1.9,
+          "source": "open-meteo"
         },
         {
           "day": 3,
           "date": "2026-01-07",
-          "new_snow_cm": 0.0,
-          "source": "nbm"
+          "new_snow_cm": 1.4,
+          "source": "open-meteo"
         },
         {
           "day": 4,
           "date": "2026-01-08",
           "new_snow_cm": 0.3,
-          "source": "nbm"
+          "source": "open-meteo"
         },
         {
           "day": 5,
           "date": "2026-01-09",
-          "new_snow_cm": 0.3,
-          "source": "nbm"
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
         },
         {
           "day": 6,
           "date": "2026-01-10",
-          "new_snow_cm": 0.3,
-          "source": "nbm"
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 1.2
+      "seven_day_total_cm": 7.8
     },
     {
       "name": "Whitefish",
@@ -1033,53 +1034,53 @@
       "lon": -114.355,
       "state": "Montana",
       "elevation_m": 2133,
-      "base_depth_cm": 31.1,
-      "temp_c": -1.6,
+      "base_depth_cm": 0.1,
+      "temp_c": 0.5,
       "forecast": [
         {
           "day": 0,
           "date": "2026-01-04",
-          "new_snow_cm": 0.0,
-          "source": "hrrr"
+          "new_snow_cm": 0.1,
+          "source": "open-meteo"
         },
         {
           "day": 1,
           "date": "2026-01-05",
-          "new_snow_cm": 0.0,
-          "source": "hrrr"
+          "new_snow_cm": 2.2,
+          "source": "open-meteo"
         },
         {
           "day": 2,
           "date": "2026-01-06",
-          "new_snow_cm": 0.0,
-          "source": "nbm"
+          "new_snow_cm": 5.3,
+          "source": "open-meteo"
         },
         {
           "day": 3,
           "date": "2026-01-07",
-          "new_snow_cm": 3.0,
-          "source": "nbm"
+          "new_snow_cm": 5.2,
+          "source": "open-meteo"
         },
         {
           "day": 4,
           "date": "2026-01-08",
-          "new_snow_cm": 1.3,
-          "source": "nbm"
+          "new_snow_cm": 2.5,
+          "source": "open-meteo"
         },
         {
           "day": 5,
           "date": "2026-01-09",
-          "new_snow_cm": 0.8,
-          "source": "nbm"
+          "new_snow_cm": 2.5,
+          "source": "open-meteo"
         },
         {
           "day": 6,
           "date": "2026-01-10",
-          "new_snow_cm": 0.3,
-          "source": "nbm"
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 5.4
+      "seven_day_total_cm": 17.9
     },
     {
       "name": "Jackson Hole",
@@ -1087,53 +1088,53 @@
       "lon": -110.8281,
       "state": "Wyoming",
       "elevation_m": 3185,
-      "base_depth_cm": 67.5,
-      "temp_c": -1.6,
+      "base_depth_cm": 0.3,
+      "temp_c": -2.4,
       "forecast": [
         {
           "day": 0,
           "date": "2026-01-04",
-          "new_snow_cm": 0.0,
-          "source": "hrrr"
+          "new_snow_cm": 3.1,
+          "source": "open-meteo"
         },
         {
           "day": 1,
           "date": "2026-01-05",
-          "new_snow_cm": 0.0,
-          "source": "hrrr"
+          "new_snow_cm": 2.7,
+          "source": "open-meteo"
         },
         {
           "day": 2,
           "date": "2026-01-06",
-          "new_snow_cm": 1.5,
-          "source": "nbm"
+          "new_snow_cm": 8.9,
+          "source": "open-meteo"
         },
         {
           "day": 3,
           "date": "2026-01-07",
-          "new_snow_cm": 3.0,
-          "source": "nbm"
+          "new_snow_cm": 8.3,
+          "source": "open-meteo"
         },
         {
           "day": 4,
           "date": "2026-01-08",
-          "new_snow_cm": 1.0,
-          "source": "nbm"
+          "new_snow_cm": 5.3,
+          "source": "open-meteo"
         },
         {
           "day": 5,
           "date": "2026-01-09",
-          "new_snow_cm": 0.5,
-          "source": "nbm"
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
         },
         {
           "day": 6,
           "date": "2026-01-10",
-          "new_snow_cm": 0.3,
-          "source": "nbm"
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 6.3
+      "seven_day_total_cm": 28.2
     },
     {
       "name": "Sun Valley",
@@ -1141,53 +1142,53 @@
       "lon": -114.4075,
       "state": "Idaho",
       "elevation_m": 2789,
-      "base_depth_cm": 29.9,
-      "temp_c": -0.6,
+      "base_depth_cm": 0.3,
+      "temp_c": -1.0,
       "forecast": [
         {
           "day": 0,
           "date": "2026-01-04",
-          "new_snow_cm": 0.0,
-          "source": "hrrr"
+          "new_snow_cm": 2.9,
+          "source": "open-meteo"
         },
         {
           "day": 1,
           "date": "2026-01-05",
-          "new_snow_cm": 0.0,
-          "source": "hrrr"
+          "new_snow_cm": 4.3,
+          "source": "open-meteo"
         },
         {
           "day": 2,
           "date": "2026-01-06",
-          "new_snow_cm": 0.8,
-          "source": "nbm"
+          "new_snow_cm": 1.6,
+          "source": "open-meteo"
         },
         {
           "day": 3,
           "date": "2026-01-07",
-          "new_snow_cm": 2.0,
-          "source": "nbm"
+          "new_snow_cm": 1.5,
+          "source": "open-meteo"
         },
         {
           "day": 4,
           "date": "2026-01-08",
-          "new_snow_cm": 1.3,
-          "source": "nbm"
+          "new_snow_cm": 0.3,
+          "source": "open-meteo"
         },
         {
           "day": 5,
           "date": "2026-01-09",
-          "new_snow_cm": 0.5,
-          "source": "nbm"
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
         },
         {
           "day": 6,
           "date": "2026-01-10",
           "new_snow_cm": 0.0,
-          "source": "nbm"
+          "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 4.6
+      "seven_day_total_cm": 10.6
     }
   ]
 }
