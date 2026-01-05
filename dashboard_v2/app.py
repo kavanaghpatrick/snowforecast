@@ -263,11 +263,11 @@ def main():
 
     # Compact chart section
     with st.expander("📊 Base Depth Comparison", expanded=False):
-        chart_data = df_display.set_index("Resort")["Base"].dropna().sort_values(ascending=True)
+        chart_data = df_display.set_index("Resort")["Base"].dropna().sort_values(ascending=False)
         if len(chart_data) > 15:
-            chart_data = chart_data.tail(15)
+            chart_data = chart_data.head(15)
             st.caption("Top 15 resorts by base depth")
-        st.bar_chart(chart_data, horizontal=True)
+        st.bar_chart(chart_data)
 
     # Compact footer
     st.divider()
@@ -279,4 +279,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-# Trigger redeploy Mon Jan  5 15:47:07 CET 2026
