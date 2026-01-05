@@ -1,15 +1,14 @@
 """
 Snow Forecast Dashboard v2 - Multi-region ski resort forecasts.
 
-Reads forecast data from JSON and displays an interactive table with filtering.
-Supports USA, Austria, and Switzerland with regional snow depth sensors.
+Displays forecast data with optimized UX based on Gemini UI audit.
 """
 
 import streamlit as st
 import pandas as pd
 import json
 import urllib.request
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timezone
 from pathlib import Path
 
 st.set_page_config(
@@ -18,23 +17,57 @@ st.set_page_config(
     layout="wide"
 )
 
-# GitHub raw URL for live data (bypasses Streamlit Cloud's file caching)
+# Custom CSS for better styling
+st.markdown("""
+<style>
+    /* Compact header */
+    .block-container { padding-top: 1rem; }
+
+    /* Better table row visibility */
+    .stDataFrame [data-testid="stDataFrameResizable"] {
+        font-size: 14px;
+    }
+
+    /* Mobile-friendly title */
+    @media (max-width: 768px) {
+        h1 { font-size: 1.5rem !important; }
+        .stDataFrame { font-size: 12px; }
+    }
+
+    /* Status badge styling */
+    .status-fresh {
+        background: #d4edda;
+        color: #155724;
+        padding: 4px 12px;
+        border-radius: 12px;
+        font-size: 13px;
+        display: inline-block;
+    }
+    .status-stale {
+        background: #fff3cd;
+        color: #856404;
+        padding: 4px 12px;
+        border-radius: 12px;
+        font-size: 13px;
+        display: inline-block;
+    }
+</style>
+""", unsafe_allow_html=True)
+
+# GitHub raw URL for live data
 GITHUB_DATA_URL = "https://raw.githubusercontent.com/kavanaghpatrick/snowforecast/main/data/forecasts_v2.json"
-# Local fallback
 DATA_PATH = Path(__file__).parent.parent / "data" / "forecasts_v2.json"
 
 
-@st.cache_data(ttl=300)  # Cache for 5 minutes, then fetch fresh
+@st.cache_data(ttl=300)
 def load_data() -> dict | None:
     """Load forecast JSON from GitHub (live) or local file (fallback)."""
-    # Try GitHub first for latest data
     try:
         with urllib.request.urlopen(GITHUB_DATA_URL, timeout=10) as response:
             return json.loads(response.read())
     except Exception:
-        pass  # Fall back to local file
+        pass
 
-    # Local fallback
     if DATA_PATH.exists():
         try:
             with open(DATA_PATH, "r") as f:
@@ -44,169 +77,203 @@ def load_data() -> dict | None:
     return None
 
 
-def check_freshness(updated_str: str) -> tuple[bool, float]:
-    """
-    Check if data is stale (> 24 hours old).
+def format_time_ago(hours: float) -> str:
+    """Convert hours to human-readable time ago string."""
+    if hours < 1:
+        minutes = int(hours * 60)
+        return f"{minutes} min ago" if minutes != 1 else "1 min ago"
+    elif hours < 24:
+        h = int(hours)
+        return f"{h} hour{'s' if h != 1 else ''} ago"
+    else:
+        days = int(hours / 24)
+        return f"{days} day{'s' if days != 1 else ''} ago"
 
-    Args:
-        updated_str: ISO format timestamp string
 
-    Returns:
-        Tuple of (is_stale, hours_old)
-    """
+def format_date_human(iso_str: str) -> str:
+    """Convert ISO date to human readable format."""
     try:
-        # Parse ISO format timestamp
+        dt = datetime.fromisoformat(iso_str.replace("Z", "+00:00"))
+        return dt.strftime("%b %d, %I:%M %p").replace(" 0", " ").replace("AM", "am").replace("PM", "pm")
+    except (ValueError, TypeError):
+        return "Unknown"
+
+
+def check_freshness(updated_str: str) -> tuple[bool, float]:
+    """Check if data is stale (> 24 hours old)."""
+    try:
         updated = datetime.fromisoformat(updated_str.replace("Z", "+00:00"))
         now = datetime.now(timezone.utc)
-        delta = now - updated
-        hours_old = delta.total_seconds() / 3600
-        is_stale = hours_old > 24
-        return is_stale, hours_old
+        hours_old = (now - updated).total_seconds() / 3600
+        return hours_old > 24, hours_old
     except (ValueError, TypeError):
-        # If we can't parse, assume stale
         return True, float("inf")
 
 
-def find_best_day(daily_snow: list[dict]) -> str:
-    """Find the day with the most snowfall from daily forecast data."""
+def find_best_day(daily_snow: list[dict]) -> tuple[str, float]:
+    """Find the day with the most snowfall. Returns (formatted_date, amount)."""
     if not daily_snow:
-        return "N/A"
+        return "—", 0
 
     best_day = max(daily_snow, key=lambda d: d.get("new_snow_cm", 0))
-    if best_day.get("new_snow_cm", 0) == 0:
-        return "None expected"
+    amount = best_day.get("new_snow_cm", 0)
 
-    # Format the date nicely
+    if amount == 0:
+        return "—", 0
+
     try:
         date = datetime.fromisoformat(best_day["date"])
-        return date.strftime("%a %b %d")
+        return date.strftime("%a %d"), amount
     except (ValueError, KeyError):
-        return best_day.get("date", "N/A")
+        return best_day.get("date", "—"), amount
+
+
+def get_snow_color(value: float, max_val: float) -> str:
+    """Get background color based on snow amount (blue gradient)."""
+    if value <= 0 or max_val <= 0:
+        return ""
+    ratio = min(value / max_val, 1.0)
+    # Light blue to deep blue gradient
+    r = int(240 - (ratio * 100))
+    g = int(248 - (ratio * 80))
+    b = int(255 - (ratio * 20))
+    return f"background-color: rgb({r}, {g}, {b})"
 
 
 def main():
-    st.title("❄️ Snow Forecast")
+    # Compact header with inline status
+    col_title, col_status = st.columns([3, 2])
+
+    with col_title:
+        st.markdown("# ❄️ Snow Forecast")
 
     # Load data
     data = load_data()
 
     if data is None:
-        st.error("No forecast data available. Please check that data/forecasts_v2.json exists.")
-        st.info("Run the data fetcher to populate forecast data.")
+        st.error("No forecast data available. Run the data fetcher to populate.")
         return
 
-    # Check freshness and display status
+    # Check freshness and show compact status
     is_stale, hours = check_freshness(data.get("updated", ""))
 
-    col1, col2 = st.columns([3, 1])
-    with col1:
-        if is_stale:
-            if hours == float("inf"):
-                st.warning("⚠️ Data freshness unknown - timestamp missing or invalid")
-            else:
-                st.warning(f"⚠️ Data is {hours:.1f} hours old - may be outdated")
+    with col_status:
+        if hours == float("inf"):
+            st.markdown('<span class="status-stale">⚠️ Unknown freshness</span>', unsafe_allow_html=True)
+        elif is_stale:
+            st.markdown(f'<span class="status-stale">⚠️ {format_time_ago(hours)}</span>', unsafe_allow_html=True)
         else:
-            st.success(f"✅ Updated {hours:.1f} hours ago")
-
-    with col2:
-        st.caption(f"Last update: {data.get('updated', 'Unknown')[:19]}")
+            st.markdown(f'<span class="status-fresh">✓ {format_time_ago(hours)}</span>', unsafe_allow_html=True)
 
     # Build dataframe from resorts
     resorts = data.get("resorts", [])
     if not resorts:
-        st.warning("No resort data found in forecast file.")
+        st.warning("No resort data found.")
         return
 
-    # Process resort data
+    # Process resort data with optimized column order
     rows = []
     for resort in resorts:
         daily = resort.get("forecast", [])
-        # Use pre-computed total, or sum from forecast data
         seven_day_total = resort.get("seven_day_total_cm", sum(d.get("new_snow_cm", 0) for d in daily[:7]))
-        best_day = find_best_day(daily[:7])
+        best_day, best_amount = find_best_day(daily[:7])
 
         base_depth = resort.get("base_depth_cm")
         station_name = resort.get("base_depth_source", "")
 
-        # Handle both old (state) and new (country/region) formats
+        # Combine location
         country = resort.get("country", "USA")
-        region = resort.get("region", resort.get("state", "??"))
+        region = resort.get("region", resort.get("state", ""))
+        location = f"{region}, {country}" if region else country
 
         rows.append({
             "Resort": resort.get("name", "Unknown"),
-            "Country": country,
-            "Region": region,
-            "Elevation (m)": resort.get("elevation_m", 0),
-            "Base (cm)": base_depth if base_depth else None,
-            "Station": station_name if station_name else "N/A",
-            "7-Day Snow (cm)": round(seven_day_total, 1),
-            "Peak Snowfall": best_day,
+            "7-Day": round(seven_day_total, 1),
+            "Best Day": best_day,
+            "Base": round(base_depth, 0) if base_depth else None,
+            "Location": location,
+            "Elev": resort.get("elevation_m", 0),
+            "_station": station_name,  # Hidden, for tooltip
+            "_country": country,  # Hidden, for filtering
+            "_region": region,  # Hidden, for filtering
         })
 
     df = pd.DataFrame(rows)
 
-    # Country and region filters
-    st.subheader("Resort Forecasts")
+    # Filters in a more compact layout
+    col1, col2, col3 = st.columns([1, 1, 2])
 
-    col1, col2 = st.columns(2)
     with col1:
-        countries = ["All Countries"] + sorted(df["Country"].unique().tolist())
-        selected_country = st.selectbox("Filter by Country", countries)
+        countries = ["All"] + sorted(df["_country"].unique().tolist())
+        selected_country = st.selectbox("Country", countries, label_visibility="collapsed")
 
     with col2:
-        if selected_country != "All Countries":
-            available_regions = sorted(df[df["Country"] == selected_country]["Region"].unique().tolist())
+        if selected_country != "All":
+            available_regions = sorted(df[df["_country"] == selected_country]["_region"].unique().tolist())
         else:
-            available_regions = sorted(df["Region"].unique().tolist())
+            available_regions = sorted(df["_region"].unique().tolist())
         regions = ["All Regions"] + available_regions
-        selected_region = st.selectbox("Filter by Region", regions)
+        selected_region = st.selectbox("Region", regions, label_visibility="collapsed")
+
+    with col3:
+        st.caption(f"Showing {len(df)} resorts across 3 countries")
 
     # Apply filters
-    df_filtered = df
-    if selected_country != "All Countries":
-        df_filtered = df_filtered[df_filtered["Country"] == selected_country]
+    df_display = df.copy()
+    if selected_country != "All":
+        df_display = df_display[df_display["_country"] == selected_country]
     if selected_region != "All Regions":
-        df_filtered = df_filtered[df_filtered["Region"] == selected_region]
+        df_display = df_display[df_display["_region"] == selected_region]
 
-    # Display count
-    st.caption(f"Showing {len(df_filtered)} of {len(df)} resorts")
+    # Sort by 7-day snowfall (what users care about most)
+    df_display = df_display.sort_values("7-Day", ascending=False)
 
-    # Display sortable table
+    # Get max for color scaling
+    max_snow = df_display["7-Day"].max() if len(df_display) > 0 else 1
+
+    # Display table with visual indicators
     st.dataframe(
-        df_filtered.sort_values("7-Day Snow (cm)", ascending=False),
+        df_display[["Resort", "7-Day", "Best Day", "Base", "Location", "Elev"]],
         use_container_width=True,
         hide_index=True,
         column_config={
             "Resort": st.column_config.TextColumn("Resort", width="medium"),
-            "Country": st.column_config.TextColumn("Country", width="small"),
-            "Region": st.column_config.TextColumn("Region", width="small"),
-            "Elevation (m)": st.column_config.NumberColumn("Elev (m)", format="%d"),
-            "Base (cm)": st.column_config.NumberColumn("Base (cm)", format="%.0f"),
-            "Station": st.column_config.TextColumn("Station", width="medium",
-                help="Nearby snow monitoring station used for base depth measurement"),
-            "7-Day Snow (cm)": st.column_config.NumberColumn("7-Day (cm)", format="%.1f"),
-            "Peak Snowfall": st.column_config.TextColumn("Peak Snowfall", width="small",
-                help="Day with highest forecasted snowfall in the next 7 days"),
-        }
+            "7-Day": st.column_config.ProgressColumn(
+                "7-Day Snow",
+                help="Total forecasted snowfall in next 7 days (cm)",
+                format="%.0f cm",
+                min_value=0,
+                max_value=max(max_snow, 100),
+            ),
+            "Best Day": st.column_config.TextColumn(
+                "Peak Day",
+                help="Day with highest forecasted snowfall",
+                width="small"
+            ),
+            "Base": st.column_config.NumberColumn(
+                "Base Depth",
+                help="Current snow base from nearby monitoring station (cm)",
+                format="%.0f cm"
+            ),
+            "Location": st.column_config.TextColumn("Location", width="medium"),
+            "Elev": st.column_config.NumberColumn("Elevation", format="%d m", width="small"),
+        },
+        height=450,
     )
 
-    # Bar chart of base depths
-    st.subheader("Base Depth by Resort")
+    # Compact chart section
+    with st.expander("📊 Base Depth Comparison", expanded=False):
+        chart_data = df_display.set_index("Resort")["Base"].dropna().sort_values(ascending=True)
+        if len(chart_data) > 15:
+            chart_data = chart_data.tail(15)
+            st.caption("Top 15 resorts by base depth")
+        st.bar_chart(chart_data, horizontal=True)
 
-    chart_data = df_filtered.set_index("Resort")["Base (cm)"].dropna().sort_values(ascending=False)
-    if len(chart_data) > 20:
-        st.caption("Showing top 20 resorts by base depth")
-        chart_data = chart_data.head(20)
-
-    st.bar_chart(chart_data)
-
-    # Footer
+    # Compact footer
     st.divider()
     st.caption(
-        "Data sources: USA - SNOTEL (nrcs.usda.gov), Austria - GeoSphere TAWES (geosphere.at), "
-        "Switzerland - SLF IMIS (slf.ch), Forecasts - Open-Meteo (open-meteo.com). "
-        "Base depths are from nearby mountain monitoring stations, not at the resort. "
-        "Always check official resort reports before traveling."
+        "Sources: SNOTEL (USA), GeoSphere TAWES (Austria), SLF IMIS (Switzerland), Open-Meteo (forecasts). "
+        "Base depths from nearby mountain stations. Always verify with official resort reports."
     )
 
 
