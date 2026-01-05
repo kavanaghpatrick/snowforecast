@@ -61,7 +61,7 @@ AUSTRIA_SKI_AREAS = [
     ("Obergurgl", 46.8669, 11.0244, "Tyrol", 1941, "11127", "Obergurgl"),
     ("Ischgl", 46.9681, 10.1856, "Tyrol", 1587, "11312", "Galtür"),
     ("Kitzbühel", 47.4183, 12.3592, "Tyrol", 1794, "8989044", "Hahnenkamm"),
-    ("Lech am Arlberg", 47.1575, 10.2128, "Vorarlberg", 2805, "11308", "Warth"),
+    ("Lech am Arlberg", 47.1575, 10.2128, "Vorarlberg", 2079, "11110", "Galzig (Ski Arlberg)"),
     ("Pitztal Glacier", 46.9269, 10.8792, "Tyrol", 2864, "11316", "Pitztaler Gletscher"),
     ("Obertauern", 47.2489, 13.5597, "Salzburg", 1437, "11222", "Flattnitz"),
     ("Zell am See", 47.3286, 12.7381, "Salzburg", 1956, "11340", "Schmittenhöhe"),
