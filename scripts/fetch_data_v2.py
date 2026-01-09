@@ -22,32 +22,92 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(me
 logger = logging.getLogger(__name__)
 
 # =============================================================================
-# USA - SNOTEL stations (pre-computed mappings)
-# Format: (name, lat, lon, region, elevation_m, station_id, station_name)
+# USA - SNOTEL stations with multi-station averaging
+# Format: (name, lat, lon, region, elevation_m, stations_list)
+# stations_list: [(station_id, station_name, weight), ...]
 # =============================================================================
 US_SKI_AREAS = [
-    ("Stevens Pass", 47.7448, -121.089, "Washington", 1241, "791:WA:SNTL", "Stevens Pass"),
-    ("Crystal Mountain", 46.9282, -121.5045, "Washington", 2134, "679:WA:SNTL", "Morse Lake"),
-    ("Mt. Baker", 48.857, -121.6695, "Washington", 1524, "909:WA:SNTL", "Wells Creek"),
-    ("Snoqualmie Pass", 47.4204, -121.4138, "Washington", 1067, "817:WA:SNTL", "Stampede Pass"),
-    ("Mt. Hood Meadows", 45.3311, -121.6647, "Oregon", 1829, "651:OR:SNTL", "Mt Hood Test Site"),
-    ("Mt. Bachelor", 43.9792, -121.6886, "Oregon", 2743, "729:OR:SNTL", "Santiam Jct"),
-    ("Timberline", 45.3309, -121.7109, "Oregon", 1829, "651:OR:SNTL", "Mt Hood Test Site"),
-    ("Mammoth Mountain", 37.6308, -119.0326, "California", 3369, "574:CA:SNTL", "Mammoth Pass"),
-    ("Squaw Valley", 39.1969, -120.2358, "California", 2500, "784:CA:SNTL", "Squaw Valley G.C."),
-    ("Heavenly", 38.9353, -119.9396, "California", 3060, "473:CA:SNTL", "Heavenly Valley"),
-    ("Kirkwood", 38.6848, -120.0655, "California", 2377, "518:CA:SNTL", "Kirkwood"),
-    ("Vail", 39.6403, -106.3742, "Colorado", 3527, "842:CO:SNTL", "Vail Mountain"),
-    ("Breckenridge", 39.4817, -106.0384, "Colorado", 3914, "415:CO:SNTL", "Copper Mountain"),
-    ("Aspen Snowmass", 39.2084, -106.949, "Colorado", 3813, "505:CO:SNTL", "Independence Pass"),
-    ("Telluride", 37.9375, -107.8123, "Colorado", 3831, "797:CO:SNTL", "Telluride"),
-    ("Park City", 40.6514, -111.508, "Utah", 3049, "628:UT:SNTL", "Mill D North"),
-    ("Snowbird", 40.583, -111.6508, "Utah", 3353, "766:UT:SNTL", "Snowbird"),
-    ("Alta", 40.5884, -111.6386, "Utah", 3215, "332:UT:SNTL", "Alta"),
-    ("Big Sky", 45.2618, -111.4018, "Montana", 3403, "609:MT:SNTL", "Shower Falls"),
-    ("Whitefish", 48.4833, -114.355, "Montana", 2133, "656:MT:SNTL", "Noisy Basin"),
-    ("Jackson Hole", 43.5875, -110.8281, "Wyoming", 3185, "481:WY:SNTL", "Granite Creek"),
-    ("Sun Valley", 43.6804, -114.4075, "Idaho", 2789, "489:ID:SNTL", "Hyndman"),
+    # Washington
+    ("Stevens Pass", 47.7448, -121.089, "Washington", 1241, [
+        ("791:WA:SNTL", "Stevens Pass", 1.0),
+        ("672:WA:SNTL", "Olallie Meadows", 0.5),
+    ]),
+    ("Crystal Mountain", 46.9282, -121.5045, "Washington", 2134, [
+        ("679:WA:SNTL", "Morse Lake", 1.0),
+    ]),
+    ("Mt. Baker", 48.857, -121.6695, "Washington", 1524, [
+        ("909:WA:SNTL", "Wells Creek", 1.0),
+    ]),
+    ("Snoqualmie Pass", 47.4204, -121.4138, "Washington", 1067, [
+        ("817:WA:SNTL", "Stampede Pass", 1.0),
+    ]),
+    # Oregon
+    ("Mt. Hood Meadows", 45.3311, -121.6647, "Oregon", 1829, [
+        ("651:OR:SNTL", "Mt Hood Test Site", 1.0),
+    ]),
+    ("Mt. Bachelor", 43.9792, -121.6886, "Oregon", 2743, [
+        ("729:OR:SNTL", "Santiam Jct", 1.0),
+    ]),
+    ("Timberline", 45.3309, -121.7109, "Oregon", 1829, [
+        ("651:OR:SNTL", "Mt Hood Test Site", 1.0),
+    ]),
+    # California
+    ("Mammoth Mountain", 37.6308, -119.0326, "California", 3369, [
+        ("846:CA:SNTL", "Virginia Lakes Ridge", 1.0),  # Closest available (~31mi)
+    ]),
+    ("Palisades Tahoe", 39.1969, -120.2358, "California", 2500, [
+        ("784:CA:SNTL", "Palisades Tahoe", 1.0),
+        ("809:CA:SNTL", "Tahoe City Cross", 0.7),
+        ("541:CA:SNTL", "Independence Lake", 0.5),
+    ]),
+    ("Heavenly", 38.9353, -119.9396, "California", 3060, [
+        ("473:CA:SNTL", "Heavenly Valley", 1.0),
+    ]),
+    ("Kirkwood", 38.6848, -120.0655, "California", 2377, [
+        ("518:CA:SNTL", "Kirkwood", 1.0),
+    ]),
+    # Colorado
+    ("Vail", 39.6403, -106.3742, "Colorado", 3527, [
+        ("842:CO:SNTL", "Vail Mountain", 1.0),
+        ("1041:CO:SNTL", "Beaver Ck Village", 0.7),
+        ("415:CO:SNTL", "Copper Mountain", 0.5),
+    ]),
+    ("Breckenridge", 39.4817, -106.0384, "Colorado", 3914, [
+        ("415:CO:SNTL", "Copper Mountain", 1.0),
+    ]),
+    ("Aspen Snowmass", 39.2084, -106.949, "Colorado", 3813, [
+        ("505:CO:SNTL", "Independence Pass", 1.0),
+    ]),
+    ("Telluride", 37.9375, -107.8123, "Colorado", 3831, [
+        ("797:CO:SNTL", "Telluride", 1.0),
+    ]),
+    # Utah
+    ("Park City", 40.6514, -111.508, "Utah", 3049, [
+        ("628:UT:SNTL", "Mill D North", 1.0),
+    ]),
+    ("Snowbird", 40.583, -111.6508, "Utah", 3353, [
+        ("766:UT:SNTL", "Snowbird", 1.0),
+        ("366:UT:SNTL", "Brighton", 0.7),
+    ]),
+    ("Alta", 40.5884, -111.6386, "Utah", 3215, [
+        ("332:UT:SNTL", "Alta", 1.0),
+        ("766:UT:SNTL", "Snowbird", 0.8),
+    ]),
+    # Montana
+    ("Big Sky", 45.2618, -111.4018, "Montana", 3403, [
+        ("609:MT:SNTL", "Shower Falls", 1.0),
+    ]),
+    ("Whitefish", 48.4833, -114.355, "Montana", 2133, [
+        ("656:MT:SNTL", "Noisy Basin", 1.0),
+    ]),
+    # Wyoming
+    ("Jackson Hole", 43.5875, -110.8281, "Wyoming", 3185, [
+        ("481:WY:SNTL", "Granite Creek", 1.0),
+    ]),
+    # Idaho
+    ("Sun Valley", 43.6804, -114.4075, "Idaho", 2789, [
+        ("489:ID:SNTL", "Hyndman", 1.0),
+    ]),
 ]
 
 # =============================================================================
@@ -87,12 +147,17 @@ SWISS_SKI_AREAS = [
 ]
 
 
-def get_snotel_snow_depth(station_id, station_name):
-    """Get current snow depth from a SNOTEL station via metloom."""
+def get_snotel_snow_depth_single(station_id, station_name):
+    """Get current snow depth from a single SNOTEL station via metloom."""
+    # Import at module level would be better, but keeping here for isolation
     try:
         from metloom.pointdata import SnotelPointData
         from metloom.variables import SnotelVariables
+    except ImportError:
+        logger.error("metloom library not installed - run: pip install metloom")
+        return None
 
+    try:
         end_date = datetime.now()
         start_date = end_date - timedelta(days=3)
 
@@ -102,17 +167,61 @@ def get_snotel_snow_depth(station_id, station_name):
         if df is None or df.empty:
             return None
 
-        # Get most recent non-null value - metloom returns inches, convert to cm
-        for col in df.columns:
-            if 'snow' in col.lower() or 'depth' in col.lower():
-                values = df[col].dropna()
-                if not values.empty:
-                    snow_depth_inches = values.iloc[-1]
-                    return round(snow_depth_inches * 2.54, 1)
+        if 'SNOWDEPTH' in df.columns:
+            values = df['SNOWDEPTH'].dropna()
+            if not values.empty:
+                snow_depth_inches = float(values.iloc[-1])
+                return round(snow_depth_inches * 2.54, 1)  # Convert to cm
+
         return None
+
     except Exception as e:
         logger.warning(f"SNOTEL error for {station_name}: {e}")
         return None
+
+
+def get_snotel_multi_station(stations_list):
+    """Get weighted average snow depth from multiple SNOTEL stations.
+
+    Args:
+        stations_list: List of (station_id, station_name, weight) tuples
+
+    Returns:
+        (depth_cm, source_description) tuple
+    """
+    if not stations_list:
+        return None, None
+
+    depths = []
+    sources = []
+
+    for station_tuple in stations_list:
+        # Validate tuple has 3 elements
+        if len(station_tuple) != 3:
+            logger.warning(f"Invalid station tuple: {station_tuple}")
+            continue
+        station_id, station_name, weight = station_tuple
+
+        depth = get_snotel_snow_depth_single(station_id, station_name)
+        if depth is not None and weight > 0:
+            depths.append((depth, weight))
+            sources.append(station_name)
+
+    if not depths:
+        return None, None
+
+    # Weighted average (safe - we only add if weight > 0)
+    total = sum(d * w for d, w in depths)
+    total_weight = sum(w for _, w in depths)
+    avg_depth = round(total / total_weight, 1)
+
+    # Build source description
+    if len(sources) == 1:
+        source_desc = sources[0]
+    else:
+        source_desc = f"{sources[0]} +{len(sources)-1}"  # e.g. "Snowbird +1"
+
+    return avg_depth, source_desc
 
 
 def get_geosphere_snow_depth(station_id, station_name):
@@ -218,11 +327,75 @@ def fetch_open_meteo(lat: float, lon: float, retries: int = 3) -> dict | None:
             return None
 
 
-def process_region(ski_areas, country, snow_depth_func, use_austria_fallback=False):
-    """Process a region's ski areas and return resort data.
+def process_us_region(ski_areas):
+    """Process US ski areas with multi-station averaging.
 
     Args:
-        ski_areas: List of resort tuples
+        ski_areas: List of (name, lat, lon, region, elev, stations_list) tuples
+    """
+    resorts = []
+    success_count = 0
+
+    for name, lat, lon, region, elev, stations_list in ski_areas:
+        logger.info(f"Processing {name} (USA)...")
+
+        # Get weighted average from multiple SNOTEL stations
+        base_depth_cm, station_name = get_snotel_multi_station(stations_list)
+        if base_depth_cm is not None:
+            logger.info(f"  Station ({station_name}): {base_depth_cm}cm")
+            success_count += 1
+        else:
+            station_name = stations_list[0][1] if stations_list else "Unknown"
+            logger.warning(f"  Station ({station_name}): No data")
+
+        # Get forecast from Open-Meteo
+        forecast_data = fetch_open_meteo(lat, lon)
+
+        forecast = []
+        total_snow = 0.0
+        temp_c = None
+
+        if forecast_data:
+            temp_c = forecast_data.get("current", {}).get("temperature_2m")
+            daily = forecast_data.get("daily", {})
+            dates = daily.get("time", [])
+            snowfall = daily.get("snowfall_sum", [])
+
+            for i, (date_str, snow_cm) in enumerate(zip(dates, snowfall)):
+                snow_val = snow_cm if snow_cm else 0.0
+                total_snow += snow_val
+                forecast.append({
+                    "day": i,
+                    "date": date_str,
+                    "new_snow_cm": round(snow_val, 1),
+                    "source": "open-meteo",
+                })
+
+        resort = {
+            "name": name,
+            "lat": lat,
+            "lon": lon,
+            "country": "USA",
+            "region": region,
+            "elevation_m": elev,
+            "base_depth_cm": base_depth_cm,
+            "base_depth_source": station_name if base_depth_cm is not None else None,
+            "temp_c": round(temp_c, 1) if temp_c is not None else None,
+            "forecast": forecast,
+            "seven_day_total_cm": round(total_snow, 1),
+        }
+
+        resorts.append(resort)
+        time.sleep(0.3)  # Be nice to APIs
+
+    return resorts, success_count
+
+
+def process_region(ski_areas, country, snow_depth_func, use_austria_fallback=False):
+    """Process a region's ski areas and return resort data (Austria/Switzerland).
+
+    Args:
+        ski_areas: List of (name, lat, lon, region, elev, station_id, station_name) tuples
         country: Country name
         snow_depth_func: Function to get snow depth
         use_austria_fallback: If True, use Austria's fallback logic (GeoSphere -> Open-Meteo)
@@ -298,9 +471,9 @@ def main():
     all_resorts = []
     stats = {}
 
-    # Process USA (SNOTEL)
-    logger.info("\n--- USA (SNOTEL) ---")
-    resorts, success = process_region(US_SKI_AREAS, "USA", get_snotel_snow_depth)
+    # Process USA (SNOTEL with multi-station averaging)
+    logger.info("\n--- USA (SNOTEL multi-station) ---")
+    resorts, success = process_us_region(US_SKI_AREAS)
     all_resorts.extend(resorts)
     stats["USA"] = {"total": len(US_SKI_AREAS), "success": success}
 
