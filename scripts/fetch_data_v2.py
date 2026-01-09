@@ -77,7 +77,7 @@ SWISS_SKI_AREAS = [
     ("Saas-Fee", 46.1275, 7.9814, "Valais", 2480, "SAA2", "Seetal"),
     ("Verbier", 46.0989, 7.2856, "Valais", 2550, "ATT2", "Lac des Vaux"),
     ("St. Moritz", 46.4761, 9.8438, "Graubünden", 2512, "BEV2", "Valetta"),
-    ("Davos", 46.8131, 9.8439, "Graubünden", 1563, "SLF2", "Davos Stilli"),
+    ("Davos", 46.8131, 9.8439, "Graubünden", 2540, "WFJ2", "Weissfluhjoch"),
     ("Laax", 46.8356, 9.2317, "Graubünden", 2325, "CMA2", "La Fuorcla"),
     ("Lenzerheide", 46.7267, 9.5542, "Graubünden", 2429, "PMA2", "Colms da Parsonz"),
     ("Mürren", 46.5573, 7.8352, "Bern", 2332, "SCH2", "Türliboden"),
