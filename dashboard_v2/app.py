@@ -246,9 +246,9 @@ def main():
         hide_index=True,
         column_config={
             "Resort": st.column_config.TextColumn("Resort", width="medium"),
-            "Forecast": st.column_config.BarChartColumn(
+            "Forecast": st.column_config.LineChartColumn(
                 "7-Day Forecast",
-                help="Daily snowfall forecast for next 7 days (cm). Each bar = 1 day.",
+                help="Daily snowfall forecast for next 7 days (cm). Line shows snow timing.",
                 y_min=0,
                 y_max=max_daily,
                 width="medium",
