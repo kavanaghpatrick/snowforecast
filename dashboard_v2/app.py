@@ -223,7 +223,7 @@ def main():
         selected_region = st.selectbox("Region", regions, label_visibility="collapsed")
 
     with col3:
-        st.caption(f"Showing {len(df)} resorts across 3 countries")
+        st.caption(f"Showing {len(df)} resorts across {df['_country'].nunique()} countries")
 
     # Apply filters
     df_display = df.copy()
@@ -286,7 +286,7 @@ def main():
     # Compact footer
     st.divider()
     st.caption(
-        "Snowpack: SNOTEL (USA), GeoSphere (Austria), SLF (Switzerland) - natural snow depth, excludes snowmaking. "
+        "Snowpack: SNOTEL (USA), GeoSphere (Austria), SLF (Switzerland), OnTheSnow (Japan) - natural snow depth, excludes snowmaking. "
         "Forecasts: Open-Meteo. May differ from resort reports."
     )
 

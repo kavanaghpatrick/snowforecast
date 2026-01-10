@@ -159,6 +159,27 @@ SWISS_SKI_AREAS = [
 ]
 
 # =============================================================================
+# JAPAN - OnTheSnow for snow depth + Open-Meteo for forecasts
+# Format: (name, lat, lon, region, elevation_m)
+# =============================================================================
+JAPAN_SKI_AREAS = [
+    # Hokkaido
+    ("Niseko United", 42.8635, 140.6981, "Hokkaido", 260),
+    ("Furano", 43.2818, 142.4735, "Hokkaido", 245),
+    ("Rusutsu", 42.75, 140.88, "Hokkaido", 400),
+    ("Kiroro", 43.0701, 140.9891, "Hokkaido", 520),
+    # Nagano
+    ("Hakuba Valley", 36.70, 137.83, "Nagano", 760),
+    ("Happo-One", 36.70, 137.827, "Nagano", 760),
+    ("Nozawa Onsen", 36.9228, 138.4406, "Nagano", 565),
+    ("Shiga Kogen", 36.70, 138.50, "Nagano", 1300),
+    # Niigata
+    ("Myoko Kogen", 36.88, 138.12, "Niigata", 731),
+    # Yamagata
+    ("Zao Onsen", 38.16, 140.40, "Yamagata", 780),
+]
+
+# =============================================================================
 # OnTheSnow.com URL slugs for scraping resort-reported base depths
 # Pattern: https://www.onthesnow.com/{slug}/skireport
 # =============================================================================
@@ -193,6 +214,20 @@ ONTHESNOW_SLUGS = {
     "Jackson Hole": "wyoming/jackson-hole",
     # USA - Idaho
     "Sun Valley": "idaho/sun-valley",
+    # Japan - Hokkaido
+    "Niseko United": "hokkaido/niseko-united",
+    "Furano": "hokkaido/furano-ski-resort",
+    "Rusutsu": "hokkaido/rusutsu",
+    "Kiroro": "hokkaido/kiroro",
+    # Japan - Nagano
+    "Hakuba Valley": "nagano/hakuba-valley",
+    "Happo-One": "nagano/happo-one",
+    "Nozawa Onsen": "nagano/nozawa-onsen",
+    "Shiga Kogen": "nagano/shiga-kogen",
+    # Japan - Niigata
+    "Myoko Kogen": "niigata/myoko-kogen",
+    # Japan - Yamagata
+    "Zao Onsen": "yamagata/zao-onsen",
 }
 
 
@@ -619,6 +654,86 @@ def process_region(ski_areas, country, snow_depth_func, use_austria_fallback=Fal
     return resorts, success_count
 
 
+def process_japan_region():
+    """Process Japan ski areas using OnTheSnow for depth + Open-Meteo for forecasts."""
+    resorts = []
+    success_count = 0
+
+    for name, lat, lon, region, elev in JAPAN_SKI_AREAS:
+        logger.info(f"Processing {name} (Japan)...")
+
+        # Get base depth from OnTheSnow
+        base_depth_cm, source = scrape_onthesnow(name)
+        if base_depth_cm is not None:
+            logger.info(f"  OnTheSnow: {base_depth_cm}cm")
+            success_count += 1
+        else:
+            logger.warning(f"  OnTheSnow: No data for {name}")
+
+        # Get forecast from Open-Meteo
+        forecast_data = fetch_open_meteo(lat, lon)
+
+        forecast = []
+        total_snow = 0.0
+        temp_c = None
+
+        if forecast_data:
+            temp_c = forecast_data.get("current", {}).get("temperature_2m")
+            daily = forecast_data.get("daily", {})
+            dates = daily.get("time", [])
+            snowfall = daily.get("snowfall_sum", [])
+
+            for i, (date_str, snow_cm) in enumerate(zip(dates, snowfall)):
+                snow_val = snow_cm if snow_cm else 0.0
+                total_snow += snow_val
+                forecast.append({
+                    "day": i,
+                    "date": date_str,
+                    "new_snow_cm": round(snow_val, 1),
+                    "source": "open-meteo",
+                })
+
+        # Calculate summit elevation and temperature
+        summit_elev = get_summit_elevation(name, elev)
+        summit_temp_c = None
+        if temp_c is not None:
+            summit_temp_c = apply_lapse_rate(temp_c, elev, summit_elev)
+
+        # Calculate 7-day summit snowfall using lapse rate physics
+        summit_7day_total = 0.0
+        if summit_temp_c is not None:
+            for day_forecast in forecast:
+                base_snow = day_forecast.get("new_snow_cm", 0)
+                has_precip = base_snow > 0
+                precip_type = get_precip_type(summit_temp_c, has_precip)
+                summit_snow = adjust_new_snow(base_snow, summit_temp_c, precip_type)
+                summit_7day_total += summit_snow
+        else:
+            summit_7day_total = total_snow
+
+        resort = {
+            "name": name,
+            "lat": lat,
+            "lon": lon,
+            "country": "Japan",
+            "region": region,
+            "elevation_m": elev,
+            "summit_elevation_m": summit_elev,
+            "base_depth_cm": base_depth_cm,
+            "base_depth_source": "OnTheSnow" if base_depth_cm else None,
+            "temp_c": round(temp_c, 1) if temp_c is not None else None,
+            "summit_temp_c": round(summit_temp_c, 1) if summit_temp_c is not None else None,
+            "forecast": forecast,
+            "seven_day_total_cm": round(total_snow, 1),
+            "summit_seven_day_total_cm": round(summit_7day_total, 1),
+        }
+
+        resorts.append(resort)
+        time.sleep(0.3)  # Be nice to APIs
+
+    return resorts, success_count
+
+
 def main():
     """Fetch all data and output JSON."""
     logger.info("=" * 50)
@@ -645,6 +760,12 @@ def main():
     resorts, success = process_region(SWISS_SKI_AREAS, "Switzerland", get_slf_snow_depth)
     all_resorts.extend(resorts)
     stats["Switzerland"] = {"total": len(SWISS_SKI_AREAS), "success": success}
+
+    # Process Japan (OnTheSnow + Open-Meteo)
+    logger.info("\n--- Japan (OnTheSnow + Open-Meteo) ---")
+    resorts, success = process_japan_region()
+    all_resorts.extend(resorts)
+    stats["Japan"] = {"total": len(JAPAN_SKI_AREAS), "success": success}
 
     # Build output
     output = {

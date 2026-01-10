@@ -346,6 +346,19 @@ RESORT_VERTICAL_M = {
     "Jackson Hole": 1261,  # 1924m base + 1261m = 3185m summit
     # Idaho
     "Sun Valley": 1036,    # 1753m base + 1036m = 2789m summit
+    # Japan - Hokkaido
+    "Niseko United": 1048,  # 260m base + 1048m = 1308m summit
+    "Furano": 829,          # 245m base + 829m = 1074m summit
+    "Rusutsu": 600,         # 400m base + 600m = 1000m summit
+    "Kiroro": 630,          # 520m base + 630m = 1150m summit
+    # Japan - Nagano
+    "Hakuba Valley": 1071,  # 760m base + 1071m = 1831m summit
+    "Happo-One": 1071,      # 760m base + 1071m = 1831m summit (part of Hakuba)
+    "Nozawa Onsen": 1085,   # 565m base + 1085m = 1650m summit
+    "Shiga Kogen": 849,     # 1300m base + 849m = 2149m summit
+    # Japan - Niigata/Other
+    "Myoko Kogen": 1034,    # 731m base + 1034m = 1765m summit
+    "Zao Onsen": 961,       # 780m base + 961m = 1741m summit
 }
 
 # Default vertical if resort not in list
