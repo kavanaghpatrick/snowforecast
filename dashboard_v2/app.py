@@ -175,8 +175,15 @@ def main():
     rows = []
     for resort in resorts:
         daily = resort.get("forecast", [])
-        seven_day_total = resort.get("seven_day_total_cm", sum(d.get("new_snow_cm", 0) for d in daily[:7]))
+        base_total = resort.get("seven_day_total_cm", sum(d.get("new_snow_cm", 0) for d in daily[:7]))
+        summit_total = resort.get("summit_seven_day_total_cm", base_total)
         best_day, best_amount = find_best_day(daily[:7])
+
+        # Format 7-day as range if different, otherwise single value
+        if summit_total > base_total + 0.5:  # Show range if >0.5cm difference
+            snow_display = f"{base_total:.0f}-{summit_total:.0f}"
+        else:
+            snow_display = f"{base_total:.0f}"
 
         base_depth = resort.get("base_depth_cm")
         station_name = resort.get("base_depth_source", "")
@@ -188,7 +195,8 @@ def main():
 
         rows.append({
             "Resort": resort.get("name", "Unknown"),
-            "7-Day": round(seven_day_total, 1),
+            "7-Day": snow_display,
+            "_7day_sort": summit_total,  # Hidden, for sorting (use summit as "best case")
             "Best Day": best_day,
             "Base": round(base_depth, 0) if base_depth else None,
             "Location": location,
@@ -225,11 +233,8 @@ def main():
     if selected_region != "All Regions":
         df_display = df_display[df_display["_region"] == selected_region]
 
-    # Sort by 7-day snowfall (what users care about most)
-    df_display = df_display.sort_values("7-Day", ascending=False)
-
-    # Get max for color scaling
-    max_snow = df_display["7-Day"].max() if len(df_display) > 0 else 1
+    # Sort by 7-day snowfall (use hidden sort column for proper numeric sort)
+    df_display = df_display.sort_values("_7day_sort", ascending=False)
 
     # Display table with visual indicators
     st.dataframe(
@@ -238,12 +243,10 @@ def main():
         hide_index=True,
         column_config={
             "Resort": st.column_config.TextColumn("Resort", width="medium"),
-            "7-Day": st.column_config.ProgressColumn(
+            "7-Day": st.column_config.TextColumn(
                 "7-Day Snow",
-                help="Total forecasted snowfall in next 7 days (cm)",
-                format="%.0f cm",
-                min_value=0,
-                max_value=max(max_snow, 100),
+                help="Forecasted snowfall range (base-summit) in next 7 days (cm). Higher elevations typically get more snow due to colder temps.",
+                width="small"
             ),
             "Best Day": st.column_config.TextColumn(
                 "Peak Day",

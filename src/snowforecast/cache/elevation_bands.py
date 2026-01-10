@@ -315,36 +315,37 @@ def compute_elevation_bands(
 # Typical ski resort vertical drops for elevation band calculation
 # Base elevation is from SKI_AREAS_DATA, vertical is added to get summit
 RESORT_VERTICAL_M = {
-    # Washington
-    "Stevens Pass": 823,  # 2064m summit
-    "Crystal Mountain": 884,  # 2225m summit
-    "Mt. Baker": 457,  # 1737m summit
-    "Snoqualmie Pass": 610,  # 1531m summit
+    # Washington (base elevations corrected Jan 2026)
+    "Stevens Pass": 538,   # 1241m base + 538m = 1779m summit
+    "Crystal Mountain": 884,  # 1341m base + 884m = 2225m summit
+    "Mt. Baker": 483,      # 1067m base + 483m = 1550m summit
+    "Snoqualmie Pass": 601,  # 945m base + 601m = 1546m summit
     # Oregon
-    "Mt. Hood Meadows": 884,  # 2408m summit
-    "Mt. Bachelor": 1070,  # 2990m summit
-    "Timberline": 1067,  # 2896m summit
+    "Mt. Hood Meadows": 846,  # 1379m base + 846m = 2225m summit
+    "Mt. Bachelor": 843,   # 1920m base + 843m = 2763m summit
+    "Timberline": 1067,    # 1829m base + 1067m = 2896m summit
     # California
-    "Mammoth Mountain": 945,  # 3369m summit
-    "Squaw Valley": 869,  # 2759m summit
-    "Heavenly": 1067,  # 3068m summit
-    "Kirkwood": 610,  # 2987m summit
+    "Mammoth Mountain": 945,  # 2424m base + 945m = 3369m summit
+    "Palisades Tahoe": 869,  # 1890m base + 869m = 2759m summit
+    "Squaw Valley": 869,   # Alias for Palisades Tahoe
+    "Heavenly": 1162,      # 1906m base + 1162m = 3068m summit
+    "Kirkwood": 610,       # 2377m base + 610m = 2987m summit
     # Colorado
-    "Vail": 1064,  # 3540m summit
-    "Breckenridge": 884,  # 3810m summit
-    "Aspen Snowmass": 1040,  # 3513m summit
-    "Telluride": 1100,  # 3759m summit
+    "Vail": 1073,          # 2454m base + 1073m = 3527m summit
+    "Breckenridge": 988,   # 2926m base + 988m = 3914m summit
+    "Aspen Snowmass": 1190,  # 2623m base + 1190m = 3813m summit
+    "Telluride": 1172,     # 2659m base + 1172m = 3831m summit
     # Utah
-    "Park City": 945,  # 3048m summit
-    "Snowbird": 960,  # 3325m summit
-    "Alta": 671,  # 3271m summit
+    "Park City": 946,      # 2103m base + 946m = 3049m summit
+    "Snowbird": 988,       # 2365m base + 988m = 3353m summit
+    "Alta": 615,           # 2600m base + 615m = 3215m summit
     # Montana
-    "Big Sky": 1330,  # 3402m summit
-    "Whitefish": 713,  # 2176m summit
+    "Big Sky": 1113,       # 2290m base + 1113m = 3403m summit
+    "Whitefish": 772,      # 1361m base + 772m = 2133m summit
     # Wyoming
-    "Jackson Hole": 1261,  # 3185m summit
+    "Jackson Hole": 1261,  # 1924m base + 1261m = 3185m summit
     # Idaho
-    "Sun Valley": 1036,  # 2788m summit
+    "Sun Valley": 1036,    # 1753m base + 1036m = 2789m summit
 }
 
 # Default vertical if resort not in list
