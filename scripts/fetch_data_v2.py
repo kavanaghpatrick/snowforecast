@@ -230,6 +230,15 @@ ONTHESNOW_SLUGS = {
     "Zao Onsen": "yamagata/zao-onsen",
 }
 
+# snow-forecast.com slugs for Japan resorts (fallback for OnTheSnow gaps)
+SNOW_FORECAST_SLUGS = {
+    "Happo-One": "Happo-One",
+    "Nozawa Onsen": "Nozawa-Onsen",
+    "Shiga Kogen": "ShigaKogenGiant",  # Main Shiga resort
+    "Myoko Kogen": "MyokoSuginohara",  # Largest Myoko resort
+    "Zao Onsen": "Yamagata-Zao-Onsen",
+}
+
 
 def scrape_onthesnow(resort_name: str) -> tuple[float | None, str | None]:
     """Scrape OnTheSnow for resort-reported base depth.
@@ -279,6 +288,65 @@ def scrape_onthesnow(resort_name: str) -> tuple[float | None, str | None]:
         return None, None
     except (json.JSONDecodeError, KeyError, TypeError) as e:
         logger.debug(f"OnTheSnow parse error for {resort_name}: {e}")
+        return None, None
+
+
+def scrape_snow_forecast(resort_name: str) -> tuple[float | None, str | None]:
+    """Scrape snow-forecast.com for resort snow depth (fallback for Japan).
+
+    snow-forecast.com has consistent page structure with snow depth in text.
+    We extract the "top" snow depth which is most relevant for skiing.
+
+    Args:
+        resort_name: Name of the resort (must be in SNOW_FORECAST_SLUGS)
+
+    Returns:
+        (depth_cm, source) tuple, or (None, None) if scraping fails
+    """
+    slug = SNOW_FORECAST_SLUGS.get(resort_name)
+    if not slug:
+        return None, None
+
+    url = f"https://www.snow-forecast.com/resorts/{slug}/6day/top"
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+    }
+
+    try:
+        req = urllib.request.Request(url, headers=headers)
+        with urllib.request.urlopen(req, timeout=15) as response:
+            html = response.read().decode('utf-8')
+
+        # Look for snow depth pattern: "X.Xm" or "Xcm" in the snow depth section
+        # The page shows depth like "Top: 2.4m" or similar
+        # Pattern for meters (e.g., "2.4m", "1.7m")
+        match_m = re.search(r'(?:top|summit)[^0-9]*?(\d+\.?\d*)\s*m(?:eter|etre)?s?\b', html, re.IGNORECASE)
+        if match_m:
+            depth_m = float(match_m.group(1))
+            depth_cm = depth_m * 100
+            return round(depth_cm, 1), "snow-forecast.com"
+
+        # Pattern for centimeters (e.g., "240cm")
+        match_cm = re.search(r'(?:top|summit)[^0-9]*?(\d+)\s*cm\b', html, re.IGNORECASE)
+        if match_cm:
+            depth_cm = float(match_cm.group(1))
+            return round(depth_cm, 1), "snow-forecast.com"
+
+        # Fallback: look for any depth value in meters on the page
+        match_any = re.search(r'(\d+\.?\d*)\s*m\s+(?:top|at top)', html, re.IGNORECASE)
+        if match_any:
+            depth_m = float(match_any.group(1))
+            depth_cm = depth_m * 100
+            return round(depth_cm, 1), "snow-forecast.com"
+
+        logger.debug(f"snow-forecast.com: No depth pattern found for {resort_name}")
+        return None, None
+
+    except (urllib.error.URLError, urllib.error.HTTPError) as e:
+        logger.debug(f"snow-forecast.com HTTP error for {resort_name}: {e}")
+        return None, None
+    except Exception as e:
+        logger.debug(f"snow-forecast.com error for {resort_name}: {e}")
         return None, None
 
 
@@ -662,16 +730,28 @@ def process_japan_region():
     for name, lat, lon, region, elev in JAPAN_SKI_AREAS:
         logger.info(f"Processing {name} (Japan)...")
 
-        # Get base depth from OnTheSnow
+        # Get forecast from Open-Meteo first (we need it anyway)
+        forecast_data = fetch_open_meteo(lat, lon)
+
+        # Get base depth from OnTheSnow, fallback to Open-Meteo modeled
         base_depth_cm, source = scrape_onthesnow(name)
         if base_depth_cm is not None:
             logger.info(f"  OnTheSnow: {base_depth_cm}cm")
             success_count += 1
         else:
-            logger.warning(f"  OnTheSnow: No data for {name}")
-
-        # Get forecast from Open-Meteo
-        forecast_data = fetch_open_meteo(lat, lon)
+            # Use Open-Meteo's modeled snow_depth as fallback
+            if forecast_data:
+                om_depth = forecast_data.get("current", {}).get("snow_depth")
+                if om_depth is not None and om_depth > 0:
+                    # Open-Meteo returns depth in meters, convert to cm
+                    base_depth_cm = round(om_depth * 100, 1)
+                    source = "Open-Meteo (modeled)"
+                    logger.info(f"  Open-Meteo modeled: {base_depth_cm}cm")
+                    success_count += 1
+                else:
+                    logger.warning(f"  No snow depth data for {name}")
+            else:
+                logger.warning(f"  No snow depth data for {name}")
 
         forecast = []
         total_snow = 0.0
@@ -720,7 +800,7 @@ def process_japan_region():
             "elevation_m": elev,
             "summit_elevation_m": summit_elev,
             "base_depth_cm": base_depth_cm,
-            "base_depth_source": "OnTheSnow" if base_depth_cm else None,
+            "base_depth_source": source if base_depth_cm else None,
             "temp_c": round(temp_c, 1) if temp_c is not None else None,
             "summit_temp_c": round(summit_temp_c, 1) if summit_temp_c is not None else None,
             "forecast": forecast,
