@@ -179,8 +179,11 @@ def main():
         summit_total = resort.get("summit_seven_day_total_cm", base_total)
         best_day, best_amount = find_best_day(daily[:7])
 
-        # Use summit total for 7-day (best case scenario)
-        snow_7day = round(summit_total, 0)
+        # Extract daily snowfall array for sparkline (7 days)
+        daily_snow = [d.get("new_snow_cm", 0) for d in daily[:7]]
+        # Pad to 7 days if needed
+        while len(daily_snow) < 7:
+            daily_snow.append(0)
 
         base_depth = resort.get("base_depth_cm")
         station_name = resort.get("base_depth_source", "")
@@ -192,11 +195,11 @@ def main():
 
         rows.append({
             "Resort": resort.get("name", "Unknown"),
-            "7-Day": snow_7day,
+            "Forecast": daily_snow,  # Sparkline data
+            "Total": round(summit_total, 0),  # Numeric total for sorting
             "Best Day": best_day,
-            "Base": round(base_depth, 0) if base_depth else None,
+            "Snowpack": round(base_depth, 0) if base_depth else None,
             "Location": location,
-            "Elev": resort.get("elevation_m", 0),
             "_station": station_name,  # Hidden, for tooltip
             "_country": country,  # Hidden, for filtering
             "_region": region,  # Hidden, for filtering
@@ -229,45 +232,52 @@ def main():
     if selected_region != "All Regions":
         df_display = df_display[df_display["_region"] == selected_region]
 
-    # Sort by 7-day snowfall
-    df_display = df_display.sort_values("7-Day", ascending=False)
+    # Sort by total snowfall
+    df_display = df_display.sort_values("Total", ascending=False)
 
-    # Calculate max for progress bar scaling (at least 30cm to avoid tiny bars)
-    max_snow = max(df_display["7-Day"].max(), 30)
+    # Calculate max for sparkline scaling (at least 10cm per day to show small amounts)
+    all_daily = [v for row in df_display["Forecast"] for v in row]
+    max_daily = max(max(all_daily) if all_daily else 10, 10)
 
-    # Display table with visual indicators
+    # Display table with sparkline visualization
     st.dataframe(
-        df_display[["Resort", "7-Day", "Best Day", "Base", "Location", "Elev"]],
+        df_display[["Resort", "Forecast", "Total", "Best Day", "Snowpack", "Location"]],
         use_container_width=True,
         hide_index=True,
         column_config={
             "Resort": st.column_config.TextColumn("Resort", width="medium"),
-            "7-Day": st.column_config.ProgressColumn(
-                "7-Day Snow (cm)",
-                help="Forecasted snowfall in next 7 days at summit elevation",
-                format="%.0f",
-                min_value=0,
-                max_value=max_snow,
+            "Forecast": st.column_config.BarChartColumn(
+                "7-Day Forecast",
+                help="Daily snowfall forecast for next 7 days (cm). Each bar = 1 day.",
+                y_min=0,
+                y_max=max_daily,
+                width="medium",
+            ),
+            "Total": st.column_config.NumberColumn(
+                "Total",
+                help="Total forecasted snowfall (cm)",
+                format="%.0f cm",
+                width="small",
             ),
             "Best Day": st.column_config.TextColumn(
-                "Peak Day",
+                "Peak",
                 help="Day with highest forecasted snowfall",
                 width="small"
             ),
-            "Base": st.column_config.NumberColumn(
+            "Snowpack": st.column_config.NumberColumn(
                 "Snowpack",
-                help="Natural snow depth from nearby monitoring station (cm). USA: SNOTEL watershed stations. Europe: Mountain weather stations. May differ from resort-reported base depth which includes snowmaking.",
-                format="%.0f cm"
+                help="Natural snow depth from nearby monitoring station (cm). USA: SNOTEL. Europe: GeoSphere/SLF.",
+                format="%.0f cm",
+                width="small",
             ),
             "Location": st.column_config.TextColumn("Location", width="medium"),
-            "Elev": st.column_config.NumberColumn("Elevation", format="%d m", width="small"),
         },
         height=450,
     )
 
     # Compact chart section
     with st.expander("📊 Snowpack Comparison", expanded=False):
-        chart_data = df_display.set_index("Resort")["Base"].dropna().sort_values(ascending=False)
+        chart_data = df_display.set_index("Resort")["Snowpack"].dropna().sort_values(ascending=False)
         if len(chart_data) > 15:
             chart_data = chart_data.head(15)
             st.caption("Top 15 resorts by snowpack")
