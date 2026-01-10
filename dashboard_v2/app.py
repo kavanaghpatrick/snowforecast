@@ -251,8 +251,8 @@ def main():
                 width="small"
             ),
             "Base": st.column_config.NumberColumn(
-                "Base Depth",
-                help="Current snow base from nearby monitoring station (cm)",
+                "Snowpack",
+                help="Natural snow depth from nearby monitoring station (cm). USA: SNOTEL watershed stations. Europe: Mountain weather stations. May differ from resort-reported base depth which includes snowmaking.",
                 format="%.0f cm"
             ),
             "Location": st.column_config.TextColumn("Location", width="medium"),
@@ -262,18 +262,18 @@ def main():
     )
 
     # Compact chart section
-    with st.expander("📊 Base Depth Comparison", expanded=False):
+    with st.expander("📊 Snowpack Comparison", expanded=False):
         chart_data = df_display.set_index("Resort")["Base"].dropna().sort_values(ascending=False)
         if len(chart_data) > 15:
             chart_data = chart_data.head(15)
-            st.caption("Top 15 resorts by base depth")
+            st.caption("Top 15 resorts by snowpack")
         st.bar_chart(chart_data)
 
     # Compact footer
     st.divider()
     st.caption(
-        "Sources: SNOTEL (USA), GeoSphere TAWES (Austria), SLF IMIS (Switzerland), Open-Meteo (forecasts). "
-        "Base depths from nearby mountain stations. Always verify with official resort reports."
+        "Snowpack: SNOTEL (USA), GeoSphere (Austria), SLF (Switzerland) - natural snow depth, excludes snowmaking. "
+        "Forecasts: Open-Meteo. May differ from resort reports."
     )
 
 
