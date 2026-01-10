@@ -12,6 +12,7 @@ Usage:
 
 import json
 import logging
+import re
 import urllib.request
 import urllib.error
 from datetime import datetime, timedelta
@@ -145,6 +146,94 @@ SWISS_SKI_AREAS = [
     ("Arosa", 46.7594, 9.6669, "Graubünden", 2495, "ROT3", "Plang Bi"),
     ("Engelberg", 46.7711, 8.4306, "Uri", 2149, "TIT2", "Titlisboden"),
 ]
+
+# =============================================================================
+# OnTheSnow.com URL slugs for scraping resort-reported base depths
+# Pattern: https://www.onthesnow.com/{slug}/skireport
+# =============================================================================
+ONTHESNOW_SLUGS = {
+    # USA - Washington
+    "Stevens Pass": "washington/stevens-pass-resort",
+    "Crystal Mountain": "washington/crystal-mountain-wa",
+    "Mt. Baker": "washington/mt-baker",
+    "Snoqualmie Pass": "washington/the-summit-at-snoqualmie",
+    # USA - Oregon
+    "Mt. Hood Meadows": "oregon/mt-hood-meadows",
+    "Mt. Bachelor": "oregon/mt-bachelor",
+    "Timberline": "oregon/timberline-lodge",
+    # USA - California
+    "Mammoth Mountain": "california/mammoth-mountain-ski-area",
+    "Palisades Tahoe": "california/palisades-tahoe",
+    "Heavenly": "california/heavenly-mountain-resort",
+    "Kirkwood": "california/kirkwood",
+    # USA - Colorado
+    "Vail": "colorado/vail",
+    "Breckenridge": "colorado/breckenridge",
+    "Aspen Snowmass": "colorado/aspen-snowmass",
+    "Telluride": "colorado/telluride",
+    # USA - Utah
+    "Park City": "utah/park-city-mountain-resort",
+    "Snowbird": "utah/snowbird",
+    "Alta": "utah/alta-ski-area",
+    # USA - Montana
+    "Big Sky": "montana/big-sky-resort",
+    "Whitefish": "montana/whitefish-mountain-resort",
+    # USA - Wyoming
+    "Jackson Hole": "wyoming/jackson-hole",
+    # USA - Idaho
+    "Sun Valley": "idaho/sun-valley",
+}
+
+
+def scrape_onthesnow(resort_name: str) -> tuple[float | None, str | None]:
+    """Scrape OnTheSnow for resort-reported base depth.
+
+    OnTheSnow uses Next.js SSR - snow data is in <script id="__NEXT_DATA__"> JSON.
+
+    Args:
+        resort_name: Name of the resort (must be in ONTHESNOW_SLUGS)
+
+    Returns:
+        (depth_cm, source) tuple, or (None, None) if scraping fails
+    """
+    slug = ONTHESNOW_SLUGS.get(resort_name)
+    if not slug:
+        return None, None
+
+    url = f"https://www.onthesnow.com/{slug}/skireport"
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+    }
+
+    try:
+        req = urllib.request.Request(url, headers=headers)
+        with urllib.request.urlopen(req, timeout=15) as response:
+            html = response.read().decode('utf-8')
+
+        # Extract __NEXT_DATA__ JSON
+        match = re.search(r'<script id="__NEXT_DATA__"[^>]*>(.+?)</script>', html, re.DOTALL)
+        if not match:
+            logger.debug(f"OnTheSnow: No __NEXT_DATA__ for {resort_name}")
+            return None, None
+
+        data = json.loads(match.group(1))
+        resort = data.get('props', {}).get('pageProps', {}).get('fullResort', {})
+        snow = resort.get('snow', {})
+
+        # Try middle (mid-mountain), then base, then summit
+        depth = snow.get('middle') or snow.get('base') or snow.get('summit')
+
+        if depth is not None and depth > 0:
+            return round(depth, 1), "OnTheSnow"
+
+        return None, None
+
+    except (urllib.error.URLError, urllib.error.HTTPError) as e:
+        logger.debug(f"OnTheSnow HTTP error for {resort_name}: {e}")
+        return None, None
+    except (json.JSONDecodeError, KeyError, TypeError) as e:
+        logger.debug(f"OnTheSnow parse error for {resort_name}: {e}")
+        return None, None
 
 
 def get_snotel_snow_depth_single(station_id, station_name):
@@ -328,7 +417,7 @@ def fetch_open_meteo(lat: float, lon: float, retries: int = 3) -> dict | None:
 
 
 def process_us_region(ski_areas):
-    """Process US ski areas with multi-station averaging.
+    """Process US ski areas with OnTheSnow scraping + SNOTEL fallback.
 
     Args:
         ski_areas: List of (name, lat, lon, region, elev, stations_list) tuples
@@ -339,14 +428,22 @@ def process_us_region(ski_areas):
     for name, lat, lon, region, elev, stations_list in ski_areas:
         logger.info(f"Processing {name} (USA)...")
 
-        # Get weighted average from multiple SNOTEL stations
-        base_depth_cm, station_name = get_snotel_multi_station(stations_list)
+        # Try OnTheSnow scraping first (resort-reported depths)
+        base_depth_cm, source = scrape_onthesnow(name)
         if base_depth_cm is not None:
-            logger.info(f"  Station ({station_name}): {base_depth_cm}cm")
+            logger.info(f"  OnTheSnow: {base_depth_cm}cm")
             success_count += 1
         else:
-            station_name = stations_list[0][1] if stations_list else "Unknown"
-            logger.warning(f"  Station ({station_name}): No data")
+            # Fall back to SNOTEL (watershed snow sensors)
+            base_depth_cm, snotel_source = get_snotel_multi_station(stations_list)
+            if base_depth_cm is not None:
+                source = f"SNOTEL {snotel_source}"
+                logger.info(f"  SNOTEL ({snotel_source}): {base_depth_cm}cm")
+                success_count += 1
+            else:
+                source = None
+                snotel_name = stations_list[0][1] if stations_list else "Unknown"
+                logger.warning(f"  No data (tried OnTheSnow + SNOTEL {snotel_name})")
 
         # Get forecast from Open-Meteo
         forecast_data = fetch_open_meteo(lat, lon)
@@ -379,7 +476,7 @@ def process_us_region(ski_areas):
             "region": region,
             "elevation_m": elev,
             "base_depth_cm": base_depth_cm,
-            "base_depth_source": station_name if base_depth_cm is not None else None,
+            "base_depth_source": source,
             "temp_c": round(temp_c, 1) if temp_c is not None else None,
             "forecast": forecast,
             "seven_day_total_cm": round(total_snow, 1),
@@ -494,7 +591,7 @@ def main():
         "updated": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
         "sources": {
             "base_depth": {
-                "USA": "SNOTEL (nrcs.usda.gov)",
+                "USA": "OnTheSnow (onthesnow.com) + SNOTEL fallback",
                 "Austria": "GeoSphere ZAMG (geosphere.at)",
                 "Switzerland": "SLF IMIS (slf.ch)",
             },
