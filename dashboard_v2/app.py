@@ -17,40 +17,167 @@ st.set_page_config(
     layout="wide"
 )
 
-# Custom CSS for better styling
+# Custom CSS for polished styling
 st.markdown("""
 <style>
-    /* Compact header */
-    .block-container { padding-top: 1rem; }
+    /* ===== TYPOGRAPHY & BASE ===== */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-    /* Better table row visibility */
-    .stDataFrame [data-testid="stDataFrameResizable"] {
-        font-size: 14px;
+    html, body, [class*="css"] {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }
 
-    /* Mobile-friendly title */
-    @media (max-width: 768px) {
-        h1 { font-size: 1.5rem !important; }
-        .stDataFrame { font-size: 12px; }
+    /* ===== LAYOUT ===== */
+    .block-container {
+        padding-top: 1.5rem !important;
+        padding-bottom: 1rem !important;
+        max-width: 1200px !important;
     }
 
-    /* Status badge styling */
+    /* ===== HEADER ===== */
+    h1 {
+        font-weight: 700 !important;
+        letter-spacing: -0.02em !important;
+        color: #0f172a !important;
+        font-size: 2rem !important;
+    }
+
+    /* Header row alignment */
+    .header-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+    }
+
+    /* ===== STATUS BADGES (Pill Style) ===== */
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 14px;
+        border-radius: 100px;
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.01em;
+    }
+
     .status-fresh {
-        background: #d4edda;
-        color: #155724;
-        padding: 4px 12px;
-        border-radius: 12px;
-        font-size: 13px;
-        display: inline-block;
+        background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+        color: #047857;
+        border: 1px solid #a7f3d0;
+        box-shadow: 0 1px 2px rgba(4, 120, 87, 0.08);
     }
+
     .status-stale {
-        background: #fff3cd;
-        color: #856404;
-        padding: 4px 12px;
-        border-radius: 12px;
-        font-size: 13px;
-        display: inline-block;
+        background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+        color: #b45309;
+        border: 1px solid #fcd34d;
+        box-shadow: 0 1px 2px rgba(180, 83, 9, 0.08);
     }
+
+    /* ===== FILTERS ===== */
+    .stSelectbox > div > div {
+        border-radius: 8px !important;
+        border-color: #e2e8f0 !important;
+    }
+
+    .stSelectbox > div > div:hover {
+        border-color: #94a3b8 !important;
+    }
+
+    .filter-caption {
+        color: #64748b;
+        font-size: 13px;
+        padding-top: 8px;
+    }
+
+    /* ===== DATA TABLE ===== */
+    [data-testid="stDataFrame"] {
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 12px !important;
+        overflow: hidden;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+    }
+
+    [data-testid="stDataFrame"] th {
+        background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%) !important;
+        font-weight: 600 !important;
+        color: #334155 !important;
+        text-transform: uppercase;
+        font-size: 11px !important;
+        letter-spacing: 0.05em;
+        border-bottom: 2px solid #e2e8f0 !important;
+    }
+
+    /* Alternating row colors */
+    [data-testid="stDataFrame"] tr:nth-child(even) {
+        background: #f8fafc !important;
+    }
+
+    [data-testid="stDataFrame"] tr:hover {
+        background: #f1f5f9 !important;
+    }
+
+    /* Sparkline column emphasis */
+    [data-testid="stDataFrame"] td {
+        vertical-align: middle !important;
+        border-bottom: 1px solid #f1f5f9 !important;
+    }
+
+    /* ===== EXPANDER ===== */
+    .streamlit-expanderHeader {
+        font-weight: 600 !important;
+        color: #334155 !important;
+        background: #f8fafc !important;
+        border-radius: 8px !important;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer-text {
+        color: #94a3b8;
+        font-size: 12px;
+        line-height: 1.6;
+    }
+
+    /* ===== MOBILE RESPONSIVE ===== */
+    @media (max-width: 768px) {
+        .block-container {
+            padding-left: 1rem !important;
+            padding-right: 1rem !important;
+        }
+
+        h1 {
+            font-size: 1.5rem !important;
+        }
+
+        .status-badge {
+            font-size: 12px;
+            padding: 5px 10px;
+        }
+
+        /* Stack filters on mobile */
+        [data-testid="column"] {
+            min-width: 100% !important;
+        }
+
+        [data-testid="stDataFrame"] {
+            font-size: 12px;
+        }
+
+        /* Hide location column on very small screens */
+        @media (max-width: 480px) {
+            [data-testid="stDataFrame"] td:last-child,
+            [data-testid="stDataFrame"] th:last-child {
+                display: none;
+            }
+        }
+    }
+
+    /* ===== HIDE STREAMLIT BRANDING ===== */
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
 </style>
 """, unsafe_allow_html=True)
 
@@ -158,12 +285,13 @@ def main():
     is_stale, hours = check_freshness(data.get("updated", ""))
 
     with col_status:
+        st.write("")  # Vertical spacer to align with title
         if hours == float("inf"):
-            st.markdown('<span class="status-stale">⚠️ Unknown freshness</span>', unsafe_allow_html=True)
+            st.markdown('<span class="status-badge status-stale">⚠️ Unknown</span>', unsafe_allow_html=True)
         elif is_stale:
-            st.markdown(f'<span class="status-stale">⚠️ {format_time_ago(hours)}</span>', unsafe_allow_html=True)
+            st.markdown(f'<span class="status-badge status-stale">⚠️ {format_time_ago(hours)}</span>', unsafe_allow_html=True)
         else:
-            st.markdown(f'<span class="status-fresh">✓ {format_time_ago(hours)}</span>', unsafe_allow_html=True)
+            st.markdown(f'<span class="status-badge status-fresh">✓ {format_time_ago(hours)}</span>', unsafe_allow_html=True)
 
     # Build dataframe from resorts
     resorts = data.get("resorts", [])
@@ -207,15 +335,15 @@ def main():
 
     df = pd.DataFrame(rows)
 
-    # Filters in a more compact layout
-    col1, col2, col3 = st.columns([1, 1, 2])
+    # Filters with clean layout
+    col1, col2, col3 = st.columns([2, 2, 3])
 
     with col1:
-        countries = ["All"] + sorted(df["_country"].unique().tolist())
+        countries = ["All Countries"] + sorted(df["_country"].unique().tolist())
         selected_country = st.selectbox("Country", countries, label_visibility="collapsed")
 
     with col2:
-        if selected_country != "All":
+        if selected_country != "All Countries":
             available_regions = sorted(df[df["_country"] == selected_country]["_region"].unique().tolist())
         else:
             available_regions = sorted(df["_region"].unique().tolist())
@@ -223,11 +351,15 @@ def main():
         selected_region = st.selectbox("Region", regions, label_visibility="collapsed")
 
     with col3:
-        st.caption(f"Showing {len(df)} resorts across {df['_country'].nunique()} countries")
+        st.markdown(
+            f'<p class="filter-caption" style="text-align: right; margin: 0; padding-top: 10px;">'
+            f'{len(df)} resorts · {df["_country"].nunique()} countries</p>',
+            unsafe_allow_html=True
+        )
 
     # Apply filters
     df_display = df.copy()
-    if selected_country != "All":
+    if selected_country != "All Countries":
         df_display = df_display[df_display["_country"] == selected_country]
     if selected_region != "All Regions":
         df_display = df_display[df_display["_region"] == selected_region]
@@ -283,11 +415,15 @@ def main():
             st.caption("Top 15 resorts by snowpack")
         st.bar_chart(chart_data)
 
-    # Compact footer
-    st.divider()
-    st.caption(
-        "Snowpack: SNOTEL (USA), GeoSphere (Austria), SLF (Switzerland), OnTheSnow (Japan) - natural snow depth, excludes snowmaking. "
-        "Forecasts: Open-Meteo. May differ from resort reports."
+    # Footer with data sources
+    st.markdown("---")
+    st.markdown(
+        '<p class="footer-text">'
+        '<strong>Data sources:</strong> '
+        'SNOTEL (USA) · GeoSphere (Austria) · SLF (Switzerland) · tenki.jp & OnTheSnow (Japan)<br>'
+        'Forecasts via Open-Meteo. Natural snow depth only—excludes snowmaking. May differ from resort reports.'
+        '</p>',
+        unsafe_allow_html=True
     )
 
 
