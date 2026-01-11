@@ -239,6 +239,12 @@ SNOW_FORECAST_SLUGS = {
     "Zao Onsen": "Yamagata-Zao-Onsen",
 }
 
+# Resorts that share the same ski area (use data from parent resort)
+# Happo-One is the main resort within Hakuba Valley
+JAPAN_RESORT_ALIASES = {
+    "Happo-One": "Hakuba Valley",  # Happo-One is the flagship resort of Hakuba Valley
+}
+
 
 def scrape_onthesnow(resort_name: str) -> tuple[float | None, str | None]:
     """Scrape OnTheSnow for resort-reported base depth.
@@ -278,8 +284,12 @@ def scrape_onthesnow(resort_name: str) -> tuple[float | None, str | None]:
         # Try middle (mid-mountain), then base, then summit
         depth = snow.get('middle') or snow.get('base') or snow.get('summit')
 
-        if depth is not None and depth > 0:
+        # Validate: reject obviously erroneous values (>600cm = 6 meters)
+        # Example: Niseko returns 1108cm from OnTheSnow but actual is 80-235cm
+        if depth is not None and 0 < depth < 600:
             return round(depth, 1), "OnTheSnow"
+        elif depth is not None and depth >= 600:
+            logger.warning(f"OnTheSnow: Rejecting implausible depth {depth}cm for {resort_name}")
 
         return None, None
 
@@ -288,6 +298,9 @@ def scrape_onthesnow(resort_name: str) -> tuple[float | None, str | None]:
         return None, None
     except (json.JSONDecodeError, KeyError, TypeError) as e:
         logger.debug(f"OnTheSnow parse error for {resort_name}: {e}")
+        return None, None
+    except (TimeoutError, OSError) as e:
+        logger.debug(f"OnTheSnow timeout for {resort_name}: {e}")
         return None, None
 
 
@@ -733,24 +746,25 @@ def process_japan_region():
         # Get forecast from Open-Meteo first (we need it anyway)
         forecast_data = fetch_open_meteo(lat, lon)
 
-        # Get base depth from OnTheSnow, fallback to Open-Meteo modeled
+        # Get base depth from OnTheSnow
+        # Note: Open-Meteo modeled snow_depth is unreliable for mountains (7-8x errors)
         base_depth_cm, source = scrape_onthesnow(name)
         if base_depth_cm is not None:
             logger.info(f"  OnTheSnow: {base_depth_cm}cm")
             success_count += 1
         else:
-            # Use Open-Meteo's modeled snow_depth as fallback
-            if forecast_data:
-                om_depth = forecast_data.get("current", {}).get("snow_depth")
-                if om_depth is not None and om_depth > 0:
-                    # Open-Meteo returns depth in meters, convert to cm
-                    base_depth_cm = round(om_depth * 100, 1)
-                    source = "Open-Meteo (modeled)"
-                    logger.info(f"  Open-Meteo modeled: {base_depth_cm}cm")
+            # Try alias resort (e.g., Happo-One → Hakuba Valley)
+            alias = JAPAN_RESORT_ALIASES.get(name)
+            if alias:
+                base_depth_cm, _ = scrape_onthesnow(alias)
+                if base_depth_cm is not None:
+                    source = f"OnTheSnow ({alias})"
+                    logger.info(f"  OnTheSnow (via {alias}): {base_depth_cm}cm")
                     success_count += 1
                 else:
                     logger.warning(f"  No snow depth data for {name}")
             else:
+                # No fallback - better to show no data than garbage modeled data
                 logger.warning(f"  No snow depth data for {name}")
 
         forecast = []
