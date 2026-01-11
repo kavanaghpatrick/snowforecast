@@ -245,6 +245,26 @@ JAPAN_RESORT_ALIASES = {
     "Happo-One": "Hakuba Valley",  # Happo-One is the flagship resort of Hakuba Valley
 }
 
+# tenki.jp resort IDs - reliable Japanese source with server-rendered HTML
+# URL pattern: https://tenki.jp/season/ski/{region}/{prefecture}/{resort_id}/
+# Updates twice daily at 9:00 and 15:00 JST
+TENKI_JP_RESORTS = {
+    # Hokkaido (region=1, prefecture=2)
+    "Niseko United": "1/2/11708",      # Niseko Grand Hirafu
+    "Furano": "1/2/11717",             # Furano Ski Resort
+    "Rusutsu": "1/2/11718",            # Rusutsu Resort
+    "Kiroro": "1/2/11711",             # Kiroro Snow World
+    # Nagano (region=3, prefecture=23)
+    "Hakuba Valley": "3/23/15101",     # Hakuba Goryu
+    "Happo-One": "3/23/15100",         # Hakuba Happo-One
+    "Nozawa Onsen": "3/23/15115",      # Nozawa Onsen
+    "Shiga Kogen": "3/23/15123",       # Shiga Kogen Yokoteyama
+    # Niigata (region=4, prefecture=18)
+    "Myoko Kogen": "4/18/13142",       # Myoko Suginohara
+    # Yamagata (region=2, prefecture=9)
+    "Zao Onsen": "2/9/15191",          # Zao Onsen
+}
+
 
 def scrape_onthesnow(resort_name: str) -> tuple[float | None, str | None]:
     """Scrape OnTheSnow for resort-reported base depth.
@@ -360,6 +380,72 @@ def scrape_snow_forecast(resort_name: str) -> tuple[float | None, str | None]:
         return None, None
     except Exception as e:
         logger.debug(f"snow-forecast.com error for {resort_name}: {e}")
+        return None, None
+
+
+def scrape_tenki_jp(resort_name: str) -> tuple[float | None, str | None]:
+    """Scrape tenki.jp for Japanese ski resort snow depth.
+
+    tenki.jp uses server-rendered HTML (no JS needed) with consistent structure.
+    Updates twice daily at 9:00 and 15:00 JST.
+
+    Args:
+        resort_name: Name of the resort (must be in TENKI_JP_RESORTS)
+
+    Returns:
+        (depth_cm, source) tuple, or (None, None) if scraping fails
+    """
+    resort_path = TENKI_JP_RESORTS.get(resort_name)
+    if not resort_path:
+        return None, None
+
+    url = f"https://tenki.jp/season/ski/{resort_path}/"
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36",
+        "Accept-Language": "ja,en;q=0.9",
+    }
+
+    try:
+        req = urllib.request.Request(url, headers=headers)
+        with urllib.request.urlopen(req, timeout=15) as response:
+            html = response.read().decode('utf-8')
+
+        # Look for 積雪 (sekisetsu = snow depth) patterns
+        # Primary: <div class="depth">積雪<br><span>135cm</span></div>
+        match = re.search(r'class="depth">積雪<br><span>(\d+)cm</span>', html)
+        if match:
+            depth_cm = float(match.group(1))
+            if 0 < depth_cm < 600:
+                return depth_cm, "tenki.jp"
+            else:
+                logger.warning(f"tenki.jp: Rejecting implausible depth {depth_cm}cm for {resort_name}")
+                return None, None
+
+        # Alternative: 積雪<br>XXXcm (without span)
+        match_alt = re.search(r'積雪<br>(\d+)cm', html)
+        if match_alt:
+            depth_cm = float(match_alt.group(1))
+            if 0 < depth_cm < 600:
+                return depth_cm, "tenki.jp"
+
+        # Fallback: 積雪 followed by number somewhere
+        match_fallback = re.search(r'積雪[^0-9]*(\d+)\s*cm', html)
+        if match_fallback:
+            depth_cm = float(match_fallback.group(1))
+            if 0 < depth_cm < 600:
+                return depth_cm, "tenki.jp"
+
+        logger.debug(f"tenki.jp: No snow depth found for {resort_name}")
+        return None, None
+
+    except (urllib.error.URLError, urllib.error.HTTPError) as e:
+        logger.debug(f"tenki.jp HTTP error for {resort_name}: {e}")
+        return None, None
+    except (TimeoutError, OSError) as e:
+        logger.debug(f"tenki.jp timeout for {resort_name}: {e}")
+        return None, None
+    except Exception as e:
+        logger.debug(f"tenki.jp error for {resort_name}: {e}")
         return None, None
 
 
@@ -746,7 +832,10 @@ def process_japan_region():
         # Get forecast from Open-Meteo first (we need it anyway)
         forecast_data = fetch_open_meteo(lat, lon)
 
-        # Get base depth from OnTheSnow
+        # Get base depth - try sources in order of reliability:
+        # 1. OnTheSnow (resort-reported)
+        # 2. OnTheSnow via alias (e.g., Happo-One → Hakuba Valley)
+        # 3. tenki.jp (Japanese weather service)
         # Note: Open-Meteo modeled snow_depth is unreliable for mountains (7-8x errors)
         base_depth_cm, source = scrape_onthesnow(name)
         if base_depth_cm is not None:
@@ -761,11 +850,15 @@ def process_japan_region():
                     source = f"OnTheSnow ({alias})"
                     logger.info(f"  OnTheSnow (via {alias}): {base_depth_cm}cm")
                     success_count += 1
+
+            # Fallback to tenki.jp (Japanese weather service)
+            if base_depth_cm is None:
+                base_depth_cm, source = scrape_tenki_jp(name)
+                if base_depth_cm is not None:
+                    logger.info(f"  tenki.jp: {base_depth_cm}cm")
+                    success_count += 1
                 else:
                     logger.warning(f"  No snow depth data for {name}")
-            else:
-                # No fallback - better to show no data than garbage modeled data
-                logger.warning(f"  No snow depth data for {name}")
 
         forecast = []
         total_snow = 0.0
