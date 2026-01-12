@@ -20,15 +20,18 @@ from datetime import datetime, timedelta
 from pathlib import Path
 import time
 
-# Add parent directory to path for snowforecast imports
-sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
+# Import elevation_bands directly to avoid triggering cache/__init__.py dependencies
+# (which requires duckdb, pydantic, etc. that aren't needed for this script)
+import importlib.util
+_eb_path = Path(__file__).parent.parent / "src" / "snowforecast" / "cache" / "elevation_bands.py"
+_eb_spec = importlib.util.spec_from_file_location("elevation_bands", _eb_path)
+_eb_module = importlib.util.module_from_spec(_eb_spec)
+_eb_spec.loader.exec_module(_eb_module)
 
-from snowforecast.cache.elevation_bands import (
-    get_summit_elevation,
-    apply_lapse_rate,
-    get_precip_type,
-    adjust_new_snow,
-)
+get_summit_elevation = _eb_module.get_summit_elevation
+apply_lapse_rate = _eb_module.apply_lapse_rate
+get_precip_type = _eb_module.get_precip_type
+adjust_new_snow = _eb_module.adjust_new_snow
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger(__name__)

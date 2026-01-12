@@ -23,7 +23,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install metloom pandas geopandas shapely duckdb
+          pip install metloom pandas
 
       - name: Fetch forecast data
         run: python scripts/fetch_data_v2.py
