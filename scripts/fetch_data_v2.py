@@ -183,6 +183,57 @@ JAPAN_SKI_AREAS = [
 ]
 
 # =============================================================================
+# FRANCE - OnTheSnow for snow depth + Open-Meteo for forecasts
+# Format: (name, lat, lon, region, elevation_m)
+# =============================================================================
+FRANCE_SKI_AREAS = [
+    # Northern Alps (Savoie / Haute-Savoie)
+    ("Val Thorens", 45.2922, 6.5747, "Northern Alps", 2300),
+    ("Les Arcs", 45.5427, 6.7587, "Northern Alps", 1200),
+    ("Val d'Isère", 45.4485, 6.9802, "Northern Alps", 1850),
+    ("Les Menuires", 45.3200, 6.5300, "Northern Alps", 1850),
+    ("Avoriaz", 46.1878, 6.7717, "Northern Alps", 1800),
+    ("La Plagne", 45.5064, 6.6772, "Northern Alps", 1250),
+    ("Courchevel", 45.4154, 6.6349, "Northern Alps", 1300),
+    ("Chamonix", 45.9238, 6.8693, "Northern Alps", 1035),
+    ("Morzine", 46.1792, 6.7089, "Northern Alps", 1000),
+    ("Tignes", 45.4686, 6.9063, "Northern Alps", 1550),
+    ("Méribel", 45.4010, 6.5655, "Northern Alps", 1100),
+    ("Megève", 45.8569, 6.6178, "Northern Alps", 1113),
+    ("La Clusaz", 45.9050, 6.4239, "Northern Alps", 1050),
+    ("Flaine", 46.0067, 6.6895, "Northern Alps", 1600),
+    ("Les Gets", 46.1577, 6.6694, "Northern Alps", 1172),
+    # Southern Alps (Isère / Hautes-Alpes)
+    ("Alpe d'Huez", 45.0500, 6.0333, "Southern Alps", 1125),
+    ("Les 2 Alpes", 45.0043, 6.1197, "Southern Alps", 1280),
+    ("Serre Chevalier", 44.9400, 6.5667, "Southern Alps", 1200),
+    ("Vars", 44.5938, 6.6899, "Southern Alps", 1650),
+    ("Isola 2000", 44.1866, 7.1579, "Southern Alps", 1800),
+]
+
+# =============================================================================
+# SPAIN - OnTheSnow for snow depth + Open-Meteo for forecasts
+# Format: (name, lat, lon, region, elevation_m)
+# =============================================================================
+SPAIN_SKI_AREAS = [
+    # Pyrenees
+    ("Baqueira-Beret", 42.701, 0.971, "Pyrenees", 1500),
+    ("Formigal", 42.774, -0.361, "Pyrenees", 1500),
+    ("Boí Taüll", 42.473, 0.821, "Pyrenees", 2020),
+    ("Candanchú", 42.788, -0.528, "Pyrenees", 1560),
+    ("La Molina", 42.344, 1.957, "Pyrenees", 1700),
+    ("Masella", 42.351, 1.901, "Pyrenees", 1600),
+    ("Cerler", 42.593, 0.538, "Pyrenees", 1500),
+    ("Astún", 42.810, -0.506, "Pyrenees", 1700),
+    ("Panticosa", 42.747, -0.358, "Pyrenees", 1500),
+    ("Vallter 2000", 42.427, 2.265, "Pyrenees", 1959),
+    ("Port Ainé", 42.421, 1.212, "Pyrenees", 1650),
+    ("Espot Esquí", 42.564, 1.094, "Pyrenees", 1510),
+    # Sierra Nevada (Andalusia)
+    ("Sierra Nevada", 37.095, -3.400, "Sierra Nevada", 2100),
+]
+
+# =============================================================================
 # OnTheSnow.com URL slugs for scraping resort-reported base depths
 # Pattern: https://www.onthesnow.com/{slug}/skireport
 # =============================================================================
@@ -231,6 +282,43 @@ ONTHESNOW_SLUGS = {
     "Myoko Kogen": "niigata/myoko-kogen",
     # Japan - Yamagata
     "Zao Onsen": "yamagata/zao-onsen",
+    # France - Northern Alps
+    "Val Thorens": "france/val-thorens",
+    "Les Arcs": "france/les-arcs-bourg-st-maurice",
+    "Val d'Isère": "france/val-disere",
+    "Les Menuires": "france/les-menuires",
+    "Avoriaz": "france/avoriaz",
+    "La Plagne": "france/la-plagne",
+    "Courchevel": "france/courchevel",
+    "Chamonix": "france/chamonix-mont-blanc",
+    "Morzine": "france/morzine",
+    "Tignes": "france/tignes",
+    "Méribel": "france/meribel",
+    "Megève": "france/megeve",
+    "La Clusaz": "france/la-clusaz",
+    "Flaine": "france/flaine",
+    "Les Gets": "france/les-gets",
+    # France - Southern Alps
+    "Alpe d'Huez": "france/alpe-dhuez",
+    "Les 2 Alpes": "france/les-2-alpes",
+    "Serre Chevalier": "france/serre-chevalier",
+    "Vars": "france/vars",
+    "Isola 2000": "france/isola-2000",
+    # Spain - Pyrenees
+    "Baqueira-Beret": "spain/baqueira-beret",
+    "Formigal": "spain/formigal",
+    "Boí Taüll": "spain/boi-tauell",
+    "Candanchú": "spain/candanchu",
+    "La Molina": "spain/la-molina",
+    "Masella": "spain/masella",
+    "Cerler": "spain/cerler",
+    "Astún": "spain/astun",
+    "Panticosa": "spain/panticosa",
+    "Vallter 2000": "spain/vallter-2000",
+    "Port Ainé": "spain/port-aine",
+    "Espot Esquí": "spain/espot-esqui",
+    # Spain - Sierra Nevada
+    "Sierra Nevada": "spain/sierra-nevada",
 }
 
 # snow-forecast.com slugs for Japan resorts (fallback for OnTheSnow gaps)
@@ -924,6 +1012,94 @@ def process_japan_region():
     return resorts, success_count
 
 
+def process_onthesnow_region(ski_areas, country):
+    """Process a region using OnTheSnow for snow depth + Open-Meteo for forecasts.
+
+    This is a generic function for regions without dedicated weather station APIs
+    (France, Spain, etc.). Uses OnTheSnow.com for resort-reported snow depths.
+
+    Args:
+        ski_areas: List of (name, lat, lon, region, elev) tuples
+        country: Country name for output
+    """
+    resorts = []
+    success_count = 0
+
+    for name, lat, lon, region, elev in ski_areas:
+        logger.info(f"Processing {name} ({country})...")
+
+        # Get forecast from Open-Meteo
+        forecast_data = fetch_open_meteo(lat, lon)
+
+        # Get base depth from OnTheSnow (resort-reported)
+        base_depth_cm, source = scrape_onthesnow(name)
+        if base_depth_cm is not None:
+            logger.info(f"  OnTheSnow: {base_depth_cm}cm")
+            success_count += 1
+        else:
+            logger.warning(f"  No snow depth data for {name}")
+
+        forecast = []
+        total_snow = 0.0
+        temp_c = None
+
+        if forecast_data:
+            temp_c = forecast_data.get("current", {}).get("temperature_2m")
+            daily = forecast_data.get("daily", {})
+            dates = daily.get("time", [])
+            snowfall = daily.get("snowfall_sum", [])
+
+            for i, (date_str, snow_cm) in enumerate(zip(dates, snowfall)):
+                snow_val = snow_cm if snow_cm else 0.0
+                total_snow += snow_val
+                forecast.append({
+                    "day": i,
+                    "date": date_str,
+                    "new_snow_cm": round(snow_val, 1),
+                    "source": "open-meteo",
+                })
+
+        # Calculate summit elevation and temperature
+        summit_elev = get_summit_elevation(name, elev)
+        summit_temp_c = None
+        if temp_c is not None:
+            summit_temp_c = apply_lapse_rate(temp_c, elev, summit_elev)
+
+        # Calculate 7-day summit snowfall using lapse rate physics
+        summit_7day_total = 0.0
+        if summit_temp_c is not None:
+            for day_forecast in forecast:
+                base_snow = day_forecast.get("new_snow_cm", 0)
+                has_precip = base_snow > 0
+                precip_type = get_precip_type(summit_temp_c, has_precip)
+                summit_snow = adjust_new_snow(base_snow, summit_temp_c, precip_type)
+                summit_7day_total += summit_snow
+        else:
+            summit_7day_total = total_snow
+
+        resort = {
+            "name": name,
+            "lat": lat,
+            "lon": lon,
+            "country": country,
+            "region": region,
+            "elevation_m": elev,
+            "summit_elevation_m": summit_elev,
+            "base_depth_cm": base_depth_cm,
+            "base_depth_source": source if base_depth_cm else None,
+            "temp_c": round(temp_c, 1) if temp_c is not None else None,
+            "summit_temp_c": round(summit_temp_c, 1) if summit_temp_c is not None else None,
+            "forecast": forecast,
+            "seven_day_total_cm": round(total_snow, 1),
+            "summit_seven_day_total_cm": round(summit_7day_total, 1),
+        }
+
+        resorts.append(resort)
+        time.sleep(0.3)  # Be nice to APIs
+
+    return resorts, success_count
+
+
 def main():
     """Fetch all data and output JSON."""
     logger.info("=" * 50)
@@ -957,6 +1133,18 @@ def main():
     all_resorts.extend(resorts)
     stats["Japan"] = {"total": len(JAPAN_SKI_AREAS), "success": success}
 
+    # Process France (OnTheSnow + Open-Meteo)
+    logger.info("\n--- France (OnTheSnow + Open-Meteo) ---")
+    resorts, success = process_onthesnow_region(FRANCE_SKI_AREAS, "France")
+    all_resorts.extend(resorts)
+    stats["France"] = {"total": len(FRANCE_SKI_AREAS), "success": success}
+
+    # Process Spain (OnTheSnow + Open-Meteo)
+    logger.info("\n--- Spain (OnTheSnow + Open-Meteo) ---")
+    resorts, success = process_onthesnow_region(SPAIN_SKI_AREAS, "Spain")
+    all_resorts.extend(resorts)
+    stats["Spain"] = {"total": len(SPAIN_SKI_AREAS), "success": success}
+
     # Build output
     output = {
         "updated": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
@@ -965,6 +1153,9 @@ def main():
                 "USA": "OnTheSnow (onthesnow.com) + SNOTEL fallback",
                 "Austria": "GeoSphere ZAMG (geosphere.at)",
                 "Switzerland": "SLF IMIS (slf.ch)",
+                "Japan": "OnTheSnow (onthesnow.com) + tenki.jp fallback",
+                "France": "OnTheSnow (onthesnow.com)",
+                "Spain": "OnTheSnow (onthesnow.com)",
             },
             "forecast": "Open-Meteo (open-meteo.com)",
         },

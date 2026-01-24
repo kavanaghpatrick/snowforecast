@@ -359,6 +359,43 @@ RESORT_VERTICAL_M = {
     # Japan - Niigata/Other
     "Myoko Kogen": 1034,    # 731m base + 1034m = 1765m summit
     "Zao Onsen": 961,       # 780m base + 961m = 1741m summit
+    # France - Northern Alps
+    "Val Thorens": 930,     # 2300m base + 930m = 3230m summit (highest in Europe)
+    "Les Arcs": 1030,       # 1200m base + 1030m = 2230m summit
+    "Val d'Isère": 950,     # 1850m base + 950m = 2800m summit
+    "Les Menuires": 850,    # 1850m base + 850m = 2700m summit
+    "Avoriaz": 500,         # 1800m base + 500m = 2300m summit
+    "La Plagne": 1050,      # 1250m base + 1050m = 2300m summit
+    "Courchevel": 1547,     # 1300m base + 1547m = 2847m summit
+    "Chamonix": 2765,       # 1035m base + 2765m = 3800m summit (Aiguille du Midi)
+    "Morzine": 1000,        # 1000m base + 1000m = 2000m summit
+    "Tignes": 1000,         # 1550m base + 1000m = 2550m summit (glacier to 3456m)
+    "Méribel": 1750,        # 1100m base + 1750m = 2850m summit
+    "Megève": 687,          # 1113m base + 687m = 1800m summit
+    "La Clusaz": 1350,      # 1050m base + 1350m = 2400m summit
+    "Flaine": 900,          # 1600m base + 900m = 2500m summit
+    "Les Gets": 428,        # 1172m base + 428m = 1600m summit
+    # France - Southern Alps
+    "Alpe d'Huez": 2105,    # 1125m base + 2105m = 3230m summit (Pic Blanc)
+    "Les 2 Alpes": 2250,    # 1280m base + 2250m = 3530m summit (glacier)
+    "Serre Chevalier": 1300,  # 1200m base + 1300m = 2500m summit
+    "Vars": 800,            # 1650m base + 800m = 2450m summit
+    "Isola 2000": 430,      # 1800m base + 430m = 2230m summit
+    # Spain - Pyrenees
+    "Baqueira-Beret": 1110, # 1500m base + 1110m = 2610m summit
+    "Formigal": 750,        # 1500m base + 750m = 2250m summit
+    "Boí Taüll": 520,       # 2020m base + 520m = 2540m summit (highest base in Spain)
+    "Candanchú": 540,       # 1560m base + 540m = 2100m summit
+    "La Molina": 537,       # 1700m base + 537m = 2237m summit
+    "Masella": 735,         # 1600m base + 735m = 2335m summit
+    "Cerler": 1130,         # 1500m base + 1130m = 2630m summit
+    "Astún": 300,           # 1700m base + 300m = 2000m summit
+    "Panticosa": 680,       # 1500m base + 680m = 2180m summit
+    "Vallter 2000": 336,    # 1959m base + 336m = 2295m summit
+    "Port Ainé": 640,       # 1650m base + 640m = 2290m summit
+    "Espot Esquí": 600,     # 1510m base + 600m = 2110m summit
+    # Spain - Sierra Nevada
+    "Sierra Nevada": 1180,  # 2100m base + 1180m = 3280m summit (highest in Spain)
 }
 
 # Default vertical if resort not in list
