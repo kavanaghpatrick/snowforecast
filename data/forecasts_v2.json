@@ -1,5 +1,5 @@
 {
-  "updated": "2026-02-20T06:54:06Z",
+  "updated": "2026-02-20T12:47:14Z",
   "sources": {
     "base_depth": {
       "USA": "OnTheSnow (onthesnow.com) + SNOTEL fallback",
@@ -22,54 +22,54 @@
       "summit_elevation_m": 1776,
       "base_depth_cm": 152.4,
       "base_depth_source": "OnTheSnow",
-      "temp_c": -12.0,
-      "summit_temp_c": -15.5,
+      "temp_c": -13.0,
+      "summit_temp_c": -16.5,
       "forecast": [
         {
           "day": 0,
-          "date": "2026-02-19",
-          "new_snow_cm": 0.3,
-          "source": "open-meteo"
-        },
-        {
-          "day": 1,
           "date": "2026-02-20",
           "new_snow_cm": 0.0,
           "source": "open-meteo"
         },
         {
-          "day": 2,
+          "day": 1,
           "date": "2026-02-21",
-          "new_snow_cm": 0.6,
+          "new_snow_cm": 0.1,
+          "source": "open-meteo"
+        },
+        {
+          "day": 2,
+          "date": "2026-02-22",
+          "new_snow_cm": 4.1,
           "source": "open-meteo"
         },
         {
           "day": 3,
-          "date": "2026-02-22",
-          "new_snow_cm": 6.0,
+          "date": "2026-02-23",
+          "new_snow_cm": 15.5,
           "source": "open-meteo"
         },
         {
           "day": 4,
-          "date": "2026-02-23",
-          "new_snow_cm": 13.7,
+          "date": "2026-02-24",
+          "new_snow_cm": 5.7,
           "source": "open-meteo"
         },
         {
           "day": 5,
-          "date": "2026-02-24",
-          "new_snow_cm": 7.1,
+          "date": "2026-02-25",
+          "new_snow_cm": 1.1,
           "source": "open-meteo"
         },
         {
           "day": 6,
-          "date": "2026-02-25",
-          "new_snow_cm": 1.5,
+          "date": "2026-02-26",
+          "new_snow_cm": 0.2,
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 29.1,
-      "summit_seven_day_total_cm": 38.0
+      "seven_day_total_cm": 26.7,
+      "summit_seven_day_total_cm": 34.7
     },
     {
       "name": "Crystal Mountain",
@@ -81,54 +81,54 @@
       "summit_elevation_m": 2225,
       "base_depth_cm": 114,
       "base_depth_source": "OnTheSnow",
-      "temp_c": -14.2,
-      "summit_temp_c": -19.9,
+      "temp_c": -13.5,
+      "summit_temp_c": -19.2,
       "forecast": [
         {
           "day": 0,
-          "date": "2026-02-19",
-          "new_snow_cm": 0.7,
-          "source": "open-meteo"
-        },
-        {
-          "day": 1,
           "date": "2026-02-20",
           "new_snow_cm": 0.0,
           "source": "open-meteo"
         },
         {
-          "day": 2,
+          "day": 1,
           "date": "2026-02-21",
-          "new_snow_cm": 4.4,
+          "new_snow_cm": 7.7,
+          "source": "open-meteo"
+        },
+        {
+          "day": 2,
+          "date": "2026-02-22",
+          "new_snow_cm": 9.7,
           "source": "open-meteo"
         },
         {
           "day": 3,
-          "date": "2026-02-22",
-          "new_snow_cm": 8.5,
+          "date": "2026-02-23",
+          "new_snow_cm": 19.0,
           "source": "open-meteo"
         },
         {
           "day": 4,
-          "date": "2026-02-23",
-          "new_snow_cm": 20.9,
+          "date": "2026-02-24",
+          "new_snow_cm": 5.1,
           "source": "open-meteo"
         },
         {
           "day": 5,
-          "date": "2026-02-24",
-          "new_snow_cm": 5.8,
+          "date": "2026-02-25",
+          "new_snow_cm": 0.0,
           "source": "open-meteo"
         },
         {
           "day": 6,
-          "date": "2026-02-25",
-          "new_snow_cm": 0.7,
+          "date": "2026-02-26",
+          "new_snow_cm": 0.0,
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 41.1,
-      "summit_seven_day_total_cm": 53.3
+      "seven_day_total_cm": 41.5,
+      "summit_seven_day_total_cm": 53.9
     },
     {
       "name": "Mt. Baker",
@@ -140,54 +140,54 @@
       "summit_elevation_m": 1550,
       "base_depth_cm": 215.9,
       "base_depth_source": "OnTheSnow",
-      "temp_c": -12.9,
-      "summit_temp_c": -16.0,
+      "temp_c": -14.3,
+      "summit_temp_c": -17.4,
       "forecast": [
         {
           "day": 0,
-          "date": "2026-02-19",
+          "date": "2026-02-20",
           "new_snow_cm": 0.1,
           "source": "open-meteo"
         },
         {
           "day": 1,
-          "date": "2026-02-20",
-          "new_snow_cm": 1.8,
+          "date": "2026-02-21",
+          "new_snow_cm": 4.1,
           "source": "open-meteo"
         },
         {
           "day": 2,
-          "date": "2026-02-21",
-          "new_snow_cm": 4.0,
+          "date": "2026-02-22",
+          "new_snow_cm": 6.1,
           "source": "open-meteo"
         },
         {
           "day": 3,
-          "date": "2026-02-22",
-          "new_snow_cm": 5.5,
+          "date": "2026-02-23",
+          "new_snow_cm": 12.5,
           "source": "open-meteo"
         },
         {
           "day": 4,
-          "date": "2026-02-23",
-          "new_snow_cm": 8.6,
+          "date": "2026-02-24",
+          "new_snow_cm": 12.4,
           "source": "open-meteo"
         },
         {
           "day": 5,
-          "date": "2026-02-24",
-          "new_snow_cm": 18.8,
+          "date": "2026-02-25",
+          "new_snow_cm": 1.8,
           "source": "open-meteo"
         },
         {
           "day": 6,
-          "date": "2026-02-25",
-          "new_snow_cm": 3.0,
+          "date": "2026-02-26",
+          "new_snow_cm": 3.4,
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 41.8,
-      "summit_seven_day_total_cm": 54.3
+      "seven_day_total_cm": 40.3,
+      "summit_seven_day_total_cm": 52.5
     },
     {
       "name": "Snoqualmie Pass",
@@ -199,54 +199,54 @@
       "summit_elevation_m": 1546,
       "base_depth_cm": 132,
       "base_depth_source": "OnTheSnow",
-      "temp_c": -6.1,
-      "summit_temp_c": -10.0,
+      "temp_c": -7.4,
+      "summit_temp_c": -11.3,
       "forecast": [
         {
           "day": 0,
-          "date": "2026-02-19",
-          "new_snow_cm": 0.1,
-          "source": "open-meteo"
-        },
-        {
-          "day": 1,
           "date": "2026-02-20",
           "new_snow_cm": 0.0,
           "source": "open-meteo"
         },
         {
-          "day": 2,
+          "day": 1,
           "date": "2026-02-21",
-          "new_snow_cm": 2.0,
+          "new_snow_cm": 1.9,
+          "source": "open-meteo"
+        },
+        {
+          "day": 2,
+          "date": "2026-02-22",
+          "new_snow_cm": 3.5,
           "source": "open-meteo"
         },
         {
           "day": 3,
-          "date": "2026-02-22",
-          "new_snow_cm": 2.7,
+          "date": "2026-02-23",
+          "new_snow_cm": 12.9,
           "source": "open-meteo"
         },
         {
           "day": 4,
-          "date": "2026-02-23",
-          "new_snow_cm": 7.1,
+          "date": "2026-02-24",
+          "new_snow_cm": 8.7,
           "source": "open-meteo"
         },
         {
           "day": 5,
-          "date": "2026-02-24",
-          "new_snow_cm": 3.4,
+          "date": "2026-02-25",
+          "new_snow_cm": 2.0,
           "source": "open-meteo"
         },
         {
           "day": 6,
-          "date": "2026-02-25",
-          "new_snow_cm": 2.8,
+          "date": "2026-02-26",
+          "new_snow_cm": 0.2,
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 18.1,
-      "summit_seven_day_total_cm": 23.5
+      "seven_day_total_cm": 29.1,
+      "summit_seven_day_total_cm": 38.0
     },
     {
       "name": "Mt. Hood Meadows",
@@ -258,54 +258,54 @@
       "summit_elevation_m": 2225,
       "base_depth_cm": 167.6,
       "base_depth_source": "OnTheSnow",
-      "temp_c": -10.1,
-      "summit_temp_c": -15.6,
+      "temp_c": -10.5,
+      "summit_temp_c": -16.0,
       "forecast": [
         {
           "day": 0,
-          "date": "2026-02-19",
-          "new_snow_cm": 1.3,
-          "source": "open-meteo"
-        },
-        {
-          "day": 1,
           "date": "2026-02-20",
           "new_snow_cm": 0.0,
           "source": "open-meteo"
         },
         {
-          "day": 2,
+          "day": 1,
           "date": "2026-02-21",
-          "new_snow_cm": 9.3,
+          "new_snow_cm": 14.8,
           "source": "open-meteo"
         },
         {
-          "day": 3,
+          "day": 2,
           "date": "2026-02-22",
           "new_snow_cm": 0.4,
           "source": "open-meteo"
         },
         {
-          "day": 4,
+          "day": 3,
           "date": "2026-02-23",
-          "new_snow_cm": 0.3,
+          "new_snow_cm": 0.4,
+          "source": "open-meteo"
+        },
+        {
+          "day": 4,
+          "date": "2026-02-24",
+          "new_snow_cm": 2.4,
           "source": "open-meteo"
         },
         {
           "day": 5,
-          "date": "2026-02-24",
-          "new_snow_cm": 1.8,
+          "date": "2026-02-25",
+          "new_snow_cm": 0.0,
           "source": "open-meteo"
         },
         {
           "day": 6,
-          "date": "2026-02-25",
-          "new_snow_cm": 1.3,
+          "date": "2026-02-26",
+          "new_snow_cm": 0.0,
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 14.5,
-      "summit_seven_day_total_cm": 18.7
+      "seven_day_total_cm": 18.0,
+      "summit_seven_day_total_cm": 23.4
     },
     {
       "name": "Mt. Bachelor",
@@ -317,54 +317,54 @@
       "summit_elevation_m": 2763,
       "base_depth_cm": 119.4,
       "base_depth_source": "OnTheSnow",
-      "temp_c": -16.6,
-      "summit_temp_c": -22.1,
+      "temp_c": -18.4,
+      "summit_temp_c": -23.9,
       "forecast": [
         {
           "day": 0,
-          "date": "2026-02-19",
-          "new_snow_cm": 0.5,
-          "source": "open-meteo"
-        },
-        {
-          "day": 1,
           "date": "2026-02-20",
           "new_snow_cm": 0.0,
           "source": "open-meteo"
         },
         {
-          "day": 2,
+          "day": 1,
           "date": "2026-02-21",
-          "new_snow_cm": 6.3,
+          "new_snow_cm": 6.4,
+          "source": "open-meteo"
+        },
+        {
+          "day": 2,
+          "date": "2026-02-22",
+          "new_snow_cm": 2.2,
           "source": "open-meteo"
         },
         {
           "day": 3,
-          "date": "2026-02-22",
-          "new_snow_cm": 0.8,
+          "date": "2026-02-23",
+          "new_snow_cm": 0.9,
           "source": "open-meteo"
         },
         {
           "day": 4,
-          "date": "2026-02-23",
-          "new_snow_cm": 2.0,
+          "date": "2026-02-24",
+          "new_snow_cm": 0.7,
           "source": "open-meteo"
         },
         {
           "day": 5,
-          "date": "2026-02-24",
-          "new_snow_cm": 1.4,
+          "date": "2026-02-25",
+          "new_snow_cm": 0.0,
           "source": "open-meteo"
         },
         {
           "day": 6,
-          "date": "2026-02-25",
+          "date": "2026-02-26",
           "new_snow_cm": 0.0,
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 11.0,
-      "summit_seven_day_total_cm": 14.3
+      "seven_day_total_cm": 10.3,
+      "summit_seven_day_total_cm": 13.3
     },
     {
       "name": "Timberline",
@@ -376,54 +376,54 @@
       "summit_elevation_m": 2896,
       "base_depth_cm": 154.9,
       "base_depth_source": "OnTheSnow",
-      "temp_c": -10.2,
-      "summit_temp_c": -17.1,
+      "temp_c": -11.3,
+      "summit_temp_c": -18.2,
       "forecast": [
         {
           "day": 0,
-          "date": "2026-02-19",
-          "new_snow_cm": 2.2,
-          "source": "open-meteo"
-        },
-        {
-          "day": 1,
           "date": "2026-02-20",
           "new_snow_cm": 0.0,
           "source": "open-meteo"
         },
         {
-          "day": 2,
+          "day": 1,
           "date": "2026-02-21",
-          "new_snow_cm": 7.5,
+          "new_snow_cm": 10.9,
           "source": "open-meteo"
         },
         {
-          "day": 3,
+          "day": 2,
           "date": "2026-02-22",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 4,
-          "date": "2026-02-23",
           "new_snow_cm": 0.1,
           "source": "open-meteo"
         },
         {
-          "day": 5,
+          "day": 3,
+          "date": "2026-02-23",
+          "new_snow_cm": 0.2,
+          "source": "open-meteo"
+        },
+        {
+          "day": 4,
           "date": "2026-02-24",
-          "new_snow_cm": 1.7,
+          "new_snow_cm": 4.5,
+          "source": "open-meteo"
+        },
+        {
+          "day": 5,
+          "date": "2026-02-25",
+          "new_snow_cm": 0.0,
           "source": "open-meteo"
         },
         {
           "day": 6,
-          "date": "2026-02-25",
-          "new_snow_cm": 1.5,
+          "date": "2026-02-26",
+          "new_snow_cm": 0.0,
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 13.0,
-      "summit_seven_day_total_cm": 16.9
+      "seven_day_total_cm": 15.7,
+      "summit_seven_day_total_cm": 20.4
     },
     {
       "name": "Mammoth Mountain",
@@ -435,54 +435,54 @@
       "summit_elevation_m": 3369,
       "base_depth_cm": 223.5,
       "base_depth_source": "OnTheSnow",
-      "temp_c": -20.1,
-      "summit_temp_c": -26.2,
+      "temp_c": -20.5,
+      "summit_temp_c": -26.6,
       "forecast": [
         {
           "day": 0,
-          "date": "2026-02-19",
-          "new_snow_cm": 9.2,
-          "source": "open-meteo"
-        },
-        {
-          "day": 1,
           "date": "2026-02-20",
           "new_snow_cm": 0.0,
           "source": "open-meteo"
         },
         {
-          "day": 2,
+          "day": 1,
           "date": "2026-02-21",
           "new_snow_cm": 0.0,
           "source": "open-meteo"
         },
         {
-          "day": 3,
+          "day": 2,
           "date": "2026-02-22",
           "new_snow_cm": 0.0,
           "source": "open-meteo"
         },
         {
-          "day": 4,
+          "day": 3,
           "date": "2026-02-23",
-          "new_snow_cm": 0.0,
+          "new_snow_cm": 0.1,
+          "source": "open-meteo"
+        },
+        {
+          "day": 4,
+          "date": "2026-02-24",
+          "new_snow_cm": 10.8,
           "source": "open-meteo"
         },
         {
           "day": 5,
-          "date": "2026-02-24",
-          "new_snow_cm": 5.3,
+          "date": "2026-02-25",
+          "new_snow_cm": 0.1,
           "source": "open-meteo"
         },
         {
           "day": 6,
-          "date": "2026-02-25",
-          "new_snow_cm": 0.1,
+          "date": "2026-02-26",
+          "new_snow_cm": 0.0,
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 14.6,
-      "summit_seven_day_total_cm": 19.0
+      "seven_day_total_cm": 11.1,
+      "summit_seven_day_total_cm": 14.3
     },
     {
       "name": "Palisades Tahoe",
@@ -494,54 +494,54 @@
       "summit_elevation_m": 2759,
       "base_depth_cm": 215.9,
       "base_depth_source": "OnTheSnow",
-      "temp_c": -11.3,
-      "summit_temp_c": -16.9,
+      "temp_c": -12.1,
+      "summit_temp_c": -17.7,
       "forecast": [
         {
           "day": 0,
-          "date": "2026-02-19",
-          "new_snow_cm": 9.7,
-          "source": "open-meteo"
-        },
-        {
-          "day": 1,
           "date": "2026-02-20",
           "new_snow_cm": 0.0,
           "source": "open-meteo"
         },
         {
-          "day": 2,
+          "day": 1,
           "date": "2026-02-21",
           "new_snow_cm": 0.0,
           "source": "open-meteo"
         },
         {
-          "day": 3,
+          "day": 2,
           "date": "2026-02-22",
           "new_snow_cm": 0.0,
           "source": "open-meteo"
         },
         {
-          "day": 4,
+          "day": 3,
           "date": "2026-02-23",
-          "new_snow_cm": 0.0,
+          "new_snow_cm": 0.3,
           "source": "open-meteo"
         },
         {
-          "day": 5,
+          "day": 4,
           "date": "2026-02-24",
           "new_snow_cm": 0.3,
           "source": "open-meteo"
         },
         {
-          "day": 6,
+          "day": 5,
           "date": "2026-02-25",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 6,
+          "date": "2026-02-26",
           "new_snow_cm": 0.0,
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 10.1,
-      "summit_seven_day_total_cm": 13.0
+      "seven_day_total_cm": 0.7,
+      "summit_seven_day_total_cm": 0.8
     },
     {
       "name": "Heavenly",
@@ -553,54 +553,54 @@
       "summit_elevation_m": 3068,
       "base_depth_cm": 142.2,
       "base_depth_source": "OnTheSnow",
-      "temp_c": -10.2,
-      "summit_temp_c": -17.8,
+      "temp_c": -11.2,
+      "summit_temp_c": -18.8,
       "forecast": [
         {
           "day": 0,
-          "date": "2026-02-19",
-          "new_snow_cm": 4.5,
-          "source": "open-meteo"
-        },
-        {
-          "day": 1,
           "date": "2026-02-20",
           "new_snow_cm": 0.0,
           "source": "open-meteo"
         },
         {
-          "day": 2,
+          "day": 1,
           "date": "2026-02-21",
           "new_snow_cm": 0.0,
           "source": "open-meteo"
         },
         {
-          "day": 3,
+          "day": 2,
           "date": "2026-02-22",
           "new_snow_cm": 0.0,
           "source": "open-meteo"
         },
         {
-          "day": 4,
+          "day": 3,
           "date": "2026-02-23",
           "new_snow_cm": 0.0,
           "source": "open-meteo"
         },
         {
-          "day": 5,
+          "day": 4,
           "date": "2026-02-24",
+          "new_snow_cm": 0.1,
+          "source": "open-meteo"
+        },
+        {
+          "day": 5,
+          "date": "2026-02-25",
           "new_snow_cm": 0.0,
           "source": "open-meteo"
         },
         {
           "day": 6,
-          "date": "2026-02-25",
+          "date": "2026-02-26",
           "new_snow_cm": 0.0,
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 4.5,
-      "summit_seven_day_total_cm": 5.9
+      "seven_day_total_cm": 0.1,
+      "summit_seven_day_total_cm": 0.1
     },
     {
       "name": "Kirkwood",
@@ -612,54 +612,54 @@
       "summit_elevation_m": 2987,
       "base_depth_cm": 221.0,
       "base_depth_source": "OnTheSnow",
-      "temp_c": -10.7,
-      "summit_temp_c": -14.7,
+      "temp_c": -13.6,
+      "summit_temp_c": -17.6,
       "forecast": [
         {
           "day": 0,
-          "date": "2026-02-19",
-          "new_snow_cm": 11.3,
-          "source": "open-meteo"
-        },
-        {
-          "day": 1,
           "date": "2026-02-20",
           "new_snow_cm": 0.3,
           "source": "open-meteo"
         },
         {
-          "day": 2,
+          "day": 1,
           "date": "2026-02-21",
           "new_snow_cm": 0.0,
           "source": "open-meteo"
         },
         {
-          "day": 3,
+          "day": 2,
           "date": "2026-02-22",
           "new_snow_cm": 0.0,
           "source": "open-meteo"
         },
         {
-          "day": 4,
+          "day": 3,
           "date": "2026-02-23",
           "new_snow_cm": 0.1,
           "source": "open-meteo"
         },
         {
-          "day": 5,
+          "day": 4,
           "date": "2026-02-24",
-          "new_snow_cm": 1.3,
+          "new_snow_cm": 2.7,
+          "source": "open-meteo"
+        },
+        {
+          "day": 5,
+          "date": "2026-02-25",
+          "new_snow_cm": 0.0,
           "source": "open-meteo"
         },
         {
           "day": 6,
-          "date": "2026-02-25",
-          "new_snow_cm": 0.5,
+          "date": "2026-02-26",
+          "new_snow_cm": 0.0,
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 13.5,
-      "summit_seven_day_total_cm": 17.6
+      "seven_day_total_cm": 3.1,
+      "summit_seven_day_total_cm": 4.0
     },
     {
       "name": "Vail",
@@ -676,49 +676,49 @@
       "forecast": [
         {
           "day": 0,
-          "date": "2026-02-19",
-          "new_snow_cm": 0.0,
+          "date": "2026-02-20",
+          "new_snow_cm": 2.5,
           "source": "open-meteo"
         },
         {
           "day": 1,
-          "date": "2026-02-20",
-          "new_snow_cm": 3.1,
-          "source": "open-meteo"
-        },
-        {
-          "day": 2,
           "date": "2026-02-21",
           "new_snow_cm": 0.0,
           "source": "open-meteo"
         },
         {
-          "day": 3,
+          "day": 2,
           "date": "2026-02-22",
           "new_snow_cm": 0.0,
           "source": "open-meteo"
         },
         {
-          "day": 4,
+          "day": 3,
           "date": "2026-02-23",
           "new_snow_cm": 0.0,
           "source": "open-meteo"
         },
         {
-          "day": 5,
+          "day": 4,
           "date": "2026-02-24",
           "new_snow_cm": 0.0,
           "source": "open-meteo"
         },
         {
-          "day": 6,
+          "day": 5,
           "date": "2026-02-25",
-          "new_snow_cm": 0.8,
+          "new_snow_cm": 1.3,
+          "source": "open-meteo"
+        },
+        {
+          "day": 6,
+          "date": "2026-02-26",
+          "new_snow_cm": 0.0,
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 3.9,
-      "summit_seven_day_total_cm": 5.1
+      "seven_day_total_cm": 3.8,
+      "summit_seven_day_total_cm": 4.9
     },
     {
       "name": "Breckenridge",
@@ -730,609 +730,19 @@
       "summit_elevation_m": 3914,
       "base_depth_cm": 73.7,
       "base_depth_source": "OnTheSnow",
-      "temp_c": -17.1,
-      "summit_temp_c": -23.5,
-      "forecast": [
-        {
-          "day": 0,
-          "date": "2026-02-19",
-          "new_snow_cm": 0.1,
-          "source": "open-meteo"
-        },
-        {
-          "day": 1,
-          "date": "2026-02-20",
-          "new_snow_cm": 0.4,
-          "source": "open-meteo"
-        },
-        {
-          "day": 2,
-          "date": "2026-02-21",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 3,
-          "date": "2026-02-22",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 4,
-          "date": "2026-02-23",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 5,
-          "date": "2026-02-24",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 6,
-          "date": "2026-02-25",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        }
-      ],
-      "seven_day_total_cm": 0.5,
-      "summit_seven_day_total_cm": 0.7
-    },
-    {
-      "name": "Aspen Snowmass",
-      "lat": 39.2084,
-      "lon": -106.949,
-      "country": "USA",
-      "region": "Colorado",
-      "elevation_m": 2623,
-      "summit_elevation_m": 3813,
-      "base_depth_cm": 121.9,
-      "base_depth_source": "OnTheSnow",
-      "temp_c": -9.3,
-      "summit_temp_c": -17.0,
-      "forecast": [
-        {
-          "day": 0,
-          "date": "2026-02-19",
-          "new_snow_cm": 0.1,
-          "source": "open-meteo"
-        },
-        {
-          "day": 1,
-          "date": "2026-02-20",
-          "new_snow_cm": 2.7,
-          "source": "open-meteo"
-        },
-        {
-          "day": 2,
-          "date": "2026-02-21",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 3,
-          "date": "2026-02-22",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 4,
-          "date": "2026-02-23",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 5,
-          "date": "2026-02-24",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 6,
-          "date": "2026-02-25",
-          "new_snow_cm": 0.4,
-          "source": "open-meteo"
-        }
-      ],
-      "seven_day_total_cm": 3.2,
-      "summit_seven_day_total_cm": 4.2
-    },
-    {
-      "name": "Telluride",
-      "lat": 37.9375,
-      "lon": -107.8123,
-      "country": "USA",
-      "region": "Colorado",
-      "elevation_m": 2659,
-      "summit_elevation_m": 3831,
-      "base_depth_cm": 124.5,
-      "base_depth_source": "OnTheSnow",
-      "temp_c": -12.0,
-      "summit_temp_c": -19.6,
-      "forecast": [
-        {
-          "day": 0,
-          "date": "2026-02-19",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 1,
-          "date": "2026-02-20",
-          "new_snow_cm": 3.9,
-          "source": "open-meteo"
-        },
-        {
-          "day": 2,
-          "date": "2026-02-21",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 3,
-          "date": "2026-02-22",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 4,
-          "date": "2026-02-23",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 5,
-          "date": "2026-02-24",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 6,
-          "date": "2026-02-25",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        }
-      ],
-      "seven_day_total_cm": 3.9,
-      "summit_seven_day_total_cm": 5.1
-    },
-    {
-      "name": "Park City",
-      "lat": 40.6514,
-      "lon": -111.508,
-      "country": "USA",
-      "region": "Utah",
-      "elevation_m": 2103,
-      "summit_elevation_m": 3049,
-      "base_depth_cm": 177.8,
-      "base_depth_source": "OnTheSnow",
-      "temp_c": -11.3,
-      "summit_temp_c": -17.4,
-      "forecast": [
-        {
-          "day": 0,
-          "date": "2026-02-19",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 1,
-          "date": "2026-02-20",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 2,
-          "date": "2026-02-21",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 3,
-          "date": "2026-02-22",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 4,
-          "date": "2026-02-23",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 5,
-          "date": "2026-02-24",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 6,
-          "date": "2026-02-25",
-          "new_snow_cm": 2.3,
-          "source": "open-meteo"
-        }
-      ],
-      "seven_day_total_cm": 2.3,
-      "summit_seven_day_total_cm": 3.0
-    },
-    {
-      "name": "Snowbird",
-      "lat": 40.583,
-      "lon": -111.6508,
-      "country": "USA",
-      "region": "Utah",
-      "elevation_m": 2365,
-      "summit_elevation_m": 3353,
-      "base_depth_cm": 246.4,
-      "base_depth_source": "OnTheSnow",
-      "temp_c": -13.2,
-      "summit_temp_c": -19.6,
-      "forecast": [
-        {
-          "day": 0,
-          "date": "2026-02-19",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 1,
-          "date": "2026-02-20",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 2,
-          "date": "2026-02-21",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 3,
-          "date": "2026-02-22",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 4,
-          "date": "2026-02-23",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 5,
-          "date": "2026-02-24",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 6,
-          "date": "2026-02-25",
-          "new_snow_cm": 2.1,
-          "source": "open-meteo"
-        }
-      ],
-      "seven_day_total_cm": 2.1,
-      "summit_seven_day_total_cm": 2.7
-    },
-    {
-      "name": "Alta",
-      "lat": 40.5884,
-      "lon": -111.6386,
-      "country": "USA",
-      "region": "Utah",
-      "elevation_m": 2600,
-      "summit_elevation_m": 3215,
-      "base_depth_cm": 251.5,
-      "base_depth_source": "OnTheSnow",
-      "temp_c": -13.0,
-      "summit_temp_c": -17.0,
-      "forecast": [
-        {
-          "day": 0,
-          "date": "2026-02-19",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 1,
-          "date": "2026-02-20",
-          "new_snow_cm": 0.1,
-          "source": "open-meteo"
-        },
-        {
-          "day": 2,
-          "date": "2026-02-21",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 3,
-          "date": "2026-02-22",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 4,
-          "date": "2026-02-23",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 5,
-          "date": "2026-02-24",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 6,
-          "date": "2026-02-25",
-          "new_snow_cm": 2.1,
-          "source": "open-meteo"
-        }
-      ],
-      "seven_day_total_cm": 2.2,
-      "summit_seven_day_total_cm": 2.9
-    },
-    {
-      "name": "Big Sky",
-      "lat": 45.2618,
-      "lon": -111.4018,
-      "country": "USA",
-      "region": "Montana",
-      "elevation_m": 2290,
-      "summit_elevation_m": 3403,
-      "base_depth_cm": 140,
-      "base_depth_source": "OnTheSnow",
-      "temp_c": -18.0,
-      "summit_temp_c": -25.2,
-      "forecast": [
-        {
-          "day": 0,
-          "date": "2026-02-19",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 1,
-          "date": "2026-02-20",
-          "new_snow_cm": 0.4,
-          "source": "open-meteo"
-        },
-        {
-          "day": 2,
-          "date": "2026-02-21",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 3,
-          "date": "2026-02-22",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 4,
-          "date": "2026-02-23",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 5,
-          "date": "2026-02-24",
-          "new_snow_cm": 1.8,
-          "source": "open-meteo"
-        },
-        {
-          "day": 6,
-          "date": "2026-02-25",
-          "new_snow_cm": 0.4,
-          "source": "open-meteo"
-        }
-      ],
-      "seven_day_total_cm": 2.7,
-      "summit_seven_day_total_cm": 3.4
-    },
-    {
-      "name": "Whitefish",
-      "lat": 48.4833,
-      "lon": -114.355,
-      "country": "USA",
-      "region": "Montana",
-      "elevation_m": 1361,
-      "summit_elevation_m": 2133,
-      "base_depth_cm": 76.2,
-      "base_depth_source": "OnTheSnow",
-      "temp_c": -7.1,
-      "summit_temp_c": -12.1,
-      "forecast": [
-        {
-          "day": 0,
-          "date": "2026-02-19",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 1,
-          "date": "2026-02-20",
-          "new_snow_cm": 0.6,
-          "source": "open-meteo"
-        },
-        {
-          "day": 2,
-          "date": "2026-02-21",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 3,
-          "date": "2026-02-22",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 4,
-          "date": "2026-02-23",
-          "new_snow_cm": 5.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 5,
-          "date": "2026-02-24",
-          "new_snow_cm": 7.7,
-          "source": "open-meteo"
-        },
-        {
-          "day": 6,
-          "date": "2026-02-25",
-          "new_snow_cm": 0.2,
-          "source": "open-meteo"
-        }
-      ],
-      "seven_day_total_cm": 13.4,
-      "summit_seven_day_total_cm": 17.6
-    },
-    {
-      "name": "Jackson Hole",
-      "lat": 43.5875,
-      "lon": -110.8281,
-      "country": "USA",
-      "region": "Wyoming",
-      "elevation_m": 1924,
-      "summit_elevation_m": 3185,
-      "base_depth_cm": 160.0,
-      "base_depth_source": "OnTheSnow",
-      "temp_c": -17.6,
-      "summit_temp_c": -25.8,
-      "forecast": [
-        {
-          "day": 0,
-          "date": "2026-02-19",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 1,
-          "date": "2026-02-20",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 2,
-          "date": "2026-02-21",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 3,
-          "date": "2026-02-22",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 4,
-          "date": "2026-02-23",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 5,
-          "date": "2026-02-24",
-          "new_snow_cm": 9.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 6,
-          "date": "2026-02-25",
-          "new_snow_cm": 1.7,
-          "source": "open-meteo"
-        }
-      ],
-      "seven_day_total_cm": 10.7,
-      "summit_seven_day_total_cm": 13.9
-    },
-    {
-      "name": "Sun Valley",
-      "lat": 43.6804,
-      "lon": -114.4075,
-      "country": "USA",
-      "region": "Idaho",
-      "elevation_m": 1753,
-      "summit_elevation_m": 2789,
-      "base_depth_cm": 116.8,
-      "base_depth_source": "OnTheSnow",
-      "temp_c": -11.8,
-      "summit_temp_c": -18.5,
-      "forecast": [
-        {
-          "day": 0,
-          "date": "2026-02-19",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 1,
-          "date": "2026-02-20",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 2,
-          "date": "2026-02-21",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 3,
-          "date": "2026-02-22",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 4,
-          "date": "2026-02-23",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 5,
-          "date": "2026-02-24",
-          "new_snow_cm": 5.1,
-          "source": "open-meteo"
-        },
-        {
-          "day": 6,
-          "date": "2026-02-25",
-          "new_snow_cm": 0.2,
-          "source": "open-meteo"
-        }
-      ],
-      "seven_day_total_cm": 5.3,
-      "summit_seven_day_total_cm": 6.9
-    },
-    {
-      "name": "St. Anton",
-      "lat": 47.1297,
-      "lon": 10.2303,
-      "country": "Austria",
-      "region": "Tyrol",
-      "elevation_m": 2079,
-      "summit_elevation_m": 2879,
-      "base_depth_cm": 242.0,
-      "base_depth_source": "Galzig",
-      "temp_c": -6.3,
-      "summit_temp_c": -11.5,
+      "temp_c": -16.0,
+      "summit_temp_c": -22.4,
       "forecast": [
         {
           "day": 0,
           "date": "2026-02-20",
-          "new_snow_cm": 10.3,
+          "new_snow_cm": 1.1,
           "source": "open-meteo"
         },
         {
           "day": 1,
           "date": "2026-02-21",
-          "new_snow_cm": 13.3,
+          "new_snow_cm": 0.0,
           "source": "open-meteo"
         },
         {
@@ -1344,7 +754,7 @@
         {
           "day": 3,
           "date": "2026-02-23",
-          "new_snow_cm": 6.3,
+          "new_snow_cm": 0.0,
           "source": "open-meteo"
         },
         {
@@ -1366,8 +776,598 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 29.9,
-      "summit_seven_day_total_cm": 38.9
+      "seven_day_total_cm": 1.1,
+      "summit_seven_day_total_cm": 1.4
+    },
+    {
+      "name": "Aspen Snowmass",
+      "lat": 39.2084,
+      "lon": -106.949,
+      "country": "USA",
+      "region": "Colorado",
+      "elevation_m": 2623,
+      "summit_elevation_m": 3813,
+      "base_depth_cm": 121.9,
+      "base_depth_source": "OnTheSnow",
+      "temp_c": -11.6,
+      "summit_temp_c": -19.3,
+      "forecast": [
+        {
+          "day": 0,
+          "date": "2026-02-20",
+          "new_snow_cm": 2.6,
+          "source": "open-meteo"
+        },
+        {
+          "day": 1,
+          "date": "2026-02-21",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 2,
+          "date": "2026-02-22",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 3,
+          "date": "2026-02-23",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 4,
+          "date": "2026-02-24",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 5,
+          "date": "2026-02-25",
+          "new_snow_cm": 0.2,
+          "source": "open-meteo"
+        },
+        {
+          "day": 6,
+          "date": "2026-02-26",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        }
+      ],
+      "seven_day_total_cm": 2.8,
+      "summit_seven_day_total_cm": 3.6
+    },
+    {
+      "name": "Telluride",
+      "lat": 37.9375,
+      "lon": -107.8123,
+      "country": "USA",
+      "region": "Colorado",
+      "elevation_m": 2659,
+      "summit_elevation_m": 3831,
+      "base_depth_cm": 124.5,
+      "base_depth_source": "OnTheSnow",
+      "temp_c": -12.0,
+      "summit_temp_c": -19.6,
+      "forecast": [
+        {
+          "day": 0,
+          "date": "2026-02-20",
+          "new_snow_cm": 4.3,
+          "source": "open-meteo"
+        },
+        {
+          "day": 1,
+          "date": "2026-02-21",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 2,
+          "date": "2026-02-22",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 3,
+          "date": "2026-02-23",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 4,
+          "date": "2026-02-24",
+          "new_snow_cm": 0.1,
+          "source": "open-meteo"
+        },
+        {
+          "day": 5,
+          "date": "2026-02-25",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 6,
+          "date": "2026-02-26",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        }
+      ],
+      "seven_day_total_cm": 4.4,
+      "summit_seven_day_total_cm": 5.7
+    },
+    {
+      "name": "Park City",
+      "lat": 40.6514,
+      "lon": -111.508,
+      "country": "USA",
+      "region": "Utah",
+      "elevation_m": 2103,
+      "summit_elevation_m": 3049,
+      "base_depth_cm": 177.8,
+      "base_depth_source": "OnTheSnow",
+      "temp_c": -13.3,
+      "summit_temp_c": -19.4,
+      "forecast": [
+        {
+          "day": 0,
+          "date": "2026-02-20",
+          "new_snow_cm": 0.2,
+          "source": "open-meteo"
+        },
+        {
+          "day": 1,
+          "date": "2026-02-21",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 2,
+          "date": "2026-02-22",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 3,
+          "date": "2026-02-23",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 4,
+          "date": "2026-02-24",
+          "new_snow_cm": 0.8,
+          "source": "open-meteo"
+        },
+        {
+          "day": 5,
+          "date": "2026-02-25",
+          "new_snow_cm": 1.3,
+          "source": "open-meteo"
+        },
+        {
+          "day": 6,
+          "date": "2026-02-26",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        }
+      ],
+      "seven_day_total_cm": 2.3,
+      "summit_seven_day_total_cm": 3.0
+    },
+    {
+      "name": "Snowbird",
+      "lat": 40.583,
+      "lon": -111.6508,
+      "country": "USA",
+      "region": "Utah",
+      "elevation_m": 2365,
+      "summit_elevation_m": 3353,
+      "base_depth_cm": 246.4,
+      "base_depth_source": "OnTheSnow",
+      "temp_c": -14.9,
+      "summit_temp_c": -21.3,
+      "forecast": [
+        {
+          "day": 0,
+          "date": "2026-02-20",
+          "new_snow_cm": 1.3,
+          "source": "open-meteo"
+        },
+        {
+          "day": 1,
+          "date": "2026-02-21",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 2,
+          "date": "2026-02-22",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 3,
+          "date": "2026-02-23",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 4,
+          "date": "2026-02-24",
+          "new_snow_cm": 0.4,
+          "source": "open-meteo"
+        },
+        {
+          "day": 5,
+          "date": "2026-02-25",
+          "new_snow_cm": 1.1,
+          "source": "open-meteo"
+        },
+        {
+          "day": 6,
+          "date": "2026-02-26",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        }
+      ],
+      "seven_day_total_cm": 2.8,
+      "summit_seven_day_total_cm": 3.6
+    },
+    {
+      "name": "Alta",
+      "lat": 40.5884,
+      "lon": -111.6386,
+      "country": "USA",
+      "region": "Utah",
+      "elevation_m": 2600,
+      "summit_elevation_m": 3215,
+      "base_depth_cm": 241.3,
+      "base_depth_source": "OnTheSnow",
+      "temp_c": -15.6,
+      "summit_temp_c": -19.6,
+      "forecast": [
+        {
+          "day": 0,
+          "date": "2026-02-20",
+          "new_snow_cm": 2.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 1,
+          "date": "2026-02-21",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 2,
+          "date": "2026-02-22",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 3,
+          "date": "2026-02-23",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 4,
+          "date": "2026-02-24",
+          "new_snow_cm": 0.4,
+          "source": "open-meteo"
+        },
+        {
+          "day": 5,
+          "date": "2026-02-25",
+          "new_snow_cm": 1.1,
+          "source": "open-meteo"
+        },
+        {
+          "day": 6,
+          "date": "2026-02-26",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        }
+      ],
+      "seven_day_total_cm": 3.4,
+      "summit_seven_day_total_cm": 4.6
+    },
+    {
+      "name": "Big Sky",
+      "lat": 45.2618,
+      "lon": -111.4018,
+      "country": "USA",
+      "region": "Montana",
+      "elevation_m": 2290,
+      "summit_elevation_m": 3403,
+      "base_depth_cm": 140,
+      "base_depth_source": "OnTheSnow",
+      "temp_c": -19.4,
+      "summit_temp_c": -26.6,
+      "forecast": [
+        {
+          "day": 0,
+          "date": "2026-02-20",
+          "new_snow_cm": 0.4,
+          "source": "open-meteo"
+        },
+        {
+          "day": 1,
+          "date": "2026-02-21",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 2,
+          "date": "2026-02-22",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 3,
+          "date": "2026-02-23",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 4,
+          "date": "2026-02-24",
+          "new_snow_cm": 0.8,
+          "source": "open-meteo"
+        },
+        {
+          "day": 5,
+          "date": "2026-02-25",
+          "new_snow_cm": 0.2,
+          "source": "open-meteo"
+        },
+        {
+          "day": 6,
+          "date": "2026-02-26",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        }
+      ],
+      "seven_day_total_cm": 1.5,
+      "summit_seven_day_total_cm": 1.8
+    },
+    {
+      "name": "Whitefish",
+      "lat": 48.4833,
+      "lon": -114.355,
+      "country": "USA",
+      "region": "Montana",
+      "elevation_m": 1361,
+      "summit_elevation_m": 2133,
+      "base_depth_cm": 76.2,
+      "base_depth_source": "OnTheSnow",
+      "temp_c": -8.2,
+      "summit_temp_c": -13.2,
+      "forecast": [
+        {
+          "day": 0,
+          "date": "2026-02-20",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 1,
+          "date": "2026-02-21",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 2,
+          "date": "2026-02-22",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 3,
+          "date": "2026-02-23",
+          "new_snow_cm": 3.7,
+          "source": "open-meteo"
+        },
+        {
+          "day": 4,
+          "date": "2026-02-24",
+          "new_snow_cm": 5.3,
+          "source": "open-meteo"
+        },
+        {
+          "day": 5,
+          "date": "2026-02-25",
+          "new_snow_cm": 0.6,
+          "source": "open-meteo"
+        },
+        {
+          "day": 6,
+          "date": "2026-02-26",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        }
+      ],
+      "seven_day_total_cm": 9.7,
+      "summit_seven_day_total_cm": 12.5
+    },
+    {
+      "name": "Jackson Hole",
+      "lat": 43.5875,
+      "lon": -110.8281,
+      "country": "USA",
+      "region": "Wyoming",
+      "elevation_m": 1924,
+      "summit_elevation_m": 3185,
+      "base_depth_cm": 160.0,
+      "base_depth_source": "OnTheSnow",
+      "temp_c": -24.6,
+      "summit_temp_c": -32.8,
+      "forecast": [
+        {
+          "day": 0,
+          "date": "2026-02-20",
+          "new_snow_cm": 0.1,
+          "source": "open-meteo"
+        },
+        {
+          "day": 1,
+          "date": "2026-02-21",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 2,
+          "date": "2026-02-22",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 3,
+          "date": "2026-02-23",
+          "new_snow_cm": 0.1,
+          "source": "open-meteo"
+        },
+        {
+          "day": 4,
+          "date": "2026-02-24",
+          "new_snow_cm": 11.3,
+          "source": "open-meteo"
+        },
+        {
+          "day": 5,
+          "date": "2026-02-25",
+          "new_snow_cm": 0.8,
+          "source": "open-meteo"
+        },
+        {
+          "day": 6,
+          "date": "2026-02-26",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        }
+      ],
+      "seven_day_total_cm": 12.4,
+      "summit_seven_day_total_cm": 16.0
+    },
+    {
+      "name": "Sun Valley",
+      "lat": 43.6804,
+      "lon": -114.4075,
+      "country": "USA",
+      "region": "Idaho",
+      "elevation_m": 1753,
+      "summit_elevation_m": 2789,
+      "base_depth_cm": 116.8,
+      "base_depth_source": "OnTheSnow",
+      "temp_c": -13.3,
+      "summit_temp_c": -20.0,
+      "forecast": [
+        {
+          "day": 0,
+          "date": "2026-02-20",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 1,
+          "date": "2026-02-21",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 2,
+          "date": "2026-02-22",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 3,
+          "date": "2026-02-23",
+          "new_snow_cm": 0.1,
+          "source": "open-meteo"
+        },
+        {
+          "day": 4,
+          "date": "2026-02-24",
+          "new_snow_cm": 5.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 5,
+          "date": "2026-02-25",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 6,
+          "date": "2026-02-26",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        }
+      ],
+      "seven_day_total_cm": 5.0,
+      "summit_seven_day_total_cm": 6.6
+    },
+    {
+      "name": "St. Anton",
+      "lat": 47.1297,
+      "lon": 10.2303,
+      "country": "Austria",
+      "region": "Tyrol",
+      "elevation_m": 2079,
+      "summit_elevation_m": 2879,
+      "base_depth_cm": 237.0,
+      "base_depth_source": "Galzig",
+      "temp_c": -4.0,
+      "summit_temp_c": -9.2,
+      "forecast": [
+        {
+          "day": 0,
+          "date": "2026-02-20",
+          "new_snow_cm": 9.8,
+          "source": "open-meteo"
+        },
+        {
+          "day": 1,
+          "date": "2026-02-21",
+          "new_snow_cm": 16.2,
+          "source": "open-meteo"
+        },
+        {
+          "day": 2,
+          "date": "2026-02-22",
+          "new_snow_cm": 0.2,
+          "source": "open-meteo"
+        },
+        {
+          "day": 3,
+          "date": "2026-02-23",
+          "new_snow_cm": 5.5,
+          "source": "open-meteo"
+        },
+        {
+          "day": 4,
+          "date": "2026-02-24",
+          "new_snow_cm": 0.9,
+          "source": "open-meteo"
+        },
+        {
+          "day": 5,
+          "date": "2026-02-25",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 6,
+          "date": "2026-02-26",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        }
+      ],
+      "seven_day_total_cm": 32.6,
+      "summit_seven_day_total_cm": 35.9
     },
     {
       "name": "S\u00f6lden",
@@ -1377,21 +1377,670 @@
       "region": "Tyrol",
       "elevation_m": 3340,
       "summit_elevation_m": 4140,
-      "base_depth_cm": 194.0,
+      "base_depth_cm": 195.0,
       "base_depth_source": "Open-Meteo (modeled)",
-      "temp_c": -15.0,
-      "summit_temp_c": -20.2,
+      "temp_c": -11.6,
+      "summit_temp_c": -16.8,
       "forecast": [
         {
           "day": 0,
           "date": "2026-02-20",
-          "new_snow_cm": 3.2,
+          "new_snow_cm": 3.4,
           "source": "open-meteo"
         },
         {
           "day": 1,
           "date": "2026-02-21",
-          "new_snow_cm": 5.7,
+          "new_snow_cm": 7.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 2,
+          "date": "2026-02-22",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 3,
+          "date": "2026-02-23",
+          "new_snow_cm": 0.2,
+          "source": "open-meteo"
+        },
+        {
+          "day": 4,
+          "date": "2026-02-24",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 5,
+          "date": "2026-02-25",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 6,
+          "date": "2026-02-26",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        }
+      ],
+      "seven_day_total_cm": 10.6,
+      "summit_seven_day_total_cm": 13.8
+    },
+    {
+      "name": "Obergurgl",
+      "lat": 46.8669,
+      "lon": 11.0244,
+      "country": "Austria",
+      "region": "Tyrol",
+      "elevation_m": 1941,
+      "summit_elevation_m": 2741,
+      "base_depth_cm": null,
+      "base_depth_source": null,
+      "temp_c": -0.1,
+      "summit_temp_c": -5.3,
+      "forecast": [
+        {
+          "day": 0,
+          "date": "2026-02-20",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 1,
+          "date": "2026-02-21",
+          "new_snow_cm": 1.3,
+          "source": "open-meteo"
+        },
+        {
+          "day": 2,
+          "date": "2026-02-22",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 3,
+          "date": "2026-02-23",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 4,
+          "date": "2026-02-24",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 5,
+          "date": "2026-02-25",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 6,
+          "date": "2026-02-26",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        }
+      ],
+      "seven_day_total_cm": 1.3,
+      "summit_seven_day_total_cm": 1.4
+    },
+    {
+      "name": "Ischgl",
+      "lat": 46.9681,
+      "lon": 10.1856,
+      "country": "Austria",
+      "region": "Tyrol",
+      "elevation_m": 1587,
+      "summit_elevation_m": 2387,
+      "base_depth_cm": 108.0,
+      "base_depth_source": "Open-Meteo (modeled)",
+      "temp_c": -0.1,
+      "summit_temp_c": -5.3,
+      "forecast": [
+        {
+          "day": 0,
+          "date": "2026-02-20",
+          "new_snow_cm": 4.8,
+          "source": "open-meteo"
+        },
+        {
+          "day": 1,
+          "date": "2026-02-21",
+          "new_snow_cm": 8.7,
+          "source": "open-meteo"
+        },
+        {
+          "day": 2,
+          "date": "2026-02-22",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 3,
+          "date": "2026-02-23",
+          "new_snow_cm": 0.3,
+          "source": "open-meteo"
+        },
+        {
+          "day": 4,
+          "date": "2026-02-24",
+          "new_snow_cm": 0.5,
+          "source": "open-meteo"
+        },
+        {
+          "day": 5,
+          "date": "2026-02-25",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 6,
+          "date": "2026-02-26",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        }
+      ],
+      "seven_day_total_cm": 14.3,
+      "summit_seven_day_total_cm": 15.7
+    },
+    {
+      "name": "Kitzb\u00fchel",
+      "lat": 47.4183,
+      "lon": 12.3592,
+      "country": "Austria",
+      "region": "Tyrol",
+      "elevation_m": 1794,
+      "summit_elevation_m": 2594,
+      "base_depth_cm": 85.0,
+      "base_depth_source": "Hahnenkamm",
+      "temp_c": -4.9,
+      "summit_temp_c": -10.1,
+      "forecast": [
+        {
+          "day": 0,
+          "date": "2026-02-20",
+          "new_snow_cm": 2.8,
+          "source": "open-meteo"
+        },
+        {
+          "day": 1,
+          "date": "2026-02-21",
+          "new_snow_cm": 11.1,
+          "source": "open-meteo"
+        },
+        {
+          "day": 2,
+          "date": "2026-02-22",
+          "new_snow_cm": 0.8,
+          "source": "open-meteo"
+        },
+        {
+          "day": 3,
+          "date": "2026-02-23",
+          "new_snow_cm": 1.9,
+          "source": "open-meteo"
+        },
+        {
+          "day": 4,
+          "date": "2026-02-24",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 5,
+          "date": "2026-02-25",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 6,
+          "date": "2026-02-26",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        }
+      ],
+      "seven_day_total_cm": 16.6,
+      "summit_seven_day_total_cm": 21.6
+    },
+    {
+      "name": "Lech am Arlberg",
+      "lat": 47.1575,
+      "lon": 10.2128,
+      "country": "Austria",
+      "region": "Vorarlberg",
+      "elevation_m": 2079,
+      "summit_elevation_m": 2879,
+      "base_depth_cm": 237.0,
+      "base_depth_source": "Galzig (Ski Arlberg)",
+      "temp_c": -8.3,
+      "summit_temp_c": -13.5,
+      "forecast": [
+        {
+          "day": 0,
+          "date": "2026-02-20",
+          "new_snow_cm": 9.8,
+          "source": "open-meteo"
+        },
+        {
+          "day": 1,
+          "date": "2026-02-21",
+          "new_snow_cm": 16.2,
+          "source": "open-meteo"
+        },
+        {
+          "day": 2,
+          "date": "2026-02-22",
+          "new_snow_cm": 0.2,
+          "source": "open-meteo"
+        },
+        {
+          "day": 3,
+          "date": "2026-02-23",
+          "new_snow_cm": 5.5,
+          "source": "open-meteo"
+        },
+        {
+          "day": 4,
+          "date": "2026-02-24",
+          "new_snow_cm": 0.9,
+          "source": "open-meteo"
+        },
+        {
+          "day": 5,
+          "date": "2026-02-25",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 6,
+          "date": "2026-02-26",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        }
+      ],
+      "seven_day_total_cm": 32.6,
+      "summit_seven_day_total_cm": 42.4
+    },
+    {
+      "name": "Pitztal Glacier",
+      "lat": 46.9269,
+      "lon": 10.8792,
+      "country": "Austria",
+      "region": "Tyrol",
+      "elevation_m": 2864,
+      "summit_elevation_m": 3664,
+      "base_depth_cm": 227.0,
+      "base_depth_source": "Pitztaler Gletscher",
+      "temp_c": -8.3,
+      "summit_temp_c": -13.5,
+      "forecast": [
+        {
+          "day": 0,
+          "date": "2026-02-20",
+          "new_snow_cm": 3.4,
+          "source": "open-meteo"
+        },
+        {
+          "day": 1,
+          "date": "2026-02-21",
+          "new_snow_cm": 7.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 2,
+          "date": "2026-02-22",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 3,
+          "date": "2026-02-23",
+          "new_snow_cm": 0.2,
+          "source": "open-meteo"
+        },
+        {
+          "day": 4,
+          "date": "2026-02-24",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 5,
+          "date": "2026-02-25",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 6,
+          "date": "2026-02-26",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        }
+      ],
+      "seven_day_total_cm": 10.6,
+      "summit_seven_day_total_cm": 13.8
+    },
+    {
+      "name": "Obertauern",
+      "lat": 47.2489,
+      "lon": 13.5597,
+      "country": "Austria",
+      "region": "Salzburg",
+      "elevation_m": 1630,
+      "summit_elevation_m": 2430,
+      "base_depth_cm": 77.0,
+      "base_depth_source": "Flattnitz",
+      "temp_c": -5.8,
+      "summit_temp_c": -11.0,
+      "forecast": [
+        {
+          "day": 0,
+          "date": "2026-02-20",
+          "new_snow_cm": 4.4,
+          "source": "open-meteo"
+        },
+        {
+          "day": 1,
+          "date": "2026-02-21",
+          "new_snow_cm": 7.6,
+          "source": "open-meteo"
+        },
+        {
+          "day": 2,
+          "date": "2026-02-22",
+          "new_snow_cm": 3.1,
+          "source": "open-meteo"
+        },
+        {
+          "day": 3,
+          "date": "2026-02-23",
+          "new_snow_cm": 1.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 4,
+          "date": "2026-02-24",
+          "new_snow_cm": 1.3,
+          "source": "open-meteo"
+        },
+        {
+          "day": 5,
+          "date": "2026-02-25",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 6,
+          "date": "2026-02-26",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        }
+      ],
+      "seven_day_total_cm": 17.4,
+      "summit_seven_day_total_cm": 22.6
+    },
+    {
+      "name": "Zell am See",
+      "lat": 47.3286,
+      "lon": 12.7381,
+      "country": "Austria",
+      "region": "Salzburg",
+      "elevation_m": 1956,
+      "summit_elevation_m": 2756,
+      "base_depth_cm": 32.0,
+      "base_depth_source": "Open-Meteo (modeled)",
+      "temp_c": -5.8,
+      "summit_temp_c": -11.0,
+      "forecast": [
+        {
+          "day": 0,
+          "date": "2026-02-20",
+          "new_snow_cm": 1.5,
+          "source": "open-meteo"
+        },
+        {
+          "day": 1,
+          "date": "2026-02-21",
+          "new_snow_cm": 11.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 2,
+          "date": "2026-02-22",
+          "new_snow_cm": 2.2,
+          "source": "open-meteo"
+        },
+        {
+          "day": 3,
+          "date": "2026-02-23",
+          "new_snow_cm": 2.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 4,
+          "date": "2026-02-24",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 5,
+          "date": "2026-02-25",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 6,
+          "date": "2026-02-26",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        }
+      ],
+      "seven_day_total_cm": 16.7,
+      "summit_seven_day_total_cm": 21.7
+    },
+    {
+      "name": "Schladming",
+      "lat": 47.4678,
+      "lon": 13.6264,
+      "country": "Austria",
+      "region": "Styria",
+      "elevation_m": 2015,
+      "summit_elevation_m": 2815,
+      "base_depth_cm": 76.0,
+      "base_depth_source": "Dachstein-Schladminger Gletscher",
+      "temp_c": -11.9,
+      "summit_temp_c": -17.1,
+      "forecast": [
+        {
+          "day": 0,
+          "date": "2026-02-20",
+          "new_snow_cm": 3.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 1,
+          "date": "2026-02-21",
+          "new_snow_cm": 12.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 2,
+          "date": "2026-02-22",
+          "new_snow_cm": 7.1,
+          "source": "open-meteo"
+        },
+        {
+          "day": 3,
+          "date": "2026-02-23",
+          "new_snow_cm": 4.6,
+          "source": "open-meteo"
+        },
+        {
+          "day": 4,
+          "date": "2026-02-24",
+          "new_snow_cm": 0.1,
+          "source": "open-meteo"
+        },
+        {
+          "day": 5,
+          "date": "2026-02-25",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 6,
+          "date": "2026-02-26",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        }
+      ],
+      "seven_day_total_cm": 26.9,
+      "summit_seven_day_total_cm": 34.8
+    },
+    {
+      "name": "Zermatt",
+      "lat": 45.9872,
+      "lon": 7.7836,
+      "country": "Switzerland",
+      "region": "Valais",
+      "elevation_m": 2953,
+      "summit_elevation_m": 3753,
+      "base_depth_cm": null,
+      "base_depth_source": null,
+      "temp_c": -8.2,
+      "summit_temp_c": -13.4,
+      "forecast": [
+        {
+          "day": 0,
+          "date": "2026-02-20",
+          "new_snow_cm": 1.6,
+          "source": "open-meteo"
+        },
+        {
+          "day": 1,
+          "date": "2026-02-21",
+          "new_snow_cm": 0.7,
+          "source": "open-meteo"
+        },
+        {
+          "day": 2,
+          "date": "2026-02-22",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 3,
+          "date": "2026-02-23",
+          "new_snow_cm": 0.5,
+          "source": "open-meteo"
+        },
+        {
+          "day": 4,
+          "date": "2026-02-24",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 5,
+          "date": "2026-02-25",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 6,
+          "date": "2026-02-26",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        }
+      ],
+      "seven_day_total_cm": 2.8,
+      "summit_seven_day_total_cm": 3.6
+    },
+    {
+      "name": "Saas-Fee",
+      "lat": 46.1275,
+      "lon": 7.9814,
+      "country": "Switzerland",
+      "region": "Valais",
+      "elevation_m": 2480,
+      "summit_elevation_m": 3280,
+      "base_depth_cm": null,
+      "base_depth_source": null,
+      "temp_c": -7.2,
+      "summit_temp_c": -12.4,
+      "forecast": [
+        {
+          "day": 0,
+          "date": "2026-02-20",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 1,
+          "date": "2026-02-21",
+          "new_snow_cm": 0.3,
+          "source": "open-meteo"
+        },
+        {
+          "day": 2,
+          "date": "2026-02-22",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 3,
+          "date": "2026-02-23",
+          "new_snow_cm": 0.1,
+          "source": "open-meteo"
+        },
+        {
+          "day": 4,
+          "date": "2026-02-24",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 5,
+          "date": "2026-02-25",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 6,
+          "date": "2026-02-26",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        }
+      ],
+      "seven_day_total_cm": 0.4,
+      "summit_seven_day_total_cm": 0.5
+    },
+    {
+      "name": "Verbier",
+      "lat": 46.0989,
+      "lon": 7.2856,
+      "country": "Switzerland",
+      "region": "Valais",
+      "elevation_m": 2550,
+      "summit_elevation_m": 3350,
+      "base_depth_cm": null,
+      "base_depth_source": null,
+      "temp_c": -7.4,
+      "summit_temp_c": -12.6,
+      "forecast": [
+        {
+          "day": 0,
+          "date": "2026-02-20",
+          "new_snow_cm": 5.1,
+          "source": "open-meteo"
+        },
+        {
+          "day": 1,
+          "date": "2026-02-21",
+          "new_snow_cm": 1.1,
           "source": "open-meteo"
         },
         {
@@ -1425,91 +2074,32 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 9.6,
-      "summit_seven_day_total_cm": 12.5
+      "seven_day_total_cm": 6.9,
+      "summit_seven_day_total_cm": 9.0
     },
     {
-      "name": "Obergurgl",
-      "lat": 46.8669,
-      "lon": 11.0244,
-      "country": "Austria",
-      "region": "Tyrol",
-      "elevation_m": 1941,
-      "summit_elevation_m": 2741,
-      "base_depth_cm": 104.0,
-      "base_depth_source": "Open-Meteo (modeled)",
-      "temp_c": -5.3,
-      "summit_temp_c": -10.5,
-      "forecast": [
-        {
-          "day": 0,
-          "date": "2026-02-20",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 1,
-          "date": "2026-02-21",
-          "new_snow_cm": 0.6,
-          "source": "open-meteo"
-        },
-        {
-          "day": 2,
-          "date": "2026-02-22",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 3,
-          "date": "2026-02-23",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 4,
-          "date": "2026-02-24",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 5,
-          "date": "2026-02-25",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 6,
-          "date": "2026-02-26",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        }
-      ],
-      "seven_day_total_cm": 0.6,
-      "summit_seven_day_total_cm": 0.8
-    },
-    {
-      "name": "Ischgl",
-      "lat": 46.9681,
-      "lon": 10.1856,
-      "country": "Austria",
-      "region": "Tyrol",
-      "elevation_m": 1587,
-      "summit_elevation_m": 2387,
-      "base_depth_cm": 105.0,
-      "base_depth_source": "Open-Meteo (modeled)",
+      "name": "St. Moritz",
+      "lat": 46.4761,
+      "lon": 9.8438,
+      "country": "Switzerland",
+      "region": "Graub\u00fcnden",
+      "elevation_m": 2512,
+      "summit_elevation_m": 3312,
+      "base_depth_cm": null,
+      "base_depth_source": null,
       "temp_c": -2.6,
       "summit_temp_c": -7.8,
       "forecast": [
         {
           "day": 0,
           "date": "2026-02-20",
-          "new_snow_cm": 4.8,
+          "new_snow_cm": 0.7,
           "source": "open-meteo"
         },
         {
           "day": 1,
           "date": "2026-02-21",
-          "new_snow_cm": 7.3,
+          "new_snow_cm": 0.1,
           "source": "open-meteo"
         },
         {
@@ -1521,7 +2111,7 @@
         {
           "day": 3,
           "date": "2026-02-23",
-          "new_snow_cm": 1.0,
+          "new_snow_cm": 0.0,
           "source": "open-meteo"
         },
         {
@@ -1543,44 +2133,103 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 13.1,
-      "summit_seven_day_total_cm": 14.4
+      "seven_day_total_cm": 0.8,
+      "summit_seven_day_total_cm": 0.9
     },
     {
-      "name": "Kitzb\u00fchel",
-      "lat": 47.4183,
-      "lon": 12.3592,
-      "country": "Austria",
-      "region": "Tyrol",
-      "elevation_m": 1794,
-      "summit_elevation_m": 2594,
-      "base_depth_cm": 85.0,
-      "base_depth_source": "Hahnenkamm",
-      "temp_c": -8.0,
-      "summit_temp_c": -13.2,
+      "name": "Davos",
+      "lat": 46.8131,
+      "lon": 9.8439,
+      "country": "Switzerland",
+      "region": "Graub\u00fcnden",
+      "elevation_m": 2540,
+      "summit_elevation_m": 3340,
+      "base_depth_cm": null,
+      "base_depth_source": null,
+      "temp_c": -0.6,
+      "summit_temp_c": -5.8,
       "forecast": [
         {
           "day": 0,
           "date": "2026-02-20",
-          "new_snow_cm": 2.6,
+          "new_snow_cm": 6.7,
           "source": "open-meteo"
         },
         {
           "day": 1,
           "date": "2026-02-21",
-          "new_snow_cm": 10.2,
+          "new_snow_cm": 7.2,
           "source": "open-meteo"
         },
         {
           "day": 2,
           "date": "2026-02-22",
-          "new_snow_cm": 0.3,
+          "new_snow_cm": 0.0,
           "source": "open-meteo"
         },
         {
           "day": 3,
           "date": "2026-02-23",
-          "new_snow_cm": 1.2,
+          "new_snow_cm": 0.1,
+          "source": "open-meteo"
+        },
+        {
+          "day": 4,
+          "date": "2026-02-24",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 5,
+          "date": "2026-02-25",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 6,
+          "date": "2026-02-26",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        }
+      ],
+      "seven_day_total_cm": 14.0,
+      "summit_seven_day_total_cm": 15.4
+    },
+    {
+      "name": "Laax",
+      "lat": 46.8356,
+      "lon": 9.2317,
+      "country": "Switzerland",
+      "region": "Graub\u00fcnden",
+      "elevation_m": 2325,
+      "summit_elevation_m": 3125,
+      "base_depth_cm": null,
+      "base_depth_source": null,
+      "temp_c": -2.2,
+      "summit_temp_c": -7.4,
+      "forecast": [
+        {
+          "day": 0,
+          "date": "2026-02-20",
+          "new_snow_cm": 3.1,
+          "source": "open-meteo"
+        },
+        {
+          "day": 1,
+          "date": "2026-02-21",
+          "new_snow_cm": 11.1,
+          "source": "open-meteo"
+        },
+        {
+          "day": 2,
+          "date": "2026-02-22",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 3,
+          "date": "2026-02-23",
+          "new_snow_cm": 0.0,
           "source": "open-meteo"
         },
         {
@@ -1603,31 +2252,31 @@
         }
       ],
       "seven_day_total_cm": 14.3,
-      "summit_seven_day_total_cm": 18.6
+      "summit_seven_day_total_cm": 15.6
     },
     {
-      "name": "Lech am Arlberg",
-      "lat": 47.1575,
-      "lon": 10.2128,
-      "country": "Austria",
-      "region": "Vorarlberg",
-      "elevation_m": 2079,
-      "summit_elevation_m": 2879,
-      "base_depth_cm": 242.0,
-      "base_depth_source": "Galzig (Ski Arlberg)",
-      "temp_c": -10.5,
-      "summit_temp_c": -15.7,
+      "name": "Lenzerheide",
+      "lat": 46.7267,
+      "lon": 9.5542,
+      "country": "Switzerland",
+      "region": "Graub\u00fcnden",
+      "elevation_m": 2429,
+      "summit_elevation_m": 3229,
+      "base_depth_cm": null,
+      "base_depth_source": null,
+      "temp_c": -0.7,
+      "summit_temp_c": -5.9,
       "forecast": [
         {
           "day": 0,
           "date": "2026-02-20",
-          "new_snow_cm": 10.3,
+          "new_snow_cm": 4.2,
           "source": "open-meteo"
         },
         {
           "day": 1,
           "date": "2026-02-21",
-          "new_snow_cm": 13.3,
+          "new_snow_cm": 8.5,
           "source": "open-meteo"
         },
         {
@@ -1639,7 +2288,7 @@
         {
           "day": 3,
           "date": "2026-02-23",
-          "new_snow_cm": 6.3,
+          "new_snow_cm": 0.0,
           "source": "open-meteo"
         },
         {
@@ -1661,32 +2310,32 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 29.9,
-      "summit_seven_day_total_cm": 38.9
+      "seven_day_total_cm": 12.7,
+      "summit_seven_day_total_cm": 14.0
     },
     {
-      "name": "Pitztal Glacier",
-      "lat": 46.9269,
-      "lon": 10.8792,
-      "country": "Austria",
-      "region": "Tyrol",
-      "elevation_m": 2864,
-      "summit_elevation_m": 3664,
-      "base_depth_cm": 212.0,
-      "base_depth_source": "Pitztaler Gletscher",
-      "temp_c": -11.6,
-      "summit_temp_c": -16.8,
+      "name": "M\u00fcrren",
+      "lat": 46.5573,
+      "lon": 7.8352,
+      "country": "Switzerland",
+      "region": "Bern",
+      "elevation_m": 2332,
+      "summit_elevation_m": 3132,
+      "base_depth_cm": null,
+      "base_depth_source": null,
+      "temp_c": -9.3,
+      "summit_temp_c": -14.5,
       "forecast": [
         {
           "day": 0,
           "date": "2026-02-20",
-          "new_snow_cm": 3.2,
+          "new_snow_cm": 8.6,
           "source": "open-meteo"
         },
         {
           "day": 1,
           "date": "2026-02-21",
-          "new_snow_cm": 5.7,
+          "new_snow_cm": 3.1,
           "source": "open-meteo"
         },
         {
@@ -1720,38 +2369,156 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 9.6,
-      "summit_seven_day_total_cm": 12.5
+      "seven_day_total_cm": 12.4,
+      "summit_seven_day_total_cm": 16.1
     },
     {
-      "name": "Obertauern",
-      "lat": 47.2489,
-      "lon": 13.5597,
-      "country": "Austria",
-      "region": "Salzburg",
-      "elevation_m": 1630,
-      "summit_elevation_m": 2430,
-      "base_depth_cm": 74.0,
-      "base_depth_source": "Flattnitz",
-      "temp_c": -7.9,
-      "summit_temp_c": -13.1,
+      "name": "Andermatt",
+      "lat": 46.6544,
+      "lon": 8.6106,
+      "country": "Switzerland",
+      "region": "Uri",
+      "elevation_m": 2209,
+      "summit_elevation_m": 3009,
+      "base_depth_cm": null,
+      "base_depth_source": null,
+      "temp_c": -4.8,
+      "summit_temp_c": -10.0,
       "forecast": [
         {
           "day": 0,
           "date": "2026-02-20",
-          "new_snow_cm": 5.0,
+          "new_snow_cm": 4.4,
           "source": "open-meteo"
         },
         {
           "day": 1,
           "date": "2026-02-21",
-          "new_snow_cm": 9.8,
+          "new_snow_cm": 9.7,
           "source": "open-meteo"
         },
         {
           "day": 2,
           "date": "2026-02-22",
-          "new_snow_cm": 2.9,
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 3,
+          "date": "2026-02-23",
+          "new_snow_cm": 2.1,
+          "source": "open-meteo"
+        },
+        {
+          "day": 4,
+          "date": "2026-02-24",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 5,
+          "date": "2026-02-25",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 6,
+          "date": "2026-02-26",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        }
+      ],
+      "seven_day_total_cm": 16.2,
+      "summit_seven_day_total_cm": 17.8
+    },
+    {
+      "name": "Arosa",
+      "lat": 46.7594,
+      "lon": 9.6669,
+      "country": "Switzerland",
+      "region": "Graub\u00fcnden",
+      "elevation_m": 2495,
+      "summit_elevation_m": 3295,
+      "base_depth_cm": null,
+      "base_depth_source": null,
+      "temp_c": -5.0,
+      "summit_temp_c": -10.2,
+      "forecast": [
+        {
+          "day": 0,
+          "date": "2026-02-20",
+          "new_snow_cm": 3.1,
+          "source": "open-meteo"
+        },
+        {
+          "day": 1,
+          "date": "2026-02-21",
+          "new_snow_cm": 3.9,
+          "source": "open-meteo"
+        },
+        {
+          "day": 2,
+          "date": "2026-02-22",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 3,
+          "date": "2026-02-23",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 4,
+          "date": "2026-02-24",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 5,
+          "date": "2026-02-25",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 6,
+          "date": "2026-02-26",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        }
+      ],
+      "seven_day_total_cm": 7.0,
+      "summit_seven_day_total_cm": 9.1
+    },
+    {
+      "name": "Engelberg",
+      "lat": 46.7711,
+      "lon": 8.4306,
+      "country": "Switzerland",
+      "region": "Uri",
+      "elevation_m": 2149,
+      "summit_elevation_m": 2949,
+      "base_depth_cm": null,
+      "base_depth_source": null,
+      "temp_c": -9.6,
+      "summit_temp_c": -14.8,
+      "forecast": [
+        {
+          "day": 0,
+          "date": "2026-02-20",
+          "new_snow_cm": 6.2,
+          "source": "open-meteo"
+        },
+        {
+          "day": 1,
+          "date": "2026-02-21",
+          "new_snow_cm": 10.2,
+          "source": "open-meteo"
+        },
+        {
+          "day": 2,
+          "date": "2026-02-22",
+          "new_snow_cm": 0.0,
           "source": "open-meteo"
         },
         {
@@ -1779,775 +2546,8 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 20.2,
-      "summit_seven_day_total_cm": 26.3
-    },
-    {
-      "name": "Zell am See",
-      "lat": 47.3286,
-      "lon": 12.7381,
-      "country": "Austria",
-      "region": "Salzburg",
-      "elevation_m": 1956,
-      "summit_elevation_m": 2756,
-      "base_depth_cm": 32.0,
-      "base_depth_source": "Open-Meteo (modeled)",
-      "temp_c": -9.1,
-      "summit_temp_c": -14.3,
-      "forecast": [
-        {
-          "day": 0,
-          "date": "2026-02-20",
-          "new_snow_cm": 1.3,
-          "source": "open-meteo"
-        },
-        {
-          "day": 1,
-          "date": "2026-02-21",
-          "new_snow_cm": 10.9,
-          "source": "open-meteo"
-        },
-        {
-          "day": 2,
-          "date": "2026-02-22",
-          "new_snow_cm": 1.8,
-          "source": "open-meteo"
-        },
-        {
-          "day": 3,
-          "date": "2026-02-23",
-          "new_snow_cm": 0.9,
-          "source": "open-meteo"
-        },
-        {
-          "day": 4,
-          "date": "2026-02-24",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 5,
-          "date": "2026-02-25",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 6,
-          "date": "2026-02-26",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        }
-      ],
-      "seven_day_total_cm": 15.0,
-      "summit_seven_day_total_cm": 19.4
-    },
-    {
-      "name": "Schladming",
-      "lat": 47.4678,
-      "lon": 13.6264,
-      "country": "Austria",
-      "region": "Styria",
-      "elevation_m": 2015,
-      "summit_elevation_m": 2815,
-      "base_depth_cm": 78.0,
-      "base_depth_source": "Dachstein-Schladminger Gletscher",
-      "temp_c": -13.8,
-      "summit_temp_c": -19.0,
-      "forecast": [
-        {
-          "day": 0,
-          "date": "2026-02-20",
-          "new_snow_cm": 3.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 1,
-          "date": "2026-02-21",
-          "new_snow_cm": 11.5,
-          "source": "open-meteo"
-        },
-        {
-          "day": 2,
-          "date": "2026-02-22",
-          "new_snow_cm": 6.7,
-          "source": "open-meteo"
-        },
-        {
-          "day": 3,
-          "date": "2026-02-23",
-          "new_snow_cm": 9.7,
-          "source": "open-meteo"
-        },
-        {
-          "day": 4,
-          "date": "2026-02-24",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 5,
-          "date": "2026-02-25",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 6,
-          "date": "2026-02-26",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        }
-      ],
-      "seven_day_total_cm": 30.8,
-      "summit_seven_day_total_cm": 40.2
-    },
-    {
-      "name": "Zermatt",
-      "lat": 45.9872,
-      "lon": 7.7836,
-      "country": "Switzerland",
-      "region": "Valais",
-      "elevation_m": 2953,
-      "summit_elevation_m": 3753,
-      "base_depth_cm": null,
-      "base_depth_source": null,
-      "temp_c": -11.5,
-      "summit_temp_c": -16.7,
-      "forecast": [
-        {
-          "day": 0,
-          "date": "2026-02-20",
-          "new_snow_cm": 1.5,
-          "source": "open-meteo"
-        },
-        {
-          "day": 1,
-          "date": "2026-02-21",
-          "new_snow_cm": 0.4,
-          "source": "open-meteo"
-        },
-        {
-          "day": 2,
-          "date": "2026-02-22",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 3,
-          "date": "2026-02-23",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 4,
-          "date": "2026-02-24",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 5,
-          "date": "2026-02-25",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 6,
-          "date": "2026-02-26",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        }
-      ],
-      "seven_day_total_cm": 2.0,
-      "summit_seven_day_total_cm": 2.5
-    },
-    {
-      "name": "Saas-Fee",
-      "lat": 46.1275,
-      "lon": 7.9814,
-      "country": "Switzerland",
-      "region": "Valais",
-      "elevation_m": 2480,
-      "summit_elevation_m": 3280,
-      "base_depth_cm": null,
-      "base_depth_source": null,
-      "temp_c": -12.1,
-      "summit_temp_c": -17.3,
-      "forecast": [
-        {
-          "day": 0,
-          "date": "2026-02-20",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 1,
-          "date": "2026-02-21",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 2,
-          "date": "2026-02-22",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 3,
-          "date": "2026-02-23",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 4,
-          "date": "2026-02-24",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 5,
-          "date": "2026-02-25",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 6,
-          "date": "2026-02-26",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        }
-      ],
-      "seven_day_total_cm": 0.0,
-      "summit_seven_day_total_cm": 0.0
-    },
-    {
-      "name": "Verbier",
-      "lat": 46.0989,
-      "lon": 7.2856,
-      "country": "Switzerland",
-      "region": "Valais",
-      "elevation_m": 2550,
-      "summit_elevation_m": 3350,
-      "base_depth_cm": null,
-      "base_depth_source": null,
-      "temp_c": -9.1,
-      "summit_temp_c": -14.3,
-      "forecast": [
-        {
-          "day": 0,
-          "date": "2026-02-20",
-          "new_snow_cm": 5.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 1,
-          "date": "2026-02-21",
-          "new_snow_cm": 0.7,
-          "source": "open-meteo"
-        },
-        {
-          "day": 2,
-          "date": "2026-02-22",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 3,
-          "date": "2026-02-23",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 4,
-          "date": "2026-02-24",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 5,
-          "date": "2026-02-25",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 6,
-          "date": "2026-02-26",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        }
-      ],
-      "seven_day_total_cm": 5.7,
-      "summit_seven_day_total_cm": 7.4
-    },
-    {
-      "name": "St. Moritz",
-      "lat": 46.4761,
-      "lon": 9.8438,
-      "country": "Switzerland",
-      "region": "Graub\u00fcnden",
-      "elevation_m": 2512,
-      "summit_elevation_m": 3312,
-      "base_depth_cm": null,
-      "base_depth_source": null,
-      "temp_c": -5.6,
-      "summit_temp_c": -10.8,
-      "forecast": [
-        {
-          "day": 0,
-          "date": "2026-02-20",
-          "new_snow_cm": 0.7,
-          "source": "open-meteo"
-        },
-        {
-          "day": 1,
-          "date": "2026-02-21",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 2,
-          "date": "2026-02-22",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 3,
-          "date": "2026-02-23",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 4,
-          "date": "2026-02-24",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 5,
-          "date": "2026-02-25",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 6,
-          "date": "2026-02-26",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        }
-      ],
-      "seven_day_total_cm": 0.7,
-      "summit_seven_day_total_cm": 0.9
-    },
-    {
-      "name": "Davos",
-      "lat": 46.8131,
-      "lon": 9.8439,
-      "country": "Switzerland",
-      "region": "Graub\u00fcnden",
-      "elevation_m": 2540,
-      "summit_elevation_m": 3340,
-      "base_depth_cm": null,
-      "base_depth_source": null,
-      "temp_c": -2.8,
-      "summit_temp_c": -8.0,
-      "forecast": [
-        {
-          "day": 0,
-          "date": "2026-02-20",
-          "new_snow_cm": 6.6,
-          "source": "open-meteo"
-        },
-        {
-          "day": 1,
-          "date": "2026-02-21",
-          "new_snow_cm": 4.8,
-          "source": "open-meteo"
-        },
-        {
-          "day": 2,
-          "date": "2026-02-22",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 3,
-          "date": "2026-02-23",
-          "new_snow_cm": 0.1,
-          "source": "open-meteo"
-        },
-        {
-          "day": 4,
-          "date": "2026-02-24",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 5,
-          "date": "2026-02-25",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 6,
-          "date": "2026-02-26",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        }
-      ],
-      "seven_day_total_cm": 11.4,
-      "summit_seven_day_total_cm": 12.6
-    },
-    {
-      "name": "Laax",
-      "lat": 46.8356,
-      "lon": 9.2317,
-      "country": "Switzerland",
-      "region": "Graub\u00fcnden",
-      "elevation_m": 2325,
-      "summit_elevation_m": 3125,
-      "base_depth_cm": null,
-      "base_depth_source": null,
-      "temp_c": -3.7,
-      "summit_temp_c": -8.9,
-      "forecast": [
-        {
-          "day": 0,
-          "date": "2026-02-20",
-          "new_snow_cm": 2.9,
-          "source": "open-meteo"
-        },
-        {
-          "day": 1,
-          "date": "2026-02-21",
-          "new_snow_cm": 8.5,
-          "source": "open-meteo"
-        },
-        {
-          "day": 2,
-          "date": "2026-02-22",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 3,
-          "date": "2026-02-23",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 4,
-          "date": "2026-02-24",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 5,
-          "date": "2026-02-25",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 6,
-          "date": "2026-02-26",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        }
-      ],
-      "seven_day_total_cm": 11.4,
-      "summit_seven_day_total_cm": 12.5
-    },
-    {
-      "name": "Lenzerheide",
-      "lat": 46.7267,
-      "lon": 9.5542,
-      "country": "Switzerland",
-      "region": "Graub\u00fcnden",
-      "elevation_m": 2429,
-      "summit_elevation_m": 3229,
-      "base_depth_cm": null,
-      "base_depth_source": null,
-      "temp_c": -2.3,
-      "summit_temp_c": -7.5,
-      "forecast": [
-        {
-          "day": 0,
-          "date": "2026-02-20",
-          "new_snow_cm": 4.1,
-          "source": "open-meteo"
-        },
-        {
-          "day": 1,
-          "date": "2026-02-21",
-          "new_snow_cm": 6.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 2,
-          "date": "2026-02-22",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 3,
-          "date": "2026-02-23",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 4,
-          "date": "2026-02-24",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 5,
-          "date": "2026-02-25",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 6,
-          "date": "2026-02-26",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        }
-      ],
-      "seven_day_total_cm": 10.1,
-      "summit_seven_day_total_cm": 11.1
-    },
-    {
-      "name": "M\u00fcrren",
-      "lat": 46.5573,
-      "lon": 7.8352,
-      "country": "Switzerland",
-      "region": "Bern",
-      "elevation_m": 2332,
-      "summit_elevation_m": 3132,
-      "base_depth_cm": null,
-      "base_depth_source": null,
-      "temp_c": -10.9,
-      "summit_temp_c": -16.1,
-      "forecast": [
-        {
-          "day": 0,
-          "date": "2026-02-20",
-          "new_snow_cm": 8.3,
-          "source": "open-meteo"
-        },
-        {
-          "day": 1,
-          "date": "2026-02-21",
-          "new_snow_cm": 1.8,
-          "source": "open-meteo"
-        },
-        {
-          "day": 2,
-          "date": "2026-02-22",
-          "new_snow_cm": 0.2,
-          "source": "open-meteo"
-        },
-        {
-          "day": 3,
-          "date": "2026-02-23",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 4,
-          "date": "2026-02-24",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 5,
-          "date": "2026-02-25",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 6,
-          "date": "2026-02-26",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        }
-      ],
-      "seven_day_total_cm": 10.3,
-      "summit_seven_day_total_cm": 13.4
-    },
-    {
-      "name": "Andermatt",
-      "lat": 46.6544,
-      "lon": 8.6106,
-      "country": "Switzerland",
-      "region": "Uri",
-      "elevation_m": 2209,
-      "summit_elevation_m": 3009,
-      "base_depth_cm": null,
-      "base_depth_source": null,
-      "temp_c": -6.3,
-      "summit_temp_c": -11.5,
-      "forecast": [
-        {
-          "day": 0,
-          "date": "2026-02-20",
-          "new_snow_cm": 4.2,
-          "source": "open-meteo"
-        },
-        {
-          "day": 1,
-          "date": "2026-02-21",
-          "new_snow_cm": 6.9,
-          "source": "open-meteo"
-        },
-        {
-          "day": 2,
-          "date": "2026-02-22",
-          "new_snow_cm": 0.1,
-          "source": "open-meteo"
-        },
-        {
-          "day": 3,
-          "date": "2026-02-23",
-          "new_snow_cm": 0.1,
-          "source": "open-meteo"
-        },
-        {
-          "day": 4,
-          "date": "2026-02-24",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 5,
-          "date": "2026-02-25",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 6,
-          "date": "2026-02-26",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        }
-      ],
-      "seven_day_total_cm": 11.3,
-      "summit_seven_day_total_cm": 14.7
-    },
-    {
-      "name": "Arosa",
-      "lat": 46.7594,
-      "lon": 9.6669,
-      "country": "Switzerland",
-      "region": "Graub\u00fcnden",
-      "elevation_m": 2495,
-      "summit_elevation_m": 3295,
-      "base_depth_cm": null,
-      "base_depth_source": null,
-      "temp_c": -7.2,
-      "summit_temp_c": -12.4,
-      "forecast": [
-        {
-          "day": 0,
-          "date": "2026-02-20",
-          "new_snow_cm": 3.1,
-          "source": "open-meteo"
-        },
-        {
-          "day": 1,
-          "date": "2026-02-21",
-          "new_snow_cm": 1.8,
-          "source": "open-meteo"
-        },
-        {
-          "day": 2,
-          "date": "2026-02-22",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 3,
-          "date": "2026-02-23",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 4,
-          "date": "2026-02-24",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 5,
-          "date": "2026-02-25",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 6,
-          "date": "2026-02-26",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        }
-      ],
-      "seven_day_total_cm": 4.8,
-      "summit_seven_day_total_cm": 6.4
-    },
-    {
-      "name": "Engelberg",
-      "lat": 46.7711,
-      "lon": 8.4306,
-      "country": "Switzerland",
-      "region": "Uri",
-      "elevation_m": 2149,
-      "summit_elevation_m": 2949,
-      "base_depth_cm": null,
-      "base_depth_source": null,
-      "temp_c": -11.1,
-      "summit_temp_c": -16.3,
-      "forecast": [
-        {
-          "day": 0,
-          "date": "2026-02-20",
-          "new_snow_cm": 6.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 1,
-          "date": "2026-02-21",
-          "new_snow_cm": 7.1,
-          "source": "open-meteo"
-        },
-        {
-          "day": 2,
-          "date": "2026-02-22",
-          "new_snow_cm": 0.2,
-          "source": "open-meteo"
-        },
-        {
-          "day": 3,
-          "date": "2026-02-23",
-          "new_snow_cm": 0.1,
-          "source": "open-meteo"
-        },
-        {
-          "day": 4,
-          "date": "2026-02-24",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 5,
-          "date": "2026-02-25",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 6,
-          "date": "2026-02-26",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        }
-      ],
-      "seven_day_total_cm": 13.4,
-      "summit_seven_day_total_cm": 17.4
+      "seven_day_total_cm": 18.8,
+      "summit_seven_day_total_cm": 24.6
     },
     {
       "name": "Niseko United",
@@ -2559,13 +2559,13 @@
       "summit_elevation_m": 1308,
       "base_depth_cm": 213,
       "base_depth_source": "OnTheSnow",
-      "temp_c": -0.3,
-      "summit_temp_c": -7.1,
+      "temp_c": -2.8,
+      "summit_temp_c": -9.6,
       "forecast": [
         {
           "day": 0,
           "date": "2026-02-20",
-          "new_snow_cm": 0.2,
+          "new_snow_cm": 0.1,
           "source": "open-meteo"
         },
         {
@@ -2589,7 +2589,7 @@
         {
           "day": 4,
           "date": "2026-02-24",
-          "new_snow_cm": 0.1,
+          "new_snow_cm": 0.2,
           "source": "open-meteo"
         },
         {
@@ -2618,8 +2618,8 @@
       "summit_elevation_m": 1074,
       "base_depth_cm": 115,
       "base_depth_source": "OnTheSnow",
-      "temp_c": -2.1,
-      "summit_temp_c": -7.5,
+      "temp_c": -7.5,
+      "summit_temp_c": -12.9,
       "forecast": [
         {
           "day": 0,
@@ -2642,72 +2642,13 @@
         {
           "day": 3,
           "date": "2026-02-23",
-          "new_snow_cm": 1.7,
-          "source": "open-meteo"
-        },
-        {
-          "day": 4,
-          "date": "2026-02-24",
-          "new_snow_cm": 0.2,
-          "source": "open-meteo"
-        },
-        {
-          "day": 5,
-          "date": "2026-02-25",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 6,
-          "date": "2026-02-26",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        }
-      ],
-      "seven_day_total_cm": 2.0,
-      "summit_seven_day_total_cm": 2.2
-    },
-    {
-      "name": "Rusutsu",
-      "lat": 42.75,
-      "lon": 140.88,
-      "country": "Japan",
-      "region": "Hokkaido",
-      "elevation_m": 400,
-      "summit_elevation_m": 1000,
-      "base_depth_cm": 195,
-      "base_depth_source": "OnTheSnow",
-      "temp_c": -1.4,
-      "summit_temp_c": -5.3,
-      "forecast": [
-        {
-          "day": 0,
-          "date": "2026-02-20",
-          "new_snow_cm": 0.3,
-          "source": "open-meteo"
-        },
-        {
-          "day": 1,
-          "date": "2026-02-21",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 2,
-          "date": "2026-02-22",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 3,
-          "date": "2026-02-23",
           "new_snow_cm": 0.2,
           "source": "open-meteo"
         },
         {
           "day": 4,
           "date": "2026-02-24",
-          "new_snow_cm": 0.0,
+          "new_snow_cm": 0.1,
           "source": "open-meteo"
         },
         {
@@ -2724,25 +2665,25 @@
         }
       ],
       "seven_day_total_cm": 0.5,
-      "summit_seven_day_total_cm": 0.6
+      "summit_seven_day_total_cm": 0.5
     },
     {
-      "name": "Kiroro",
-      "lat": 43.0701,
-      "lon": 140.9891,
+      "name": "Rusutsu",
+      "lat": 42.75,
+      "lon": 140.88,
       "country": "Japan",
       "region": "Hokkaido",
-      "elevation_m": 520,
-      "summit_elevation_m": 1150,
-      "base_depth_cm": 250,
+      "elevation_m": 400,
+      "summit_elevation_m": 1000,
+      "base_depth_cm": 195,
       "base_depth_source": "OnTheSnow",
-      "temp_c": -1.5,
-      "summit_temp_c": -5.6,
+      "temp_c": -3.4,
+      "summit_temp_c": -7.3,
       "forecast": [
         {
           "day": 0,
           "date": "2026-02-20",
-          "new_snow_cm": 0.2,
+          "new_snow_cm": 0.4,
           "source": "open-meteo"
         },
         {
@@ -2760,7 +2701,66 @@
         {
           "day": 3,
           "date": "2026-02-23",
-          "new_snow_cm": 3.6,
+          "new_snow_cm": 0.1,
+          "source": "open-meteo"
+        },
+        {
+          "day": 4,
+          "date": "2026-02-24",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 5,
+          "date": "2026-02-25",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 6,
+          "date": "2026-02-26",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        }
+      ],
+      "seven_day_total_cm": 0.6,
+      "summit_seven_day_total_cm": 0.7
+    },
+    {
+      "name": "Kiroro",
+      "lat": 43.0701,
+      "lon": 140.9891,
+      "country": "Japan",
+      "region": "Hokkaido",
+      "elevation_m": 520,
+      "summit_elevation_m": 1150,
+      "base_depth_cm": 250,
+      "base_depth_source": "OnTheSnow",
+      "temp_c": -3.9,
+      "summit_temp_c": -8.0,
+      "forecast": [
+        {
+          "day": 0,
+          "date": "2026-02-20",
+          "new_snow_cm": 0.3,
+          "source": "open-meteo"
+        },
+        {
+          "day": 1,
+          "date": "2026-02-21",
+          "new_snow_cm": 0.1,
+          "source": "open-meteo"
+        },
+        {
+          "day": 2,
+          "date": "2026-02-22",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 3,
+          "date": "2026-02-23",
+          "new_snow_cm": 4.1,
           "source": "open-meteo"
         },
         {
@@ -2782,8 +2782,8 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 4.1,
-      "summit_seven_day_total_cm": 4.5
+      "seven_day_total_cm": 4.6,
+      "summit_seven_day_total_cm": 5.2
     },
     {
       "name": "Hakuba Valley",
@@ -2795,8 +2795,8 @@
       "summit_elevation_m": 1831,
       "base_depth_cm": 305,
       "base_depth_source": "OnTheSnow",
-      "temp_c": 4.1,
-      "summit_temp_c": -2.9,
+      "temp_c": -2.4,
+      "summit_temp_c": -9.4,
       "forecast": [
         {
           "day": 0,
@@ -2819,19 +2819,19 @@
         {
           "day": 3,
           "date": "2026-02-23",
-          "new_snow_cm": 0.6,
+          "new_snow_cm": 1.8,
           "source": "open-meteo"
         },
         {
           "day": 4,
           "date": "2026-02-24",
-          "new_snow_cm": 0.0,
+          "new_snow_cm": 0.1,
           "source": "open-meteo"
         },
         {
           "day": 5,
           "date": "2026-02-25",
-          "new_snow_cm": 3.4,
+          "new_snow_cm": 4.8,
           "source": "open-meteo"
         },
         {
@@ -2841,8 +2841,8 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 3.9,
-      "summit_seven_day_total_cm": 4.0
+      "seven_day_total_cm": 6.7,
+      "summit_seven_day_total_cm": 7.4
     },
     {
       "name": "Happo-One",
@@ -2854,8 +2854,8 @@
       "summit_elevation_m": 1831,
       "base_depth_cm": 305,
       "base_depth_source": "OnTheSnow (Hakuba Valley)",
-      "temp_c": 3.4,
-      "summit_temp_c": -3.6,
+      "temp_c": -3.1,
+      "summit_temp_c": -10.1,
       "forecast": [
         {
           "day": 0,
@@ -2878,19 +2878,19 @@
         {
           "day": 3,
           "date": "2026-02-23",
-          "new_snow_cm": 0.6,
+          "new_snow_cm": 1.8,
           "source": "open-meteo"
         },
         {
           "day": 4,
           "date": "2026-02-24",
-          "new_snow_cm": 0.0,
+          "new_snow_cm": 0.1,
           "source": "open-meteo"
         },
         {
           "day": 5,
           "date": "2026-02-25",
-          "new_snow_cm": 3.4,
+          "new_snow_cm": 4.8,
           "source": "open-meteo"
         },
         {
@@ -2900,8 +2900,8 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 3.9,
-      "summit_seven_day_total_cm": 4.0
+      "seven_day_total_cm": 6.7,
+      "summit_seven_day_total_cm": 8.7
     },
     {
       "name": "Nozawa Onsen",
@@ -2913,8 +2913,8 @@
       "summit_elevation_m": 1650,
       "base_depth_cm": 240.0,
       "base_depth_source": "tenki.jp",
-      "temp_c": 3.3,
-      "summit_temp_c": -3.8,
+      "temp_c": -2.3,
+      "summit_temp_c": -9.4,
       "forecast": [
         {
           "day": 0,
@@ -2972,8 +2972,8 @@
       "summit_elevation_m": 2149,
       "base_depth_cm": 140.0,
       "base_depth_source": "tenki.jp",
-      "temp_c": -1.8,
-      "summit_temp_c": -7.3,
+      "temp_c": -7.2,
+      "summit_temp_c": -12.7,
       "forecast": [
         {
           "day": 0,
@@ -3008,7 +3008,7 @@
         {
           "day": 5,
           "date": "2026-02-25",
-          "new_snow_cm": 0.0,
+          "new_snow_cm": 0.1,
           "source": "open-meteo"
         },
         {
@@ -3018,8 +3018,8 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 0.0,
-      "summit_seven_day_total_cm": 0.0
+      "seven_day_total_cm": 0.1,
+      "summit_seven_day_total_cm": 0.1
     },
     {
       "name": "Myoko Kogen",
@@ -3031,8 +3031,8 @@
       "summit_elevation_m": 1765,
       "base_depth_cm": 170.0,
       "base_depth_source": "tenki.jp",
-      "temp_c": -4.6,
-      "summit_temp_c": -11.3,
+      "temp_c": -9.1,
+      "summit_temp_c": -15.8,
       "forecast": [
         {
           "day": 0,
@@ -3067,7 +3067,7 @@
         {
           "day": 5,
           "date": "2026-02-25",
-          "new_snow_cm": 0.8,
+          "new_snow_cm": 1.0,
           "source": "open-meteo"
         },
         {
@@ -3077,8 +3077,8 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 0.8,
-      "summit_seven_day_total_cm": 1.0
+      "seven_day_total_cm": 1.0,
+      "summit_seven_day_total_cm": 1.3
     },
     {
       "name": "Zao Onsen",
@@ -3090,8 +3090,8 @@
       "summit_elevation_m": 1741,
       "base_depth_cm": 175.0,
       "base_depth_source": "tenki.jp",
-      "temp_c": 0.4,
-      "summit_temp_c": -5.8,
+      "temp_c": -5.0,
+      "summit_temp_c": -11.2,
       "forecast": [
         {
           "day": 0,
@@ -3126,7 +3126,7 @@
         {
           "day": 5,
           "date": "2026-02-25",
-          "new_snow_cm": 0.0,
+          "new_snow_cm": 2.0,
           "source": "open-meteo"
         },
         {
@@ -3136,8 +3136,8 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 0.0,
-      "summit_seven_day_total_cm": 0.0
+      "seven_day_total_cm": 2.0,
+      "summit_seven_day_total_cm": 2.6
     },
     {
       "name": "Val Thorens",
@@ -3147,15 +3147,15 @@
       "region": "Northern Alps",
       "elevation_m": 2300,
       "summit_elevation_m": 3230,
-      "base_depth_cm": 260,
+      "base_depth_cm": 285,
       "base_depth_source": "OnTheSnow",
-      "temp_c": -6.8,
-      "summit_temp_c": -12.8,
+      "temp_c": -5.3,
+      "summit_temp_c": -11.3,
       "forecast": [
         {
           "day": 0,
           "date": "2026-02-20",
-          "new_snow_cm": 5.2,
+          "new_snow_cm": 5.3,
           "source": "open-meteo"
         },
         {
@@ -3195,8 +3195,8 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 5.2,
-      "summit_seven_day_total_cm": 6.8
+      "seven_day_total_cm": 5.3,
+      "summit_seven_day_total_cm": 6.9
     },
     {
       "name": "Les Arcs",
@@ -3208,8 +3208,8 @@
       "summit_elevation_m": 2230,
       "base_depth_cm": 340,
       "base_depth_source": "OnTheSnow",
-      "temp_c": -0.5,
-      "summit_temp_c": -7.2,
+      "temp_c": 1.4,
+      "summit_temp_c": -5.3,
       "forecast": [
         {
           "day": 0,
@@ -3265,10 +3265,10 @@
       "region": "Northern Alps",
       "elevation_m": 1850,
       "summit_elevation_m": 2800,
-      "base_depth_cm": 269,
+      "base_depth_cm": 290,
       "base_depth_source": "OnTheSnow",
-      "temp_c": -4.2,
-      "summit_temp_c": -10.4,
+      "temp_c": -0.6,
+      "summit_temp_c": -6.8,
       "forecast": [
         {
           "day": 0,
@@ -3314,7 +3314,7 @@
         }
       ],
       "seven_day_total_cm": 2.2,
-      "summit_seven_day_total_cm": 2.9
+      "summit_seven_day_total_cm": 2.4
     },
     {
       "name": "Les Menuires",
@@ -3326,13 +3326,13 @@
       "summit_elevation_m": 2700,
       "base_depth_cm": 100,
       "base_depth_source": "OnTheSnow",
-      "temp_c": -3.4,
-      "summit_temp_c": -8.9,
+      "temp_c": -1.9,
+      "summit_temp_c": -7.4,
       "forecast": [
         {
           "day": 0,
           "date": "2026-02-20",
-          "new_snow_cm": 5.2,
+          "new_snow_cm": 5.3,
           "source": "open-meteo"
         },
         {
@@ -3372,8 +3372,8 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 5.2,
-      "summit_seven_day_total_cm": 5.7
+      "seven_day_total_cm": 5.3,
+      "summit_seven_day_total_cm": 5.8
     },
     {
       "name": "Avoriaz",
@@ -3383,21 +3383,21 @@
       "region": "Northern Alps",
       "elevation_m": 1800,
       "summit_elevation_m": 2300,
-      "base_depth_cm": 234,
+      "base_depth_cm": 260,
       "base_depth_source": "OnTheSnow",
-      "temp_c": -1.8,
-      "summit_temp_c": -5.0,
+      "temp_c": -1.4,
+      "summit_temp_c": -4.7,
       "forecast": [
         {
           "day": 0,
           "date": "2026-02-20",
-          "new_snow_cm": 8.4,
+          "new_snow_cm": 9.0,
           "source": "open-meteo"
         },
         {
           "day": 1,
           "date": "2026-02-21",
-          "new_snow_cm": 0.1,
+          "new_snow_cm": 0.8,
           "source": "open-meteo"
         },
         {
@@ -3431,8 +3431,8 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 8.5,
-      "summit_seven_day_total_cm": 9.4
+      "seven_day_total_cm": 9.8,
+      "summit_seven_day_total_cm": 9.8
     },
     {
       "name": "La Plagne",
@@ -3444,8 +3444,8 @@
       "summit_elevation_m": 2300,
       "base_depth_cm": 60,
       "base_depth_source": "OnTheSnow",
-      "temp_c": -4.7,
-      "summit_temp_c": -11.5,
+      "temp_c": -2.9,
+      "summit_temp_c": -9.7,
       "forecast": [
         {
           "day": 0,
@@ -3491,7 +3491,7 @@
         }
       ],
       "seven_day_total_cm": 6.7,
-      "summit_seven_day_total_cm": 8.7
+      "summit_seven_day_total_cm": 7.4
     },
     {
       "name": "Courchevel",
@@ -3501,15 +3501,15 @@
       "region": "Northern Alps",
       "elevation_m": 1300,
       "summit_elevation_m": 2847,
-      "base_depth_cm": 192,
+      "base_depth_cm": 195,
       "base_depth_source": "OnTheSnow",
-      "temp_c": -3.1,
-      "summit_temp_c": -13.2,
+      "temp_c": -1.5,
+      "summit_temp_c": -11.6,
       "forecast": [
         {
           "day": 0,
           "date": "2026-02-20",
-          "new_snow_cm": 5.0,
+          "new_snow_cm": 5.2,
           "source": "open-meteo"
         },
         {
@@ -3549,8 +3549,8 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 5.0,
-      "summit_seven_day_total_cm": 6.5
+      "seven_day_total_cm": 5.2,
+      "summit_seven_day_total_cm": 6.8
     },
     {
       "name": "Chamonix",
@@ -3562,13 +3562,131 @@
       "summit_elevation_m": 3800,
       "base_depth_cm": 150,
       "base_depth_source": "OnTheSnow",
-      "temp_c": 2.4,
-      "summit_temp_c": -15.6,
+      "temp_c": 3.4,
+      "summit_temp_c": -14.6,
       "forecast": [
         {
           "day": 0,
           "date": "2026-02-20",
-          "new_snow_cm": 9.0,
+          "new_snow_cm": 9.4,
+          "source": "open-meteo"
+        },
+        {
+          "day": 1,
+          "date": "2026-02-21",
+          "new_snow_cm": 0.9,
+          "source": "open-meteo"
+        },
+        {
+          "day": 2,
+          "date": "2026-02-22",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 3,
+          "date": "2026-02-23",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 4,
+          "date": "2026-02-24",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 5,
+          "date": "2026-02-25",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 6,
+          "date": "2026-02-26",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        }
+      ],
+      "seven_day_total_cm": 10.3,
+      "summit_seven_day_total_cm": 13.4
+    },
+    {
+      "name": "Morzine",
+      "lat": 46.1792,
+      "lon": 6.7089,
+      "country": "France",
+      "region": "Northern Alps",
+      "elevation_m": 1000,
+      "summit_elevation_m": 2000,
+      "base_depth_cm": 10,
+      "base_depth_source": "OnTheSnow",
+      "temp_c": 2.4,
+      "summit_temp_c": -4.1,
+      "forecast": [
+        {
+          "day": 0,
+          "date": "2026-02-20",
+          "new_snow_cm": 7.2,
+          "source": "open-meteo"
+        },
+        {
+          "day": 1,
+          "date": "2026-02-21",
+          "new_snow_cm": 0.7,
+          "source": "open-meteo"
+        },
+        {
+          "day": 2,
+          "date": "2026-02-22",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 3,
+          "date": "2026-02-23",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 4,
+          "date": "2026-02-24",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 5,
+          "date": "2026-02-25",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        },
+        {
+          "day": 6,
+          "date": "2026-02-26",
+          "new_snow_cm": 0.0,
+          "source": "open-meteo"
+        }
+      ],
+      "seven_day_total_cm": 7.9,
+      "summit_seven_day_total_cm": 7.9
+    },
+    {
+      "name": "Tignes",
+      "lat": 45.4686,
+      "lon": 6.9063,
+      "country": "France",
+      "region": "Northern Alps",
+      "elevation_m": 1550,
+      "summit_elevation_m": 2550,
+      "base_depth_cm": 168,
+      "base_depth_source": "OnTheSnow",
+      "temp_c": -3.0,
+      "summit_temp_c": -9.5,
+      "forecast": [
+        {
+          "day": 0,
+          "date": "2026-02-20",
+          "new_snow_cm": 6.3,
           "source": "open-meteo"
         },
         {
@@ -3608,126 +3726,8 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 9.0,
-      "summit_seven_day_total_cm": 11.8
-    },
-    {
-      "name": "Morzine",
-      "lat": 46.1792,
-      "lon": 6.7089,
-      "country": "France",
-      "region": "Northern Alps",
-      "elevation_m": 1000,
-      "summit_elevation_m": 2000,
-      "base_depth_cm": 10,
-      "base_depth_source": "OnTheSnow",
-      "temp_c": 2.1,
-      "summit_temp_c": -4.4,
-      "forecast": [
-        {
-          "day": 0,
-          "date": "2026-02-20",
-          "new_snow_cm": 6.4,
-          "source": "open-meteo"
-        },
-        {
-          "day": 1,
-          "date": "2026-02-21",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 2,
-          "date": "2026-02-22",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 3,
-          "date": "2026-02-23",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 4,
-          "date": "2026-02-24",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 5,
-          "date": "2026-02-25",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 6,
-          "date": "2026-02-26",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        }
-      ],
       "seven_day_total_cm": 6.4,
-      "summit_seven_day_total_cm": 6.4
-    },
-    {
-      "name": "Tignes",
-      "lat": 45.4686,
-      "lon": 6.9063,
-      "country": "France",
-      "region": "Northern Alps",
-      "elevation_m": 1550,
-      "summit_elevation_m": 2550,
-      "base_depth_cm": 174,
-      "base_depth_source": "OnTheSnow",
-      "temp_c": -4.9,
-      "summit_temp_c": -11.4,
-      "forecast": [
-        {
-          "day": 0,
-          "date": "2026-02-20",
-          "new_snow_cm": 6.2,
-          "source": "open-meteo"
-        },
-        {
-          "day": 1,
-          "date": "2026-02-21",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 2,
-          "date": "2026-02-22",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 3,
-          "date": "2026-02-23",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 4,
-          "date": "2026-02-24",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 5,
-          "date": "2026-02-25",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        },
-        {
-          "day": 6,
-          "date": "2026-02-26",
-          "new_snow_cm": 0.0,
-          "source": "open-meteo"
-        }
-      ],
-      "seven_day_total_cm": 6.2,
-      "summit_seven_day_total_cm": 8.1
+      "summit_seven_day_total_cm": 7.0
     },
     {
       "name": "M\u00e9ribel",
@@ -3739,13 +3739,13 @@
       "summit_elevation_m": 2850,
       "base_depth_cm": 178,
       "base_depth_source": "OnTheSnow",
-      "temp_c": -1.0,
-      "summit_temp_c": -12.4,
+      "temp_c": 0.6,
+      "summit_temp_c": -10.8,
       "forecast": [
         {
           "day": 0,
           "date": "2026-02-20",
-          "new_snow_cm": 5.0,
+          "new_snow_cm": 5.2,
           "source": "open-meteo"
         },
         {
@@ -3785,8 +3785,8 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 5.0,
-      "summit_seven_day_total_cm": 6.5
+      "seven_day_total_cm": 5.2,
+      "summit_seven_day_total_cm": 6.8
     },
     {
       "name": "Meg\u00e8ve",
@@ -3798,19 +3798,19 @@
       "summit_elevation_m": 1800,
       "base_depth_cm": 210,
       "base_depth_source": "OnTheSnow",
-      "temp_c": 0.5,
-      "summit_temp_c": -4.0,
+      "temp_c": 1.6,
+      "summit_temp_c": -2.9,
       "forecast": [
         {
           "day": 0,
           "date": "2026-02-20",
-          "new_snow_cm": 6.9,
+          "new_snow_cm": 7.1,
           "source": "open-meteo"
         },
         {
           "day": 1,
           "date": "2026-02-21",
-          "new_snow_cm": 0.0,
+          "new_snow_cm": 0.5,
           "source": "open-meteo"
         },
         {
@@ -3844,8 +3844,8 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 6.9,
-      "summit_seven_day_total_cm": 6.9
+      "seven_day_total_cm": 7.6,
+      "summit_seven_day_total_cm": 7.6
     },
     {
       "name": "La Clusaz",
@@ -3857,19 +3857,19 @@
       "summit_elevation_m": 2400,
       "base_depth_cm": 240,
       "base_depth_source": "OnTheSnow",
-      "temp_c": 1.2,
-      "summit_temp_c": -7.6,
+      "temp_c": 2.1,
+      "summit_temp_c": -6.7,
       "forecast": [
         {
           "day": 0,
           "date": "2026-02-20",
-          "new_snow_cm": 7.8,
+          "new_snow_cm": 8.4,
           "source": "open-meteo"
         },
         {
           "day": 1,
           "date": "2026-02-21",
-          "new_snow_cm": 0.0,
+          "new_snow_cm": 0.4,
           "source": "open-meteo"
         },
         {
@@ -3903,8 +3903,8 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 7.8,
-      "summit_seven_day_total_cm": 8.6
+      "seven_day_total_cm": 8.8,
+      "summit_seven_day_total_cm": 9.7
     },
     {
       "name": "Flaine",
@@ -3914,21 +3914,21 @@
       "region": "Northern Alps",
       "elevation_m": 1600,
       "summit_elevation_m": 2500,
-      "base_depth_cm": 145,
+      "base_depth_cm": 180,
       "base_depth_source": "OnTheSnow",
-      "temp_c": -3.2,
-      "summit_temp_c": -9.1,
+      "temp_c": -1.8,
+      "summit_temp_c": -7.7,
       "forecast": [
         {
           "day": 0,
           "date": "2026-02-20",
-          "new_snow_cm": 6.5,
+          "new_snow_cm": 6.9,
           "source": "open-meteo"
         },
         {
           "day": 1,
           "date": "2026-02-21",
-          "new_snow_cm": 0.0,
+          "new_snow_cm": 0.7,
           "source": "open-meteo"
         },
         {
@@ -3962,8 +3962,8 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 6.5,
-      "summit_seven_day_total_cm": 7.2
+      "seven_day_total_cm": 7.6,
+      "summit_seven_day_total_cm": 8.4
     },
     {
       "name": "Les Gets",
@@ -3973,21 +3973,21 @@
       "region": "Northern Alps",
       "elevation_m": 1172,
       "summit_elevation_m": 1600,
-      "base_depth_cm": 70,
+      "base_depth_cm": 80,
       "base_depth_source": "OnTheSnow",
-      "temp_c": 0.7,
-      "summit_temp_c": -2.1,
+      "temp_c": 1.0,
+      "summit_temp_c": -1.8,
       "forecast": [
         {
           "day": 0,
           "date": "2026-02-20",
-          "new_snow_cm": 6.4,
+          "new_snow_cm": 7.2,
           "source": "open-meteo"
         },
         {
           "day": 1,
           "date": "2026-02-21",
-          "new_snow_cm": 0.0,
+          "new_snow_cm": 0.7,
           "source": "open-meteo"
         },
         {
@@ -4021,8 +4021,8 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 6.4,
-      "summit_seven_day_total_cm": 6.4
+      "seven_day_total_cm": 7.9,
+      "summit_seven_day_total_cm": 7.9
     },
     {
       "name": "Alpe d'Huez",
@@ -4034,13 +4034,13 @@
       "summit_elevation_m": 3230,
       "base_depth_cm": 225,
       "base_depth_source": "OnTheSnow",
-      "temp_c": 1.8,
-      "summit_temp_c": -11.9,
+      "temp_c": 2.8,
+      "summit_temp_c": -10.9,
       "forecast": [
         {
           "day": 0,
           "date": "2026-02-20",
-          "new_snow_cm": 9.6,
+          "new_snow_cm": 9.3,
           "source": "open-meteo"
         },
         {
@@ -4080,8 +4080,8 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 9.6,
-      "summit_seven_day_total_cm": 12.5
+      "seven_day_total_cm": 9.3,
+      "summit_seven_day_total_cm": 12.1
     },
     {
       "name": "Les 2 Alpes",
@@ -4093,13 +4093,13 @@
       "summit_elevation_m": 3530,
       "base_depth_cm": 50,
       "base_depth_source": "OnTheSnow",
-      "temp_c": -3.1,
-      "summit_temp_c": -17.7,
+      "temp_c": -1.4,
+      "summit_temp_c": -16.0,
       "forecast": [
         {
           "day": 0,
           "date": "2026-02-20",
-          "new_snow_cm": 9.5,
+          "new_snow_cm": 9.7,
           "source": "open-meteo"
         },
         {
@@ -4139,8 +4139,8 @@
           "source": "open-meteo"
         }
       ],
-      "seven_day_total_cm": 9.5,
-      "summit_seven_day_total_cm": 12.3
+      "seven_day_total_cm": 9.7,
+      "summit_seven_day_total_cm": 12.6
     },
     {
       "name": "Serre Chevalier",
@@ -4150,10 +4150,10 @@
       "region": "Southern Alps",
       "elevation_m": 1200,
       "summit_elevation_m": 2500,
-      "base_depth_cm": 127,
+      "base_depth_cm": 135,
       "base_depth_source": "OnTheSnow",
-      "temp_c": -1.8,
-      "summit_temp_c": -10.3,
+      "temp_c": 2.2,
+      "summit_temp_c": -6.3,
       "forecast": [
         {
           "day": 0,
@@ -4199,7 +4199,7 @@
         }
       ],
       "seven_day_total_cm": 0.9,
-      "summit_seven_day_total_cm": 1.2
+      "summit_seven_day_total_cm": 1.0
     },
     {
       "name": "Vars",
@@ -4211,8 +4211,8 @@
       "summit_elevation_m": 2450,
       "base_depth_cm": 130,
       "base_depth_source": "OnTheSnow",
-      "temp_c": -7.2,
-      "summit_temp_c": -12.4,
+      "temp_c": 1.2,
+      "summit_temp_c": -4.0,
       "forecast": [
         {
           "day": 0,
@@ -4258,7 +4258,7 @@
         }
       ],
       "seven_day_total_cm": 2.0,
-      "summit_seven_day_total_cm": 2.6
+      "summit_seven_day_total_cm": 2.0
     },
     {
       "name": "Isola 2000",
@@ -4270,8 +4270,8 @@
       "summit_elevation_m": 2230,
       "base_depth_cm": 165,
       "base_depth_source": "OnTheSnow",
-      "temp_c": -9.9,
-      "summit_temp_c": -12.7,
+      "temp_c": -0.0,
+      "summit_temp_c": -2.8,
       "forecast": [
         {
           "day": 0,
@@ -4327,10 +4327,10 @@
       "region": "Pyrenees",
       "elevation_m": 1500,
       "summit_elevation_m": 2610,
-      "base_depth_cm": 210,
+      "base_depth_cm": 230,
       "base_depth_source": "OnTheSnow",
-      "temp_c": -5.6,
-      "summit_temp_c": -12.8,
+      "temp_c": -1.6,
+      "summit_temp_c": -8.8,
       "forecast": [
         {
           "day": 0,
@@ -4376,7 +4376,7 @@
         }
       ],
       "seven_day_total_cm": 2.6,
-      "summit_seven_day_total_cm": 3.4
+      "summit_seven_day_total_cm": 2.9
     },
     {
       "name": "Formigal",
@@ -4388,8 +4388,8 @@
       "summit_elevation_m": 2250,
       "base_depth_cm": 175,
       "base_depth_source": "OnTheSnow",
-      "temp_c": -1.9,
-      "summit_temp_c": -6.8,
+      "temp_c": 1.2,
+      "summit_temp_c": -3.7,
       "forecast": [
         {
           "day": 0,
@@ -4435,7 +4435,7 @@
         }
       ],
       "seven_day_total_cm": 1.8,
-      "summit_seven_day_total_cm": 2.0
+      "summit_seven_day_total_cm": 1.8
     },
     {
       "name": "Bo\u00ed Ta\u00fcll",
@@ -4447,8 +4447,8 @@
       "summit_elevation_m": 2540,
       "base_depth_cm": 220,
       "base_depth_source": "OnTheSnow",
-      "temp_c": -6.5,
-      "summit_temp_c": -9.9,
+      "temp_c": -1.4,
+      "summit_temp_c": -4.8,
       "forecast": [
         {
           "day": 0,
@@ -4506,8 +4506,8 @@
       "summit_elevation_m": 2100,
       "base_depth_cm": 170,
       "base_depth_source": "OnTheSnow",
-      "temp_c": -2.1,
-      "summit_temp_c": -5.6,
+      "temp_c": 0.5,
+      "summit_temp_c": -3.0,
       "forecast": [
         {
           "day": 0,
@@ -4553,7 +4553,7 @@
         }
       ],
       "seven_day_total_cm": 1.5,
-      "summit_seven_day_total_cm": 1.7
+      "summit_seven_day_total_cm": 1.5
     },
     {
       "name": "La Molina",
@@ -4565,8 +4565,8 @@
       "summit_elevation_m": 2237,
       "base_depth_cm": 125,
       "base_depth_source": "OnTheSnow",
-      "temp_c": -2.9,
-      "summit_temp_c": -6.4,
+      "temp_c": 4.9,
+      "summit_temp_c": 1.4,
       "forecast": [
         {
           "day": 0,
@@ -4624,8 +4624,8 @@
       "summit_elevation_m": 2335,
       "base_depth_cm": 120,
       "base_depth_source": "OnTheSnow",
-      "temp_c": -2.8,
-      "summit_temp_c": -7.6,
+      "temp_c": 5.2,
+      "summit_temp_c": 0.4,
       "forecast": [
         {
           "day": 0,
@@ -4683,8 +4683,8 @@
       "summit_elevation_m": 2630,
       "base_depth_cm": 130,
       "base_depth_source": "OnTheSnow",
-      "temp_c": -2.8,
-      "summit_temp_c": -10.1,
+      "temp_c": 1.5,
+      "summit_temp_c": -5.8,
       "forecast": [
         {
           "day": 0,
@@ -4742,8 +4742,8 @@
       "summit_elevation_m": 2000,
       "base_depth_cm": 210,
       "base_depth_source": "OnTheSnow",
-      "temp_c": -3.4,
-      "summit_temp_c": -5.3,
+      "temp_c": -0.2,
+      "summit_temp_c": -2.1,
       "forecast": [
         {
           "day": 0,
@@ -4789,7 +4789,7 @@
         }
       ],
       "seven_day_total_cm": 1.9,
-      "summit_seven_day_total_cm": 2.1
+      "summit_seven_day_total_cm": 1.9
     },
     {
       "name": "Panticosa",
@@ -4801,8 +4801,8 @@
       "summit_elevation_m": 2180,
       "base_depth_cm": 160,
       "base_depth_source": "OnTheSnow",
-      "temp_c": -4.2,
-      "summit_temp_c": -8.6,
+      "temp_c": 0.9,
+      "summit_temp_c": -3.5,
       "forecast": [
         {
           "day": 0,
@@ -4860,8 +4860,8 @@
       "summit_elevation_m": 2295,
       "base_depth_cm": 200,
       "base_depth_source": "OnTheSnow",
-      "temp_c": -7.8,
-      "summit_temp_c": -10.0,
+      "temp_c": -0.0,
+      "summit_temp_c": -2.2,
       "forecast": [
         {
           "day": 0,
@@ -4919,8 +4919,8 @@
       "summit_elevation_m": 2290,
       "base_depth_cm": 230,
       "base_depth_source": "OnTheSnow",
-      "temp_c": -5.4,
-      "summit_temp_c": -9.6,
+      "temp_c": 0.6,
+      "summit_temp_c": -3.6,
       "forecast": [
         {
           "day": 0,
@@ -4978,8 +4978,8 @@
       "summit_elevation_m": 2110,
       "base_depth_cm": 180,
       "base_depth_source": "OnTheSnow",
-      "temp_c": -1.5,
-      "summit_temp_c": -5.4,
+      "temp_c": 4.5,
+      "summit_temp_c": 0.6,
       "forecast": [
         {
           "day": 0,
@@ -5037,8 +5037,8 @@
       "summit_elevation_m": 3280,
       "base_depth_cm": 80,
       "base_depth_source": "OnTheSnow",
-      "temp_c": 0.5,
-      "summit_temp_c": -7.2,
+      "temp_c": 10.4,
+      "summit_temp_c": 2.7,
       "forecast": [
         {
           "day": 0,
