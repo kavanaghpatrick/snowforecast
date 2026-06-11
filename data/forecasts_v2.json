@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-11T15:28:05Z",
+  "updated": "2026-06-11T19:11:26Z",
   "sources": {
     "base_depth": {
       "USA": "OnTheSnow (onthesnow.com) + SNOTEL fallback",
@@ -20,10 +20,10 @@
       "region": "Washington",
       "elevation_m": 1238,
       "summit_elevation_m": 1776,
-      "base_depth_cm": null,
-      "base_depth_source": null,
-      "temp_c": 3.2,
-      "summit_temp_c": -0.3,
+      "base_depth_cm": 0.0,
+      "base_depth_source": "SNOTEL Stevens Pass +1",
+      "temp_c": 11.3,
+      "summit_temp_c": 7.8,
       "forecast": [
         {
           "day": 0,
@@ -79,10 +79,10 @@
       "region": "Washington",
       "elevation_m": 1341,
       "summit_elevation_m": 2225,
-      "base_depth_cm": null,
-      "base_depth_source": null,
-      "temp_c": -0.3,
-      "summit_temp_c": -6.0,
+      "base_depth_cm": 0.0,
+      "base_depth_source": "SNOTEL Morse Lake",
+      "temp_c": 6.4,
+      "summit_temp_c": 0.7,
       "forecast": [
         {
           "day": 0,
@@ -138,10 +138,10 @@
       "region": "Washington",
       "elevation_m": 1067,
       "summit_elevation_m": 1550,
-      "base_depth_cm": null,
-      "base_depth_source": null,
-      "temp_c": 0.2,
-      "summit_temp_c": -2.9,
+      "base_depth_cm": 0.0,
+      "base_depth_source": "SNOTEL Wells Creek",
+      "temp_c": 8.7,
+      "summit_temp_c": 5.6,
       "forecast": [
         {
           "day": 0,
@@ -197,10 +197,10 @@
       "region": "Washington",
       "elevation_m": 945,
       "summit_elevation_m": 1546,
-      "base_depth_cm": null,
-      "base_depth_source": null,
-      "temp_c": 6.1,
-      "summit_temp_c": 2.2,
+      "base_depth_cm": 0.0,
+      "base_depth_source": "SNOTEL Stampede Pass",
+      "temp_c": 13.8,
+      "summit_temp_c": 9.9,
       "forecast": [
         {
           "day": 0,
@@ -256,10 +256,10 @@
       "region": "Oregon",
       "elevation_m": 1379,
       "summit_elevation_m": 2225,
-      "base_depth_cm": null,
-      "base_depth_source": null,
-      "temp_c": 1.9,
-      "summit_temp_c": -3.6,
+      "base_depth_cm": 5.1,
+      "base_depth_source": "SNOTEL Mt Hood Test Site",
+      "temp_c": 10.1,
+      "summit_temp_c": 4.6,
       "forecast": [
         {
           "day": 0,
@@ -315,10 +315,10 @@
       "region": "Oregon",
       "elevation_m": 1920,
       "summit_elevation_m": 2763,
-      "base_depth_cm": null,
-      "base_depth_source": null,
-      "temp_c": 0.2,
-      "summit_temp_c": -5.3,
+      "base_depth_cm": 0.0,
+      "base_depth_source": "SNOTEL Santiam Jct",
+      "temp_c": 7.2,
+      "summit_temp_c": 1.7,
       "forecast": [
         {
           "day": 0,
@@ -376,8 +376,8 @@
       "summit_elevation_m": 2896,
       "base_depth_cm": 10.2,
       "base_depth_source": "OnTheSnow",
-      "temp_c": 4.1,
-      "summit_temp_c": -2.8,
+      "temp_c": 10.3,
+      "summit_temp_c": 3.4,
       "forecast": [
         {
           "day": 0,
@@ -433,10 +433,10 @@
       "region": "California",
       "elevation_m": 2424,
       "summit_elevation_m": 3369,
-      "base_depth_cm": null,
-      "base_depth_source": null,
-      "temp_c": 3.1,
-      "summit_temp_c": -3.0,
+      "base_depth_cm": 0.0,
+      "base_depth_source": "SNOTEL Virginia Lakes Ridge",
+      "temp_c": 15.5,
+      "summit_temp_c": 9.4,
       "forecast": [
         {
           "day": 0,
@@ -492,10 +492,10 @@
       "region": "California",
       "elevation_m": 1890,
       "summit_elevation_m": 2759,
-      "base_depth_cm": null,
-      "base_depth_source": null,
-      "temp_c": 9.2,
-      "summit_temp_c": 3.6,
+      "base_depth_cm": 0.0,
+      "base_depth_source": "SNOTEL Palisades Tahoe +2",
+      "temp_c": 20.9,
+      "summit_temp_c": 15.3,
       "forecast": [
         {
           "day": 0,
@@ -551,10 +551,10 @@
       "region": "California",
       "elevation_m": 1906,
       "summit_elevation_m": 3068,
-      "base_depth_cm": null,
-      "base_depth_source": null,
-      "temp_c": 14.4,
-      "summit_temp_c": 6.8,
+      "base_depth_cm": 0.0,
+      "base_depth_source": "SNOTEL Heavenly Valley",
+      "temp_c": 20.2,
+      "summit_temp_c": 12.6,
       "forecast": [
         {
           "day": 0,
@@ -610,10 +610,10 @@
       "region": "California",
       "elevation_m": 2377,
       "summit_elevation_m": 2987,
-      "base_depth_cm": null,
-      "base_depth_source": null,
-      "temp_c": 8.5,
-      "summit_temp_c": 4.5,
+      "base_depth_cm": 0.0,
+      "base_depth_source": "SNOTEL Kirkwood",
+      "temp_c": 21.6,
+      "summit_temp_c": 17.6,
       "forecast": [
         {
           "day": 0,
@@ -669,10 +669,10 @@
       "region": "Colorado",
       "elevation_m": 2454,
       "summit_elevation_m": 3527,
-      "base_depth_cm": null,
-      "base_depth_source": null,
-      "temp_c": 9.3,
-      "summit_temp_c": 2.3,
+      "base_depth_cm": 0.8,
+      "base_depth_source": "SNOTEL Vail Mountain +2",
+      "temp_c": 17.9,
+      "summit_temp_c": 10.9,
       "forecast": [
         {
           "day": 0,
@@ -728,10 +728,10 @@
       "region": "Colorado",
       "elevation_m": 2926,
       "summit_elevation_m": 3914,
-      "base_depth_cm": null,
-      "base_depth_source": null,
-      "temp_c": 6.4,
-      "summit_temp_c": -0.0,
+      "base_depth_cm": 0.0,
+      "base_depth_source": "SNOTEL Copper Mountain",
+      "temp_c": 16.0,
+      "summit_temp_c": 9.6,
       "forecast": [
         {
           "day": 0,
@@ -787,10 +787,10 @@
       "region": "Colorado",
       "elevation_m": 2623,
       "summit_elevation_m": 3813,
-      "base_depth_cm": null,
-      "base_depth_source": null,
-      "temp_c": 9.8,
-      "summit_temp_c": 2.1,
+      "base_depth_cm": 0.0,
+      "base_depth_source": "SNOTEL Independence Pass",
+      "temp_c": 17.9,
+      "summit_temp_c": 10.2,
       "forecast": [
         {
           "day": 0,
@@ -848,8 +848,8 @@
       "summit_elevation_m": 3831,
       "base_depth_cm": null,
       "base_depth_source": null,
-      "temp_c": 13.4,
-      "summit_temp_c": 5.8,
+      "temp_c": 19.7,
+      "summit_temp_c": 12.1,
       "forecast": [
         {
           "day": 0,
@@ -905,10 +905,10 @@
       "region": "Utah",
       "elevation_m": 2103,
       "summit_elevation_m": 3049,
-      "base_depth_cm": null,
-      "base_depth_source": null,
-      "temp_c": 7.1,
-      "summit_temp_c": 1.0,
+      "base_depth_cm": 0.0,
+      "base_depth_source": "SNOTEL Mill D North",
+      "temp_c": 17.4,
+      "summit_temp_c": 11.3,
       "forecast": [
         {
           "day": 0,
@@ -964,10 +964,10 @@
       "region": "Utah",
       "elevation_m": 2365,
       "summit_elevation_m": 3353,
-      "base_depth_cm": null,
-      "base_depth_source": null,
-      "temp_c": 7.6,
-      "summit_temp_c": 1.2,
+      "base_depth_cm": 0.0,
+      "base_depth_source": "SNOTEL Snowbird +1",
+      "temp_c": 12.6,
+      "summit_temp_c": 6.2,
       "forecast": [
         {
           "day": 0,
@@ -1023,10 +1023,10 @@
       "region": "Utah",
       "elevation_m": 2600,
       "summit_elevation_m": 3215,
-      "base_depth_cm": null,
-      "base_depth_source": null,
-      "temp_c": 6.6,
-      "summit_temp_c": 2.6,
+      "base_depth_cm": 0.0,
+      "base_depth_source": "SNOTEL Alta +1",
+      "temp_c": 12.9,
+      "summit_temp_c": 8.9,
       "forecast": [
         {
           "day": 0,
@@ -1082,10 +1082,10 @@
       "region": "Montana",
       "elevation_m": 2290,
       "summit_elevation_m": 3403,
-      "base_depth_cm": null,
-      "base_depth_source": null,
-      "temp_c": 2.3,
-      "summit_temp_c": -4.9,
+      "base_depth_cm": 0.0,
+      "base_depth_source": "SNOTEL Shower Falls",
+      "temp_c": 8.7,
+      "summit_temp_c": 1.5,
       "forecast": [
         {
           "day": 0,
@@ -1131,7 +1131,7 @@
         }
       ],
       "seven_day_total_cm": 1.9,
-      "summit_seven_day_total_cm": 1.9
+      "summit_seven_day_total_cm": 0.9
     },
     {
       "name": "Whitefish",
@@ -1141,10 +1141,10 @@
       "region": "Montana",
       "elevation_m": 1361,
       "summit_elevation_m": 2133,
-      "base_depth_cm": null,
-      "base_depth_source": null,
-      "temp_c": 8.2,
-      "summit_temp_c": 3.2,
+      "base_depth_cm": 0.0,
+      "base_depth_source": "SNOTEL Noisy Basin",
+      "temp_c": 13.9,
+      "summit_temp_c": 8.9,
       "forecast": [
         {
           "day": 0,
@@ -1202,8 +1202,8 @@
       "summit_elevation_m": 3185,
       "base_depth_cm": null,
       "base_depth_source": null,
-      "temp_c": 5.5,
-      "summit_temp_c": -2.7,
+      "temp_c": 13.9,
+      "summit_temp_c": 5.7,
       "forecast": [
         {
           "day": 0,
@@ -1259,10 +1259,10 @@
       "region": "Idaho",
       "elevation_m": 1753,
       "summit_elevation_m": 2789,
-      "base_depth_cm": null,
-      "base_depth_source": null,
-      "temp_c": 9.6,
-      "summit_temp_c": 2.9,
+      "base_depth_cm": 0.0,
+      "base_depth_source": "SNOTEL Hyndman",
+      "temp_c": 15.1,
+      "summit_temp_c": 8.4,
       "forecast": [
         {
           "day": 0,
@@ -1320,8 +1320,8 @@
       "summit_elevation_m": 2879,
       "base_depth_cm": 0.0,
       "base_depth_source": "Galzig",
-      "temp_c": 4.9,
-      "summit_temp_c": -0.3,
+      "temp_c": 2.1,
+      "summit_temp_c": -3.1,
       "forecast": [
         {
           "day": 0,
@@ -1367,7 +1367,7 @@
         }
       ],
       "seven_day_total_cm": 0.3,
-      "summit_seven_day_total_cm": 0.1
+      "summit_seven_day_total_cm": 0.3
     },
     {
       "name": "S\u00f6lden",
@@ -1379,8 +1379,8 @@
       "summit_elevation_m": 4140,
       "base_depth_cm": 110.0,
       "base_depth_source": "Open-Meteo (modeled)",
-      "temp_c": -4.6,
-      "summit_temp_c": -9.8,
+      "temp_c": -7.9,
+      "summit_temp_c": -13.1,
       "forecast": [
         {
           "day": 0,
@@ -1426,7 +1426,7 @@
         }
       ],
       "seven_day_total_cm": 1.2,
-      "summit_seven_day_total_cm": 1.3
+      "summit_seven_day_total_cm": 1.6
     },
     {
       "name": "Obergurgl",
@@ -1438,8 +1438,8 @@
       "summit_elevation_m": 2741,
       "base_depth_cm": 0.0,
       "base_depth_source": "Obergurgl",
-      "temp_c": 8.4,
-      "summit_temp_c": 3.2,
+      "temp_c": 4.3,
+      "summit_temp_c": -0.9,
       "forecast": [
         {
           "day": 0,
@@ -1497,8 +1497,8 @@
       "summit_elevation_m": 2387,
       "base_depth_cm": null,
       "base_depth_source": null,
-      "temp_c": 8.9,
-      "summit_temp_c": 3.7,
+      "temp_c": 6.0,
+      "summit_temp_c": 0.8,
       "forecast": [
         {
           "day": 0,
@@ -1544,7 +1544,7 @@
         }
       ],
       "seven_day_total_cm": 0.2,
-      "summit_seven_day_total_cm": 0.0
+      "summit_seven_day_total_cm": 0.1
     },
     {
       "name": "Kitzb\u00fchel",
@@ -1556,8 +1556,8 @@
       "summit_elevation_m": 2594,
       "base_depth_cm": 0.0,
       "base_depth_source": "Open-Meteo (modeled)",
-      "temp_c": 5.8,
-      "summit_temp_c": 0.6,
+      "temp_c": 1.7,
+      "summit_temp_c": -3.5,
       "forecast": [
         {
           "day": 0,
@@ -1615,8 +1615,8 @@
       "summit_elevation_m": 2879,
       "base_depth_cm": 0.0,
       "base_depth_source": "Galzig (Ski Arlberg)",
-      "temp_c": 0.7,
-      "summit_temp_c": -4.5,
+      "temp_c": -2.2,
+      "summit_temp_c": -7.4,
       "forecast": [
         {
           "day": 0,
@@ -1672,10 +1672,10 @@
       "region": "Tyrol",
       "elevation_m": 2864,
       "summit_elevation_m": 3664,
-      "base_depth_cm": 95.0,
+      "base_depth_cm": 94.0,
       "base_depth_source": "Pitztaler Gletscher",
-      "temp_c": -1.4,
-      "summit_temp_c": -6.6,
+      "temp_c": -4.6,
+      "summit_temp_c": -9.8,
       "forecast": [
         {
           "day": 0,
@@ -1731,10 +1731,10 @@
       "region": "Salzburg",
       "elevation_m": 1630,
       "summit_elevation_m": 2430,
-      "base_depth_cm": null,
-      "base_depth_source": null,
-      "temp_c": 5.1,
-      "summit_temp_c": -0.1,
+      "base_depth_cm": 0.0,
+      "base_depth_source": "Open-Meteo (modeled)",
+      "temp_c": -0.4,
+      "summit_temp_c": -5.6,
       "forecast": [
         {
           "day": 0,
@@ -1780,7 +1780,7 @@
         }
       ],
       "seven_day_total_cm": 0.8,
-      "summit_seven_day_total_cm": 0.4
+      "summit_seven_day_total_cm": 0.9
     },
     {
       "name": "Zell am See",
@@ -1790,10 +1790,10 @@
       "region": "Salzburg",
       "elevation_m": 1956,
       "summit_elevation_m": 2756,
-      "base_depth_cm": 0.0,
-      "base_depth_source": "Open-Meteo (modeled)",
-      "temp_c": 6.1,
-      "summit_temp_c": 0.9,
+      "base_depth_cm": null,
+      "base_depth_source": null,
+      "temp_c": 0.4,
+      "summit_temp_c": -4.8,
       "forecast": [
         {
           "day": 0,
@@ -1849,10 +1849,10 @@
       "region": "Styria",
       "elevation_m": 2015,
       "summit_elevation_m": 2815,
-      "base_depth_cm": 13.0,
+      "base_depth_cm": 14.0,
       "base_depth_source": "Dachstein-Schladminger Gletscher",
-      "temp_c": 0.5,
-      "summit_temp_c": -4.7,
+      "temp_c": -2.8,
+      "summit_temp_c": -8.0,
       "forecast": [
         {
           "day": 0,
@@ -1908,10 +1908,10 @@
       "region": "Valais",
       "elevation_m": 2953,
       "summit_elevation_m": 3753,
-      "base_depth_cm": null,
-      "base_depth_source": null,
-      "temp_c": 3.7,
-      "summit_temp_c": -1.5,
+      "base_depth_cm": 0.0,
+      "base_depth_source": "Gornergratsee",
+      "temp_c": -0.7,
+      "summit_temp_c": -5.9,
       "forecast": [
         {
           "day": 0,
@@ -1967,10 +1967,10 @@
       "region": "Valais",
       "elevation_m": 2480,
       "summit_elevation_m": 3280,
-      "base_depth_cm": null,
-      "base_depth_source": null,
-      "temp_c": 4.3,
-      "summit_temp_c": -0.9,
+      "base_depth_cm": 0.0,
+      "base_depth_source": "Seetal",
+      "temp_c": 0.2,
+      "summit_temp_c": -5.0,
       "forecast": [
         {
           "day": 0,
@@ -2026,10 +2026,10 @@
       "region": "Valais",
       "elevation_m": 2550,
       "summit_elevation_m": 3350,
-      "base_depth_cm": null,
-      "base_depth_source": null,
-      "temp_c": 3.5,
-      "summit_temp_c": -1.7,
+      "base_depth_cm": 0.0,
+      "base_depth_source": "Lac des Vaux",
+      "temp_c": -0.3,
+      "summit_temp_c": -5.5,
       "forecast": [
         {
           "day": 0,
@@ -2085,10 +2085,10 @@
       "region": "Graub\u00fcnden",
       "elevation_m": 2512,
       "summit_elevation_m": 3312,
-      "base_depth_cm": null,
-      "base_depth_source": null,
-      "temp_c": 6.3,
-      "summit_temp_c": 1.1,
+      "base_depth_cm": 0.0,
+      "base_depth_source": "Valetta",
+      "temp_c": 3.4,
+      "summit_temp_c": -1.8,
       "forecast": [
         {
           "day": 0,
@@ -2144,10 +2144,10 @@
       "region": "Graub\u00fcnden",
       "elevation_m": 2540,
       "summit_elevation_m": 3340,
-      "base_depth_cm": null,
-      "base_depth_source": null,
-      "temp_c": 9.3,
-      "summit_temp_c": 4.1,
+      "base_depth_cm": 4.4,
+      "base_depth_source": "Weissfluhjoch",
+      "temp_c": 5.6,
+      "summit_temp_c": 0.4,
       "forecast": [
         {
           "day": 0,
@@ -2193,7 +2193,7 @@
         }
       ],
       "seven_day_total_cm": 0.2,
-      "summit_seven_day_total_cm": 0.0
+      "summit_seven_day_total_cm": 0.1
     },
     {
       "name": "Laax",
@@ -2203,10 +2203,10 @@
       "region": "Graub\u00fcnden",
       "elevation_m": 2325,
       "summit_elevation_m": 3125,
-      "base_depth_cm": null,
-      "base_depth_source": null,
-      "temp_c": 11.3,
-      "summit_temp_c": 6.1,
+      "base_depth_cm": 0.0,
+      "base_depth_source": "La Fuorcla",
+      "temp_c": 4.2,
+      "summit_temp_c": -1.0,
       "forecast": [
         {
           "day": 0,
@@ -2262,10 +2262,10 @@
       "region": "Graub\u00fcnden",
       "elevation_m": 2429,
       "summit_elevation_m": 3229,
-      "base_depth_cm": null,
-      "base_depth_source": null,
-      "temp_c": 12.7,
-      "summit_temp_c": 7.5,
+      "base_depth_cm": 1.0,
+      "base_depth_source": "Colms da Parsonz",
+      "temp_c": 6.3,
+      "summit_temp_c": 1.1,
       "forecast": [
         {
           "day": 0,
@@ -2311,7 +2311,7 @@
         }
       ],
       "seven_day_total_cm": 0.1,
-      "summit_seven_day_total_cm": 0.0
+      "summit_seven_day_total_cm": 0.1
     },
     {
       "name": "M\u00fcrren",
@@ -2321,10 +2321,10 @@
       "region": "Bern",
       "elevation_m": 2332,
       "summit_elevation_m": 3132,
-      "base_depth_cm": null,
-      "base_depth_source": null,
-      "temp_c": 2.1,
-      "summit_temp_c": -3.1,
+      "base_depth_cm": 3.3,
+      "base_depth_source": "T\u00fcrliboden",
+      "temp_c": -1.6,
+      "summit_temp_c": -6.8,
       "forecast": [
         {
           "day": 0,
@@ -2380,10 +2380,10 @@
       "region": "Uri",
       "elevation_m": 2209,
       "summit_elevation_m": 3009,
-      "base_depth_cm": null,
-      "base_depth_source": null,
-      "temp_c": 6.0,
-      "summit_temp_c": 0.8,
+      "base_depth_cm": 0.0,
+      "base_depth_source": "G\u00fctsch",
+      "temp_c": 2.3,
+      "summit_temp_c": -2.9,
       "forecast": [
         {
           "day": 0,
@@ -2439,10 +2439,10 @@
       "region": "Graub\u00fcnden",
       "elevation_m": 2495,
       "summit_elevation_m": 3295,
-      "base_depth_cm": null,
-      "base_depth_source": null,
-      "temp_c": 4.8,
-      "summit_temp_c": -0.4,
+      "base_depth_cm": 0.0,
+      "base_depth_source": "Plang Bi",
+      "temp_c": 0.8,
+      "summit_temp_c": -4.4,
       "forecast": [
         {
           "day": 0,
@@ -2498,10 +2498,10 @@
       "region": "Uri",
       "elevation_m": 2149,
       "summit_elevation_m": 2949,
-      "base_depth_cm": null,
-      "base_depth_source": null,
-      "temp_c": 0.8,
-      "summit_temp_c": -4.4,
+      "base_depth_cm": 1.8,
+      "base_depth_source": "Titlisboden",
+      "temp_c": -2.5,
+      "summit_temp_c": -7.7,
       "forecast": [
         {
           "day": 0,
@@ -2547,7 +2547,7 @@
         }
       ],
       "seven_day_total_cm": 0.5,
-      "summit_seven_day_total_cm": 0.5
+      "summit_seven_day_total_cm": 0.6
     },
     {
       "name": "Niseko United",
@@ -2559,8 +2559,8 @@
       "summit_elevation_m": 1308,
       "base_depth_cm": 100.0,
       "base_depth_source": "tenki.jp",
-      "temp_c": 9.9,
-      "summit_temp_c": 3.1,
+      "temp_c": 9.8,
+      "summit_temp_c": 3.0,
       "forecast": [
         {
           "day": 0,
@@ -2618,8 +2618,8 @@
       "summit_elevation_m": 1074,
       "base_depth_cm": 100.0,
       "base_depth_source": "tenki.jp",
-      "temp_c": 8.7,
-      "summit_temp_c": 3.3,
+      "temp_c": 8.3,
+      "summit_temp_c": 2.9,
       "forecast": [
         {
           "day": 0,
@@ -2677,8 +2677,8 @@
       "summit_elevation_m": 1000,
       "base_depth_cm": null,
       "base_depth_source": null,
-      "temp_c": 9.2,
-      "summit_temp_c": 5.3,
+      "temp_c": 9.0,
+      "summit_temp_c": 5.1,
       "forecast": [
         {
           "day": 0,
@@ -2795,8 +2795,8 @@
       "summit_elevation_m": 1831,
       "base_depth_cm": 100.0,
       "base_depth_source": "tenki.jp",
-      "temp_c": 10.0,
-      "summit_temp_c": 3.0,
+      "temp_c": 11.7,
+      "summit_temp_c": 4.7,
       "forecast": [
         {
           "day": 0,
@@ -2854,8 +2854,8 @@
       "summit_elevation_m": 1831,
       "base_depth_cm": null,
       "base_depth_source": null,
-      "temp_c": 9.4,
-      "summit_temp_c": 2.4,
+      "temp_c": 11.0,
+      "summit_temp_c": 4.0,
       "forecast": [
         {
           "day": 0,
@@ -2913,8 +2913,8 @@
       "summit_elevation_m": 1650,
       "base_depth_cm": 100.0,
       "base_depth_source": "tenki.jp",
-      "temp_c": 12.4,
-      "summit_temp_c": 5.3,
+      "temp_c": 13.2,
+      "summit_temp_c": 6.1,
       "forecast": [
         {
           "day": 0,
@@ -2972,8 +2972,8 @@
       "summit_elevation_m": 2149,
       "base_depth_cm": 100.0,
       "base_depth_source": "tenki.jp",
-      "temp_c": 6.9,
-      "summit_temp_c": 1.4,
+      "temp_c": 6.3,
+      "summit_temp_c": 0.8,
       "forecast": [
         {
           "day": 0,
@@ -3031,8 +3031,8 @@
       "summit_elevation_m": 1765,
       "base_depth_cm": 100.0,
       "base_depth_source": "tenki.jp",
-      "temp_c": 4.9,
-      "summit_temp_c": -1.8,
+      "temp_c": 5.7,
+      "summit_temp_c": -1.0,
       "forecast": [
         {
           "day": 0,
@@ -3090,8 +3090,8 @@
       "summit_elevation_m": 1741,
       "base_depth_cm": 100.0,
       "base_depth_source": "tenki.jp",
-      "temp_c": 9.2,
-      "summit_temp_c": 3.0,
+      "temp_c": 8.6,
+      "summit_temp_c": 2.4,
       "forecast": [
         {
           "day": 0,
@@ -3149,8 +3149,8 @@
       "summit_elevation_m": 3230,
       "base_depth_cm": null,
       "base_depth_source": null,
-      "temp_c": 7.8,
-      "summit_temp_c": 1.8,
+      "temp_c": 3.5,
+      "summit_temp_c": -2.5,
       "forecast": [
         {
           "day": 0,
@@ -3208,8 +3208,8 @@
       "summit_elevation_m": 2230,
       "base_depth_cm": null,
       "base_depth_source": null,
-      "temp_c": 15.1,
-      "summit_temp_c": 8.4,
+      "temp_c": 9.3,
+      "summit_temp_c": 2.6,
       "forecast": [
         {
           "day": 0,
@@ -3267,8 +3267,8 @@
       "summit_elevation_m": 2800,
       "base_depth_cm": null,
       "base_depth_source": null,
-      "temp_c": 11.8,
-      "summit_temp_c": 5.6,
+      "temp_c": 7.6,
+      "summit_temp_c": 1.4,
       "forecast": [
         {
           "day": 0,
@@ -3326,8 +3326,8 @@
       "summit_elevation_m": 2700,
       "base_depth_cm": null,
       "base_depth_source": null,
-      "temp_c": 11.2,
-      "summit_temp_c": 5.7,
+      "temp_c": 7.0,
+      "summit_temp_c": 1.5,
       "forecast": [
         {
           "day": 0,
@@ -3385,8 +3385,8 @@
       "summit_elevation_m": 2300,
       "base_depth_cm": null,
       "base_depth_source": null,
-      "temp_c": 12.5,
-      "summit_temp_c": 9.2,
+      "temp_c": 7.0,
+      "summit_temp_c": 3.8,
       "forecast": [
         {
           "day": 0,
@@ -3444,8 +3444,8 @@
       "summit_elevation_m": 2300,
       "base_depth_cm": null,
       "base_depth_source": null,
-      "temp_c": 10.9,
-      "summit_temp_c": 4.1,
+      "temp_c": 5.1,
+      "summit_temp_c": -1.7,
       "forecast": [
         {
           "day": 0,
@@ -3503,8 +3503,8 @@
       "summit_elevation_m": 2847,
       "base_depth_cm": 85,
       "base_depth_source": "OnTheSnow",
-      "temp_c": 11.9,
-      "summit_temp_c": 1.8,
+      "temp_c": 6.6,
+      "summit_temp_c": -3.5,
       "forecast": [
         {
           "day": 0,
@@ -3562,8 +3562,8 @@
       "summit_elevation_m": 3800,
       "base_depth_cm": null,
       "base_depth_source": null,
-      "temp_c": 15.4,
-      "summit_temp_c": -2.6,
+      "temp_c": 12.1,
+      "summit_temp_c": -5.9,
       "forecast": [
         {
           "day": 0,
@@ -3621,8 +3621,8 @@
       "summit_elevation_m": 2000,
       "base_depth_cm": null,
       "base_depth_source": null,
-      "temp_c": 16.5,
-      "summit_temp_c": 10.0,
+      "temp_c": 11.1,
+      "summit_temp_c": 4.6,
       "forecast": [
         {
           "day": 0,
@@ -3680,8 +3680,8 @@
       "summit_elevation_m": 2550,
       "base_depth_cm": null,
       "base_depth_source": null,
-      "temp_c": 9.1,
-      "summit_temp_c": 2.6,
+      "temp_c": 5.4,
+      "summit_temp_c": -1.1,
       "forecast": [
         {
           "day": 0,
@@ -3739,8 +3739,8 @@
       "summit_elevation_m": 2850,
       "base_depth_cm": null,
       "base_depth_source": null,
-      "temp_c": 14.0,
-      "summit_temp_c": 2.6,
+      "temp_c": 8.7,
+      "summit_temp_c": -2.7,
       "forecast": [
         {
           "day": 0,
@@ -3798,8 +3798,8 @@
       "summit_elevation_m": 1800,
       "base_depth_cm": null,
       "base_depth_source": null,
-      "temp_c": 16.8,
-      "summit_temp_c": 12.3,
+      "temp_c": 10.1,
+      "summit_temp_c": 5.6,
       "forecast": [
         {
           "day": 0,
@@ -3857,8 +3857,8 @@
       "summit_elevation_m": 2400,
       "base_depth_cm": null,
       "base_depth_source": null,
-      "temp_c": 16.9,
-      "summit_temp_c": 8.1,
+      "temp_c": 10.4,
+      "summit_temp_c": 1.6,
       "forecast": [
         {
           "day": 0,
@@ -3916,8 +3916,8 @@
       "summit_elevation_m": 2500,
       "base_depth_cm": null,
       "base_depth_source": null,
-      "temp_c": 11.6,
-      "summit_temp_c": 5.7,
+      "temp_c": 7.2,
+      "summit_temp_c": 1.3,
       "forecast": [
         {
           "day": 0,
@@ -3975,8 +3975,8 @@
       "summit_elevation_m": 1600,
       "base_depth_cm": null,
       "base_depth_source": null,
-      "temp_c": 15.2,
-      "summit_temp_c": 12.4,
+      "temp_c": 9.8,
+      "summit_temp_c": 7.0,
       "forecast": [
         {
           "day": 0,
@@ -4034,8 +4034,8 @@
       "summit_elevation_m": 3230,
       "base_depth_cm": null,
       "base_depth_source": null,
-      "temp_c": 19.2,
-      "summit_temp_c": 5.5,
+      "temp_c": 12.2,
+      "summit_temp_c": -1.5,
       "forecast": [
         {
           "day": 0,
@@ -4093,8 +4093,8 @@
       "summit_elevation_m": 3530,
       "base_depth_cm": null,
       "base_depth_source": null,
-      "temp_c": 12.9,
-      "summit_temp_c": -1.7,
+      "temp_c": 7.3,
+      "summit_temp_c": -7.3,
       "forecast": [
         {
           "day": 0,
@@ -4152,8 +4152,8 @@
       "summit_elevation_m": 2500,
       "base_depth_cm": null,
       "base_depth_source": null,
-      "temp_c": 15.7,
-      "summit_temp_c": 7.2,
+      "temp_c": 10.1,
+      "summit_temp_c": 1.6,
       "forecast": [
         {
           "day": 0,
@@ -4211,8 +4211,8 @@
       "summit_elevation_m": 2450,
       "base_depth_cm": null,
       "base_depth_source": null,
-      "temp_c": 16.7,
-      "summit_temp_c": 11.5,
+      "temp_c": 11.1,
+      "summit_temp_c": 5.9,
       "forecast": [
         {
           "day": 0,
@@ -4270,8 +4270,8 @@
       "summit_elevation_m": 2230,
       "base_depth_cm": null,
       "base_depth_source": null,
-      "temp_c": 13.6,
-      "summit_temp_c": 10.8,
+      "temp_c": 7.7,
+      "summit_temp_c": 4.9,
       "forecast": [
         {
           "day": 0,
@@ -4329,8 +4329,8 @@
       "summit_elevation_m": 2610,
       "base_depth_cm": null,
       "base_depth_source": null,
-      "temp_c": 13.1,
-      "summit_temp_c": 5.9,
+      "temp_c": 6.9,
+      "summit_temp_c": -0.3,
       "forecast": [
         {
           "day": 0,
@@ -4388,8 +4388,8 @@
       "summit_elevation_m": 2250,
       "base_depth_cm": null,
       "base_depth_source": null,
-      "temp_c": 15.4,
-      "summit_temp_c": 10.5,
+      "temp_c": 10.0,
+      "summit_temp_c": 5.1,
       "forecast": [
         {
           "day": 0,
@@ -4447,8 +4447,8 @@
       "summit_elevation_m": 2540,
       "base_depth_cm": null,
       "base_depth_source": null,
-      "temp_c": 15.2,
-      "summit_temp_c": 11.8,
+      "temp_c": 8.4,
+      "summit_temp_c": 5.0,
       "forecast": [
         {
           "day": 0,
@@ -4506,8 +4506,8 @@
       "summit_elevation_m": 2100,
       "base_depth_cm": null,
       "base_depth_source": null,
-      "temp_c": 15.7,
-      "summit_temp_c": 12.2,
+      "temp_c": 9.8,
+      "summit_temp_c": 6.3,
       "forecast": [
         {
           "day": 0,
@@ -4565,8 +4565,8 @@
       "summit_elevation_m": 2237,
       "base_depth_cm": null,
       "base_depth_source": null,
-      "temp_c": 21.1,
-      "summit_temp_c": 17.6,
+      "temp_c": 13.2,
+      "summit_temp_c": 9.7,
       "forecast": [
         {
           "day": 0,
@@ -4624,8 +4624,8 @@
       "summit_elevation_m": 2335,
       "base_depth_cm": null,
       "base_depth_source": null,
-      "temp_c": 20.1,
-      "summit_temp_c": 15.3,
+      "temp_c": 12.2,
+      "summit_temp_c": 7.4,
       "forecast": [
         {
           "day": 0,
@@ -4683,8 +4683,8 @@
       "summit_elevation_m": 2630,
       "base_depth_cm": null,
       "base_depth_source": null,
-      "temp_c": 16.9,
-      "summit_temp_c": 9.6,
+      "temp_c": 10.3,
+      "summit_temp_c": 3.0,
       "forecast": [
         {
           "day": 0,
@@ -4742,8 +4742,8 @@
       "summit_elevation_m": 2000,
       "base_depth_cm": null,
       "base_depth_source": null,
-      "temp_c": 14.6,
-      "summit_temp_c": 12.7,
+      "temp_c": 8.8,
+      "summit_temp_c": 6.9,
       "forecast": [
         {
           "day": 0,
@@ -4801,8 +4801,8 @@
       "summit_elevation_m": 2180,
       "base_depth_cm": null,
       "base_depth_source": null,
-      "temp_c": 17.0,
-      "summit_temp_c": 12.6,
+      "temp_c": 10.0,
+      "summit_temp_c": 5.6,
       "forecast": [
         {
           "day": 0,
@@ -4860,8 +4860,8 @@
       "summit_elevation_m": 2295,
       "base_depth_cm": null,
       "base_depth_source": null,
-      "temp_c": 14.5,
-      "summit_temp_c": 12.3,
+      "temp_c": 6.9,
+      "summit_temp_c": 4.7,
       "forecast": [
         {
           "day": 0,
@@ -4919,8 +4919,8 @@
       "summit_elevation_m": 2290,
       "base_depth_cm": null,
       "base_depth_source": null,
-      "temp_c": 15.5,
-      "summit_temp_c": 11.3,
+      "temp_c": 7.8,
+      "summit_temp_c": 3.6,
       "forecast": [
         {
           "day": 0,
@@ -4978,8 +4978,8 @@
       "summit_elevation_m": 2110,
       "base_depth_cm": null,
       "base_depth_source": null,
-      "temp_c": 19.4,
-      "summit_temp_c": 15.5,
+      "temp_c": 11.7,
+      "summit_temp_c": 7.8,
       "forecast": [
         {
           "day": 0,
@@ -5037,8 +5037,8 @@
       "summit_elevation_m": 3280,
       "base_depth_cm": null,
       "base_depth_source": null,
-      "temp_c": 20.0,
-      "summit_temp_c": 12.3,
+      "temp_c": 17.5,
+      "summit_temp_c": 9.8,
       "forecast": [
         {
           "day": 0,
