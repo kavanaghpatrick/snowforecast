@@ -345,18 +345,26 @@ def snow_cover_str(resort, day):
     ax = _sl_axis(resort)
     if rng is None or ax is None:
         return None
-    hi = rng[1]
     base, summit = ax
-    if hi <= base:
-        return "~100%"
-    if hi >= summit:
-        return "~0%"
-    pct = int(round((summit - hi) / (summit - base) * 20)) * 5
-    if pct >= 100:
-        return "~100%"
-    if pct <= 0:
-        return "~0%"
-    return f"upper ~{pct}%"
+
+    def pct(line):
+        p = (summit - line) / (summit - base) * 100
+        return max(0, min(100, int(round(p / 5)) * 5))
+
+    # The snow line moves during a mixed day. Collapsing its range to the
+    # worst hour said "~0%" beside a 4-inch snow row (user, Crystal Mountain,
+    # 27 Nov) — the snow fell in the other, colder hours. A split day shows
+    # the honest range; a steady day keeps the single figure (conservative).
+    worst, best = pct(rng[1]), pct(rng[0])
+    if best - worst <= 5:
+        if worst >= 100:
+            return "~100%"
+        if worst <= 0:
+            return "~0%"
+        return f"upper ~{worst}%"
+    lo_w = "~0" if worst <= 0 else f"~{worst}"
+    hi_w = "100" if best >= 100 else f"{best}"
+    return f"{lo_w}\u2013{hi_w}%"
 
 
 def snow_line_mark(lo, hi, base, summit, text):

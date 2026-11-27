@@ -335,7 +335,10 @@ def test_verdict_warns_when_file_is_stale(resorts):
 # Snow-cover strings
 # ----------------------------------------------------------------------------
 
-COVER = re.compile(r"^(~100%|~0%|upper ~(?:[1-9]?5|[1-9]0)%)$")
+# Single value on a steady snow line; an honest range ("~0–0100%" is
+# impossible, "~0–100%" fine) when the line moves across the mountain
+# during a mixed day (Crystal Mountain fix, 27 Nov).
+COVER = re.compile(r"^(~100%|~0%|upper ~(?:[1-9]?5|[1-9]0)%|~\d{1,2}–(?:100|\d{1,2})%)$")
 
 
 @pytest.mark.parametrize("rid", IDS)
@@ -352,6 +355,9 @@ def test_snow_cover_strings_well_formed(by_id, rid):
         if cov.startswith("upper"):
             pct = int(cov[7:-1])
             assert 5 <= pct <= 95
+        if "–" in cov:
+            a, b = cov[1:-1].split("–")
+            assert int(a) < int(b), (rid, i, cov)
         lo_hi = R.snow_line_range(d)
         base, summit = R._sl_axis(r)
         if cov == "~100%":
