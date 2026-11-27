@@ -302,22 +302,23 @@ def bar(v, vmax, best=False):
 
 
 def spark_bars(values, best_index, vmax, height=12, label=""):
-    """Vertical day bars, 3px wide with 2px gaps, viewBox (5n-2) x height.
+    """Vertical day bars, 4px wide with 2px gaps, viewBox (6n-2) x height.
 
     values are display-unit numbers (rounded) or None. Zero and None draw no
-    rect; any other value is at least 1px. Returns "" when no rect would be
-    drawn, so an empty frame never renders (skim spec 6.3).
+    rect; any other value is at least 4px tall, so a mark reads as a mark and
+    never as a flyspeck beside the numeral (audit round 1). Returns "" when
+    no rect would be drawn, so an empty frame never renders (skim spec 6.3).
     """
     rects = []
     for i, v in enumerate(values):
         if v is None or v <= 0 or not vmax:
             continue
-        h = max(1, int(round(min(v / vmax, 1.0) * height)))
+        h = max(4, int(round(min(v / vmax, 1.0) * height)))
         cls = ' class="is-best"' if i == best_index else ""
-        rects.append(f'<rect x="{i * 5}" y="{height - h}" width="3" height="{h}"{cls}/>')
+        rects.append(f'<rect x="{i * 6}" y="{height - h}" width="4" height="{h}"{cls}/>')
     if not rects:
         return ""
-    w = 5 * len(values) - 2
+    w = 6 * len(values) - 2
     lab = escape(label)
     return (f'<svg class="sb" width="{w}" height="{height}" viewBox="0 0 {w} {height}" '
             f'shape-rendering="crispEdges" role="img" aria-label="{lab}"><title>{lab}</title>'
@@ -533,6 +534,24 @@ def best_cell(resort, ctx_units):
         return "No ski day, wind"
     if "rain" in reasons:
         return "No ski day, rain"
+    # No ski score and no spoil reason, but the verdict may still name real
+    # snow (Telluride, verify r3 major: "Real snow Thu: ~10 cm." sat over a
+    # bare dash here). Quote exactly the day and figure the verdict's
+    # "Real snow {day}" branch quotes — week.best_snow_day at >= 3 holding
+    # POWDER_MIN_CM — so the two can never disagree. Nothing looser: a
+    # measured refutation (best ski day refuted by a station reading) must
+    # keep the dash, so no scan of other days.
+    cand = g(resort, "week", "best_snow_day")
+    n3 = next3(resort)
+    wk = week_total(resort)
+    if (isinstance(cand, int) and cand >= 3
+            and n3 is not None and n3 < 1
+            and is_num(wk) and wk >= POWDER_MIN_CM):
+        v = day_snow(resort, day_by_index(resort, cand))
+        w = short_day_word(resort, cand)
+        if w and is_num(v) and v >= POWDER_MIN_CM:
+            amt = disp_cell(snow_val(v, ctx_units), ctx_units, model=True)
+            return f"{amt} on {w}"
     return DASH
 
 
@@ -774,7 +793,10 @@ def _ski_sentence(resort, ctx):
 
 
 def _first_ext_snow_day(resort, ctx):
-    """First day 7..14 with 5 cm or more, as 'Next snow on Dec 8: ~6 cm.'
+    """First day 7..14 with 5 cm or more, as 'Real snow on Dec 8: ~6 cm.'
+
+    "Next snow" claimed more than the 5 cm gate checks: a visible earlier row
+    can hold ~2 cm, and the page then contradicts its own table (verify r2).
 
     Month-form date: a bare 'Tue 8' reads as day + centimetres everywhere
     else on the page, so as a date it was incomprehensible (user, 27 Nov)."""
@@ -784,7 +806,7 @@ def _first_ext_snow_day(resort, ctx):
         if is_num(v) and v >= POWDER_MIN_CM:
             dd = local_date(d.get("date"))
             if dd:
-                return (f"Next snow on {MONTHS[dd.month - 1][:3]} {dd.day}: "
+                return (f"Real snow on {MONTHS[dd.month - 1][:3]} {dd.day}: "
                         f"{_snow_amount(v, ctx, model=True)}.")
     return None
 
@@ -822,9 +844,16 @@ def verdict(resort, ctx, updated):
     if n3 < 1:
         best = g(resort, "week", "best_snow_day")
         if isinstance(best, int) and best >= 3:
-            d = local_date(g(day_by_index(resort, best), "date"))
-            if d:
-                return f"Models show no snow until {_date_word(resort, d)}."
+            # Claim only the checked row: "no snow until Thu" contradicted a
+            # visible ~2 cm day (verify r2 major). Quote the best day's own
+            # figure, and only when it clears the 5 cm gate the word "real"
+            # means everywhere on the page.
+            bd = day_by_index(resort, best)
+            v = day_snow(resort, bd)
+            d = local_date(g(bd, "date"))
+            if d and is_num(v) and v >= POWDER_MIN_CM:
+                return (f"Real snow {_date_word(resort, d)}: "
+                        f"{_snow_amount(v, ctx, model=True)}.")
     blocks = [b for b in (g(resort, "next_72h", "summit_by_period") or []) if is_num(b.get("snowfall_cm"))]
     if n3 >= 1 and blocks and has_summit(resort):
         top = max(blocks, key=lambda b: b["snowfall_cm"])
@@ -1749,7 +1778,7 @@ def stations_section(resort, ctx):
     # Headers name the measure only; the unit sits in each cell.
     head = (f'<tr><th>Station</th><th class="r">{du}</th><th class="r">Height</th>'
             f'<th class="r">Snow depth</th><th class="r">24-hour depth change</th>'
-            f'<th>Snow depth, last 15 days</th><th>Last reading</th></tr>')
+            f'<th>Depth, last 15 days</th><th>Last reading</th></tr>')
     srows = []
     for s in stations:
         dk = s.get("distance_km")
@@ -1862,10 +1891,16 @@ CSS = """
 .sec{ padding-top:var(--s4); }
 .verdict, .stApp .verdict, [data-testid="stMarkdownContainer"] p.verdict{ font-size:40px; line-height:1.1;
   letter-spacing:-.01em; max-width:20em; text-wrap:balance; }
-.herorow{ display:flex; flex-wrap:wrap; align-items:baseline; column-gap:var(--l); }
+/* flex-end: the two stat labels (same size) share a baseline exactly, and the
+   two numerals read as two stats, a full --s2 apart (audit round 1, minor) */
+.herorow{ display:flex; flex-wrap:wrap; align-items:flex-end; column-gap:var(--s2); }
 .herolab{ white-space:nowrap; }
 /* band rows (skim spec 1.1): label, ink bar, numeral, at most two words */
-.bands{ display:grid; grid-template-columns:fit-content(12em) 10em 5.5em auto; column-gap:.5em; align-items:baseline; }
+/* grid-auto-rows pins every band row to one 27px line: baseline alignment
+   across mixed sizes otherwise inflated rows to 34px and let a row drift
+   inside its track. All items share the 27px line-height, so top alignment
+   keeps their baselines within a pixel (audit round 1). */
+.bands{ display:grid; grid-template-columns:fit-content(12em) 10em 5.5em auto; column-gap:.5em; align-items:start; grid-auto-rows:var(--l); }
 .bands > *{ line-height:var(--l); min-height:var(--l); white-space:nowrap; }
 .bands .bl{ overflow:hidden; }
 .bands .ln{ display:none; }
@@ -1887,7 +1922,7 @@ svg.sl line{ stroke:var(--ink); stroke-width:1; vector-effect:non-scaling-stroke
 .rows .hd.slh{ line-height:20px; }
 .rows .hd .slax{ display:flex; justify-content:space-between; width:120px; box-sizing:border-box; padding:0 6px;
   font-size:14px; font-variant-caps:normal; letter-spacing:0; font-variant-numeric:lining-nums tabular-nums; }
-details.ext summary{ cursor:pointer; list-style:none; padding-block:9px; display:inline-block; }
+details.ext summary{ cursor:pointer; list-style:none; padding-block:12px; display:inline-block; }
 details.ext summary .u{ text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:.2em; }
 details.ext summary::-webkit-details-marker{ display:none; }
 details.ext summary:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
@@ -1900,29 +1935,44 @@ details.ext summary:focus-visible{ outline:2px solid var(--accent); outline-offs
 .rows .tot{ grid-column:1 / 3; }
 .thn{ display:none; }
 /* inline, not inline-block: the padding still enlarges the tap area, but a
-   wrapped sort line keeps normal line height instead of a 46px gap */
-.stApp .words a{ display:inline; }
+   wrapped sort line keeps normal line height instead of a 46px gap.
+   nowrap: a sort item never breaks mid-phrase; breaks fall on the dots. */
+.stApp .words a{ display:inline; white-space:nowrap; padding-inline:8px; margin-inline:-8px; }
+/* the cm/in pair: a two-glyph primary control gets a 44px hit area through
+   padding with cancelling margins, so the glyphs do not shift */
+.stApp .topbar .units a{ padding-block:16px; padding-inline:10px; margin-inline:-10px; }
+details.ext summary.caption{ padding-inline:6px; margin-inline:-6px; }
 .stApp .rows.days.wk{ grid-template-columns:5.2em 10em 5.5em minmax(7em,max-content) minmax(8.5em,max-content); }
 @media (max-width:700px){
   .thw{ display:none; }
   .thn{ display:inline; }
+  .herorow{ column-gap:26px; }  /* the phone pair still fits side by side */
   .verdict, .stApp .verdict, [data-testid="stMarkdownContainer"] p.verdict{ font-size:34px; }
-  .bands{ grid-template-columns:fit-content(9em) 4em 4.5em auto; }
+  /* phone band rows: the bar column stole the label's width and clipped
+     elevations mid-number ("Summit 2,8"); the bars there were 4px specks.
+     The label keeps its intrinsic width, the numeral and word follow, and
+     the specks go — the numeral carries the value (audit round 1, blocker) */
+  .bands{ grid-template-columns:max-content 5.5em minmax(0,auto); column-gap:.75em; }
   .bands .lw{ display:none; }
   .bands .ln{ display:inline; }
-  .bands .bar{ width:calc(var(--v)*4em); }
+  .bands .bc{ display:none; }
   svg.sb{ height:1em; width:auto; }
   .ground .gi{ margin-right:1.2em; }
   /* Watch for stays on the day's row, never under the bar. The bar column is
      fixed so bar length stays proportional (a shrinking column clipped long
      bars to the same length); two Watch words that don't fit wrap inside
      their own column. */
-  .stApp .rows.days.wk{ grid-template-columns:3.3em 2.4em 3.6em minmax(0,1fr) 120px; column-gap:.35em; }
+  /* label column takes the widest nowrap month-form date ("Sun Nov 29"):
+     the old 3.3em was sized for short labels and let the date overflow into
+     the bar column, striking through the digits (verify r1, blocker). The
+     Watch column pays the width back (120 -> 108) and keeps a 64px floor so
+     "powder" never breaks mid-word (verify r1, major 2). */
+  .stApp .rows.days.wk{ grid-template-columns:max-content 2.4em 3.6em minmax(64px,1fr) 108px; column-gap:.35em; }
   .stApp .rows.days.wk > span:first-child, .stApp .rows.days.wk .tot{ white-space:nowrap; }
   .stApp .rows.days.wk > *:nth-child(5n+1){ white-space:nowrap; }
   .stApp .rows.days.wk .bar{ width:calc(var(--v)*2.4em); max-width:none; }
   .stApp .rows.days.wk .bc{ overflow:visible; }
-  .stApp .rows.days.wk .f:not(.hd){ font-size:14px; white-space:normal; line-height:16px; }
+  .stApp .rows.days.wk .f:not(.hd){ font-size:14px; white-space:normal; line-height:16px; overflow-wrap:normal; word-break:normal; }
   /* stations at 390: headers wrap, names wrap, the trend line narrows, so all five columns fit */
   [data-testid="stMarkdownContainer"] table.st-t th{ white-space:normal; line-height:1.2; vertical-align:bottom; }
   [data-testid="stMarkdownContainer"] table.st-t td, [data-testid="stMarkdownContainer"] table.st-t th{ padding-right:.6em; }

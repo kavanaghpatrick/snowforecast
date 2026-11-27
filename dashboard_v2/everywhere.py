@@ -223,7 +223,9 @@ def page(resorts, col, direction, units, resort_id, debug=False, rng="all"):
 CSS = """
 .every-t th a, .every-t th a:visited{ text-decoration:none !important; }
 .stApp [data-testid="stMarkdownContainer"] table.t th.cur, .stApp [data-testid="stMarkdownContainer"] table.t th.cur a{ color:var(--accent) !important; }
-[data-testid="stMarkdownContainer"] table.every-t td.first{ font-size:16px; padding-right:1.5em; }
+/* 18px matches table.t td.first: resort names sit on the type scale
+   (16px was off the 12/14/18/27/40/61/91/200 law — audit round 1) */
+[data-testid="stMarkdownContainer"] table.every-t td.first{ font-size:18px; padding-right:1.5em; }
 [data-testid="stMarkdownContainer"] table.every-t td.first .label{ padding-left:.3em; }
 [data-testid="stMarkdownContainer"] table.every-t td, [data-testid="stMarkdownContainer"] table.every-t th{ padding-right:1.4em; }
 [data-testid="stMarkdownContainer"] table.every-t td.barcol, [data-testid="stMarkdownContainer"] table.every-t th.barcol{ width:6em; padding-right:.6em; }
@@ -244,7 +246,7 @@ table.every-t td.r{ font-variant-numeric:lining-nums tabular-nums; }
   [data-testid="stMarkdownContainer"] table.every-t th{ white-space:normal; line-height:1.2; vertical-align:bottom; min-width:3.5em; }
   [data-testid="stMarkdownContainer"] table.every-t th:first-child{ min-width:0; }
   [data-testid="stMarkdownContainer"] table.every-t td.first .label{ display:none; }
-  [data-testid="stMarkdownContainer"] table.every-t td.first{ font-size:15px; white-space:normal; padding-right:.6em; }
+  [data-testid="stMarkdownContainer"] table.every-t td.first{ font-size:17px; white-space:normal; padding-right:.6em; }
   .stApp h1.title, [data-testid="stMarkdownContainer"] h1.title{ font-size:44px; }
   .leaders, .stApp .leaders{ font-size:34px; }
 }

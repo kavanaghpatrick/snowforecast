@@ -25,6 +25,10 @@ CSS = r"""
 }
 @media (max-width:700px){ :root{ --l:26px; --s6:calc(var(--l)*5); --m:24px; --hang:24px } }
 @media (min-width:1921px){ :root{ --l:30px } }
+/* very wide screens: the hang margin takes half the extra width, so the text
+   column travels toward the right-bleed art instead of leaving a dead middle
+   between a left-anchored page and edge-glued paintings (audit round 1) */
+@media (min-width:1800px){ :root{ --hang:calc(200px + (100vw - 1800px)/2) } }
 
 /* chrome */
 header[data-testid="stHeader"], [data-testid="stToolbar"], [data-testid="stDecoration"],
@@ -63,7 +67,8 @@ b, strong{ font-weight:500; }
 .screen.top .label{ margin-bottom:var(--s0); }
 .screen.after-breath{ padding-top:0; }
 .label{ font-size:12px; line-height:1.5; font-variant-caps:all-small-caps; letter-spacing:.12em; font-weight:400; }
-.caption{ font-size:14px; line-height:20px; }
+/* captions hold a readable measure (~68ch worst case) and never orphan one word */
+.caption{ font-size:14px; line-height:20px; max-width:34em; text-wrap:pretty; }
 .body{ font-size:18px; line-height:var(--l); }
 .n27{ font-size:27px; line-height:1.35; }
 .h40, [data-testid="stMarkdownContainer"] h2.h40{ font-size:40px; line-height:1.1; letter-spacing:-.01em; font-weight:400;
@@ -132,8 +137,17 @@ b, strong{ font-weight:500; }
 .spark polyline{ fill:none; stroke:var(--ink); stroke-width:1.25; vector-effect:non-scaling-stroke; shape-rendering:geometricPrecision; }
 .spark rect{ fill:var(--ink); } .spark rect.is-best{ fill:var(--accent); } .spark circle{ fill:var(--accent); }
 
-/* tables */
-.tablewrap{ overflow:auto clip; }
+/* tables. The wrapper keeps 24px of paper after the last column, and on
+   phones a gentle fade sits at the clipped edge, so a sideways-scrolling
+   table shows whitespace or a fade at the fold, never a knifed glyph; a
+   table that fits ends 24px before the edge and never enters the fade. */
+.tablewrap{ overflow:auto clip; padding-right:24px; }
+@media (max-width:700px){
+  .tablewrap{
+    -webkit-mask-image:linear-gradient(to right, #000 calc(100%% - 20px), rgba(0,0,0,.25));
+    mask-image:linear-gradient(to right, #000 calc(100%% - 20px), rgba(0,0,0,.25));
+  }
+}
 [data-testid="stMarkdownContainer"] table.t{ border-collapse:collapse; border:0 !important; font-size:14px; margin:0; width:auto; }
 [data-testid="stMarkdownContainer"] table.t tr{ border:0 !important; background:transparent !important; }
 [data-testid="stMarkdownContainer"] table.t th, [data-testid="stMarkdownContainer"] table.t td{
@@ -141,7 +155,9 @@ b, strong{ font-weight:500; }
   text-align:left; font-weight:400; color:var(--ink); white-space:nowrap; vertical-align:baseline; font-size:14px; }
 [data-testid="stMarkdownContainer"] table.t th{ font-size:12px; font-variant-caps:all-small-caps; letter-spacing:.12em; padding-bottom:var(--s0); }
 [data-testid="stMarkdownContainer"] table.t td.r, [data-testid="stMarkdownContainer"] table.t th.r{ text-align:right; }
-[data-testid="stMarkdownContainer"] table.t td.first{ font-size:18px; padding-right:2em; }
+/* line-height 23px trims the 18px cell's above-baseline share so a mixed
+   18/14 row stands exactly one 27px line tall (baselines still align) */
+[data-testid="stMarkdownContainer"] table.t td.first{ font-size:18px; padding-right:2em; line-height:23px; }
 [data-testid="stMarkdownContainer"] table.t tr.is-selected td{ color:var(--accent); }
 [data-testid="stMarkdownContainer"] table.t tr.grp td{ font-size:27px; line-height:1.35; padding-top:var(--s3); padding-bottom:var(--s0); height:auto; }
 [data-testid="stMarkdownContainer"] table.t tr.grp.first td{ padding-top:0; }
@@ -150,11 +166,11 @@ b, strong{ font-weight:500; }
 /* links */
 .stApp a, .stApp a:visited{ color:inherit !important; text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:.2em; }
 .stApp a.plain{ text-decoration:none; }
-.words a{ display:inline-block; padding-block:10px; }
+.words a{ display:inline-block; padding-block:13px; }
 /* 44px tap targets for inline links without moving the line grid: vertical padding on an
    inline box enlarges its hit area but not the line box */
-.stApp a:not(.words a){ padding-block:11px; }
-.stApp .caption a:not(.words a){ padding-block:13px; }
+.stApp a:not(.words a){ padding-block:13px; }
+.stApp .caption a:not(.words a){ padding-block:15px; }
 .stApp .words a.is-current{ text-decoration:underline; } .stApp .words a:not(.is-current){ text-decoration:none; }
 :focus-visible{ outline:2px solid var(--accent) !important; outline-offset:3px; }
 
@@ -170,7 +186,10 @@ b, strong{ font-weight:500; }
 [data-testid="stSelectbox"] input:focus, [data-testid="stSelectbox"] input:focus-visible{ outline:none !important; box-shadow:none !important; }
 [data-testid="stSelectbox"] [data-baseweb="select"]:focus-within > div{ border-bottom-color:var(--accent) !important; }
 [data-testid="stSelectbox"] [data-baseweb="select"] div{ height:auto !important; max-height:none !important; overflow:visible !important;
-  white-space:normal !important; text-overflow:clip !important; }
+  white-space:normal !important; text-overflow:clip !important; background:transparent !important; }
+/* every widget state (base, hover, focus, open, hydrating) stays on the paper:
+   a grey select background showed behind the H1 in some captures */
+[data-testid="stSelectbox"], [data-testid="stSelectbox"] *{ background-color:transparent !important; }
 [data-testid="stSelectbox"] [data-baseweb="select"] > div > div:first-child{ padding:0 0 8px 0 !important; }
 [data-testid="stSelectbox"] svg{ width:24px !important; height:24px !important; color:var(--ink); }
 @media (max-width:700px){ [data-testid="stSelectbox"] [data-baseweb="select"] *{ font-size:44px !important } }

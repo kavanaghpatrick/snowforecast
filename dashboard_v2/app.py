@@ -85,14 +85,18 @@ def main():
         _html("<style>" + R.CSS + E.CSS + P.CSS + A.CSS + "</style>")
         _html(E.nav("powder", resort_id, units, updated, debug, resort,
                     unit_params={"view": "powder", "resort": resort_id}, powder_hot=hot))
-        _html(A.powder_art())
-        _html(A.powder_companion(P.page(resorts, units, resort_id, debug), updated))
+        page_html = P.page(resorts, units, resort_id, debug)
+        powder_empty = "<table" not in page_html
+        _html(A.powder_art(empty=powder_empty))
+        _html(A.powder_companion(page_html, updated))
         ctx = R.Ctx(resort_id, "nearby", "next3", units, debug)
         _html(R.footer(data, ctx))
         if st.button("Refresh forecast"):
             load.clear()
             st.rerun()
         _html('<div class="close-end"></div>')
+        if powder_empty:
+            _html(A.powder_art_low())
         return
 
     if st.query_params.get("view") == "all":
@@ -167,7 +171,7 @@ def main():
         _html(st_html)
 
     # Level 11: footer
-    footer_art = A.footer_art(art_state, resort_id)
+    footer_art = A.footer_art(art_state, resort_id, resort)
     if footer_art:
         _html(footer_art)
     _html(R.footer(data, ctx))
@@ -175,7 +179,7 @@ def main():
         load.clear()
         st.rerun()
     _html('<div class="close-end"></div>')
-    foot_art = A.foot_art(art_state, resort_id)
+    foot_art = A.foot_art(art_state, resort_id, far=bool(footer_art))
     if foot_art:
         _html(foot_art)
 
