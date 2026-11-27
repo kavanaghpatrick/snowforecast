@@ -1,431 +1,183 @@
+"""Snow forecast dashboard v2.
+
+One long page about one resort, in the order a skier decides: go or not,
+where, when, will it be good (docs/ux_hierarchy_spec.md).
+Reads data/forecasts_v2.json (schema version 3). State lives in the URL:
+?resort=<id>&scope=nearby|country&sort=next3|week|best|depth|name&units=cm|in
+All resorts page (every resort, one table):
+?view=all&sort=name|next3|week|best|flags|depth|ext&dir=asc|desc&units=cm|in
+Powder page (measured snow, then the powder forecast):
+?view=powder&resort=<id>&units=cm|in
+
+Run: streamlit run dashboard_v2/app.py
 """
-Snow Forecast Dashboard v2 - Multi-region ski resort forecasts.
 
-Displays forecast data with optimized UX based on Gemini UI audit.
-"""
+from __future__ import annotations
 
-import streamlit as st
-import pandas as pd
-import json
-import urllib.request
-from datetime import datetime, timezone
-from pathlib import Path
+import os
+import sys
+from urllib.parse import urlencode
 
-st.set_page_config(
-    page_title="Snow Forecast",
-    page_icon="❄️",
-    layout="wide"
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+import streamlit as st  # noqa: E402
+
+import art as A  # noqa: E402
+import everywhere as E  # noqa: E402
+import powder as P  # noqa: E402
+import render as R  # noqa: E402
+from data import (  # noqa: E402
+    COUNTRY_ORDER,
+    SORTS,
+    UNITS,
+    default_resort,
+    load,
+    name_key,
+    scope_resorts,
+    sort_resorts,
+    updated_utc,
 )
+from theme import apply_theme  # noqa: E402
 
-# Custom CSS for polished styling
-st.markdown("""
-<style>
-    /* ===== TYPOGRAPHY & BASE ===== */
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
-    html, body, [class*="css"] {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    }
-
-    /* ===== LAYOUT ===== */
-    .block-container {
-        padding-top: 1.5rem !important;
-        padding-bottom: 1rem !important;
-        max-width: 1200px !important;
-    }
-
-    /* ===== HEADER ===== */
-    h1 {
-        font-weight: 700 !important;
-        letter-spacing: -0.02em !important;
-        color: #0f172a !important;
-        font-size: 2rem !important;
-    }
-
-    /* Header row alignment */
-    .header-row {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 1rem;
-    }
-
-    /* ===== STATUS BADGES (Pill Style) ===== */
-    .status-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        padding: 6px 14px;
-        border-radius: 100px;
-        font-size: 13px;
-        font-weight: 600;
-        letter-spacing: 0.01em;
-    }
-
-    .status-fresh {
-        background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
-        color: #047857;
-        border: 1px solid #a7f3d0;
-        box-shadow: 0 1px 2px rgba(4, 120, 87, 0.08);
-    }
-
-    .status-stale {
-        background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
-        color: #b45309;
-        border: 1px solid #fcd34d;
-        box-shadow: 0 1px 2px rgba(180, 83, 9, 0.08);
-    }
-
-    /* ===== FILTERS ===== */
-    .stSelectbox > div > div {
-        border-radius: 8px !important;
-        border-color: #e2e8f0 !important;
-    }
-
-    .stSelectbox > div > div:hover {
-        border-color: #94a3b8 !important;
-    }
-
-    .filter-caption {
-        color: #64748b;
-        font-size: 13px;
-        padding-top: 8px;
-    }
-
-    /* ===== DATA TABLE ===== */
-    [data-testid="stDataFrame"] {
-        border: 1px solid #e2e8f0 !important;
-        border-radius: 12px !important;
-        overflow: hidden;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
-    }
-
-    [data-testid="stDataFrame"] th {
-        background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%) !important;
-        font-weight: 600 !important;
-        color: #334155 !important;
-        text-transform: uppercase;
-        font-size: 11px !important;
-        letter-spacing: 0.05em;
-        border-bottom: 2px solid #e2e8f0 !important;
-    }
-
-    /* Alternating row colors */
-    [data-testid="stDataFrame"] tr:nth-child(even) {
-        background: #f8fafc !important;
-    }
-
-    [data-testid="stDataFrame"] tr:hover {
-        background: #f1f5f9 !important;
-    }
-
-    /* Sparkline column emphasis */
-    [data-testid="stDataFrame"] td {
-        vertical-align: middle !important;
-        border-bottom: 1px solid #f1f5f9 !important;
-    }
-
-    /* ===== EXPANDER ===== */
-    .streamlit-expanderHeader {
-        font-weight: 600 !important;
-        color: #334155 !important;
-        background: #f8fafc !important;
-        border-radius: 8px !important;
-    }
-
-    /* ===== FOOTER ===== */
-    .footer-text {
-        color: #94a3b8;
-        font-size: 12px;
-        line-height: 1.6;
-    }
-
-    /* ===== MOBILE RESPONSIVE ===== */
-    @media (max-width: 768px) {
-        .block-container {
-            padding-left: 1rem !important;
-            padding-right: 1rem !important;
-        }
-
-        h1 {
-            font-size: 1.5rem !important;
-        }
-
-        .status-badge {
-            font-size: 12px;
-            padding: 5px 10px;
-        }
-
-        /* Stack filters on mobile */
-        [data-testid="column"] {
-            min-width: 100% !important;
-        }
-
-        [data-testid="stDataFrame"] {
-            font-size: 12px;
-        }
-
-        /* Hide location column on very small screens */
-        @media (max-width: 480px) {
-            [data-testid="stDataFrame"] td:last-child,
-            [data-testid="stDataFrame"] th:last-child {
-                display: none;
-            }
-        }
-    }
-
-    /* ===== HIDE STREAMLIT BRANDING ===== */
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    header {visibility: hidden;}
-</style>
-""", unsafe_allow_html=True)
-
-# GitHub raw URL for live data
-GITHUB_DATA_URL = "https://raw.githubusercontent.com/kavanaghpatrick/snowforecast/main/data/forecasts_v2.json"
-DATA_PATH = Path(__file__).parent.parent / "data" / "forecasts_v2.json"
+PAGE_SCOPES = ("nearby", "country")  # "all" is now the All resorts page
 
 
-@st.cache_data(ttl=300)
-def load_data() -> dict | None:
-    """Load forecast JSON from GitHub (live) or local file (fallback)."""
-    try:
-        with urllib.request.urlopen(GITHUB_DATA_URL, timeout=10) as response:
-            return json.loads(response.read())
-    except Exception:
-        pass
-
-    if DATA_PATH.exists():
-        try:
-            with open(DATA_PATH, "r") as f:
-                return json.load(f)
-        except (json.JSONDecodeError, IOError):
-            pass
-    return None
+def _param(name, allowed, default):
+    v = st.query_params.get(name)
+    return v if v in allowed else default
 
 
-def format_time_ago(hours: float) -> str:
-    """Convert hours to human-readable time ago string."""
-    if hours < 1:
-        minutes = int(hours * 60)
-        return f"{minutes} min ago" if minutes != 1 else "1 min ago"
-    elif hours < 24:
-        h = int(hours)
-        return f"{h} hour{'s' if h != 1 else ''} ago"
-    else:
-        days = int(hours / 24)
-        return f"{days} day{'s' if days != 1 else ''} ago"
+def _html(markup):
+    st.markdown(markup, unsafe_allow_html=True)
 
 
-def format_date_human(iso_str: str) -> str:
-    """Convert ISO date to human readable format."""
-    try:
-        dt = datetime.fromisoformat(iso_str.replace("Z", "+00:00"))
-        return dt.strftime("%b %d, %I:%M %p").replace(" 0", " ").replace("AM", "am").replace("PM", "pm")
-    except (ValueError, TypeError):
-        return "Unknown"
-
-
-def check_freshness(updated_str: str) -> tuple[bool, float]:
-    """Check if data is stale (> 24 hours old)."""
-    try:
-        updated = datetime.fromisoformat(updated_str.replace("Z", "+00:00"))
-        now = datetime.now(timezone.utc)
-        hours_old = (now - updated).total_seconds() / 3600
-        return hours_old > 24, hours_old
-    except (ValueError, TypeError):
-        return True, float("inf")
-
-
-def find_best_day(daily_snow: list[dict]) -> tuple[str, float]:
-    """Find the day with the most snowfall. Returns (formatted_date, amount)."""
-    if not daily_snow:
-        return "—", 0
-
-    best_day = max(daily_snow, key=lambda d: d.get("new_snow_cm", 0))
-    amount = best_day.get("new_snow_cm", 0)
-
-    if amount == 0:
-        return "—", 0
-
-    try:
-        date = datetime.fromisoformat(best_day["date"])
-        return date.strftime("%a %d"), amount
-    except (ValueError, KeyError):
-        return best_day.get("date", "—"), amount
-
-
-def get_snow_color(value: float, max_val: float) -> str:
-    """Get background color based on snow amount (blue gradient)."""
-    if value <= 0 or max_val <= 0:
-        return ""
-    ratio = min(value / max_val, 1.0)
-    # Light blue to deep blue gradient
-    r = int(240 - (ratio * 100))
-    g = int(248 - (ratio * 80))
-    b = int(255 - (ratio * 20))
-    return f"background-color: rgb({r}, {g}, {b})"
+def _on_pick():
+    st.session_state["picked"] = st.session_state["picker"]
 
 
 def main():
-    # Compact header with inline status
-    col_title, col_status = st.columns([3, 2])
+    data, origin, err = load()
+    debug = st.query_params.get("debug") == "1"
 
-    with col_title:
-        st.markdown("# ❄️ Snow Forecast")
-
-    # Load data
-    data = load_data()
-
-    if data is None:
-        st.error("No forecast data available. Run the data fetcher to populate.")
+    if err is not None:
+        apply_theme("Snow forecast")
+        _html(R.screen_error(err))
         return
 
-    # Check freshness and show compact status
-    is_stale, hours = check_freshness(data.get("updated", ""))
+    resorts = [r for r in data["resorts"]
+               if isinstance(r, dict) and isinstance(r.get("id"), str) and r["id"]]
+    by_id = {r["id"]: r for r in resorts}
+    picked = st.session_state.pop("picked", None)
+    if picked in by_id:
+        st.query_params["resort"] = picked  # written during the run, so the browser URL follows
+    resort_id = st.query_params.get("resort")
+    if resort_id not in by_id:
+        resort_id = default_resort(resorts)["id"]
+    resort = by_id[resort_id]
+    units = _param("units", UNITS, "cm")
+    updated = updated_utc(data)
+    extra = {"debug": "1"} if debug else {}
 
-    with col_status:
-        st.write("")  # Vertical spacer to align with title
-        if hours == float("inf"):
-            st.markdown('<span class="status-badge status-stale">⚠️ Unknown</span>', unsafe_allow_html=True)
-        elif is_stale:
-            st.markdown(f'<span class="status-badge status-stale">⚠️ {format_time_ago(hours)}</span>', unsafe_allow_html=True)
-        else:
-            st.markdown(f'<span class="status-badge status-fresh">✓ {format_time_ago(hours)}</span>', unsafe_allow_html=True)
+    hot = P.any_powder(resorts)
 
-    # Build dataframe from resorts
-    resorts = data.get("resorts", [])
-    if not resorts:
-        st.warning("No resort data found.")
+    if st.query_params.get("view") == "powder":
+        apply_theme("Snow forecast, powder")
+        _html("<style>" + R.CSS + E.CSS + P.CSS + A.CSS + "</style>")
+        _html(E.nav("powder", resort_id, units, updated, debug, resort,
+                    unit_params={"view": "powder", "resort": resort_id}, powder_hot=hot))
+        _html(A.powder_art())
+        _html(A.powder_companion(P.page(resorts, units, resort_id, debug), updated))
+        ctx = R.Ctx(resort_id, "nearby", "next3", units, debug)
+        _html(R.footer(data, ctx))
+        if st.button("Refresh forecast"):
+            load.clear()
+            st.rerun()
+        _html('<div class="close-end"></div>')
         return
 
-    # Process resort data with optimized column order
-    rows = []
-    for resort in resorts:
-        daily = resort.get("forecast", [])
-        base_total = resort.get("seven_day_total_cm", sum(d.get("new_snow_cm", 0) for d in daily[:7]))
-        summit_total = resort.get("summit_seven_day_total_cm", base_total)
-        best_day, best_amount = find_best_day(daily[:7])
+    if st.query_params.get("view") == "all":
+        apply_theme("Snow forecast, all resorts")
+        sort = _param("sort", E.SORT_KEYS, "next3")
+        direction = _param("dir", E.DIRS, "desc")
+        rng = _param("range", E.RANGE_KEYS, "all")
+        _html("<style>" + R.CSS + E.CSS + "</style>")
+        _html(E.nav("all", resort_id, units, updated, debug, resort,
+                    unit_params={"view": "all", "sort": sort, "dir": direction,
+                                 "range": rng, "resort": resort_id},
+                    powder_hot=hot))
+        _html(E.page(resorts, sort, direction, units, resort_id, debug, rng=rng))
+        ctx = R.Ctx(resort_id, "nearby", "next3", units, debug)
+        _html(R.footer(data, ctx))
+        if st.button("Refresh forecast"):
+            load.clear()
+            st.rerun()
+        _html('<div class="close-end"></div>')
+        return
 
-        # Extract daily snowfall array for sparkline (7 days)
-        daily_snow = [d.get("new_snow_cm", 0) for d in daily[:7]]
-        # Pad to 7 days if needed
-        while len(daily_snow) < 7:
-            daily_snow.append(0)
+    ctx = R.Ctx(resort_id, _param("scope", PAGE_SCOPES, "nearby"), _param("sort", SORTS, "next3"),
+                units, debug)
+    all_href = "?" + urlencode({"view": "all", "resort": resort_id, "units": units, **extra})
 
-        base_depth = resort.get("base_depth_cm")
-        station_name = resort.get("base_depth_source", "")
+    apply_theme(f"Snow forecast, {resort.get('name', '')}")
+    _html("<style>" + E.CSS + R.CSS + A.CSS + "</style>")
+    art_state = A.state(resort, updated)
 
-        # Combine location
-        country = resort.get("country", "USA")
-        region = resort.get("region", resort.get("state", ""))
-        location = f"{region}, {country}" if region else country
+    # Level 0: top bar (corner paintings anchor before it, at the viewport top)
+    top_art = A.top_art(art_state, resort_id, resort)
+    if top_art:
+        _html(top_art)
+    _html(E.nav("resort", resort_id, units, updated, debug, resort,
+                unit_params={"resort": resort_id, "scope": ctx.scope, "sort": ctx.sort}, powder_hot=hot))
+    verdict_art = A.verdict_art(art_state, resort_id, resort)
+    if verdict_art:
+        _html(verdict_art)
 
-        rows.append({
-            "Resort": resort.get("name", "Unknown"),
-            "Forecast": daily_snow,  # Sparkline data
-            "Total": round(summit_total, 0),  # Numeric total for sorting
-            "Best Day": best_day,
-            "Snowpack": round(base_depth, 0) if base_depth else None,
-            "Location": location,
-            "_station": station_name,  # Hidden, for tooltip
-            "_country": country,  # Hidden, for filtering
-            "_region": region,  # Hidden, for filtering
-        })
+    # Level 1: picker
+    def order(r):
+        c = r.get("country")
+        return (COUNTRY_ORDER.index(c) if c in COUNTRY_ORDER else 99, name_key(r.get("name")))
 
-    df = pd.DataFrame(rows)
+    ids = [r["id"] for r in sorted(resorts, key=order)]
+    st.session_state["picker"] = resort_id
+    st.selectbox("Resort", ids, key="picker", label_visibility="collapsed",
+                 format_func=lambda i: R.option_label(by_id[i]), on_change=_on_pick)
 
-    # Filters with clean layout
-    col1, col2, col3 = st.columns([2, 2, 3])
+    # Levels 2 to 6: verdict, hero, mountain strip, nearby line, ground line
+    nearby = scope_resorts(resorts, resort, "nearby")
+    _html('<div class="page">' + R.screen1_main(resort, ctx, updated, nearby) + "</div>")
 
-    with col1:
-        countries = ["All Countries"] + sorted(df["_country"].unique().tolist())
-        selected_country = st.selectbox("Country", countries, label_visibility="collapsed")
+    # Powder forecast line, only when this resort has a qualifying powder day
+    pl = P.resort_line(resort, units)
+    if pl:
+        _html(f'<div class="page"><p class="body prose gap1">{pl}</p></div>')
 
-    with col2:
-        if selected_country != "All Countries":
-            available_regions = sorted(df[df["_country"] == selected_country]["_region"].unique().tolist())
-        else:
-            available_regions = sorted(df["_region"].unique().tolist())
-        regions = ["All Regions"] + available_regions
-        selected_region = st.selectbox("Region", regions, label_visibility="collapsed")
+    # Levels 7 and 8: daily table and days 8-15
+    table_art = A.table_art(art_state, resort_id)
+    if table_art:
+        _html(table_art)
+    _html(R.daily_table(resort, ctx))
 
-    with col3:
-        st.markdown(
-            f'<p class="filter-caption" style="text-align: right; margin: 0; padding-top: 10px;">'
-            f'{len(df)} resorts · {df["_country"].nunique()} countries</p>',
-            unsafe_allow_html=True
-        )
+    # Level 9: compare resorts
+    scoped = scope_resorts(resorts, resort, ctx.scope)
+    _html(R.compare_section(resort, sort_resorts(scoped, ctx.sort, ctx.units), ctx, len(resorts), all_href))
 
-    # Apply filters
-    df_display = df.copy()
-    if selected_country != "All Countries":
-        df_display = df_display[df_display["_country"] == selected_country]
-    if selected_region != "All Regions":
-        df_display = df_display[df_display["_region"] == selected_region]
+    # Level 10: snow stations, only when one exists
+    st_html = R.stations_section(resort, ctx)
+    if st_html:
+        _html(st_html)
 
-    # Sort by total snowfall
-    df_display = df_display.sort_values("Total", ascending=False)
-
-    # Calculate max for sparkline scaling (at least 10cm per day to show small amounts)
-    all_daily = [v for row in df_display["Forecast"] for v in row]
-    max_daily = max(max(all_daily) if all_daily else 10, 10)
-
-    # Display table with sparkline visualization
-    st.dataframe(
-        df_display[["Resort", "Forecast", "Total", "Best Day", "Snowpack", "Location"]],
-        use_container_width=True,
-        hide_index=True,
-        column_config={
-            "Resort": st.column_config.TextColumn("Resort", width="medium"),
-            "Forecast": st.column_config.LineChartColumn(
-                "7-Day Forecast",
-                help="Daily snowfall forecast for next 7 days (cm). Line shows snow timing.",
-                y_min=0,
-                y_max=max_daily,
-                width="medium",
-            ),
-            "Total": st.column_config.NumberColumn(
-                "Total",
-                help="Total forecasted snowfall (cm)",
-                format="%.0f cm",
-                width="small",
-            ),
-            "Best Day": st.column_config.TextColumn(
-                "Peak",
-                help="Day with highest forecasted snowfall",
-                width="small"
-            ),
-            "Snowpack": st.column_config.NumberColumn(
-                "Snowpack",
-                help="Natural snow depth from nearby monitoring station (cm). USA: SNOTEL. Europe: GeoSphere/SLF.",
-                format="%.0f cm",
-                width="small",
-            ),
-            "Location": st.column_config.TextColumn("Location", width="medium"),
-        },
-        height=450,
-    )
-
-    # Compact chart section
-    with st.expander("📊 Snowpack Comparison", expanded=False):
-        chart_data = df_display.set_index("Resort")["Snowpack"].dropna().sort_values(ascending=False)
-        if len(chart_data) > 15:
-            chart_data = chart_data.head(15)
-            st.caption("Top 15 resorts by snowpack")
-        st.bar_chart(chart_data)
-
-    # Footer with data sources
-    st.markdown("---")
-    st.markdown(
-        '<p class="footer-text">'
-        '<strong>Data sources:</strong> '
-        'SNOTEL (USA) · GeoSphere (Austria) · SLF (Switzerland) · tenki.jp & OnTheSnow (Japan)<br>'
-        'Forecasts via Open-Meteo. Natural snow depth only—excludes snowmaking. May differ from resort reports.'
-        '</p>',
-        unsafe_allow_html=True
-    )
+    # Level 11: footer
+    footer_art = A.footer_art(art_state, resort_id)
+    if footer_art:
+        _html(footer_art)
+    _html(R.footer(data, ctx))
+    if st.button("Refresh forecast"):
+        load.clear()
+        st.rerun()
+    _html('<div class="close-end"></div>')
+    foot_art = A.foot_art(art_state, resort_id)
+    if foot_art:
+        _html(foot_art)
 
 
-if __name__ == "__main__":
-    main()
+main()

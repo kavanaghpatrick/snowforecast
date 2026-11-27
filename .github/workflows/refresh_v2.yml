@@ -2,37 +2,56 @@ name: Refresh Dashboard V2 Data
 
 on:
   schedule:
-    # Run 3x daily: 6 AM, 12 PM, 6 PM UTC
-    - cron: '0 6,12,18 * * *'
-  workflow_dispatch:  # Allow manual trigger
+    # 4x daily: 00, 06, 12, 18 UTC
+    - cron: '0 0,6,12,18 * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: refresh-v2
+  cancel-in-progress: false
 
 jobs:
   refresh:
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     permissions:
       contents: write
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      - name: Install dependencies
-        run: |
-          pip install metloom pandas
-
+      # No pip install: the fetcher is stdlib only.
+      # No continue-on-error: exit 2 (validation failed) leaves the old file in place and turns the run red.
       - name: Fetch forecast data
+        # AEMET (Spain) runs only when this optional repo secret exists; empty means skipped.
+        env:
+          AEMET_API_KEY: ${{ secrets.AEMET_API_KEY }}
         run: python scripts/fetch_data_v2.py
-        continue-on-error: true  # Don't fail if some data unavailable
 
       - name: Commit and push if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -f data/forecasts_v2.json
-          git diff --staged --quiet || git commit -m "Update forecast data [skip ci]"
-          git push
+          # The file is fully regenerated, so this run's copy always wins. Lay it on top of the
+          # newest main (never 'pull --rebase -X ours': in a rebase 'ours' is upstream, so that
+          # silently dropped this run's forecast whenever someone else had pushed the file).
+          NEW="$RUNNER_TEMP/forecasts_v2.json"
+          cp data/forecasts_v2.json "$NEW"
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git reset --hard origin/main
+            cp "$NEW" data/forecasts_v2.json
+            git add -f data/forecasts_v2.json
+            git diff --staged --quiet && exit 0
+            git commit -m "Update forecast data [skip ci]"
+            git push origin HEAD:main && exit 0
+            sleep $((attempt * 5))
+          done
+          exit 1
+
+      - name: Source health
+        run: python scripts/validate_forecasts_v2.py data/forecasts_v2.json --health

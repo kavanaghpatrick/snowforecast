@@ -1,0 +1,149 @@
+{
+ "schema_version": 3,
+ "updated": "2026-11-27T12:27:13Z",
+ "run": {
+  "started_utc": "2026-11-27T12:15:48Z",
+  "finished_utc": "2026-11-27T12:27:13Z",
+  "duration_s": 685,
+  "resort_count": 86,
+  "open_meteo": {
+   "requests": 31,
+   "retries": 1,
+   "failed_chunks": []
+  },
+  "coverage": {
+   "forecast": 86,
+   "depth": 71,
+   "depth_by_provider": {
+    "SNOTEL": 4,
+    "GeoSphere": 7,
+    "SLF": 11,
+    "OnTheSnow": 22,
+    "tenki.jp": 0,
+    "JMA": 6,
+    "Meteo-France": 16,
+    "Meteocat": 3,
+    "Tirol": 2,
+    "AEMET": 0
+   },
+   "stations_measured": 83,
+   "recent_measured": 72
+  },
+  "warnings": []
+ },
+ "thresholds": {
+  "wind_gust_hold_kmh": 60,
+  "wind_700hpa_hold_kmh": 70,
+  "storm_3day_cm": 15,
+  "storm_codes": [
+   73,
+   75,
+   85,
+   86
+  ],
+  "storm_prob_pct": 50,
+  "storm_day_min_cm": 10,
+  "powder_cold_below_c": -8,
+  "powder_warm_above_c": -3,
+  "snowy_day_min_cm": 1.0,
+  "bluebird_prev24_cm": 10,
+  "bluebird_codes": [
+   0,
+   1,
+   2
+  ],
+  "flat_light_visibility_m": 1000,
+  "flat_light_cloud_pct": 90,
+  "snowline_below_fl_m": 250,
+  "phase_min_mm": 1.0,
+  "phase_share_min": 0.2,
+  "phase_day_min_mm": 0.5,
+  "bluebird_cloud_mean_pct": 40,
+  "bluebird_flat_light_max_h": 2,
+  "wind_700hpa_min_summit_m": 2500
+ },
+ "sources": {
+  "base_depth": {
+   "USA": "OnTheSnow resort reports (17 of 22), SNOTEL stations (4 of 22)",
+   "Austria": "GeoSphere TAWES stations (7 of 10), Land Tirol stations (2 of 10)",
+   "Switzerland": "SLF stations (11 of 11)",
+   "Japan": "JMA AMeDAS stations (6 of 10), OnTheSnow resort reports (3 of 10)",
+   "France": "Météo-France stations (15 of 20), OnTheSnow resort reports (2 of 20)",
+   "Spain": "Meteocat XEMA stations (3 of 13), Météo-France stations (1 of 13)"
+  },
+  "forecast": "Open-Meteo (open-meteo.com), best_match model",
+  "list": [
+   {
+    "id": "open-meteo",
+    "name": "Open-Meteo",
+    "url": "https://open-meteo.com",
+    "kind": "model",
+    "used_for": "forecasts, recent modelled snowfall, freezing level, wind"
+   },
+   {
+    "id": "snotel",
+    "name": "USDA NRCS SNOTEL (AWDB)",
+    "url": "https://wcc.sc.egov.usda.gov",
+    "kind": "measured",
+    "used_for": "measured snow depth and 15-day depth history at US stations"
+   },
+   {
+    "id": "geosphere",
+    "name": "GeoSphere Austria TAWES",
+    "url": "https://dataset.api.hub.geosphere.at",
+    "kind": "measured",
+    "used_for": "measured snow depth at Austrian stations"
+   },
+   {
+    "id": "slf",
+    "name": "WSL Institute for Snow and Avalanche Research SLF, IMIS and study plots",
+    "url": "https://measurement-api.slf.ch",
+    "kind": "measured",
+    "used_for": "measured snow depth and new snow at Swiss stations (IMIS and study plots)"
+   },
+   {
+    "id": "jma",
+    "name": "Japan Meteorological Agency, AMeDAS",
+    "url": "https://www.jma.go.jp/bosai/amedas/",
+    "kind": "measured",
+    "used_for": "measured snow depth and new snow at Japanese stations (出典：気象庁ホームページ (https://www.jma.go.jp/); selected and summed by Snowforecast)"
+   },
+   {
+    "id": "meteo-france",
+    "name": "Météo-France, hourly climatological data (Licence Ouverte 2.0)",
+    "url": "https://www.data.gouv.fr/datasets/6569b4473bedf2e7abad3b72/",
+    "kind": "measured",
+    "used_for": "measured snow depth at French and Pyrenean stations"
+   },
+   {
+    "id": "meteocat",
+    "name": "Servei Meteorològic de Catalunya, XEMA",
+    "url": "https://analisi.transparenciacatalunya.cat",
+    "kind": "measured",
+    "used_for": "measured snow depth at Catalan stations"
+   },
+   {
+    "id": "tirol",
+    "name": "Land Tirol weather stations, LWD and HD Tirol (CC BY 4.0)",
+    "url": "https://www.data.gv.at",
+    "kind": "measured",
+    "used_for": "measured snow depth at Tyrolean stations (Wetterstationsdaten Tirol, data.tirol.gv.at)"
+   },
+   {
+    "id": "onthesnow",
+    "name": "OnTheSnow",
+    "url": "https://www.onthesnow.com",
+    "kind": "resort_report",
+    "used_for": "resort-reported base, mid and summit depth and new snow"
+   }
+  ]
+ },
+ "_fixture_note": "resorts with no dict that has an id",
+ "resorts": [
+  null,
+  5,
+  {
+   "name": "x"
+  }
+ ]
+}

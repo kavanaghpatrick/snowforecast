@@ -1,0 +1,2275 @@
+{
+ "schema_version": 3,
+ "updated": "2026-11-27T12:27:13Z",
+ "run": {
+  "started_utc": "2026-11-27T12:15:48Z",
+  "finished_utc": "2026-11-27T12:27:13Z",
+  "duration_s": 685,
+  "resort_count": 86,
+  "open_meteo": {
+   "requests": 31,
+   "retries": 1,
+   "failed_chunks": []
+  },
+  "coverage": {
+   "forecast": 86,
+   "depth": 71,
+   "depth_by_provider": {
+    "SNOTEL": 4,
+    "GeoSphere": 7,
+    "SLF": 11,
+    "OnTheSnow": 22,
+    "tenki.jp": 0,
+    "JMA": 6,
+    "Meteo-France": 16,
+    "Meteocat": 3,
+    "Tirol": 2,
+    "AEMET": 0
+   },
+   "stations_measured": 83,
+   "recent_measured": 72
+  },
+  "warnings": []
+ },
+ "thresholds": {
+  "wind_gust_hold_kmh": 60,
+  "wind_700hpa_hold_kmh": 70,
+  "storm_3day_cm": 15,
+  "storm_codes": [
+   73,
+   75,
+   85,
+   86
+  ],
+  "storm_prob_pct": 50,
+  "storm_day_min_cm": 10,
+  "powder_cold_below_c": -8,
+  "powder_warm_above_c": -3,
+  "snowy_day_min_cm": 1.0,
+  "bluebird_prev24_cm": 10,
+  "bluebird_codes": [
+   0,
+   1,
+   2
+  ],
+  "flat_light_visibility_m": 1000,
+  "flat_light_cloud_pct": 90,
+  "snowline_below_fl_m": 250,
+  "phase_min_mm": 1.0,
+  "phase_share_min": 0.2,
+  "phase_day_min_mm": 0.5,
+  "bluebird_cloud_mean_pct": 40,
+  "bluebird_flat_light_max_h": 2,
+  "wind_700hpa_min_summit_m": 2500
+ },
+ "sources": {
+  "base_depth": {
+   "USA": "OnTheSnow resort reports (17 of 22), SNOTEL stations (4 of 22)",
+   "Austria": "GeoSphere TAWES stations (7 of 10), Land Tirol stations (2 of 10)",
+   "Switzerland": "SLF stations (11 of 11)",
+   "Japan": "JMA AMeDAS stations (6 of 10), OnTheSnow resort reports (3 of 10)",
+   "France": "Météo-France stations (15 of 20), OnTheSnow resort reports (2 of 20)",
+   "Spain": "Meteocat XEMA stations (3 of 13), Météo-France stations (1 of 13)"
+  },
+  "forecast": "Open-Meteo (open-meteo.com), best_match model",
+  "list": [
+   {
+    "id": "open-meteo",
+    "name": "Open-Meteo",
+    "url": "https://open-meteo.com",
+    "kind": "model",
+    "used_for": "forecasts, recent modelled snowfall, freezing level, wind"
+   },
+   {
+    "id": "snotel",
+    "name": "USDA NRCS SNOTEL (AWDB)",
+    "url": "https://wcc.sc.egov.usda.gov",
+    "kind": "measured",
+    "used_for": "measured snow depth and 15-day depth history at US stations"
+   },
+   {
+    "id": "geosphere",
+    "name": "GeoSphere Austria TAWES",
+    "url": "https://dataset.api.hub.geosphere.at",
+    "kind": "measured",
+    "used_for": "measured snow depth at Austrian stations"
+   },
+   {
+    "id": "slf",
+    "name": "WSL Institute for Snow and Avalanche Research SLF, IMIS and study plots",
+    "url": "https://measurement-api.slf.ch",
+    "kind": "measured",
+    "used_for": "measured snow depth and new snow at Swiss stations (IMIS and study plots)"
+   },
+   {
+    "id": "jma",
+    "name": "Japan Meteorological Agency, AMeDAS",
+    "url": "https://www.jma.go.jp/bosai/amedas/",
+    "kind": "measured",
+    "used_for": "measured snow depth and new snow at Japanese stations (出典：気象庁ホームページ (https://www.jma.go.jp/); selected and summed by Snowforecast)"
+   },
+   {
+    "id": "meteo-france",
+    "name": "Météo-France, hourly climatological data (Licence Ouverte 2.0)",
+    "url": "https://www.data.gouv.fr/datasets/6569b4473bedf2e7abad3b72/",
+    "kind": "measured",
+    "used_for": "measured snow depth at French and Pyrenean stations"
+   },
+   {
+    "id": "meteocat",
+    "name": "Servei Meteorològic de Catalunya, XEMA",
+    "url": "https://analisi.transparenciacatalunya.cat",
+    "kind": "measured",
+    "used_for": "measured snow depth at Catalan stations"
+   },
+   {
+    "id": "tirol",
+    "name": "Land Tirol weather stations, LWD and HD Tirol (CC BY 4.0)",
+    "url": "https://www.data.gv.at",
+    "kind": "measured",
+    "used_for": "measured snow depth at Tyrolean stations (Wetterstationsdaten Tirol, data.tirol.gv.at)"
+   },
+   {
+    "id": "onthesnow",
+    "name": "OnTheSnow",
+    "url": "https://www.onthesnow.com",
+    "kind": "resort_report",
+    "used_for": "resort-reported base, mid and summit depth and new snow"
+   }
+  ]
+ },
+ "_fixture_note": "real record: best day 0 by the model, resort reported 0 cm (measured refutes)",
+ "resorts": [
+  {
+   "id": "whitefish",
+   "name": "Whitefish",
+   "country": "USA",
+   "region": "Montana",
+   "lat": 48.4833,
+   "lon": -114.355,
+   "timezone": "America/Denver",
+   "utc_offset_s": -25200,
+   "elevation_m": 1361,
+   "summit_elevation_m": 2078,
+   "mid_elevation_m": 1720,
+   "elevation_note": "skiresort.com (base 1,361 m, lift-served top 2,078 m)",
+   "base_depth_cm": 40.6,
+   "base_depth_source": "Resort report via OnTheSnow (mid-mountain)",
+   "temp_c": 1.5,
+   "summit_temp_c": -2.9,
+   "forecast": [
+    {
+     "day": 0,
+     "date": "2026-11-27",
+     "new_snow_cm": 0.0,
+     "source": "open-meteo"
+    },
+    {
+     "day": 1,
+     "date": "2026-11-28",
+     "new_snow_cm": 0.0,
+     "source": "open-meteo"
+    },
+    {
+     "day": 2,
+     "date": "2026-11-29",
+     "new_snow_cm": 0.1,
+     "source": "open-meteo"
+    },
+    {
+     "day": 3,
+     "date": "2026-11-30",
+     "new_snow_cm": 1.8,
+     "source": "open-meteo"
+    },
+    {
+     "day": 4,
+     "date": "2026-12-01",
+     "new_snow_cm": 0.0,
+     "source": "open-meteo"
+    },
+    {
+     "day": 5,
+     "date": "2026-12-02",
+     "new_snow_cm": 0.6,
+     "source": "open-meteo"
+    },
+    {
+     "day": 6,
+     "date": "2026-12-03",
+     "new_snow_cm": 0.2,
+     "source": "open-meteo"
+    }
+   ],
+   "seven_day_total_cm": 2.7,
+   "summit_seven_day_total_cm": 16.3,
+   "depth": {
+    "value_cm": 40.6,
+    "kind": "resort_report",
+    "provider": "OnTheSnow",
+    "source_label": "Resort report via OnTheSnow (mid-mountain)",
+    "observed_utc": "2026-11-26",
+    "report": {
+     "base_cm": null,
+     "mid_cm": 40.6,
+     "summit_cm": null,
+     "last24_cm": 0.0,
+     "last48_cm": 0.0,
+     "last72_cm": 0.0
+    }
+   },
+   "stations": [],
+   "recent": {
+    "measured": {
+     "kind": "resort_reported_new_snow",
+     "provider": "OnTheSnow",
+     "label": "New snow reported by the resort",
+     "h24_cm": 0.0,
+     "h48_cm": 0.0,
+     "h72_cm": 0.0
+    },
+    "modelled": {
+     "kind": "model",
+     "base": {
+      "h24_cm": 2.8,
+      "h48_cm": 2.8,
+      "h72_cm": 2.8
+     },
+     "mid": {
+      "h24_cm": 5.8,
+      "h48_cm": 5.8,
+      "h72_cm": 5.8
+     },
+     "summit": {
+      "h24_cm": 6.2,
+      "h48_cm": 6.2,
+      "h72_cm": 6.2
+     }
+    }
+   },
+   "now": {
+    "local_time": "2026-11-27T05:00",
+    "base": {
+     "temp_c": 1.5,
+     "apparent_temp_c": -1.7,
+     "weather_code": 3,
+     "wind_kmh": 7,
+     "gust_kmh": 15,
+     "freezing_level_m": 1740,
+     "snowfall_cm": 0.0,
+     "is_day": false
+    },
+    "summit": {
+     "temp_c": -2.9,
+     "apparent_temp_c": -8.9,
+     "weather_code": 45,
+     "wind_kmh": 23,
+     "gust_kmh": 40,
+     "freezing_level_m": 1640,
+     "snowfall_cm": 0.0,
+     "is_day": false
+    }
+   },
+   "next_72h": {
+    "base_cm": 0.5,
+    "mid_cm": 2.2,
+    "summit_cm": 2.2,
+    "summit_by_period": [
+     {
+      "start_local": "2026-11-27T00:00",
+      "label": "night",
+      "snowfall_cm": 0.0
+     },
+     {
+      "start_local": "2026-11-27T06:00",
+      "label": "morning",
+      "snowfall_cm": 0.8
+     },
+     {
+      "start_local": "2026-11-27T12:00",
+      "label": "afternoon",
+      "snowfall_cm": 0.0
+     },
+     {
+      "start_local": "2026-11-27T18:00",
+      "label": "evening",
+      "snowfall_cm": 0.0
+     },
+     {
+      "start_local": "2026-11-28T00:00",
+      "label": "night",
+      "snowfall_cm": 0.0
+     },
+     {
+      "start_local": "2026-11-28T06:00",
+      "label": "morning",
+      "snowfall_cm": 0.0
+     },
+     {
+      "start_local": "2026-11-28T12:00",
+      "label": "afternoon",
+      "snowfall_cm": 0.0
+     },
+     {
+      "start_local": "2026-11-28T18:00",
+      "label": "evening",
+      "snowfall_cm": 0.1
+     },
+     {
+      "start_local": "2026-11-29T00:00",
+      "label": "night",
+      "snowfall_cm": 0.1
+     },
+     {
+      "start_local": "2026-11-29T06:00",
+      "label": "morning",
+      "snowfall_cm": 0.0
+     },
+     {
+      "start_local": "2026-11-29T12:00",
+      "label": "afternoon",
+      "snowfall_cm": 0.0
+     },
+     {
+      "start_local": "2026-11-29T18:00",
+      "label": "evening",
+      "snowfall_cm": 0.6
+     },
+     {
+      "start_local": "2026-11-30T00:00",
+      "label": "night",
+      "snowfall_cm": 0.7
+     }
+    ],
+    "precip_prob_max_pct": 64,
+    "window_start_local": "2026-11-27T05:00",
+    "window_end_local": "2026-11-30T05:00",
+    "by_day": {
+     "base": [
+      {
+       "date": "2026-11-27",
+       "hours": 18,
+       "snowfall_cm": 0.1,
+       "rain_mm": 0.2,
+       "precip_mm": 0.3,
+       "phase": "none",
+       "rain_phase_mm": 0.2,
+       "mixed_phase_mm": 0.1
+      },
+      {
+       "date": "2026-11-28",
+       "hours": 24,
+       "snowfall_cm": 0.0,
+       "rain_mm": 0.0,
+       "precip_mm": 0.0,
+       "phase": "none",
+       "rain_phase_mm": 0.0,
+       "mixed_phase_mm": 0.0
+      },
+      {
+       "date": "2026-11-29",
+       "hours": 24,
+       "snowfall_cm": 0.1,
+       "rain_mm": 0.1,
+       "precip_mm": 0.2,
+       "phase": "none",
+       "rain_phase_mm": 0.0,
+       "mixed_phase_mm": 0.1
+      },
+      {
+       "date": "2026-11-30",
+       "hours": 6,
+       "snowfall_cm": 0.4,
+       "rain_mm": 0.0,
+       "precip_mm": 0.5,
+       "phase": "snow",
+       "rain_phase_mm": 0.0,
+       "mixed_phase_mm": 0.0
+      }
+     ],
+     "mid": [
+      {
+       "date": "2026-11-27",
+       "hours": 18,
+       "snowfall_cm": 0.8,
+       "rain_mm": 0.0,
+       "precip_mm": 1.1,
+       "phase": "snow",
+       "rain_phase_mm": 0.0,
+       "mixed_phase_mm": 0.0
+      },
+      {
+       "date": "2026-11-28",
+       "hours": 24,
+       "snowfall_cm": 0.0,
+       "rain_mm": 0.0,
+       "precip_mm": 0.0,
+       "phase": "none",
+       "rain_phase_mm": 0.0,
+       "mixed_phase_mm": 0.0
+      },
+      {
+       "date": "2026-11-29",
+       "hours": 24,
+       "snowfall_cm": 0.7,
+       "rain_mm": 0.1,
+       "precip_mm": 1.1,
+       "phase": "snow",
+       "rain_phase_mm": 0.0,
+       "mixed_phase_mm": 0.1
+      },
+      {
+       "date": "2026-11-30",
+       "hours": 6,
+       "snowfall_cm": 0.8,
+       "rain_mm": 0.0,
+       "precip_mm": 1.1,
+       "phase": "snow",
+       "rain_phase_mm": 0.0,
+       "mixed_phase_mm": 0.0
+      }
+     ],
+     "summit": [
+      {
+       "date": "2026-11-27",
+       "hours": 18,
+       "snowfall_cm": 0.8,
+       "rain_mm": 0.0,
+       "precip_mm": 1.1,
+       "phase": "snow",
+       "rain_phase_mm": 0.0,
+       "mixed_phase_mm": 0.0
+      },
+      {
+       "date": "2026-11-28",
+       "hours": 24,
+       "snowfall_cm": 0.0,
+       "rain_mm": 0.0,
+       "precip_mm": 0.0,
+       "phase": "none",
+       "rain_phase_mm": 0.0,
+       "mixed_phase_mm": 0.0
+      },
+      {
+       "date": "2026-11-29",
+       "hours": 24,
+       "snowfall_cm": 0.7,
+       "rain_mm": 0.1,
+       "precip_mm": 1.1,
+       "phase": "snow",
+       "rain_phase_mm": 0.0,
+       "mixed_phase_mm": 0.1
+      },
+      {
+       "date": "2026-11-30",
+       "hours": 6,
+       "snowfall_cm": 0.8,
+       "rain_mm": 0.0,
+       "precip_mm": 1.1,
+       "phase": "snow",
+       "rain_phase_mm": 0.0,
+       "mixed_phase_mm": 0.0
+      }
+     ]
+    },
+    "mid_equals_summit": true,
+    "base_equals_mid": false
+   },
+   "days": [
+    {
+     "date": "2026-11-24",
+     "index": -3,
+     "horizon": "past_model",
+     "sunrise_local": "2026-11-24T07:58",
+     "sunset_local": "2026-11-24T16:49",
+     "daylight_s": 31860,
+     "base": {
+      "snowfall_cm": 0.0,
+      "rain_mm": 0.0,
+      "precip_mm": 0.0,
+      "precip_hours": null,
+      "precip_prob_pct": null,
+      "temp_max_c": null,
+      "temp_min_c": null,
+      "wind_max_kmh": null,
+      "gust_max_kmh": null,
+      "wind_dir_deg": null,
+      "weather_code": null,
+      "sunshine_s": null,
+      "uv_max": null
+     },
+     "mid": {
+      "snowfall_cm": 0.0,
+      "rain_mm": 0.0,
+      "precip_mm": 0.0,
+      "precip_hours": null,
+      "precip_prob_pct": null,
+      "temp_max_c": null,
+      "temp_min_c": null,
+      "wind_max_kmh": null,
+      "gust_max_kmh": null,
+      "wind_dir_deg": null,
+      "weather_code": null,
+      "sunshine_s": null,
+      "uv_max": null
+     },
+     "summit": {
+      "snowfall_cm": 0.0,
+      "rain_mm": 0.0,
+      "precip_mm": 0.0,
+      "precip_hours": null,
+      "precip_prob_pct": null,
+      "temp_max_c": null,
+      "temp_min_c": null,
+      "wind_max_kmh": null,
+      "gust_max_kmh": null,
+      "wind_dir_deg": null,
+      "weather_code": null,
+      "sunshine_s": null,
+      "uv_max": null
+     },
+     "derived": {
+      "freezing_level_max_m": null,
+      "freezing_level_precip_min_m": null,
+      "freezing_level_precip_max_m": null,
+      "snowfall_height_precip_min_m": null,
+      "snowfall_height_precip_max_m": null,
+      "rain_risk": {
+       "base": null,
+       "mid": null,
+       "summit": null
+      },
+      "powder_temp_c": null,
+      "powder_band": null,
+      "wind_700hpa_lift_max_kmh": null,
+      "wind_hold": null,
+      "flat_light_hours": null,
+      "wind_chill_min_c": null,
+      "lift_hours_snowfall_cm": null,
+      "ski_score_cm": null,
+      "bluebird": null,
+      "mixed_risk": {
+       "base": null,
+       "mid": null,
+       "summit": null
+      },
+      "phase": {
+       "base": null,
+       "mid": null,
+       "summit": null
+      },
+      "rain_phase_mm": {
+       "base": null,
+       "mid": null,
+       "summit": null
+      },
+      "rain_limit_m": null,
+      "rain_limit_kind": null,
+      "wind_gust_lift_max_kmh": null,
+      "cloud_cover_lift_mean_pct": null
+     }
+    },
+    {
+     "date": "2026-11-25",
+     "index": -2,
+     "horizon": "past_model",
+     "sunrise_local": "2026-11-25T08:00",
+     "sunset_local": "2026-11-25T16:48",
+     "daylight_s": 31680,
+     "base": {
+      "snowfall_cm": 0.0,
+      "rain_mm": 0.0,
+      "precip_mm": 0.0,
+      "precip_hours": null,
+      "precip_prob_pct": null,
+      "temp_max_c": null,
+      "temp_min_c": null,
+      "wind_max_kmh": null,
+      "gust_max_kmh": null,
+      "wind_dir_deg": null,
+      "weather_code": null,
+      "sunshine_s": null,
+      "uv_max": null
+     },
+     "mid": {
+      "snowfall_cm": 0.0,
+      "rain_mm": 0.0,
+      "precip_mm": 0.0,
+      "precip_hours": null,
+      "precip_prob_pct": null,
+      "temp_max_c": null,
+      "temp_min_c": null,
+      "wind_max_kmh": null,
+      "gust_max_kmh": null,
+      "wind_dir_deg": null,
+      "weather_code": null,
+      "sunshine_s": null,
+      "uv_max": null
+     },
+     "summit": {
+      "snowfall_cm": 0.0,
+      "rain_mm": 0.0,
+      "precip_mm": 0.0,
+      "precip_hours": null,
+      "precip_prob_pct": null,
+      "temp_max_c": null,
+      "temp_min_c": null,
+      "wind_max_kmh": null,
+      "gust_max_kmh": null,
+      "wind_dir_deg": null,
+      "weather_code": null,
+      "sunshine_s": null,
+      "uv_max": null
+     },
+     "derived": {
+      "freezing_level_max_m": null,
+      "freezing_level_precip_min_m": null,
+      "freezing_level_precip_max_m": null,
+      "snowfall_height_precip_min_m": null,
+      "snowfall_height_precip_max_m": null,
+      "rain_risk": {
+       "base": null,
+       "mid": null,
+       "summit": null
+      },
+      "powder_temp_c": null,
+      "powder_band": null,
+      "wind_700hpa_lift_max_kmh": null,
+      "wind_hold": null,
+      "flat_light_hours": null,
+      "wind_chill_min_c": null,
+      "lift_hours_snowfall_cm": null,
+      "ski_score_cm": null,
+      "bluebird": null,
+      "mixed_risk": {
+       "base": null,
+       "mid": null,
+       "summit": null
+      },
+      "phase": {
+       "base": null,
+       "mid": null,
+       "summit": null
+      },
+      "rain_phase_mm": {
+       "base": null,
+       "mid": null,
+       "summit": null
+      },
+      "rain_limit_m": null,
+      "rain_limit_kind": null,
+      "wind_gust_lift_max_kmh": null,
+      "cloud_cover_lift_mean_pct": null
+     }
+    },
+    {
+     "date": "2026-11-26",
+     "index": -1,
+     "horizon": "past_model",
+     "sunrise_local": "2026-11-26T08:01",
+     "sunset_local": "2026-11-26T16:47",
+     "daylight_s": 31560,
+     "base": {
+      "snowfall_cm": 3.4,
+      "rain_mm": 1.8,
+      "precip_mm": 6.6,
+      "precip_hours": null,
+      "precip_prob_pct": null,
+      "temp_max_c": null,
+      "temp_min_c": null,
+      "wind_max_kmh": null,
+      "gust_max_kmh": null,
+      "wind_dir_deg": null,
+      "weather_code": null,
+      "sunshine_s": null,
+      "uv_max": null
+     },
+     "mid": {
+      "snowfall_cm": 8.1,
+      "rain_mm": 0.0,
+      "precip_mm": 11.6,
+      "precip_hours": null,
+      "precip_prob_pct": null,
+      "temp_max_c": null,
+      "temp_min_c": null,
+      "wind_max_kmh": null,
+      "gust_max_kmh": null,
+      "wind_dir_deg": null,
+      "weather_code": null,
+      "sunshine_s": null,
+      "uv_max": null
+     },
+     "summit": {
+      "snowfall_cm": 8.1,
+      "rain_mm": 0.0,
+      "precip_mm": 11.6,
+      "precip_hours": null,
+      "precip_prob_pct": null,
+      "temp_max_c": null,
+      "temp_min_c": null,
+      "wind_max_kmh": null,
+      "gust_max_kmh": null,
+      "wind_dir_deg": null,
+      "weather_code": null,
+      "sunshine_s": null,
+      "uv_max": null
+     },
+     "derived": {
+      "freezing_level_max_m": null,
+      "freezing_level_precip_min_m": null,
+      "freezing_level_precip_max_m": null,
+      "snowfall_height_precip_min_m": null,
+      "snowfall_height_precip_max_m": null,
+      "rain_risk": {
+       "base": null,
+       "mid": null,
+       "summit": null
+      },
+      "powder_temp_c": null,
+      "powder_band": null,
+      "wind_700hpa_lift_max_kmh": null,
+      "wind_hold": null,
+      "flat_light_hours": null,
+      "wind_chill_min_c": null,
+      "lift_hours_snowfall_cm": null,
+      "ski_score_cm": null,
+      "bluebird": null,
+      "mixed_risk": {
+       "base": null,
+       "mid": null,
+       "summit": null
+      },
+      "phase": {
+       "base": null,
+       "mid": null,
+       "summit": null
+      },
+      "rain_phase_mm": {
+       "base": null,
+       "mid": null,
+       "summit": null
+      },
+      "rain_limit_m": null,
+      "rain_limit_kind": null,
+      "wind_gust_lift_max_kmh": null,
+      "cloud_cover_lift_mean_pct": null
+     }
+    },
+    {
+     "date": "2026-11-27",
+     "index": 0,
+     "horizon": "short",
+     "sunrise_local": "2026-11-27T08:02",
+     "sunset_local": "2026-11-27T16:46",
+     "daylight_s": 31440,
+     "base": {
+      "snowfall_cm": 0.0,
+      "rain_mm": 0.0,
+      "precip_mm": 0.0,
+      "precip_hours": 0.0,
+      "precip_prob_pct": 16,
+      "temp_max_c": 3.7,
+      "temp_min_c": 0.1,
+      "wind_max_kmh": 16,
+      "gust_max_kmh": 30,
+      "wind_dir_deg": 275,
+      "weather_code": 3,
+      "sunshine_s": 9657,
+      "uv_max": 1.6
+     },
+     "mid": {
+      "snowfall_cm": 0.0,
+      "rain_mm": 0.0,
+      "precip_mm": 0.0,
+      "precip_hours": 0.0,
+      "precip_prob_pct": 16,
+      "temp_max_c": 0.7,
+      "temp_min_c": -3.7,
+      "wind_max_kmh": 29,
+      "gust_max_kmh": 48,
+      "wind_dir_deg": 265,
+      "weather_code": 45,
+      "sunshine_s": 5637,
+      "uv_max": 1.4
+     },
+     "summit": {
+      "snowfall_cm": 0.0,
+      "rain_mm": 0.0,
+      "precip_mm": 0.0,
+      "precip_hours": 0.0,
+      "precip_prob_pct": 18,
+      "temp_max_c": -1.6,
+      "temp_min_c": -6.0,
+      "wind_max_kmh": 29,
+      "gust_max_kmh": 48,
+      "wind_dir_deg": 265,
+      "weather_code": 45,
+      "sunshine_s": 5637,
+      "uv_max": 1.4
+     },
+     "derived": {
+      "freezing_level_max_m": 1800,
+      "freezing_level_precip_min_m": 1700,
+      "freezing_level_precip_max_m": 1700,
+      "snowfall_height_precip_min_m": null,
+      "snowfall_height_precip_max_m": null,
+      "rain_risk": {
+       "base": false,
+       "mid": false,
+       "summit": false
+      },
+      "powder_temp_c": null,
+      "powder_band": null,
+      "wind_700hpa_lift_max_kmh": 56,
+      "wind_hold": false,
+      "flat_light_hours": 6,
+      "wind_chill_min_c": -9.3,
+      "lift_hours_snowfall_cm": 0.0,
+      "ski_score_cm": 8.1,
+      "bluebird": false,
+      "mixed_risk": {
+       "base": false,
+       "mid": false,
+       "summit": false
+      },
+      "phase": {
+       "base": "none",
+       "mid": "snow",
+       "summit": "snow"
+      },
+      "rain_phase_mm": {
+       "base": 0.2,
+       "mid": 0.0,
+       "summit": 0.0
+      },
+      "rain_limit_m": 1450,
+      "rain_limit_kind": "freezing_level_minus_250",
+      "wind_gust_lift_max_kmh": 41,
+      "cloud_cover_lift_mean_pct": 100
+     }
+    },
+    {
+     "date": "2026-11-28",
+     "index": 1,
+     "horizon": "short",
+     "sunrise_local": "2026-11-28T08:04",
+     "sunset_local": "2026-11-28T16:46",
+     "daylight_s": 31320,
+     "base": {
+      "snowfall_cm": 0.0,
+      "rain_mm": 0.0,
+      "precip_mm": 0.0,
+      "precip_hours": 0.0,
+      "precip_prob_pct": 3,
+      "temp_max_c": 2.0,
+      "temp_min_c": -4.5,
+      "wind_max_kmh": 9,
+      "gust_max_kmh": 19,
+      "wind_dir_deg": 258,
+      "weather_code": 3,
+      "sunshine_s": 30598,
+      "uv_max": 1.2
+     },
+     "mid": {
+      "snowfall_cm": 0.0,
+      "rain_mm": 0.0,
+      "precip_mm": 0.0,
+      "precip_hours": 0.0,
+      "precip_prob_pct": 3,
+      "temp_max_c": -1.6,
+      "temp_min_c": -6.6,
+      "wind_max_kmh": 15,
+      "gust_max_kmh": 32,
+      "wind_dir_deg": 266,
+      "weather_code": 45,
+      "sunshine_s": 30586,
+      "uv_max": 0.9
+     },
+     "summit": {
+      "snowfall_cm": 0.0,
+      "rain_mm": 0.0,
+      "precip_mm": 0.0,
+      "precip_hours": 0.0,
+      "precip_prob_pct": 3,
+      "temp_max_c": -3.9,
+      "temp_min_c": -9.0,
+      "wind_max_kmh": 15,
+      "gust_max_kmh": 32,
+      "wind_dir_deg": 266,
+      "weather_code": 45,
+      "sunshine_s": 30586,
+      "uv_max": 0.9
+     },
+     "derived": {
+      "freezing_level_max_m": 1580,
+      "freezing_level_precip_min_m": null,
+      "freezing_level_precip_max_m": null,
+      "snowfall_height_precip_min_m": null,
+      "snowfall_height_precip_max_m": null,
+      "rain_risk": {
+       "base": false,
+       "mid": false,
+       "summit": false
+      },
+      "powder_temp_c": null,
+      "powder_band": null,
+      "wind_700hpa_lift_max_kmh": 29,
+      "wind_hold": false,
+      "flat_light_hours": 0,
+      "wind_chill_min_c": -12.0,
+      "lift_hours_snowfall_cm": 0.0,
+      "ski_score_cm": 0.0,
+      "bluebird": false,
+      "mixed_risk": {
+       "base": false,
+       "mid": false,
+       "summit": false
+      },
+      "phase": {
+       "base": "none",
+       "mid": "none",
+       "summit": "none"
+      },
+      "rain_phase_mm": {
+       "base": 0.0,
+       "mid": 0.0,
+       "summit": 0.0
+      },
+      "rain_limit_m": null,
+      "rain_limit_kind": null,
+      "wind_gust_lift_max_kmh": 26,
+      "cloud_cover_lift_mean_pct": 0
+     }
+    },
+    {
+     "date": "2026-11-29",
+     "index": 2,
+     "horizon": "short",
+     "sunrise_local": "2026-11-29T08:05",
+     "sunset_local": "2026-11-29T16:45",
+     "daylight_s": 31200,
+     "base": {
+      "snowfall_cm": 0.1,
+      "rain_mm": 0.1,
+      "precip_mm": 0.2,
+      "precip_hours": 2.0,
+      "precip_prob_pct": 59,
+      "temp_max_c": -1.7,
+      "temp_min_c": -3.7,
+      "wind_max_kmh": 4,
+      "gust_max_kmh": 5,
+      "wind_dir_deg": 114,
+      "weather_code": 71,
+      "sunshine_s": 25726,
+      "uv_max": 1.1
+     },
+     "mid": {
+      "snowfall_cm": 0.7,
+      "rain_mm": 0.1,
+      "precip_mm": 1.1,
+      "precip_hours": 7.0,
+      "precip_prob_pct": 59,
+      "temp_max_c": -3.3,
+      "temp_min_c": -6.5,
+      "wind_max_kmh": 5,
+      "gust_max_kmh": 5,
+      "wind_dir_deg": 179,
+      "weather_code": 73,
+      "sunshine_s": 25642,
+      "uv_max": 1.2
+     },
+     "summit": {
+      "snowfall_cm": 0.7,
+      "rain_mm": 0.1,
+      "precip_mm": 1.1,
+      "precip_hours": 7.0,
+      "precip_prob_pct": 60,
+      "temp_max_c": -5.7,
+      "temp_min_c": -8.8,
+      "wind_max_kmh": 5,
+      "gust_max_kmh": 5,
+      "wind_dir_deg": 179,
+      "weather_code": 73,
+      "sunshine_s": 25642,
+      "uv_max": 1.2
+     },
+     "derived": {
+      "freezing_level_max_m": 1090,
+      "freezing_level_precip_min_m": 870,
+      "freezing_level_precip_max_m": 920,
+      "snowfall_height_precip_min_m": null,
+      "snowfall_height_precip_max_m": null,
+      "rain_risk": {
+       "base": false,
+       "mid": false,
+       "summit": false
+      },
+      "powder_temp_c": null,
+      "powder_band": null,
+      "wind_700hpa_lift_max_kmh": 59,
+      "wind_hold": false,
+      "flat_light_hours": 8,
+      "wind_chill_min_c": -12.0,
+      "lift_hours_snowfall_cm": 0.0,
+      "ski_score_cm": 0.0,
+      "bluebird": false,
+      "mixed_risk": {
+       "base": false,
+       "mid": false,
+       "summit": false
+      },
+      "phase": {
+       "base": "none",
+       "mid": "snow",
+       "summit": "snow"
+      },
+      "rain_phase_mm": {
+       "base": 0.0,
+       "mid": 0.0,
+       "summit": 0.0
+      },
+      "rain_limit_m": null,
+      "rain_limit_kind": null,
+      "wind_gust_lift_max_kmh": 5,
+      "cloud_cover_lift_mean_pct": 100
+     }
+    },
+    {
+     "date": "2026-11-30",
+     "index": 3,
+     "horizon": "short",
+     "sunrise_local": "2026-11-30T08:06",
+     "sunset_local": "2026-11-30T16:45",
+     "daylight_s": 31140,
+     "base": {
+      "snowfall_cm": 1.8,
+      "rain_mm": 1.1,
+      "precip_mm": 3.6,
+      "precip_hours": 18.0,
+      "precip_prob_pct": 81,
+      "temp_max_c": -1.4,
+      "temp_min_c": -3.5,
+      "wind_max_kmh": 4,
+      "gust_max_kmh": 22,
+      "wind_dir_deg": 70,
+      "weather_code": 73,
+      "sunshine_s": 0,
+      "uv_max": 0.5
+     },
+     "mid": {
+      "snowfall_cm": 5.5,
+      "rain_mm": 0.0,
+      "precip_mm": 7.8,
+      "precip_hours": 23.0,
+      "precip_prob_pct": 81,
+      "temp_max_c": -2.3,
+      "temp_min_c": -6.5,
+      "wind_max_kmh": 6,
+      "gust_max_kmh": 22,
+      "wind_dir_deg": 171,
+      "weather_code": 73,
+      "sunshine_s": 0,
+      "uv_max": 0.5
+     },
+     "summit": {
+      "snowfall_cm": 5.5,
+      "rain_mm": 0.0,
+      "precip_mm": 7.8,
+      "precip_hours": 23.0,
+      "precip_prob_pct": 82,
+      "temp_max_c": -4.6,
+      "temp_min_c": -8.8,
+      "wind_max_kmh": 6,
+      "gust_max_kmh": 22,
+      "wind_dir_deg": 171,
+      "weather_code": 73,
+      "sunshine_s": 0,
+      "uv_max": 0.5
+     },
+     "derived": {
+      "freezing_level_max_m": 1600,
+      "freezing_level_precip_min_m": 990,
+      "freezing_level_precip_max_m": 1600,
+      "snowfall_height_precip_min_m": null,
+      "snowfall_height_precip_max_m": null,
+      "rain_risk": {
+       "base": false,
+       "mid": false,
+       "summit": false
+      },
+      "powder_temp_c": -5.9,
+      "powder_band": "average",
+      "wind_700hpa_lift_max_kmh": 62,
+      "wind_hold": false,
+      "flat_light_hours": 8,
+      "wind_chill_min_c": -9.8,
+      "lift_hours_snowfall_cm": 2.5,
+      "ski_score_cm": 3.2,
+      "bluebird": false,
+      "mixed_risk": {
+       "base": true,
+       "mid": false,
+       "summit": false
+      },
+      "phase": {
+       "base": "mixed",
+       "mid": "snow",
+       "summit": "snow"
+      },
+      "rain_phase_mm": {
+       "base": 0.0,
+       "mid": 0.0,
+       "summit": 0.0
+      },
+      "rain_limit_m": null,
+      "rain_limit_kind": null,
+      "wind_gust_lift_max_kmh": 8,
+      "cloud_cover_lift_mean_pct": 100
+     }
+    },
+    {
+     "date": "2026-12-01",
+     "index": 4,
+     "horizon": "short",
+     "sunrise_local": "2026-12-01T08:08",
+     "sunset_local": "2026-12-01T16:44",
+     "daylight_s": 30960,
+     "base": {
+      "snowfall_cm": 0.0,
+      "rain_mm": 1.4,
+      "precip_mm": 2.1,
+      "precip_hours": 9.0,
+      "precip_prob_pct": 33,
+      "temp_max_c": 2.5,
+      "temp_min_c": -5.0,
+      "wind_max_kmh": 8,
+      "gust_max_kmh": 25,
+      "wind_dir_deg": 154,
+      "weather_code": 53,
+      "sunshine_s": 27135,
+      "uv_max": 1.4
+     },
+     "mid": {
+      "snowfall_cm": 5.1,
+      "rain_mm": 0.4,
+      "precip_mm": 7.9,
+      "precip_hours": 24.0,
+      "precip_prob_pct": 33,
+      "temp_max_c": -1.0,
+      "temp_min_c": -5.7,
+      "wind_max_kmh": 10,
+      "gust_max_kmh": 25,
+      "wind_dir_deg": 199,
+      "weather_code": 85,
+      "sunshine_s": 14597,
+      "uv_max": 1.1
+     },
+     "summit": {
+      "snowfall_cm": 5.1,
+      "rain_mm": 0.4,
+      "precip_mm": 7.9,
+      "precip_hours": 24.0,
+      "precip_prob_pct": 35,
+      "temp_max_c": -3.3,
+      "temp_min_c": -8.1,
+      "wind_max_kmh": 10,
+      "gust_max_kmh": 25,
+      "wind_dir_deg": 199,
+      "weather_code": 85,
+      "sunshine_s": 14597,
+      "uv_max": 1.1
+     },
+     "derived": {
+      "freezing_level_max_m": 1590,
+      "freezing_level_precip_min_m": 1310,
+      "freezing_level_precip_max_m": 1570,
+      "snowfall_height_precip_min_m": null,
+      "snowfall_height_precip_max_m": null,
+      "rain_risk": {
+       "base": false,
+       "mid": false,
+       "summit": false
+      },
+      "powder_temp_c": -4.8,
+      "powder_band": "average",
+      "wind_700hpa_lift_max_kmh": 58,
+      "wind_hold": false,
+      "flat_light_hours": 8,
+      "wind_chill_min_c": -9.5,
+      "lift_hours_snowfall_cm": 1.3,
+      "ski_score_cm": 6.8,
+      "bluebird": false,
+      "mixed_risk": {
+       "base": true,
+       "mid": false,
+       "summit": false
+      },
+      "phase": {
+       "base": "mixed",
+       "mid": "snow",
+       "summit": "snow"
+      },
+      "rain_phase_mm": {
+       "base": 0.0,
+       "mid": 0.0,
+       "summit": 0.0
+      },
+      "rain_limit_m": null,
+      "rain_limit_kind": null,
+      "wind_gust_lift_max_kmh": 13,
+      "cloud_cover_lift_mean_pct": 100
+     }
+    },
+    {
+     "date": "2026-12-02",
+     "index": 5,
+     "horizon": "short",
+     "sunrise_local": "2026-12-02T08:09",
+     "sunset_local": "2026-12-02T16:44",
+     "daylight_s": 30900,
+     "base": {
+      "snowfall_cm": 0.6,
+      "rain_mm": 0.3,
+      "precip_mm": 1.2,
+      "precip_hours": 12.0,
+      "precip_prob_pct": 11,
+      "temp_max_c": 0.6,
+      "temp_min_c": -5.1,
+      "wind_max_kmh": 5,
+      "gust_max_kmh": 5,
+      "wind_dir_deg": 78,
+      "weather_code": 71,
+      "sunshine_s": 25606,
+      "uv_max": 1.1
+     },
+     "mid": {
+      "snowfall_cm": 3.1,
+      "rain_mm": 0.0,
+      "precip_mm": 4.5,
+      "precip_hours": 21.0,
+      "precip_prob_pct": 11,
+      "temp_max_c": -2.1,
+      "temp_min_c": -5.8,
+      "wind_max_kmh": 7,
+      "gust_max_kmh": 5,
+      "wind_dir_deg": 213,
+      "weather_code": 85,
+      "sunshine_s": 17721,
+      "uv_max": 0.9
+     },
+     "summit": {
+      "snowfall_cm": 3.1,
+      "rain_mm": 0.0,
+      "precip_mm": 4.5,
+      "precip_hours": 21.0,
+      "precip_prob_pct": 12,
+      "temp_max_c": -4.5,
+      "temp_min_c": -8.1,
+      "wind_max_kmh": 7,
+      "gust_max_kmh": 5,
+      "wind_dir_deg": 213,
+      "weather_code": 85,
+      "sunshine_s": 17721,
+      "uv_max": 0.9
+     },
+     "derived": {
+      "freezing_level_max_m": 1280,
+      "freezing_level_precip_min_m": 140,
+      "freezing_level_precip_max_m": 1150,
+      "snowfall_height_precip_min_m": null,
+      "snowfall_height_precip_max_m": null,
+      "rain_risk": {
+       "base": false,
+       "mid": false,
+       "summit": false
+      },
+      "powder_temp_c": -6.0,
+      "powder_band": "average",
+      "wind_700hpa_lift_max_kmh": 47,
+      "wind_hold": false,
+      "flat_light_hours": 8,
+      "wind_chill_min_c": -9.5,
+      "lift_hours_snowfall_cm": 1.4,
+      "ski_score_cm": 6.5,
+      "bluebird": false,
+      "mixed_risk": {
+       "base": false,
+       "mid": false,
+       "summit": false
+      },
+      "phase": {
+       "base": "snow",
+       "mid": "snow",
+       "summit": "snow"
+      },
+      "rain_phase_mm": {
+       "base": 0.0,
+       "mid": 0.0,
+       "summit": 0.0
+      },
+      "rain_limit_m": null,
+      "rain_limit_kind": null,
+      "wind_gust_lift_max_kmh": 5,
+      "cloud_cover_lift_mean_pct": 100
+     }
+    },
+    {
+     "date": "2026-12-03",
+     "index": 6,
+     "horizon": "short",
+     "sunrise_local": "2026-12-03T08:10",
+     "sunset_local": "2026-12-03T16:43",
+     "daylight_s": 30780,
+     "base": {
+      "snowfall_cm": 0.2,
+      "rain_mm": 0.0,
+      "precip_mm": 0.3,
+      "precip_hours": 3.0,
+      "precip_prob_pct": 21,
+      "temp_max_c": -0.6,
+      "temp_min_c": -5.2,
+      "wind_max_kmh": 5,
+      "gust_max_kmh": 8,
+      "wind_dir_deg": 90,
+      "weather_code": 71,
+      "sunshine_s": 25425,
+      "uv_max": 1.2
+     },
+     "mid": {
+      "snowfall_cm": 1.9,
+      "rain_mm": 0.0,
+      "precip_mm": 2.7,
+      "precip_hours": 6.0,
+      "precip_prob_pct": 21,
+      "temp_max_c": -2.8,
+      "temp_min_c": -5.0,
+      "wind_max_kmh": 7,
+      "gust_max_kmh": 8,
+      "wind_dir_deg": 202,
+      "weather_code": 73,
+      "sunshine_s": 19865,
+      "uv_max": 1.0
+     },
+     "summit": {
+      "snowfall_cm": 1.9,
+      "rain_mm": 0.0,
+      "precip_mm": 2.7,
+      "precip_hours": 6.0,
+      "precip_prob_pct": 21,
+      "temp_max_c": -5.1,
+      "temp_min_c": -7.4,
+      "wind_max_kmh": 7,
+      "gust_max_kmh": 8,
+      "wind_dir_deg": 202,
+      "weather_code": 73,
+      "sunshine_s": 19865,
+      "uv_max": 1.0
+     },
+     "derived": {
+      "freezing_level_max_m": 1250,
+      "freezing_level_precip_min_m": 1110,
+      "freezing_level_precip_max_m": 1130,
+      "snowfall_height_precip_min_m": null,
+      "snowfall_height_precip_max_m": null,
+      "rain_risk": {
+       "base": false,
+       "mid": false,
+       "summit": false
+      },
+      "powder_temp_c": -6.1,
+      "powder_band": "average",
+      "wind_700hpa_lift_max_kmh": 73,
+      "wind_hold": false,
+      "flat_light_hours": 8,
+      "wind_chill_min_c": -10.4,
+      "lift_hours_snowfall_cm": 0.0,
+      "ski_score_cm": 3.1,
+      "bluebird": false,
+      "mixed_risk": {
+       "base": false,
+       "mid": false,
+       "summit": false
+      },
+      "phase": {
+       "base": "none",
+       "mid": "snow",
+       "summit": "snow"
+      },
+      "rain_phase_mm": {
+       "base": 0.0,
+       "mid": 0.0,
+       "summit": 0.0
+      },
+      "rain_limit_m": null,
+      "rain_limit_kind": null,
+      "wind_gust_lift_max_kmh": 8,
+      "cloud_cover_lift_mean_pct": 100
+     }
+    },
+    {
+     "date": "2026-12-04",
+     "index": 7,
+     "horizon": "extended",
+     "sunrise_local": "2026-12-04T08:11",
+     "sunset_local": "2026-12-04T16:43",
+     "daylight_s": 30720,
+     "base": {
+      "snowfall_cm": 3.1,
+      "rain_mm": 1.2,
+      "precip_mm": 5.7,
+      "precip_hours": 15.0,
+      "precip_prob_pct": 20,
+      "temp_max_c": -0.6,
+      "temp_min_c": -2.0,
+      "wind_max_kmh": 4,
+      "gust_max_kmh": 9,
+      "wind_dir_deg": 130,
+      "weather_code": 73,
+      "sunshine_s": 0,
+      "uv_max": 0.3
+     },
+     "mid": {
+      "snowfall_cm": 8.2,
+      "rain_mm": 0.0,
+      "precip_mm": 11.7,
+      "precip_hours": 24.0,
+      "precip_prob_pct": 20,
+      "temp_max_c": -1.8,
+      "temp_min_c": -3.7,
+      "wind_max_kmh": 5,
+      "gust_max_kmh": 9,
+      "wind_dir_deg": 210,
+      "weather_code": 75,
+      "sunshine_s": 0,
+      "uv_max": 0.5
+     },
+     "summit": {
+      "snowfall_cm": 8.2,
+      "rain_mm": 0.0,
+      "precip_mm": 11.7,
+      "precip_hours": 24.0,
+      "precip_prob_pct": 20,
+      "temp_max_c": -4.2,
+      "temp_min_c": -6.0,
+      "wind_max_kmh": 5,
+      "gust_max_kmh": 9,
+      "wind_dir_deg": 210,
+      "weather_code": 75,
+      "sunshine_s": 0,
+      "uv_max": 0.5
+     },
+     "derived": {
+      "freezing_level_max_m": null,
+      "freezing_level_precip_min_m": null,
+      "freezing_level_precip_max_m": null,
+      "snowfall_height_precip_min_m": null,
+      "snowfall_height_precip_max_m": null,
+      "rain_risk": {
+       "base": null,
+       "mid": false,
+       "summit": false
+      },
+      "powder_temp_c": null,
+      "powder_band": null,
+      "wind_700hpa_lift_max_kmh": null,
+      "wind_hold": null,
+      "flat_light_hours": null,
+      "wind_chill_min_c": null,
+      "lift_hours_snowfall_cm": null,
+      "ski_score_cm": null,
+      "bluebird": null,
+      "mixed_risk": {
+       "base": null,
+       "mid": false,
+       "summit": false
+      },
+      "phase": {
+       "base": null,
+       "mid": null,
+       "summit": null
+      },
+      "rain_phase_mm": {
+       "base": null,
+       "mid": null,
+       "summit": null
+      },
+      "rain_limit_m": null,
+      "rain_limit_kind": null,
+      "wind_gust_lift_max_kmh": null,
+      "cloud_cover_lift_mean_pct": null
+     }
+    },
+    {
+     "date": "2026-12-05",
+     "index": 8,
+     "horizon": "extended",
+     "sunrise_local": "2026-12-05T08:13",
+     "sunset_local": "2026-12-05T16:42",
+     "daylight_s": 30540,
+     "base": {
+      "snowfall_cm": 0.0,
+      "rain_mm": 0.0,
+      "precip_mm": 0.3,
+      "precip_hours": 3.0,
+      "precip_prob_pct": 15,
+      "temp_max_c": 0.5,
+      "temp_min_c": -8.3,
+      "wind_max_kmh": 11,
+      "gust_max_kmh": 9,
+      "wind_dir_deg": 177,
+      "weather_code": 51,
+      "sunshine_s": 26792,
+      "uv_max": 1.4
+     },
+     "mid": {
+      "snowfall_cm": 2.7,
+      "rain_mm": 0.0,
+      "precip_mm": 4.2,
+      "precip_hours": 18.0,
+      "precip_prob_pct": 15,
+      "temp_max_c": -3.1,
+      "temp_min_c": -13.5,
+      "wind_max_kmh": 11,
+      "gust_max_kmh": 9,
+      "wind_dir_deg": 201,
+      "weather_code": 85,
+      "sunshine_s": 23778,
+      "uv_max": 1.1
+     },
+     "summit": {
+      "snowfall_cm": 2.7,
+      "rain_mm": 0.0,
+      "precip_mm": 4.2,
+      "precip_hours": 18.0,
+      "precip_prob_pct": 15,
+      "temp_max_c": -5.5,
+      "temp_min_c": -15.8,
+      "wind_max_kmh": 11,
+      "gust_max_kmh": 9,
+      "wind_dir_deg": 201,
+      "weather_code": 85,
+      "sunshine_s": 23778,
+      "uv_max": 1.1
+     },
+     "derived": {
+      "freezing_level_max_m": null,
+      "freezing_level_precip_min_m": null,
+      "freezing_level_precip_max_m": null,
+      "snowfall_height_precip_min_m": null,
+      "snowfall_height_precip_max_m": null,
+      "rain_risk": {
+       "base": false,
+       "mid": false,
+       "summit": false
+      },
+      "powder_temp_c": null,
+      "powder_band": null,
+      "wind_700hpa_lift_max_kmh": null,
+      "wind_hold": null,
+      "flat_light_hours": null,
+      "wind_chill_min_c": null,
+      "lift_hours_snowfall_cm": null,
+      "ski_score_cm": null,
+      "bluebird": null,
+      "mixed_risk": {
+       "base": false,
+       "mid": false,
+       "summit": false
+      },
+      "phase": {
+       "base": null,
+       "mid": null,
+       "summit": null
+      },
+      "rain_phase_mm": {
+       "base": null,
+       "mid": null,
+       "summit": null
+      },
+      "rain_limit_m": null,
+      "rain_limit_kind": null,
+      "wind_gust_lift_max_kmh": null,
+      "cloud_cover_lift_mean_pct": null
+     }
+    },
+    {
+     "date": "2026-12-06",
+     "index": 9,
+     "horizon": "extended",
+     "sunrise_local": "2026-12-06T08:14",
+     "sunset_local": "2026-12-06T16:42",
+     "daylight_s": 30480,
+     "base": {
+      "snowfall_cm": 0.0,
+      "rain_mm": 0.0,
+      "precip_mm": 0.0,
+      "precip_hours": 0.0,
+      "precip_prob_pct": 21,
+      "temp_max_c": -3.0,
+      "temp_min_c": -9.7,
+      "wind_max_kmh": 7,
+      "gust_max_kmh": 8,
+      "wind_dir_deg": 27,
+      "weather_code": 3,
+      "sunshine_s": 27279,
+      "uv_max": 1.4
+     },
+     "mid": {
+      "snowfall_cm": 0.0,
+      "rain_mm": 0.0,
+      "precip_mm": 0.0,
+      "precip_hours": 0.0,
+      "precip_prob_pct": 21,
+      "temp_max_c": -5.1,
+      "temp_min_c": -14.3,
+      "wind_max_kmh": 8,
+      "gust_max_kmh": 8,
+      "wind_dir_deg": 14,
+      "weather_code": 3,
+      "sunshine_s": 27762,
+      "uv_max": 1.4
+     },
+     "summit": {
+      "snowfall_cm": 0.0,
+      "rain_mm": 0.0,
+      "precip_mm": 0.0,
+      "precip_hours": 0.0,
+      "precip_prob_pct": 21,
+      "temp_max_c": -7.5,
+      "temp_min_c": -16.7,
+      "wind_max_kmh": 8,
+      "gust_max_kmh": 8,
+      "wind_dir_deg": 14,
+      "weather_code": 3,
+      "sunshine_s": 27762,
+      "uv_max": 1.4
+     },
+     "derived": {
+      "freezing_level_max_m": null,
+      "freezing_level_precip_min_m": null,
+      "freezing_level_precip_max_m": null,
+      "snowfall_height_precip_min_m": null,
+      "snowfall_height_precip_max_m": null,
+      "rain_risk": {
+       "base": false,
+       "mid": false,
+       "summit": false
+      },
+      "powder_temp_c": null,
+      "powder_band": null,
+      "wind_700hpa_lift_max_kmh": null,
+      "wind_hold": null,
+      "flat_light_hours": null,
+      "wind_chill_min_c": null,
+      "lift_hours_snowfall_cm": null,
+      "ski_score_cm": null,
+      "bluebird": null,
+      "mixed_risk": {
+       "base": false,
+       "mid": false,
+       "summit": false
+      },
+      "phase": {
+       "base": null,
+       "mid": null,
+       "summit": null
+      },
+      "rain_phase_mm": {
+       "base": null,
+       "mid": null,
+       "summit": null
+      },
+      "rain_limit_m": null,
+      "rain_limit_kind": null,
+      "wind_gust_lift_max_kmh": null,
+      "cloud_cover_lift_mean_pct": null
+     }
+    },
+    {
+     "date": "2026-12-07",
+     "index": 10,
+     "horizon": "extended",
+     "sunrise_local": "2026-12-07T08:15",
+     "sunset_local": "2026-12-07T16:42",
+     "daylight_s": 30420,
+     "base": {
+      "snowfall_cm": 0.2,
+      "rain_mm": 0.9,
+      "precip_mm": 1.2,
+      "precip_hours": 9.0,
+      "precip_prob_pct": 19,
+      "temp_max_c": -3.8,
+      "temp_min_c": -9.9,
+      "wind_max_kmh": 6,
+      "gust_max_kmh": 15,
+      "wind_dir_deg": 68,
+      "weather_code": 71,
+      "sunshine_s": 26593,
+      "uv_max": 1.3
+     },
+     "mid": {
+      "snowfall_cm": 2.9,
+      "rain_mm": 0.0,
+      "precip_mm": 4.2,
+      "precip_hours": 12.0,
+      "precip_prob_pct": 19,
+      "temp_max_c": -6.0,
+      "temp_min_c": -13.1,
+      "wind_max_kmh": 7,
+      "gust_max_kmh": 15,
+      "wind_dir_deg": 193,
+      "weather_code": 73,
+      "sunshine_s": 27121,
+      "uv_max": 1.2
+     },
+     "summit": {
+      "snowfall_cm": 2.9,
+      "rain_mm": 0.0,
+      "precip_mm": 4.2,
+      "precip_hours": 12.0,
+      "precip_prob_pct": 19,
+      "temp_max_c": -8.3,
+      "temp_min_c": -15.5,
+      "wind_max_kmh": 7,
+      "gust_max_kmh": 15,
+      "wind_dir_deg": 193,
+      "weather_code": 73,
+      "sunshine_s": 27121,
+      "uv_max": 1.2
+     },
+     "derived": {
+      "freezing_level_max_m": null,
+      "freezing_level_precip_min_m": null,
+      "freezing_level_precip_max_m": null,
+      "snowfall_height_precip_min_m": null,
+      "snowfall_height_precip_max_m": null,
+      "rain_risk": {
+       "base": null,
+       "mid": false,
+       "summit": false
+      },
+      "powder_temp_c": null,
+      "powder_band": null,
+      "wind_700hpa_lift_max_kmh": null,
+      "wind_hold": null,
+      "flat_light_hours": null,
+      "wind_chill_min_c": null,
+      "lift_hours_snowfall_cm": null,
+      "ski_score_cm": null,
+      "bluebird": null,
+      "mixed_risk": {
+       "base": null,
+       "mid": false,
+       "summit": false
+      },
+      "phase": {
+       "base": null,
+       "mid": null,
+       "summit": null
+      },
+      "rain_phase_mm": {
+       "base": null,
+       "mid": null,
+       "summit": null
+      },
+      "rain_limit_m": null,
+      "rain_limit_kind": null,
+      "wind_gust_lift_max_kmh": null,
+      "cloud_cover_lift_mean_pct": null
+     }
+    },
+    {
+     "date": "2026-12-08",
+     "index": 11,
+     "horizon": "extended",
+     "sunrise_local": "2026-12-08T08:16",
+     "sunset_local": "2026-12-08T16:42",
+     "daylight_s": 30360,
+     "base": {
+      "snowfall_cm": 1.1,
+      "rain_mm": 0.3,
+      "precip_mm": 1.8,
+      "precip_hours": 9.0,
+      "precip_prob_pct": 26,
+      "temp_max_c": -1.7,
+      "temp_min_c": -8.7,
+      "wind_max_kmh": 7,
+      "gust_max_kmh": 9,
+      "wind_dir_deg": 341,
+      "weather_code": 73,
+      "sunshine_s": 26492,
+      "uv_max": 1.5
+     },
+     "mid": {
+      "snowfall_cm": 1.9,
+      "rain_mm": 0.0,
+      "precip_mm": 2.7,
+      "precip_hours": 18.0,
+      "precip_prob_pct": 26,
+      "temp_max_c": -4.9,
+      "temp_min_c": -11.8,
+      "wind_max_kmh": 6,
+      "gust_max_kmh": 9,
+      "wind_dir_deg": 280,
+      "weather_code": 73,
+      "sunshine_s": 26093,
+      "uv_max": 1.4
+     },
+     "summit": {
+      "snowfall_cm": 1.9,
+      "rain_mm": 0.0,
+      "precip_mm": 2.7,
+      "precip_hours": 18.0,
+      "precip_prob_pct": 26,
+      "temp_max_c": -7.3,
+      "temp_min_c": -14.1,
+      "wind_max_kmh": 6,
+      "gust_max_kmh": 9,
+      "wind_dir_deg": 280,
+      "weather_code": 73,
+      "sunshine_s": 26093,
+      "uv_max": 1.4
+     },
+     "derived": {
+      "freezing_level_max_m": null,
+      "freezing_level_precip_min_m": null,
+      "freezing_level_precip_max_m": null,
+      "snowfall_height_precip_min_m": null,
+      "snowfall_height_precip_max_m": null,
+      "rain_risk": {
+       "base": null,
+       "mid": false,
+       "summit": false
+      },
+      "powder_temp_c": null,
+      "powder_band": null,
+      "wind_700hpa_lift_max_kmh": null,
+      "wind_hold": null,
+      "flat_light_hours": null,
+      "wind_chill_min_c": null,
+      "lift_hours_snowfall_cm": null,
+      "ski_score_cm": null,
+      "bluebird": null,
+      "mixed_risk": {
+       "base": null,
+       "mid": false,
+       "summit": false
+      },
+      "phase": {
+       "base": null,
+       "mid": null,
+       "summit": null
+      },
+      "rain_phase_mm": {
+       "base": null,
+       "mid": null,
+       "summit": null
+      },
+      "rain_limit_m": null,
+      "rain_limit_kind": null,
+      "wind_gust_lift_max_kmh": null,
+      "cloud_cover_lift_mean_pct": null
+     }
+    },
+    {
+     "date": "2026-12-09",
+     "index": 12,
+     "horizon": "extended",
+     "sunrise_local": "2026-12-09T08:17",
+     "sunset_local": "2026-12-09T16:42",
+     "daylight_s": 30300,
+     "base": {
+      "snowfall_cm": 3.8,
+      "rain_mm": 1.2,
+      "precip_mm": 6.6,
+      "precip_hours": 18.0,
+      "precip_prob_pct": 35,
+      "temp_max_c": -1.9,
+      "temp_min_c": -9.4,
+      "wind_max_kmh": 11,
+      "gust_max_kmh": 19,
+      "wind_dir_deg": 104,
+      "weather_code": 73,
+      "sunshine_s": 24729,
+      "uv_max": 1.1
+     },
+     "mid": {
+      "snowfall_cm": 7.1,
+      "rain_mm": 0.0,
+      "precip_mm": 10.2,
+      "precip_hours": 21.0,
+      "precip_prob_pct": 35,
+      "temp_max_c": -5.0,
+      "temp_min_c": -13.1,
+      "wind_max_kmh": 11,
+      "gust_max_kmh": 19,
+      "wind_dir_deg": 185,
+      "weather_code": 75,
+      "sunshine_s": 21326,
+      "uv_max": 1.1
+     },
+     "summit": {
+      "snowfall_cm": 7.1,
+      "rain_mm": 0.0,
+      "precip_mm": 10.2,
+      "precip_hours": 21.0,
+      "precip_prob_pct": 35,
+      "temp_max_c": -7.3,
+      "temp_min_c": -15.5,
+      "wind_max_kmh": 11,
+      "gust_max_kmh": 19,
+      "wind_dir_deg": 185,
+      "weather_code": 75,
+      "sunshine_s": 21326,
+      "uv_max": 1.1
+     },
+     "derived": {
+      "freezing_level_max_m": null,
+      "freezing_level_precip_min_m": null,
+      "freezing_level_precip_max_m": null,
+      "snowfall_height_precip_min_m": null,
+      "snowfall_height_precip_max_m": null,
+      "rain_risk": {
+       "base": null,
+       "mid": false,
+       "summit": false
+      },
+      "powder_temp_c": null,
+      "powder_band": null,
+      "wind_700hpa_lift_max_kmh": null,
+      "wind_hold": null,
+      "flat_light_hours": null,
+      "wind_chill_min_c": null,
+      "lift_hours_snowfall_cm": null,
+      "ski_score_cm": null,
+      "bluebird": null,
+      "mixed_risk": {
+       "base": null,
+       "mid": false,
+       "summit": false
+      },
+      "phase": {
+       "base": null,
+       "mid": null,
+       "summit": null
+      },
+      "rain_phase_mm": {
+       "base": null,
+       "mid": null,
+       "summit": null
+      },
+      "rain_limit_m": null,
+      "rain_limit_kind": null,
+      "wind_gust_lift_max_kmh": null,
+      "cloud_cover_lift_mean_pct": null
+     }
+    },
+    {
+     "date": "2026-12-10",
+     "index": 13,
+     "horizon": "extended",
+     "sunrise_local": "2026-12-10T08:18",
+     "sunset_local": "2026-12-10T16:42",
+     "daylight_s": 30240,
+     "base": {
+      "snowfall_cm": 0.6,
+      "rain_mm": 0.0,
+      "precip_mm": 0.9,
+      "precip_hours": 3.0,
+      "precip_prob_pct": 29,
+      "temp_max_c": -2.1,
+      "temp_min_c": -9.7,
+      "wind_max_kmh": 18,
+      "gust_max_kmh": 37,
+      "wind_dir_deg": 303,
+      "weather_code": 73,
+      "sunshine_s": 26758,
+      "uv_max": 1.5
+     },
+     "mid": {
+      "snowfall_cm": 3.4,
+      "rain_mm": 0.3,
+      "precip_mm": 5.1,
+      "precip_hours": 15.0,
+      "precip_prob_pct": 29,
+      "temp_max_c": -5.2,
+      "temp_min_c": -13.2,
+      "wind_max_kmh": 14,
+      "gust_max_kmh": 37,
+      "wind_dir_deg": 223,
+      "weather_code": 85,
+      "sunshine_s": 26611,
+      "uv_max": 1.4
+     },
+     "summit": {
+      "snowfall_cm": 3.4,
+      "rain_mm": 0.3,
+      "precip_mm": 5.1,
+      "precip_hours": 15.0,
+      "precip_prob_pct": 29,
+      "temp_max_c": -7.5,
+      "temp_min_c": -15.6,
+      "wind_max_kmh": 14,
+      "gust_max_kmh": 37,
+      "wind_dir_deg": 223,
+      "weather_code": 85,
+      "sunshine_s": 26611,
+      "uv_max": 1.4
+     },
+     "derived": {
+      "freezing_level_max_m": null,
+      "freezing_level_precip_min_m": null,
+      "freezing_level_precip_max_m": null,
+      "snowfall_height_precip_min_m": null,
+      "snowfall_height_precip_max_m": null,
+      "rain_risk": {
+       "base": false,
+       "mid": null,
+       "summit": null
+      },
+      "powder_temp_c": null,
+      "powder_band": null,
+      "wind_700hpa_lift_max_kmh": null,
+      "wind_hold": null,
+      "flat_light_hours": null,
+      "wind_chill_min_c": null,
+      "lift_hours_snowfall_cm": null,
+      "ski_score_cm": null,
+      "bluebird": null,
+      "mixed_risk": {
+       "base": false,
+       "mid": null,
+       "summit": null
+      },
+      "phase": {
+       "base": null,
+       "mid": null,
+       "summit": null
+      },
+      "rain_phase_mm": {
+       "base": null,
+       "mid": null,
+       "summit": null
+      },
+      "rain_limit_m": null,
+      "rain_limit_kind": null,
+      "wind_gust_lift_max_kmh": null,
+      "cloud_cover_lift_mean_pct": null
+     }
+    },
+    {
+     "date": "2026-12-11",
+     "index": 14,
+     "horizon": "extended",
+     "sunrise_local": "2026-12-11T08:19",
+     "sunset_local": "2026-12-11T16:42",
+     "daylight_s": 30180,
+     "base": {
+      "snowfall_cm": 0.4,
+      "rain_mm": 0.0,
+      "precip_mm": 0.6,
+      "precip_hours": 6.0,
+      "precip_prob_pct": 35,
+      "temp_max_c": -4.3,
+      "temp_min_c": -10.5,
+      "wind_max_kmh": 5,
+      "gust_max_kmh": 12,
+      "wind_dir_deg": 21,
+      "weather_code": 71,
+      "sunshine_s": 6280,
+      "uv_max": 0.6
+     },
+     "mid": {
+      "snowfall_cm": 2.1,
+      "rain_mm": 0.0,
+      "precip_mm": 3.0,
+      "precip_hours": 21.0,
+      "precip_prob_pct": 35,
+      "temp_max_c": -5.4,
+      "temp_min_c": -12.5,
+      "wind_max_kmh": 6,
+      "gust_max_kmh": 12,
+      "wind_dir_deg": 195,
+      "weather_code": 71,
+      "sunshine_s": 6798,
+      "uv_max": 0.6
+     },
+     "summit": {
+      "snowfall_cm": 2.1,
+      "rain_mm": 0.0,
+      "precip_mm": 3.0,
+      "precip_hours": 21.0,
+      "precip_prob_pct": 35,
+      "temp_max_c": -7.7,
+      "temp_min_c": -14.8,
+      "wind_max_kmh": 6,
+      "gust_max_kmh": 12,
+      "wind_dir_deg": 195,
+      "weather_code": 71,
+      "sunshine_s": 6798,
+      "uv_max": 0.6
+     },
+     "derived": {
+      "freezing_level_max_m": null,
+      "freezing_level_precip_min_m": null,
+      "freezing_level_precip_max_m": null,
+      "snowfall_height_precip_min_m": null,
+      "snowfall_height_precip_max_m": null,
+      "rain_risk": {
+       "base": false,
+       "mid": false,
+       "summit": false
+      },
+      "powder_temp_c": null,
+      "powder_band": null,
+      "wind_700hpa_lift_max_kmh": null,
+      "wind_hold": null,
+      "flat_light_hours": null,
+      "wind_chill_min_c": null,
+      "lift_hours_snowfall_cm": null,
+      "ski_score_cm": null,
+      "bluebird": null,
+      "mixed_risk": {
+       "base": false,
+       "mid": false,
+       "summit": false
+      },
+      "phase": {
+       "base": null,
+       "mid": null,
+       "summit": null
+      },
+      "rain_phase_mm": {
+       "base": null,
+       "mid": null,
+       "summit": null
+      },
+      "rain_limit_m": null,
+      "rain_limit_kind": null,
+      "wind_gust_lift_max_kmh": null,
+      "cloud_cover_lift_mean_pct": null
+     }
+    }
+   ],
+   "week": {
+    "base_cm": 2.7,
+    "mid_cm": 16.3,
+    "summit_cm": 16.3,
+    "best_snow_day": 3,
+    "best_ski_day": 0,
+    "best_ski_day_score_cm": 8.1
+   },
+   "extended": {
+    "summit_cm": 28.3,
+    "base_cm": 9.2,
+    "days_available": 8
+   },
+   "flags": {
+    "storm_incoming": false,
+    "storm_reasons": [],
+    "bluebird_days": [],
+    "wind_hold_days": [],
+    "rain_days": [],
+    "mixed_days": []
+   },
+   "models": {
+    "compared": [
+     "best_match",
+     "ecmwf_ifs025"
+    ],
+    "days": [
+     {
+      "index": 0,
+      "snowfall_cm": {
+       "best_match": 0.0,
+       "ecmwf_ifs025": 0.7,
+       "icon_d2": null
+      }
+     },
+     {
+      "index": 1,
+      "snowfall_cm": {
+       "best_match": 0.0,
+       "ecmwf_ifs025": 0.3,
+       "icon_d2": null
+      }
+     },
+     {
+      "index": 2,
+      "snowfall_cm": {
+       "best_match": 0.7,
+       "ecmwf_ifs025": 0.5,
+       "icon_d2": null
+      }
+     },
+     {
+      "index": 3,
+      "snowfall_cm": {
+       "best_match": 5.5,
+       "ecmwf_ifs025": 2.5,
+       "icon_d2": null
+      }
+     },
+     {
+      "index": 4,
+      "snowfall_cm": {
+       "best_match": 5.1,
+       "ecmwf_ifs025": 1.2,
+       "icon_d2": null
+      }
+     },
+     {
+      "index": 5,
+      "snowfall_cm": {
+       "best_match": 3.1,
+       "ecmwf_ifs025": 0.1,
+       "icon_d2": null
+      }
+     },
+     {
+      "index": 6,
+      "snowfall_cm": {
+       "best_match": 1.9,
+       "ecmwf_ifs025": 0.1,
+       "icon_d2": null
+      }
+     }
+    ],
+    "agree_through": 3
+   },
+   "model_cells": {
+    "base": {
+     "lat": 48.47078,
+     "lon": -114.34042,
+     "model_elevation_m": 1361
+    },
+    "mid": {
+     "lat": 48.4969,
+     "lon": -114.34771,
+     "model_elevation_m": 1720
+    },
+    "summit": {
+     "lat": 48.4969,
+     "lon": -114.34771,
+     "model_elevation_m": 2078
+    }
+   },
+   "quality": {
+    "bands": {
+     "mid_summit_same_cell": true,
+     "mid_summit_same_72h": true,
+     "mid_summit_same_week": true,
+     "base_mid_same_72h": false
+    },
+    "forecast_ok": true,
+    "summit_forecast_ok": true,
+    "depth_ok": true,
+    "notes": [
+     "No SNOTEL site within 15 km; depth comes from the resort report only",
+     "SNOTEL 664:MT:SNTL (Noisy Basin) is 47.2 km away, over 15 km, removed",
+     "Mid-mountain and summit get the same forecast precipitation for the next three days; the model cannot separate these heights here"
+    ]
+   }
+  }
+ ]
+}

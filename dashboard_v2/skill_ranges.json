@@ -1,0 +1,108 @@
+{
+ "backtest": "1 Dec 2025 - 31 Mar 2026, Open-Meteo previous-runs archive, best_match, station height; 38 stations (SNOTEL, Meteo-France automatic, Meteocat). 3-day blocks overlap by issue day.",
+ "built_by": "scripts/validation/hero_ranges.py from data/validation/out/pairs.csv",
+ "countries": {
+  "France": [
+   {
+    "basis": "country",
+    "hi_ratio": 2.062,
+    "lo_ratio": 0.144,
+    "max_cm": 10.0,
+    "median_ratio": 1.011,
+    "min_cm": 5.0,
+    "n_blocks": 172,
+    "n_stations": 11
+   },
+   {
+    "basis": "country",
+    "hi_ratio": 1.61,
+    "lo_ratio": 0.492,
+    "max_cm": 20.0,
+    "median_ratio": 1.075,
+    "min_cm": 10.0,
+    "n_blocks": 130,
+    "n_stations": 11
+   },
+   {
+    "basis": "country",
+    "hi_ratio": 1.34,
+    "lo_ratio": 0.671,
+    "max_cm": null,
+    "median_ratio": 0.991,
+    "min_cm": 20.0,
+    "n_blocks": 112,
+    "n_stations": 10
+   }
+  ],
+  "Spain": [
+   {
+    "basis": "country",
+    "hi_ratio": 2.26,
+    "lo_ratio": 0.0,
+    "max_cm": 10.0,
+    "median_ratio": 0.521,
+    "min_cm": 5.0,
+    "n_blocks": 92,
+    "n_stations": 5
+   },
+   {
+    "basis": "country",
+    "hi_ratio": 1.964,
+    "lo_ratio": 0.352,
+    "max_cm": 20.0,
+    "median_ratio": 1.108,
+    "min_cm": 10.0,
+    "n_blocks": 93,
+    "n_stations": 5
+   },
+   {
+    "basis": "country",
+    "hi_ratio": 1.42,
+    "lo_ratio": 0.536,
+    "max_cm": null,
+    "median_ratio": 0.987,
+    "min_cm": 20.0,
+    "n_blocks": 58,
+    "n_stations": 5
+   }
+  ],
+  "USA": [
+   {
+    "basis": "country",
+    "hi_ratio": 2.516,
+    "lo_ratio": 0.349,
+    "max_cm": 10.0,
+    "median_ratio": 1.41,
+    "min_cm": 5.0,
+    "n_blocks": 283,
+    "n_stations": 22
+   },
+   {
+    "basis": "country",
+    "hi_ratio": 2.008,
+    "lo_ratio": 0.506,
+    "max_cm": 20.0,
+    "median_ratio": 1.272,
+    "min_cm": 10.0,
+    "n_blocks": 223,
+    "n_stations": 22
+   },
+   {
+    "basis": "country",
+    "hi_ratio": 1.812,
+    "lo_ratio": 0.628,
+    "max_cm": null,
+    "median_ratio": 1.112,
+    "min_cm": 20.0,
+    "n_blocks": 178,
+    "n_stations": 18
+   }
+  ]
+ },
+ "min_forecast_cm": 5.0,
+ "quantiles": [
+  17.0,
+  83.0
+ ],
+ "what": "Likely range for the 3-day snow hero: the 17th to 83rd percentile of measured / forecast over real 3-day forecasts (day 0-2 at their own lead), by forecast size and country."
+}
