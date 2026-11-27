@@ -32,12 +32,30 @@ page stays art-free. Phones show only the dump dissolve and a small hare.
 
 from __future__ import annotations
 
+import base64
 import zlib
+from functools import lru_cache
+from pathlib import Path
 
 from data import g, is_num, next3, week_total
 from render import age_hours
 
 ART = "app/static/art"
+_ART_DIR = Path(__file__).parent / "static" / "art"
+
+
+@lru_cache(maxsize=None)
+def _src(name: str) -> str:
+    """Inline the painting as a data URI.
+
+    Streamlit Cloud proxies the server under /~/+/, so a relative
+    app/static URL resolves to the SPA shell there, never the file.
+    """
+    try:
+        raw = (_ART_DIR / f"{name}.webp").read_bytes()
+    except OSError:
+        return f"{ART}/{name}.webp"
+    return "data:image/webp;base64," + base64.b64encode(raw).decode("ascii")
 
 DUMP_CM = 40
 STORM_CM = 20
@@ -211,14 +229,14 @@ def _mask_css(name):
 def _img(name, iw, ml, mt):
     # loading="lazy": a display:none piece (phone media queries) never fetches,
     # so phones stop downloading the hidden desktop art set (audit round 1).
-    return (f'<img src="{ART}/{name}.webp" alt="" aria-hidden="true" '
+    return (f'<img src="{_src(name)}" alt="" aria-hidden="true" '
             f'loading="lazy" decoding="async" style="width:{iw}px;margin:{mt}px 0 0 {ml}px">')
 
 
 def _raw(cls, name):
     """A hand-placed piece whose geometry lives wholly in the CSS class."""
     return (f'<div class="art-anchor" aria-hidden="true"><div class="art {cls}">'
-            f'<img src="{ART}/{name}.webp" alt="" aria-hidden="true" '
+            f'<img src="{_src(name)}" alt="" aria-hidden="true" '
             f'loading="lazy" decoding="async"></div></div>')
 
 
@@ -351,7 +369,7 @@ def table_art(st, rid):
         # above and the table header below by the full 54px at 390 (audit
         # round 1, minor: it sat 29px from the header).
         out += ('<div class="art-anchor" aria-hidden="true"><div class="art-m art-hare-m">'
-                f'<img src="{ART}/v2-hare.webp" alt="" aria-hidden="true" '
+                f'<img src="{_src("v2-hare")}" alt="" aria-hidden="true" '
                 'decoding="async" style="width:130px;margin:-66px 0 0 -26px"></div></div>')
     return out
 
@@ -389,7 +407,7 @@ def foot_art(st, rid, far=False):
         return ""  # ruled: "resorts with nothing notable show no art" (verify r1)
     if st == "dump":
         return ('<div class="art-foot" aria-hidden="true">'
-                f'<img src="{ART}/v2-buried-village.webp" alt="" aria-hidden="true" '
+                f'<img src="{_src("v2-buried-village")}" alt="" aria-hidden="true" '
                 'loading="lazy" decoding="async"></div>')
     name = _pick(FOOT_POOL, rid, "foot")
     ww, wh, iw, ml, mt = _fit(name)
