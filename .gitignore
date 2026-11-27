@@ -84,7 +84,7 @@ package*.json
 
 # Test artifacts
 test_*.js
-test_*.py
+/test_*.py
 screenshot*.png
 page_text.txt
 streamlit_*.png

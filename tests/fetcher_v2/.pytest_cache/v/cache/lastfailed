@@ -1,0 +1,3 @@
+{
+  "test_validator.py::test_cli_rejects_wrong_count_by_default": true
+}
