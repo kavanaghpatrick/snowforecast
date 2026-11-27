@@ -2,3 +2,5 @@
 # of this file). The old ML stack moved to requirements-ml-archive.txt.
 streamlit==1.66.1
 tzdata==2025.2
+
+# build marker: force full rebuild 2026-11-27 21:10 PT (cloud hot-reload cannot refresh runpy-loaded modules)
