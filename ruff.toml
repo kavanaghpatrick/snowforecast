@@ -2,6 +2,12 @@
 # (src/, its tests) is excluded; it predates this config and nothing runs it.
 extend-exclude = ["src", "tests/pipelines", "tests/api", "tests/e2e", "playwright-test"]
 
+[lint]
+# Explicit select: newer ruff releases widen their defaults (0.17 added import
+# sorting, blind-except and more), which made CI and local disagree. This is
+# the classic pycodestyle+pyflakes set, stable across versions.
+select = ["E4", "E7", "E9", "F"]
+
 [lint.per-file-ignores]
 # Modules import siblings by bare name after a sys.path insert, so imports
 # legitimately follow code (same pattern app.py marks with noqa).
