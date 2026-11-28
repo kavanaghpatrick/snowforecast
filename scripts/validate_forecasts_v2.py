@@ -66,6 +66,16 @@ NONNEG_KEYS = {"depth_cm", "value_cm", "swe_mm", "new_24h_cm", "new_48h_cm", "ne
 MAX_DEPTH_CM = 600
 DEPTH_KEYS_CAPPED = {"depth_cm", "value_cm"}
 FUTURE_SLACK = timedelta(minutes=15)
+BANDS = ("base", "mid", "summit")
+# Optional per-band derived fields (powder upgrades). Each, when present, is an object keyed
+# by the resort's bands; a value may be null. Bounds are sanity limits, not physics claims:
+# Kuchera's ratio at -40 C column air is about 50, and a day's gust above 300 km/h is an error.
+OPTIONAL_BAND_FIELDS = {"slr_kuchera": (0.0, 60.0), "snow_kuchera_cm": (0.0, 400.0),
+                        "post_gust_max_kmh": (0.0, 300.0), "storm_profile": None}
+STORM_PROFILES = ("rsu", "usd")
+# Past days carry the phase and powder-temperature fields the powder gates read; every
+# other derived value stays null there.
+PAST_DERIVED_OK = {"rain_risk", "powder_temp_c"}
 
 
 def _missing(d, keys, where, errs):
@@ -290,13 +300,17 @@ def _check_resort(r, w, updated, errs):
         der = day["derived"]
         if _missing(der, DERIVED_KEYS, f"{w}.day{day['index']}.derived", errs):
             continue
+        _check_band_fields(der, f"{w}: day {day['index']}", errs)
         if day["horizon"] == "past_model":
-            bad = [k for k in DERIVED_KEYS if k != "rain_risk" and der[k] is not None]
-            bad += [f"rain_risk.{k}" for k, v in der["rain_risk"].items() if v is not None]
+            bad = [k for k in DERIVED_KEYS if k not in PAST_DERIVED_OK and der[k] is not None]
+            bad += [k for k in OPTIONAL_BAND_FIELDS if isinstance(der.get(k), dict)
+                    and any(v is not None for v in der[k].values())]
             if bad:
                 errs.append(f"{w}: past_model day {day['index']} has derived values {bad}")
         if day["horizon"] == "extended":
             bad = [k for k in HOURLY_DERIVED if der[k] is not None]
+            bad += [k for k in OPTIONAL_BAND_FIELDS if isinstance(der.get(k), dict)
+                    and any(v is not None for v in der[k].values())]
             if der["wind_hold"] is False:
                 bad.append("wind_hold=false")
             if bad:
@@ -318,6 +332,35 @@ def _check_resort(r, w, updated, errs):
             errs.append(f"{w}: quality.depth_ok inconsistent")
     if r["summit_elevation_m"] is None and r["next_72h"].get("summit_cm") is not None:
         errs.append(f"{w}: summit forecast without summit elevation")
+
+
+def _check_band_fields(der, where, errs):
+    """The optional per-band powder fields: shape, type and sanity bounds."""
+    for k, bounds in OPTIONAL_BAND_FIELDS.items():
+        if k not in der:
+            continue
+        x = der[k]
+        if not isinstance(x, dict) or not set(x) <= set(BANDS):
+            errs.append(f"{where} {k} is not an object keyed by band")
+            continue
+        for e, val in x.items():
+            if val is None:
+                continue
+            if bounds is None:
+                if val not in STORM_PROFILES:
+                    errs.append(f"{where} {k}.{e} is {val!r}, not one of {STORM_PROFILES}")
+            elif not _is_num_or_none(val) or isinstance(val, float) and (math.isnan(val) or math.isinf(val)):
+                errs.append(f"{where} {k}.{e} is not a number")
+            elif not bounds[0] <= val <= bounds[1]:
+                errs.append(f"{where} {k}.{e} = {val} outside {bounds[0]:g}..{bounds[1]:g}")
+    # a Kuchera amount or profile needs its band's ratio
+    slr = der.get("slr_kuchera") if isinstance(der.get("slr_kuchera"), dict) else {}
+    for k in ("snow_kuchera_cm", "storm_profile"):
+        x = der.get(k)
+        if isinstance(x, dict):
+            for e, val in x.items():
+                if val is not None and slr.get(e) is None:
+                    errs.append(f"{where} {k}.{e} set without slr_kuchera.{e}")
 
 
 def health(obj, max_age_h=None, now=None):

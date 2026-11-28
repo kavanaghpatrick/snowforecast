@@ -2301,6 +2301,12 @@ HOURLY_VARS = ("snowfall,rain,precipitation,temperature_2m,apparent_temperature,
                "cloud_cover_low,cloud_cover_mid,visibility,"
                "wind_speed_10m,wind_gusts_10m,freezing_level_height,snowfall_height,precipitation_probability,"
                "wind_speed_700hPa,weather_code,is_day")
+# Pressure-level temperatures for the Kuchera snow-to-liquid ratio. Asked once per resort,
+# on the summit point only (a column property of the grid cell, the same for every band),
+# in its own small hourly call so the base and mid calls stay as they were.
+PLEV_HEIGHT_M = {"temperature_850hPa": 1457, "temperature_700hPa": 3012,
+                 "temperature_600hPa": 4206, "temperature_500hPa": 5574}   # standard atmosphere
+PLEV_VARS = ",".join(PLEV_HEIGHT_M)
 CURRENT_VARS = ("temperature_2m,apparent_temperature,snowfall,weather_code,wind_speed_10m,wind_gusts_10m,"
                 "freezing_level_height,is_day")
 OM_BATCH_RESORTS = 10
@@ -2327,6 +2333,8 @@ def _om_url(kind, lats, lons, elevs, models=None):
     if kind == "hourly":
         return (f"{OM_URL}{q}&hourly={HOURLY_VARS}&current={CURRENT_VARS}"
                 f"&forecast_days=7&past_days=3&timezone=auto{OM_UNITS}")
+    if kind == "plev":
+        return f"{OM_URL}{q}&hourly={PLEV_VARS}&forecast_days=7&past_days=3&timezone=auto{OM_UNITS}"
     if kind == "models":
         return f"{OM_URL}{q}&daily=snowfall_sum&models={','.join(models)}&forecast_days=7&timezone=auto"
     raise ValueError(kind)
@@ -2553,6 +2561,113 @@ def phase_summary(h, times, elev):
             "phase": phase}
 
 
+KUCHERA_PIVOT_K = 271.16
+PROFILE_SLR_STEP = 2.0   # storm_profile needs the last third's mean SLR this far from the first third's
+
+
+def kuchera_slr(tmax_k):
+    """Kuchera snow-to-liquid ratio from the warmest column temperature (K), floored at 0.
+
+    Published form (Kuchera; NOAA VLab): 12 + (271.16 - T) at or below 271.16 K, and
+    12 + 2 x (271.16 - T) above it, so the ratio falls twice as fast on the warm side.
+    """
+    if tmax_k is None:
+        return None
+    d = KUCHERA_PIVOT_K - tmax_k
+    return max(12.0 + (d if tmax_k <= KUCHERA_PIVOT_K else 2.0 * d), 0.0)
+
+
+def column_tmax_k(t2m_c, plev_c, elev):
+    """Warmest temperature (K) from the band's 2 m air up to 500 hPa, or None.
+
+    plev_c: {PLEV_HEIGHT_M key: deg C}. A level whose standard-atmosphere height is
+    below the band elevation is underground there and never counts (an 850 hPa value
+    under a 3,000 m summit is an extrapolation, often far warmer than the real air).
+    Any counted level that is missing makes the answer None.
+    """
+    if t2m_c is None or elev is None:
+        return None
+    vals = [t2m_c]
+    for var, h in PLEV_HEIGHT_M.items():
+        if h >= elev:
+            v = plev_c.get(var)
+            if v is None:
+                return None
+            vals.append(v)
+    return max(vals) + 273.15
+
+
+def kuchera_band(h, hp, times, elev):
+    """(slr, snow_cm, profile) for one band over the given hours; each None when unknown.
+
+    h: the band's own Hourly call (precipitation, rain, freezing level, snow line, 2 m
+    temperature). hp: the summit call's pressure-level Hourly. Snowfall hours are the
+    hours the phase split (hour_split) counts as snow at this band; their frozen water
+    weights the storm-mean SLR, so snow_cm = sum(frozen_mm x SLR) / 10.
+    """
+    if h is None or hp is None or elev is None or not times:
+        return None, None, None
+    P = h.series("precipitation", times)
+    if any(p is None for p in P):
+        return None, None, None
+    w, s = [], []
+    for t, p in zip(times, P):
+        if p <= 0:
+            continue
+        sp = hour_split(elev, p, h.get("rain", t), h.get("freezing_level_height", t), h.get("snowfall_height", t))
+        if sp is None:
+            return None, None, None
+        if sp[2] <= 0:
+            continue
+        slr = kuchera_slr(column_tmax_k(h.get("temperature_2m", t), {v: hp.get(v, t) for v in PLEV_HEIGHT_M}, elev))
+        if slr is None:
+            return None, None, None
+        w.append(sp[2])
+        s.append(slr)
+    if not w:
+        return None, None, None
+    tot = sum(x * y for x, y in zip(w, s))
+    return r1(tot / sum(w)), r1(tot / 10.0), storm_profile(s)
+
+
+def storm_profile(slrs):
+    """'rsu' when the hourly SLR rises from the first third of the snowfall hours to the
+    last third by >= 2 (light snow on denser snow), 'usd' when it falls by >= 2, else None."""
+    k = len(slrs) // 3
+    if k == 0:
+        return None
+    first, last = sum(slrs[:k]) / k, sum(slrs[-k:]) / k
+    if last - first >= PROFILE_SLR_STEP:
+        return "rsu"
+    if first - last >= PROFILE_SLR_STEP:
+        return "usd"
+    return None
+
+
+def post_snow_gust(h, times, sunrise, sunset):
+    """Max gust (km/h, whole) in lift hours after the day's last snowfall hour, or None.
+
+    None when no snow fell, when snow falls through the last lift hour, or when a
+    needed hour is missing.
+    """
+    if h is None or not times or sunrise is None or sunset is None:
+        return None
+    S = h.series("snowfall", times)
+    if any(v is None for v in S):
+        return None
+    snowy = [t for t, v in zip(times, S) if v > 0]
+    if not snowy:
+        return None
+    t_end = snowy[-1]
+    after = [t for t in times if t > t_end and sunrise < datetime.fromisoformat(t) <= sunset]
+    if not after:
+        return None
+    gs = h.series("wind_gusts_10m", after)
+    if any(v is None for v in gs):
+        return None
+    return rint(max(gs))
+
+
 def _same_series(a, b, times, vars_=("snowfall", "rain", "precipitation")):
     """True if two hourly calls give identical values over times; None if either is missing."""
     if a is None or b is None or not times:
@@ -2681,10 +2796,16 @@ def day_point(row, past):
         "uv_max": r1(row.get("uv_index_max")),
     }
     if past:
+        # Past days keep the amounts plus the raw temperatures and gust the fallen-snow
+        # gates read (cold, thaw, wind-pack; docs/powder_fetcher_fixes.md item 6). They are
+        # the model's record of the day, not a forecast; the rest stays null.
         for k in p:
-            if k not in ("snowfall_cm", "rain_mm", "precip_mm"):
+            if k not in PAST_DAY_POINT_KEYS:
                 p[k] = None
     return p
+
+
+PAST_DAY_POINT_KEYS = ("snowfall_cm", "rain_mm", "precip_mm", "temp_max_c", "temp_min_c", "gust_max_kmh")
 
 
 def _parse_local(s):
@@ -2731,6 +2852,39 @@ def powder_band(t):
     return "warm_heavy"
 
 
+KUCHERA_BAND_FIELDS = ("slr_kuchera", "snow_kuchera_cm", "storm_profile", "post_gust_max_kmh")
+
+
+def _phase_band(out, h, e, elev, d):
+    ps = phase_summary(h, h.day_times(d) if h is not None else [], elev)
+    out["rain_risk"][e] = ps["rain_risk"]
+    out["mixed_risk"][e] = ps["mixed_risk"]
+    out["phase"][e] = ps["phase"]
+    out["rain_phase_mm"][e] = ps["rain_mm"]
+
+
+def _phase_fields(out, hourly, elevations, d):
+    for e in ("base", "mid", "summit"):
+        if elevations.get(e) is not None:
+            _phase_band(out, hourly.get(e), e, elevations[e], d)
+
+
+def _powder_temp(hs, summit, d):
+    """Snowfall-weighted summit 2 m temperature on a snowy day, else None."""
+    if hs is None or summit is None:
+        return None
+    sday = summit.get("snowfall_cm")
+    if sday is None or sday < THRESHOLDS["snowy_day_min_cm"]:
+        return None
+    times = hs.day_times(d)
+    T = hs.series("temperature_2m", times)
+    S = hs.series("snowfall", times)
+    if not times or any(v is None for v in T + S):
+        return None
+    ssum = sum(S)
+    return r1(sum(t * s for t, s in zip(T, S)) / ssum) if ssum > 0 else None
+
+
 def derive_day(day, prev_day, hourly, elevations, H):
     """Derived fields for one Day (spec 1.9.1).
 
@@ -2740,13 +2894,21 @@ def derive_day(day, prev_day, hourly, elevations, H):
     H: run local hour (naive) for this resort.
     """
     out = _empty_derived()
-    if day["horizon"] == "past_model":
-        return out
+    bands = [e for e in ("base", "mid", "summit") if elevations.get(e) is not None]
+    for k in KUCHERA_BAND_FIELDS:
+        out[k] = {e: None for e in bands}
     idx = day["index"]
     d = date.fromisoformat(day["date"])
-    short = day["horizon"] == "short"
     hb, hs = hourly.get("base"), hourly.get("summit")
     summit = day.get("summit")
+    if day["horizon"] == "past_model":
+        # The hourly call reaches back 3 days, so a past day gets the same phase and
+        # powder temperature rules as a forecast day: day 0's "rained the day before"
+        # gate and the fallen-snow cold gate read them (powder_fetcher_fixes items 3, 6).
+        _phase_fields(out, hourly, elevations, d)
+        out["powder_temp_c"] = _powder_temp(hs, summit, d)
+        return out
+    short = day["horizon"] == "short"
 
     sunrise = _parse_local(day.get("sunrise_local"))
     sunset = _parse_local(day.get("sunset_local"))
@@ -2803,12 +2965,7 @@ def derive_day(day, prev_day, hourly, elevations, H):
         if elev is None:
             continue
         if short:
-            h = hourly.get(e)
-            ps = phase_summary(h, h.day_times(d) if h is not None else [], elev)
-            out["rain_risk"][e] = ps["rain_risk"]
-            out["mixed_risk"][e] = ps["mixed_risk"]
-            out["phase"][e] = ps["phase"]
-            out["rain_phase_mm"][e] = ps["rain_mm"]
+            _phase_band(out, hourly.get(e), e, elev, d)
         else:
             # Extended days have no hourly data: false only when there is no rain at all
             dp = day.get(e)
@@ -2823,16 +2980,22 @@ def derive_day(day, prev_day, hourly, elevations, H):
         lift_times = [t for t in hs.day_times(d) if sunrise < datetime.fromisoformat(t) <= sunset]
 
     if short and hs is not None and summit is not None:
-        sday = summit.get("snowfall_cm")
-        if sday is not None and sday >= THRESHOLDS["snowy_day_min_cm"]:
-            times = hs.day_times(d)
-            T = hs.series("temperature_2m", times)
-            S = hs.series("snowfall", times)
-            if times and all(v is not None for v in T + S):
-                ssum = sum(S)
-                if ssum > 0:
-                    out["powder_temp_c"] = r1(sum(t * s for t, s in zip(T, S)) / ssum)
+        out["powder_temp_c"] = _powder_temp(hs, summit, d)
         out["powder_band"] = powder_band(out["powder_temp_c"])
+
+    # ---- Kuchera snow-to-liquid ratio and post-snowfall gust, per band (short days).
+    # Every band uses the summit call's pressure-level temperatures, masked at its own
+    # elevation, with its own 2 m temperature and its own frozen water.
+    if short:
+        hp = hourly.get("plev")
+        for e in bands:
+            h = hourly.get(e)
+            times = h.day_times(d) if h is not None else []
+            slr, snow_cm, prof = kuchera_band(h, hp, times, elevations[e])
+            out["slr_kuchera"][e] = slr
+            out["snow_kuchera_cm"][e] = snow_cm if slr is not None else None
+            out["storm_profile"][e] = prof
+            out["post_gust_max_kmh"][e] = post_snow_gust(h, times, sunrise, sunset)
 
     if lift_times:
         w7 = hs.series("wind_speed_700hPa", lift_times)
@@ -2911,6 +3074,7 @@ def build_days(resp_by_label, elevations, run_utc, H):
              for e in ("base", "mid", "summit")}
     hourly = {e: Hourly(resp_by_label[f"hourly_{e}"]) if resp_by_label.get(f"hourly_{e}") else None
               for e in ("base", "mid", "summit")}
+    hourly["plev"] = Hourly(resp_by_label["plev_summit"]) if resp_by_label.get("plev_summit") else None
     days = []
     for ds in sorted(daily["base"].keys()):
         idx = (date.fromisoformat(ds) - today).days
@@ -3476,6 +3640,11 @@ def _main(argv=None):
                 for lab, resp in labs.items():
                     om.setdefault(rid, {})[f"{kind}_{lab}"] = resp
             time.sleep(OM_PAUSE_S)
+        res = openmeteo_fetch("plev", rs, failed_chunks,
+                              point_fn=lambda r: [("summit", r["summit_m"])] if r["summit_m"] is not None else [])
+        for rid, labs in res.items():
+            om.setdefault(rid, {})["plev_summit"] = labs.get("summit")
+        time.sleep(OM_PAUSE_S)
         try:
             models_ok, why = verify_model_call()
         except Exception as e:   # a malformed answer switches the optional feature off, no more

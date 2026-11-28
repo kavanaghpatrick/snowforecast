@@ -603,6 +603,54 @@ POWDER_CALM_GUST_KMH = 40.0   # gusts at or under this leave fresh snow in place
 POWDER_LABELS = {3: "dry powder", 2: "powder", 1: "heavy snow", 0: "heavy snow"}
 
 
+def _band_field(day, key, band):
+    """derived[key][band], a {base, mid, summit} dict. An absent key, a
+    non-dict or a null all mean "no estimate": one band's value is never
+    read for another band."""
+    v = g(day, "derived", key)
+    v = v.get(band) if isinstance(v, dict) else None
+    return v if is_num(v) else None
+
+
+def kuchera_slr(day, band):
+    """The day's storm-mean Kuchera snow-to-liquid ratio at band, or None.
+
+    0 is a real ratio, not a missing one: the fetcher floors a warm column
+    at 0 (kuchera_slr), so 0 says "almost no snow". Reading it as missing
+    would fall back to the larger 7:1 figure and admit the warmest storms.
+    """
+    v = _band_field(day, "slr_kuchera", band)
+    return v if v is not None and v >= 0 else None
+
+
+def kuchera_cm(day, band):
+    """The day's Kuchera snow estimate at band, in cm, or None.
+
+    Optional field (absent == null). Read only where the file states it for
+    this band: a summit ratio is never applied to a lower band's water, as a
+    lower band takes in warmer levels and would get a smaller ratio. None
+    whenever the ratio itself is null, so a stray amount without its ratio
+    is not trusted.
+    """
+    if kuchera_slr(day, band) is None:
+        return None
+    v = _band_field(day, "snow_kuchera_cm", band)
+    return v if v is not None and v >= 0 else None
+
+
+def post_gust_kmh(day, band):
+    """Max gust after the day's last snowfall hour, or None.
+
+    A {band: value} dict is read at the band; a bare number (the summit
+    call's) is used for every band: summit wind is the windier, so excluding
+    on it only ever drops a row, never adds one.
+    """
+    v = g(day, "derived", "post_gust_max_kmh")
+    if isinstance(v, dict):
+        v = v.get(band)
+    return v if is_num(v) else None
+
+
 def powder_band_key(resort):
     """The band the score speaks for: mid, else summit (the ski_score band)."""
     if resort.get("mid_elevation_m") is not None:
@@ -620,7 +668,8 @@ def powder_score(resort, day):
     with q (0..3), label, tp, wp, band, snow_cm, ff and crust (warmth or rain
     the next day may crust the snow).
 
-    Gates: band snow >= 10 cm; no rain or mixed risk at the band and frozen
+    Gates: band snow >= 10 cm (the Kuchera estimate when the file has one for
+    the band, else the 7:1 figure; amount_cm says which was tested); no rain or mixed risk at the band and frozen
     fraction >= 0.9; the day before not rained on at the band; no wind hold.
     Tp (0..2) from powder_temp_c and the band's max temperature; Wp (0..1)
     from the band's daily max gust. Q = Tp + Wp.
@@ -643,7 +692,13 @@ def powder_score(resort, day):
     if not all(isinstance(x, bool) for x in (rr, mx, prr, hold)):
         return None
     out = {"band": band, "snow_cm": snow, "index": day.get("index")}
-    if snow < POWDER_AMOUNT_MIN_CM:
+    # The amount gate reads the Kuchera estimate when the file has one for this
+    # band, else the 7:1 figure. Frozen fraction below stays on the 7:1 figure:
+    # it is a ratio of the model's own 7:1 snow to its water, not an amount.
+    kc = kuchera_cm(day, band)
+    out["kuchera_cm"] = kc
+    out["amount_cm"] = kc if kc is not None else snow
+    if out["amount_cm"] < POWDER_AMOUNT_MIN_CM:
         return {**out, "ok": False, "gate": "amount"}
     ff = snow / (SNOW_CM_PER_MM * pr) if pr > 0 else None
     out["ff"] = ff

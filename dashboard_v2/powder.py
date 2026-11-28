@@ -14,8 +14,16 @@ from the measurement.
                           3-day new snow is at most twice the resort's own depth
   Powder forecast, 4 days days 0-3 that pass data.powder_score with a
                           temperature point and the wind point (so "powder"
-                          or "dry powder", never "dense snow"), and on which
-                          every compared model gives >= 10 cm
+                          or "dry powder", never "dense snow"), with no gust
+                          over 40 km/h after the snow stops (when the file
+                          says), and on which every compared model gives
+                          >= 10 cm (in Kuchera terms when the amount gate
+                          read the Kuchera estimate). Displayed amounts are
+                          always the 7:1 figure every other page shows, so
+                          one day carries one number product-wide; Kuchera
+                          decides which days qualify but is never displayed
+                          (the page states no bar, so a shown figure under
+                          10 cm contradicts nothing the user can see).
 
 Retroactive gates, at the powder band, over the model's past days and today
 (day 0, whole day, so stricter than the hours before the reading), from the
@@ -51,11 +59,14 @@ from data import (
     day_snow,
     g,
     is_num,
+    kuchera_slr,
     local_date,
     models_agree_cm,
     name_key,
+    post_gust_kmh,
     powder_band_key,
     powder_score,
+    POWDER_AMOUNT_MIN_CM,
     POWDER_CALM_GUST_KMH,
     POWDER_FF_MIN,
     POWDER_WARM_C,
@@ -110,6 +121,15 @@ def _as_utc(value, resort):
     except ValueError:
         return None
     return dt if dt.tzinfo else dt.replace(tzinfo=timezone.utc)
+
+
+def _local_day(dt, resort):
+    """The resort's calendar date at the aware datetime dt."""
+    tz = _tz(resort)
+    off = resort.get("utc_offset_s")
+    if tz is None:
+        tz = timezone(timedelta(seconds=off)) if is_num(off) and abs(off) < 86400 else timezone.utc
+    return dt.astimezone(tz).date()
 
 
 def reading_time(resort):
@@ -220,6 +240,12 @@ def fallen_verdict(resort, now=None):
     if kind in REPORTED_KINDS and implausible(resort):
         return None, "implausible report"
     failed, missing = fallen_gates(resort)
+    # The gates run through day 0. When the file's day 0 is older than the
+    # reading's own date (a resort past midnight before the next fetch), the
+    # hours that day before the reading went unchecked: no claim.
+    d0 = local_date(g(day_by_index(resort, 0), "date"))
+    if d0 is None or d0 < _local_day(t, resort):
+        missing = missing + ["today"]
     if failed or missing:
         return None, "; ".join([f"failed {', '.join(failed)}"] * bool(failed)
                                + [f"no data for {', '.join(missing)}"] * bool(missing))
@@ -248,6 +274,58 @@ def snow_down_to(resort, day):
     return None
 
 
+def _agree_min_cm(day, s):
+    """The amount every compared model must give, in its own 7:1 cm.
+
+    10 cm, unless the day's amount gate read the Kuchera estimate: then the
+    same 10 cm in Kuchera terms, at the scored band's own ratio (the one
+    the amount gate used, so the two cannot disagree). 7:1 cm x ratio / 7
+    >= 10 cm. A colder ratio lowers the bar; a ratio under 7 raises it
+    above 10 cm, with no floor: a warm storm must clear more.
+    """
+    slr = kuchera_slr(day, s["band"])
+    if s.get("kuchera_cm") is None or slr is None:
+        return POWDER_AMOUNT_MIN_CM
+    if slr <= 0:
+        return float("inf")   # no model amount clears a ratio of 0 (the amount gate already failed)
+    return POWDER_AMOUNT_MIN_CM * SNOW_CM_PER_MM * 10 / slr
+
+
+def forecast_verdict(resort, i):
+    """(row, why) for forecast day i: the row when it lists on this page,
+    else None and the reason it does not ("" when no score or a failed
+    score gate, which powder_score already names)."""
+    day = day_by_index(resort, i)
+    # Between a resort's midnight and the next fetch the file's day 0 is
+    # yesterday there. A past day is not a forecast: it never lists here.
+    d = local_date(g(day, "date"))
+    if d is None or d < resort_today(resort):
+        return None, "past day" if d is not None else ""
+    s = powder_score(resort, day)
+    if not s or not s.get("ok"):
+        return None, ""
+    # Powder only: fell cold (tp >= 1) and calm (wp 1), the same bar as
+    # fallen snow. "dense snow" is not powder and does not list here.
+    if s.get("tp", 0) < 1 or s.get("wp") != 1:
+        return None, "not powder"
+    # Wind after the snow stops packs it as surely as wind during it
+    pg = post_gust_kmh(day, s["band"])
+    if pg is not None and pg > WIND_PACK_GUST_KMH:
+        return None, "wind after snowfall"
+    if models_agree_cm(resort, i, _agree_min_cm(day, s)) is not True:
+        return None, "models disagree"
+    shown = day_snow(resort, day, s["band"])
+    cm = shown if is_num(shown) else s["snow_cm"]
+    # One estimate on every page: all displayed amounts are the 7:1 figure,
+    # the same number the resort page and daily table carry, so the same day
+    # can never show two different "~" amounts (ruling, Nov 28). The Kuchera
+    # estimate decides WHICH days qualify (the gates) but is not displayed;
+    # the page states no 10 cm bar, so a smaller shown figure contradicts
+    # nothing. page_cm is kept equal to cm for sort/scale stability.
+    return {"resort": resort, "group": "forecast", "index": i, "day": day, "score": s,
+            "cm": cm, "page_cm": cm}, ""
+
+
 def forecast_row(resort):
     """The resort's best qualifying powder day in days 0-3, or None.
 
@@ -255,20 +333,10 @@ def forecast_row(resort):
     """
     best = None
     for i in FORECAST_DAYS:
-        day = day_by_index(resort, i)
-        s = powder_score(resort, day)
-        if not s or not s.get("ok"):
+        row, _why = forecast_verdict(resort, i)
+        if row is None:
             continue
-        # Powder only: fell cold (tp >= 1) and calm (wp 1), the same bar as
-        # fallen snow. "dense snow" is not powder and does not list here.
-        if s.get("tp", 0) < 1 or s.get("wp") != 1:
-            continue
-        if models_agree_cm(resort, i) is not True:
-            continue
-        shown = day_snow(resort, day, s["band"])
-        row = {"resort": resort, "group": "forecast", "index": i, "day": day, "score": s,
-               "cm": shown if is_num(shown) else s["snow_cm"]}
-        key = (s["q"], row["cm"], -i)
+        key = (row["score"]["q"], row["cm"], -i)
         if best is None or key > best[0]:
             best = (key, row)
     return best[1] if best else None
@@ -301,7 +369,7 @@ def groups(resorts, now=None):
             forecast.append(p)
     for rows in (measured, reported):
         rows.sort(key=lambda x: (-x["cm"], name_key(x["resort"].get("name"))))
-    forecast.sort(key=lambda x: (-x["score"]["q"], -x["cm"], x["index"], name_key(x["resort"].get("name"))))
+    forecast.sort(key=lambda x: (-x["score"]["q"], -x["page_cm"], x["index"], name_key(x["resort"].get("name"))))
     return measured, reported, forecast
 
 
@@ -341,8 +409,9 @@ def _day_words(resort, index):
 
 def forecast_sentence(name_html, row, units, resort):
     """'Myoko Kogen: powder snow on Sun, ~16 cm.' Drops the quality word,
-    then the colon-led name, to stay within eight words."""
-    amt = _amount(row["cm"], units, model=True)
+    then the colon-led name, to stay within eight words. The amount is the
+    7:1 figure every other page shows for the day (one estimate, one number)."""
+    amt = _amount(row["page_cm"], units, model=True)
     day = _day_words(resort, row["index"])
     if amt is None or day is None:
         return None
@@ -430,7 +499,8 @@ def page(resorts, units, resort_id, debug=False, now=None):
     def link(r):
         return f'<a class="plain" href="{escape(href(r))}" target="_self">{escape(r.get("name") or "?")}</a>'
 
-    vmax = scale_max([snow_val(x["cm"], units) for x in measured + reported + forecast], units)
+    vmax = scale_max([snow_val(x["cm"], units) for x in measured + reported]
+                     + [snow_val(x["page_cm"], units) for x in forecast], units)
 
     def tr(row, cells):
         cls = ' class="is-selected"' if row["resort"].get("id") == resort_id else ""
@@ -469,7 +539,7 @@ def page(resorts, units, resort_id, debug=False, now=None):
         body = []
         for x in forecast:
             r = x["resort"]
-            v = snow_val(x["cm"], units)
+            v = snow_val(x["page_cm"], units)
             cells = [_name_cell(r, href(r)),
                      f'<td class="barcol">{bar(v, vmax)}</td>',
                      f'<td class="r">{disp_cell(v, units, model=True)}</td>',

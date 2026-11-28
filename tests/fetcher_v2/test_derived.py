@@ -163,21 +163,49 @@ def test_lift_hour_fields(f, snowbird_days):
         assert der["bluebird"] in (None, False)
 
 
-def test_past_model_days_have_no_derived(snowbird_days):
-    days, _, _ = snowbird_days
+PAST_DERIVED_SET = {"rain_risk", "mixed_risk", "phase", "rain_phase_mm", "powder_temp_c"}
+
+
+def test_past_model_days_carry_only_phase_and_powder_temp(f, T, snowbird_days):
+    """Past days get the phase fields and powder_temp_c by the forecast-day rules (the
+    hourly call reaches back 3 days); every other derived value stays null."""
+    days, h, _ = snowbird_days
     past = [d for d in days if d["horizon"] == "past_model"]
     assert [d["index"] for d in past] == [-3, -2, -1]
     for d in past:
-        assert all(v is None or (isinstance(v, dict) and set(v.values()) == {None})
-                   for v in d["derived"].values())
+        for k, v in d["derived"].items():
+            if k in PAST_DERIVED_SET:
+                continue
+            assert v is None or (isinstance(v, dict) and set(v.values()) <= {None}), (d["index"], k)
+        ts = h.day_times(date.fromisoformat(d["date"]))
+        assert len(ts) == 24
+        ps = f.phase_summary(h, ts, 3215)
+        assert d["derived"]["rain_risk"]["summit"] is ps["rain_risk"]
+        assert isinstance(d["derived"]["rain_risk"]["summit"], bool)
+        assert d["derived"]["phase"]["summit"] == ps["phase"]
+        S, Tt = h.series("snowfall", ts), h.series("temperature_2m", ts)
+        if d["summit"]["snowfall_cm"] >= T["snowy_day_min_cm"] and sum(S) > 0:
+            exp = round(sum(a * b for a, b in zip(Tt, S)) / sum(S), 1)
+            assert d["derived"]["powder_temp_c"] == pytest.approx(exp, abs=0.05)
+        else:
+            assert d["derived"]["powder_temp_c"] is None
 
 
-def test_past_model_day_points_keep_only_amounts(snowbird_days):
-    days, _, _ = snowbird_days
+def test_past_model_day_points_keep_amounts_temps_and_gust(f, snowbird_days):
+    days, _, daily = snowbird_days
+    dd = daily["daily"]
+    seen = 0
     for d in days:
         if d["horizon"] == "past_model":
+            i = dd["time"].index(d["date"])
             kept = {k for k, v in d["summit"].items() if v is not None}
-            assert kept <= {"snowfall_cm", "rain_mm", "precip_mm"}
+            assert kept <= set(f.PAST_DAY_POINT_KEYS)
+            assert d["summit"]["temp_max_c"] == round(dd["temperature_2m_max"][i], 1)
+            assert d["summit"]["temp_min_c"] == round(dd["temperature_2m_min"][i], 1)
+            assert d["summit"]["gust_max_kmh"] == half_up(dd["wind_gusts_10m_max"][i])
+            assert d["summit"]["weather_code"] is None and d["summit"]["sunshine_s"] is None
+            seen += 1
+    assert seen == 3
 
 
 def test_daily_day16_dropped(f, snowbird_days):
