@@ -201,6 +201,41 @@ b, strong{ font-weight:500; }
 [role="option"] *{ font-size:18px !important; color:inherit !important; }
 [role="option"][aria-selected="true"], [role="option"]:hover{ color:var(--accent) !important; background:transparent !important; }
 
+/* Streamlit >=1.66 renders the picker as a react-aria ComboBox (input + button),
+   not a BaseWeb select; same look: bare 61px name over an ink underline. */
+[data-testid="stSelectbox"] .react-aria-ComboBox,
+[data-testid="stSelectbox"] .react-aria-ComboBox div{
+  height:auto !important; max-height:none !important; overflow:visible !important; }
+[data-testid="stSelectbox"] .react-aria-ComboBox [role="group"]{
+  background:transparent !important; border:0 !important;
+  border-bottom:1px solid var(--ink) !important; border-radius:0 !important;
+  box-shadow:none !important; padding:0 0 8px 0 !important; min-height:0 !important;
+  display:flex; align-items:baseline; }
+[data-testid="stSelectbox"] .react-aria-ComboBox input{
+  font:inherit; font-size:61px !important; line-height:1.05 !important;
+  letter-spacing:-.01em; color:var(--ink) !important;
+  background:transparent !important; border:0 !important; outline:none !important;
+  box-shadow:none !important; padding:0 !important; height:auto !important;
+  min-height:0 !important; width:100%%; caret-color:var(--accent);
+  text-overflow:ellipsis; }
+[data-testid="stSelectbox"] .react-aria-ComboBox button{
+  background:transparent !important; border:0 !important; padding:0 !important; }
+[data-testid="stSelectbox"] .react-aria-ComboBox svg{
+  width:24px !important; height:24px !important; color:var(--ink); }
+[data-testid="stSelectbox"] .react-aria-ComboBox:focus-within [role="group"]{
+  border-bottom-color:var(--accent) !important; }
+@media (max-width:700px){
+  [data-testid="stSelectbox"] .react-aria-ComboBox input{ font-size:44px !important } }
+@media (min-width:1921px){
+  [data-testid="stSelectbox"] .react-aria-ComboBox input{ font-size:70px !important } }
+/* its dropdown: paper sheet, one ink rule, no shadow (react-aria portal) */
+[role="listbox"]{ background:var(--paper) !important; border:1px solid var(--ink) !important;
+  border-radius:0 !important; box-shadow:none !important; }
+div:has(> [role="listbox"]), div:has(> div > [role="listbox"]){
+  background:transparent !important; border:0 !important;
+  border-radius:0 !important; box-shadow:none !important; }
+[data-baseweb="popover"] ul[role="listbox"]{ border:0 !important; }
+
 /* the map */
 [data-testid="stDeckGlJsonChart"]{
   margin-right:calc(var(--m) * -1);
