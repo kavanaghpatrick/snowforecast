@@ -18,7 +18,18 @@ import os
 import sys
 from urllib.parse import urlencode
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+_APP_DIR = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, _APP_DIR)
+
+# Streamlit re-runs this script from source but keeps imported modules cached
+# in sys.modules. When the host syncs new code under a running process, this
+# fresh script would call stale render/art/data modules and die on changed
+# signatures (seen live on Streamlit Cloud). Purge our modules every run so
+# each rerun imports the source that is on disk now.
+for _name, _mod in list(sys.modules.items()):
+    _file = getattr(_mod, "__file__", None) or ""
+    if _file.startswith(_APP_DIR) and not _file.endswith("app.py"):
+        del sys.modules[_name]
 
 import streamlit as st  # noqa: E402
 
