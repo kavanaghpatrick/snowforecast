@@ -1,19 +1,27 @@
 name: CI
 
+# Lints and tests the live product: the V2 dashboard and fetcher.
+# The retired V1 ML stack (src/) is excluded here and in ruff.toml;
+# its own suites live in test-pipelines.yml, which only fires on V1 paths.
+
 on:
   push:
     branches: [main, develop]
   pull_request:
     branches: [main, develop]
 
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   lint:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
@@ -21,68 +29,32 @@ jobs:
         run: pip install ruff
 
       - name: Run linter
-        run: ruff check src/ tests/
+        run: ruff check dashboard_v2/ scripts/fetch_data_v2.py scripts/validate_forecasts_v2.py tests/dashboard_v2 tests/fetcher_v2
 
   test:
     runs-on: ubuntu-latest
-    needs: lint
+    timeout-minutes: 30
     strategy:
       fail-fast: false
       matrix:
-        test-group:
-          - pipelines
-          - features
-          - models
-          - cache
-          - dashboard
-          - api
-          - visualization
+        # 3.11 is local dev; 3.13 is what Streamlit Cloud runs the app on.
+        python-version: ['3.11', '3.13']
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
-
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5
-        with:
-          enable-cache: true
+          python-version: ${{ matrix.python-version }}
+          cache: pip
 
       - name: Install dependencies
-        run: uv pip install --system -e ".[all]"
+        run: pip install -r requirements.txt pytest cryptography
 
-      - name: Run ${{ matrix.test-group }} tests
-        run: pytest tests/${{ matrix.test-group }}/ -v --tb=short -m "not integration and not live"
+      # Two invocations: the suites carry same-named conftest modules and
+      # cannot be collected together in one pytest run.
+      - name: Dashboard suite
+        run: python -m pytest tests/dashboard_v2 -q
 
-  coverage:
-    runs-on: ubuntu-latest
-    needs: test
-    if: github.ref == 'refs/heads/main'
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5
-        with:
-          enable-cache: true
-
-      - name: Install dependencies
-        run: uv pip install --system -e ".[all]"
-
-      - name: Run tests with coverage
-        run: pytest tests/ -v --tb=short -m "not integration and not live" --cov=src/snowforecast --cov-report=xml
-
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4
-        with:
-          files: coverage.xml
-          fail_ci_if_error: false
+      - name: Fetcher suite
+        run: python -m pytest tests/fetcher_v2 -q

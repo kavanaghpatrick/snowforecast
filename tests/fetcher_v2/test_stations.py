@@ -14,7 +14,7 @@ import math
 
 import pytest
 
-from conftest import RUN_UTC, fixture_bytes, load_fixture
+from conftest import fixture_bytes, load_fixture
 from test_units import SNOTEL_RESORTS, snotel_run  # noqa: F401  (module-scoped replay run)
 
 

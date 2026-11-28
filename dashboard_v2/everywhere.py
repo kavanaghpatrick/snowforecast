@@ -168,7 +168,6 @@ def page(resorts, col, direction, units, resort_id, debug=False, rng="all"):
         resorts = [r for r in resorts if in_range(r, rng)]
     rows = sort_all(resorts, col, direction, units)
     extra = {"debug": "1"} if debug else {}
-    u = "in" if units == "in" else "cm"
 
     head = []
     for key, text, numeric, first in COLS:

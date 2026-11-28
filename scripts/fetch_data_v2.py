@@ -2076,7 +2076,10 @@ def _fetch_pages(items, fetch_one, min_left_s=1):
                     return None, _STOPPED
                 state["turn"] += 1
                 cond.notify_all()
-                if i >= SITE_DOWN_AFTER and all(conn_fail[j] for j in range(i - SITE_DOWN_AFTER, i)):
+                # .get, not [j]: window_known lets this page proceed as soon as one
+                # predecessor is a known success, while others may still be running
+                # (their entries missing). Missing means "not failed" here.
+                if i >= SITE_DOWN_AFTER and all(conn_fail.get(j) for j in range(i - SITE_DOWN_AFTER, i)):
                     failed = True   # so the pages after it are skipped too
                     return None, _STOPPED
                 now = time.monotonic()

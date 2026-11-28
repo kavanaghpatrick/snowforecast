@@ -2,8 +2,10 @@ name: Refresh Dashboard V2 Data
 
 on:
   schedule:
-    # 4x daily: 00, 06, 12, 18 UTC
-    - cron: '0 0,6,12,18 * * *'
+    # 4x daily. Minute 17, not 00: on-the-hour crons are so contended on
+    # GitHub's shared runners that half our runs were delayed by hours or
+    # silently skipped (Nov 27-28: scheduled 00/06/12/18, fired 01:14, 05:08).
+    - cron: '17 0,6,12,18 * * *'
   workflow_dispatch:
 
 concurrency:
@@ -13,9 +15,10 @@ concurrency:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 45
     permissions:
       contents: write
+      issues: write
 
     steps:
       - uses: actions/checkout@v4
@@ -25,12 +28,19 @@ jobs:
           python-version: '3.11'
 
       # No pip install: the fetcher is stdlib only.
-      # No continue-on-error: exit 2 (validation failed) leaves the old file in place and turns the run red.
+      # Two attempts: one clean retry covers transient API refusals and
+      # network blips. Exit 2 (validation failed) leaves the old file in
+      # place; a second attempt is still worth it (fresh API responses).
       - name: Fetch forecast data
         # AEMET (Spain) runs only when this optional repo secret exists; empty means skipped.
         env:
           AEMET_API_KEY: ${{ secrets.AEMET_API_KEY }}
-        run: python scripts/fetch_data_v2.py
+        run: |
+          if ! python scripts/fetch_data_v2.py; then
+            echo "::warning::First fetch attempt failed; retrying once after 60s"
+            sleep 60
+            python scripts/fetch_data_v2.py
+          fi
 
       - name: Commit and push if changed
         run: |
@@ -53,5 +63,56 @@ jobs:
           done
           exit 1
 
+      # Provider warnings (one source down, stale stations) are advisory: the
+      # data already shipped, so they must not turn the run red — a red run
+      # should always mean "no fresh data went out". Warnings land in the step
+      # summary and the alert issue instead.
       - name: Source health
-        run: python scripts/validate_forecasts_v2.py data/forecasts_v2.json --health
+        run: |
+          set +e
+          OUT=$(python scripts/validate_forecasts_v2.py data/forecasts_v2.json --health 2>&1)
+          CODE=$?
+          echo "$OUT"
+          {
+            echo "### Source health"
+            echo '```'
+            echo "$OUT"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          if [ "$CODE" -ne 0 ]; then
+            echo "HEALTH_WARN=1" >> "$GITHUB_ENV"
+            printf '%s\n' "$OUT" > "$RUNNER_TEMP/health.txt"
+          fi
+
+      - name: Raise or update the alert issue on health warnings
+        if: env.HEALTH_WARN == '1'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TITLE="Data pipeline alert"
+          BODY="Source health warnings in scheduled refresh [run ${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}):
+
+          \`\`\`
+          $(cat "$RUNNER_TEMP/health.txt")
+          \`\`\`"
+          N=$(gh issue list --state open --search "in:title \"$TITLE\"" --json number --jq '.[0].number' || true)
+          if [ -n "$N" ]; then
+            gh issue comment "$N" --body "$BODY"
+          else
+            gh issue create --title "$TITLE" --body "$BODY"
+          fi
+
+      # Any hard failure above (fetch twice, push thrice) alerts the same issue.
+      - name: Raise the alert issue on hard failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TITLE="Data pipeline alert"
+          BODY="**Refresh run FAILED — no fresh data went out.** [Run ${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+          N=$(gh issue list --state open --search "in:title \"$TITLE\"" --json number --jq '.[0].number' || true)
+          if [ -n "$N" ]; then
+            gh issue comment "$N" --body "$BODY"
+          else
+            gh issue create --title "$TITLE" --body "$BODY"
+          fi

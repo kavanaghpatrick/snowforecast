@@ -61,8 +61,8 @@ from data import (
     POWDER_WARM_C,
     SNOW_CM_PER_MM,
 )
-from render import (DASH, THIN, _tz, bar, disp_cell, elev_str, prose_num, resort_today, scale_max,
-                    short_day_word, snow_cover_str, snow_line_range, snow_str, snow_val)
+from render import (DASH, THIN, _tz, bar, disp_cell, prose_num, resort_today, scale_max,
+                    short_day_word, snow_cover_str, snow_str, snow_val)
 
 FALLEN_MIN_CM = 20.0      # a fallen-snow row needs this much in 72 hours
 READING_MAX_AGE_H = 36    # and a reading no older than this
@@ -422,7 +422,6 @@ def _down_to_str(resort, day, units):
 
 def page(resorts, units, resort_id, debug=False, now=None):
     extra = {"debug": "1"} if debug else {}
-    u = "in" if units == "in" else "cm"
     measured, reported, forecast = groups(resorts, now)
 
     def href(r):

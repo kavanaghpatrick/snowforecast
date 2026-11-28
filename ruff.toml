@@ -1,0 +1,9 @@
+# Lint scope: the live V2 dashboard and fetcher. The retired V1 ML stack
+# (src/, its tests) is excluded; it predates this config and nothing runs it.
+extend-exclude = ["src", "tests/pipelines", "tests/api", "tests/e2e", "playwright-test"]
+
+[lint.per-file-ignores]
+# Modules import siblings by bare name after a sys.path insert, so imports
+# legitimately follow code (same pattern app.py marks with noqa).
+"dashboard_v2/*" = ["E402"]
+"tests/*" = ["E402", "E731", "E741"]

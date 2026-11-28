@@ -1,0 +1,84 @@
+name: Pipeline Monitor
+
+# Watches the two things that matter from the outside:
+#   1. data freshness - the "updated" stamp in data/forecasts_v2.json on main
+#      must be under 8 hours old (refreshes run every 6)
+#   2. the live site answers - snowforecast.streamlit.app/healthz returns 200
+# A problem opens or updates the "Data pipeline alert" issue; a fully healthy
+# check closes it, so the issue's open/closed state IS the pipeline status.
+
+on:
+  schedule:
+    - cron: '43 */2 * * *'   # every 2 hours, off the contended minute 0
+  workflow_dispatch:
+
+concurrency:
+  group: pipeline-monitor
+  cancel-in-progress: true
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      issues: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check data freshness and live site
+        id: checks
+        run: |
+          PROBLEMS=""
+          UPDATED=$(python3 -c "import json; print(json.load(open('data/forecasts_v2.json'))['updated'])")
+          AGE_H=$(python3 - "$UPDATED" <<'EOF'
+          import sys
+          from datetime import datetime, timezone
+          u = datetime.fromisoformat(sys.argv[1].replace("Z", "+00:00"))
+          print(round((datetime.now(timezone.utc) - u).total_seconds() / 3600, 1))
+          EOF
+          )
+          echo "Data age: ${AGE_H}h (updated $UPDATED)"
+          if python3 -c "import sys; sys.exit(0 if float('$AGE_H') > 8 else 1)"; then
+            PROBLEMS="- Forecast data is ${AGE_H}h old (updated $UPDATED); refreshes run every 6h, so at least one run was missed or failed."
+          fi
+          CODE=$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 https://snowforecast.streamlit.app/healthz || echo 000)
+          echo "Live site healthz: $CODE"
+          if [ "$CODE" != "200" ]; then
+            PROBLEMS="$PROBLEMS
+          - Live site health check returned $CODE (expected 200)."
+          fi
+          if [ -n "$PROBLEMS" ]; then
+            echo "healthy=false" >> "$GITHUB_OUTPUT"
+            printf '%s\n' "$PROBLEMS" > "$RUNNER_TEMP/problems.txt"
+          else
+            echo "healthy=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Raise or update the alert issue
+        if: steps.checks.outputs.healthy == 'false'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TITLE="Data pipeline alert"
+          BODY="Monitor found problems at $(date -u '+%Y-%m-%d %H:%M UTC') ([run ${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})):
+
+          $(cat "$RUNNER_TEMP/problems.txt")"
+          N=$(gh issue list --state open --search "in:title \"$TITLE\"" --json number --jq '.[0].number' || true)
+          if [ -n "$N" ]; then
+            gh issue comment "$N" --body "$BODY"
+          else
+            gh issue create --title "$TITLE" --body "$BODY"
+          fi
+
+      - name: Close the alert issue when healthy
+        if: steps.checks.outputs.healthy == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TITLE="Data pipeline alert"
+          N=$(gh issue list --state open --search "in:title \"$TITLE\"" --json number --jq '.[0].number' || true)
+          if [ -n "$N" ]; then
+            gh issue close "$N" --comment "Monitor: data fresh and live site healthy at $(date -u '+%Y-%m-%d %H:%M UTC')."
+          fi

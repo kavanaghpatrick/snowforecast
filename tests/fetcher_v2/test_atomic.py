@@ -6,7 +6,6 @@ as the payload.
 
 import json
 import math
-import os
 import threading
 
 import pytest
