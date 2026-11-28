@@ -1,6 +1,7 @@
 # Streamlit Cloud requirements for the v2 dashboard (the only cloud consumer
 # of this file). The old ML stack moved to requirements-ml-archive.txt.
-streamlit==1.66.1
+# Pinned to the version the design was built and audited against: the theme's
+# selectbox/widget CSS targets this version's DOM, and 1.66 renders the resort
+# picker unstyled (small text, stray border).
+streamlit==1.52.2
 tzdata==2025.2
-
-# build marker: force full rebuild 2026-11-27 21:10 PT (cloud hot-reload cannot refresh runpy-loaded modules)
